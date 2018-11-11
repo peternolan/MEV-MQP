@@ -379,6 +379,7 @@ app.post('/getdemographicdata', (req, res) => {
   })
 });
 
+//WHERE THE REPORTS COME FROM?
 app.post('/getreports', (req, res) => {
   console.log('got a report request with body:\n ', req.body);
   let query = '';
@@ -951,11 +952,11 @@ function writeSQL(dataRows, drugReactions, meTypesArray, drugNamesArray, causesA
 
               wstream.write(insertReaction)
             }
-          })
+          });
           resolve2('DONE ALL INSERT')
         })
       }))
-    })
+    });
     Promise.all(promises).then(() => {
       console.log(`Done with Chunk`)
       wstream.end();
@@ -1078,7 +1079,7 @@ getDummyCache = () => ({
     }
   },
   set: () => Promise.resolve(),
-})
+});
 
 app.listen(port);
-console.log('listening on ' + port)
+console.log('listening on ' + port);

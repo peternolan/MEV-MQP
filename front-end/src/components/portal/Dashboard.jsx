@@ -330,9 +330,10 @@ class Dashboard extends Component {
                     scrollable
                     scrollButtons="auto"
                   >
+
                     {this.state.userBins.map((option, index) => {
                       switch (option) {
-                        case 'Trash':
+                          case 'Trash':
                           return (
                             <Tab icon={<TrashIcon />} label={option} key={option} value={index} onClick={event => this.handleCaseClick(event, index)}  />
                           );

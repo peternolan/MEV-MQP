@@ -7,4 +7,6 @@ export default {
   weight: 'orchid',
   indication: 'silver',
   interesting: 'cyan',
+    clear: 'white',
+    edit: 'black'
 };

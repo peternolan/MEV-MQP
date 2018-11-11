@@ -1,3 +1,7 @@
+
+--THIS IS WHERE WE CREATE THE INFORMATION FOR OUR DATABASE
+
+--DEMO IS
 create table demo (
 primaryid numeric (1000),
 caseid numeric (500),
@@ -25,6 +29,7 @@ occp_cod varchar (300),
 reporter_country varchar (500),
 occr_country varchar (2));
 
+--DRUGS CONTAINS A LIST OF DRUGS THAT ARE IN AVAILABLE IN THE SYSTEM.
 create table drug (
 primaryid numeric (1000),
 caseid numeric (500),
@@ -46,6 +51,7 @@ dose_amt varchar (15),
 dose_unit varchar (50),
 dose_form varchar (50),
 dose_freq varchar (50));
+
 
 create table indi (
 primaryid numeric (1000), 

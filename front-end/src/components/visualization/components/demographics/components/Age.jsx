@@ -177,7 +177,7 @@ class Age extends Component {
             className={this.props.classes.clearFilterChip}
           />
           <Typography id="age-graph-title" className={this.props.classes.labelFont} type="title" component="h1">
-            Age
+            THIS IS THE AGE SECTION
           </Typography>
         </div>
         <ResponsiveContainer className={this.props.classes.responsiveContainerMaximized} width="100%" height={this.state.graphHeight} >

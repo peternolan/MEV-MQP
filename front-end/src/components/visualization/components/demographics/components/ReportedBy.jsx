@@ -112,7 +112,7 @@ class ReportedBy extends Component {
    */
   clearFilter = () => {
     this.props.toggleFilter('CLEAR');
-  }
+  };
 
   /**
    * Toggles the filter in Redux State for the bar clicked on in the chart
@@ -121,7 +121,7 @@ class ReportedBy extends Component {
     if (e && e.activeLabel) {
       this.props.toggleFilter(e.activeLabel);
     }
-  }
+  };
 
   /**
    * Calculates the best size for the visualization for better scalability
@@ -145,10 +145,11 @@ class ReportedBy extends Component {
         graphHeight: (parseInt(containerHeight, 10) + 4),
       });
     }
-  }
+  };
 
   renderMinimized = () => {
     return (
+
       <div id="occupation-container" className={this.props.classes.maxHeight} >
         <ResponsiveContainer className={this.props.classes.responsiveContainerMinimized} width="100%" height={this.state.graphHeight} >
           <BarChart
@@ -168,7 +169,7 @@ class ReportedBy extends Component {
         </ResponsiveContainer>
       </div>
     );
-  }
+  };
 
   renderMaximized = () => {
     return (
@@ -206,7 +207,7 @@ class ReportedBy extends Component {
         </ResponsiveContainer>
       </div>
     );
-  }
+  };
 
   render() {
     return (this.props.minimized)

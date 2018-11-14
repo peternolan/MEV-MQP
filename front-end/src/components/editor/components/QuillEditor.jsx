@@ -15,8 +15,10 @@ import Highlighter from 'react-highlight-words';
 // import styles from 'react-highlight-words.example.css'
 // import latinize from 'latinize';
 import './NarrativeAnnotator.css';
+//const ToolTip = Quill.import('ui/tooltip');
 
 class QuillEditor extends Component {
+
     static propTypes = {
         getReportNarrativeFromID: PropTypes.func.isRequired,
         incrementSummary: PropTypes.func,
@@ -43,13 +45,15 @@ class QuillEditor extends Component {
         incrementSummary: () => {},
     };
 
-    constructor(props) {
+    constructor(props){
+
         super(props);
         this.state = {
             searching:false,
             valueAttr:'Search..',
             loading: true,
             editModeOn: false,
+            primaryId: this.props.primaryid,
             current: {
                 reportText: '',
                 tags: [],
@@ -86,7 +90,7 @@ class QuillEditor extends Component {
         // clearInterval(this.autosave);
     }
 
-    onUnload = () => this.saveWork()
+    onUnload = () => this.saveWork();
 
     getTextFromID = (id) => {
         if (isNaN(id)) {
@@ -122,11 +126,13 @@ class QuillEditor extends Component {
                 });
         }
 
-    }
+    };
 
     setHeaderStyle(header) {
         this.quill.format('header', header);
     }
+
+
 
     saveWork = () => {
         if (!this.state.saving && !_.isEqual(this.state.current, this.state.saved)) {
@@ -147,7 +153,9 @@ class QuillEditor extends Component {
                     primaryid: (this.props.match.params)
                         ? Number(this.props.match.params.id, 10)
                         : this.props.primaryid,
+
                 }),
+
             };
 
             fetch(`${process.env.REACT_APP_NODE_SERVER}/savereporttext`, fetchData)
@@ -167,7 +175,10 @@ class QuillEditor extends Component {
     display =() =>{
         return <div>
             {/* {this.customToolbar()} */}
+            {console.log("ReactQuill " + this.props.primaryid)}
+            {console.log("Report text " + this.state.current.reportText)}
             {
+
                 (!this.state.loading)
                     ? <ReactQuill
                         id={`${this.props.primaryid}` || 'react-quill'}
@@ -179,12 +190,16 @@ class QuillEditor extends Component {
                     />
                     : null
             }
+
+
         </div>
 
-    }
+    };
 
 
     handleChange = (value) => {
+
+        console.log("Handle Change " + value);
         const drugRE = `background-color: ${annotationColors.drug};`;
         const reactionRE = `background-color: ${annotationColors.reaction};`;
         const dosageRE = `background-color: ${annotationColors.dosage};`;
@@ -200,7 +215,10 @@ class QuillEditor extends Component {
             .getElementsByClassName('ql-editor')[0]
             .getElementsByTagName('span');
 
+
+
         for (let i = 0; i < spans.length; i += 1) {
+            console.log('spans ' + spans[i].getAttribute('style'));
             switch (spans[i].getAttribute('style')) {
                 case drugRE:
                     newTags.drug = (newTags.drug)
@@ -238,6 +256,7 @@ class QuillEditor extends Component {
                         : [spans[i].innerText];
                     break;
                 case interestingRE:
+                    console.log('innerText ' + spans[i].innerText);
                     newTags.interesting = (newTags.interesting)
                         ? newTags.interesting.concat(spans[i].innerText)
                         : [spans[i].innerText];
@@ -245,12 +264,37 @@ class QuillEditor extends Component {
                 default:
             }
         }
+        console.log('value ' + value);
+        console.log('newTag age ' + newTags.age);
+        console.log('newTag drug ' + newTags.drug);
+        console.log('newTag interesting ' + newTags.interesting);
         this.setState({ success: false, current: { reportText: value, tags: newTags } });
-    }
+
+    };
 
     colorBackground(color) {
+        console.log('color background ' + color);
         const { index, length } = this.quill.getSelection();
         this.quill.formatText(index, length, 'background', color);
+    };
+
+    commentMade = (value) => {
+
+        var comment = document.getElementById('comment').value;
+
+        console.log('comment Made ' + comment);
+        console.log('value ' + value);
+        var currentText = value;
+        var newText = currentText.concat(comment);
+
+        console.log('newText ' + newText);
+
+        this.setState({text: newText});
+
+
+
+
+
     }
 
     searchTextBox =(event) => {
@@ -261,7 +305,7 @@ class QuillEditor extends Component {
             this.setState({searching:false})
         }
         else
-            this.setState({searching:true})
+            this.setState({searching:true});
 
 
         this.setState({textHighlight:{searchText: event.target.value},
@@ -269,17 +313,19 @@ class QuillEditor extends Component {
         })
 
 
-    }
+    };
 
 
     editMode = () => {
         //var x = document.getElementById(`react-quill-${this.props.primaryid}`);
         console.log('editModeOn ' + this.state.editModeOn)
         if (this.state.editModeOn) {
-            this.setState({editModeOn: false})
+            this.setState({editModeOn: false});
+            this.display();
         }
         else {
-            this.setState({editModeOn: true})
+            this.setState({editModeOn: true});
+            this.display();
         }
 
     };
@@ -292,7 +338,7 @@ class QuillEditor extends Component {
 
     customToolbar = () => (
 
-        <div id={`react-quill-${this.props.primaryid}`} style={{height: '100px', width: '1060px', padding: '4px' }} ref = 'toolbar'>
+        <div id={`react-quill-${this.state.primaryId}`} style={{height: '100px', width: '1060px', padding: '4px' }}>
 
             <select defaultValue="false" className="ql-header" style={{ width: '175px', height: '36px', margin: '4px' }}>
                 <option value="1" />
@@ -339,8 +385,8 @@ class QuillEditor extends Component {
             {/* <label className="ql-colorBackground pull" value="search" style={{ padding: '0px', margin: '4px'}}>
        Search
      </label> */}
-            <div style={{position: 'absolute', left: 40}}>
-                <input className="ql-colorBackground pull-right" id="SearchTextbox" value= "Search.." ref={el => this.inputEntry = el} type="text" name="search" value = {this.state.valueAttr}  onClick= {this.clearText} onChange={this.searchTextBox}  style={{verticalAlign: 'absolute', bottom: 0, padding: '0px', margin: '0px' }} />
+            <div /*style={{position: 'absolute', bottom: 0, right: 0,}}*/>
+                <input className="ql-colorBackground pull-right" id="SearchTextbox" value= "Search.." ref={el => this.inputEntry = el} type="text" name="search" value = {this.state.valueAttr}  onClick= {this.clearText} onChange={this.searchTextBox}  style={{verticalAlign: 'absolute', padding: '0px', margin: '0px' }} />
             </div>
         </div>
     );
@@ -355,11 +401,13 @@ class QuillEditor extends Component {
         </div>
     );
 
+
     modules = {
         toolbar: {
             container: `#react-quill-${this.props.primaryid}`,
             handlers: {
                 colorBackground: this.colorBackground,
+                //commentMade: this.commentMade,
                 header: this.setHeaderStyle,
             },
         },
@@ -372,27 +420,25 @@ class QuillEditor extends Component {
 
     render() {
 
-        const { ...props } = this.props
-        const { activeIndex, caseSensitive, searchText } = this.state.textHighlight
+        const { ...props } = this.props;
+        const { activeIndex, caseSensitive, searchText } = this.state.textHighlight;
         const  textToHighlight = this.state.current.reportText;
         // console.log(searchText)
 
         const searchWords= searchText.split(/\s/).filter(word => word)
         // console.log(searchWords)
-        console.log(`edit-${this.props.primaryid}`);
-        console.log(`react-quill-${this.props.primaryid}`);
-        console.log(this.state.editModeOn);
+        console.log("reportText " + this.state.current.reportText);
+        console.log("Edit Mode " + this.state.editModeOn);
+        console.log("State Primary ID " + this.state.primaryId);
+        console.log("Props Primary ID " + this.props.primaryid);
         return (
             <div className={`${this.props.classes.pdfView} container`}>
                 {/* ====== Quil editor for Annotating the Report Text ====== */}
 
-
-
-
                 <Paper elevation={4} className={this.props.classes.paperWindow}>
 
 
-                    {(this.state.editModeOn) ? this.customToolbar() : this.customToolbar2()}
+                    {(!this.state.editModeOn) ? this.customToolbar() : this.customToolbar2()}
 
                     {(!this.state.searching)
                         ? this.display()
@@ -422,16 +468,30 @@ class QuillEditor extends Component {
                         onClick={this.saveWork}>
                         Save
                     </Button>
+
+                    <div style={{padding: '4px'}}>
+                        <textarea id = "comment" cols = "120" rows = "5">  </textarea>
+                    </div>
+                    <div style={{padding: '4px'}}>
+                        <Button
+                            value={this.state.current.reportText}
+                            onClick={this.commentMade}> Make Note </Button>
+                    </div>
                     {(this.state.editModeOn) ?
-                        (<Button id={`-${this.props.primaryid}`} style={{color: 'white', background: annotationColors.edit}} onClick = {() => this.editMode()} >
+                        (<Button style={{color: 'white', background: annotationColors.edit}} onClick = {() => this.editMode()} >
                             Stop Editing
-                        </Button>) : null
+                        </Button>
+
+                        ) : null
                     }
                     {this.state.saving &&
                     <CircularProgress
                         size={24}
                         className={this.props.classes.buttonProgress}
                     />}
+
+
+
                 </div>
 
             </div>

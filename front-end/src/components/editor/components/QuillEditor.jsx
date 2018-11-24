@@ -32,6 +32,7 @@ class QuillEditor extends Component {
             buttonProgress: PropTypes.string,
         }).isRequired,
         primaryid: PropTypes.number,
+        userID: PropTypes.number.isRequired,
         match: PropTypes.shape({
             params: PropTypes.shape({
                 id: PropTypes.string,
@@ -51,9 +52,11 @@ class QuillEditor extends Component {
         this.state = {
             searching:false,
             valueAttr:'Search..',
+            addingComment: false,
             loading: true,
             editModeOn: false,
             primaryId: this.props.primaryid,
+            userID: this.props.userID,
             current: {
                 reportText: '',
                 tags: [],
@@ -132,6 +135,12 @@ class QuillEditor extends Component {
         this.quill.format('header', header);
     }
 
+    setContainer(container) {
+
+        this.quill.addContainer(container)
+
+    }
+
 
 
     saveWork = () => {
@@ -197,78 +206,85 @@ class QuillEditor extends Component {
     };
 
 
+    //Need to Set State in order to make sure it doesn't change when we add comments.
     handleChange = (value) => {
 
+
         console.log("Handle Change " + value);
-        const drugRE = `background-color: ${annotationColors.drug};`;
-        const reactionRE = `background-color: ${annotationColors.reaction};`;
-        const dosageRE = `background-color: ${annotationColors.dosage};`;
-        const ageRE = `background-color: ${annotationColors.age};`;
-        const sexRE = `background-color: ${annotationColors.sex};`;
-        const weightRE = `background-color: ${annotationColors.weight};`;
-        const indicationRE = `background-color: ${annotationColors.indication};`;
-        const interestingRE = `background-color: ${annotationColors.interesting};`;
-        const newTags = {};
+        console.log("Handle Change Report Text" + this.state.current.reportText);
+        if (!this.state.addingComment) {
+            const drugRE = `background-color: ${annotationColors.drug};`;
+            const reactionRE = `background-color: ${annotationColors.reaction};`;
+            const dosageRE = `background-color: ${annotationColors.dosage};`;
+            const ageRE = `background-color: ${annotationColors.age};`;
+            const sexRE = `background-color: ${annotationColors.sex};`;
+            const weightRE = `background-color: ${annotationColors.weight};`;
+            const indicationRE = `background-color: ${annotationColors.indication};`;
+            const interestingRE = `background-color: ${annotationColors.interesting};`;
+            const newTags = {};
 
-        console.log('This ' + `${this.props.primaryid}`);
-        const spans = document.getElementById(`${this.props.primaryid}` || 'react-quill')
-            .getElementsByClassName('ql-editor')[0]
-            .getElementsByTagName('span');
+            console.log('This ' + `${this.props.primaryid}`);
+            const spans = document.getElementById(`${this.props.primaryid}` || 'react-quill')
+                .getElementsByClassName('ql-editor')[0]
+                .getElementsByTagName('span');
 
 
-
-        for (let i = 0; i < spans.length; i += 1) {
-            console.log('spans ' + spans[i].getAttribute('style'));
-            switch (spans[i].getAttribute('style')) {
-                case drugRE:
-                    newTags.drug = (newTags.drug)
-                        ? newTags.drug.concat(spans[i].innerText)
-                        : [spans[i].innerText];
-                    break;
-                case reactionRE:
-                    newTags.reaction = (newTags.reaction)
-                        ? newTags.reaction.concat(spans[i].innerText)
-                        : [spans[i].innerText];
-                    break;
-                case dosageRE:
-                    newTags.dosage = (newTags.dosage)
-                        ? newTags.dosage.concat(spans[i].innerText)
-                        : [spans[i].innerText];
-                    break;
-                case ageRE:
-                    newTags.age = (newTags.age)
-                        ? newTags.age.concat(spans[i].innerText)
-                        : [spans[i].innerText];
-                    break;
-                case sexRE:
-                    newTags.sex = (newTags.sex)
-                        ? newTags.sex.concat(spans[i].innerText)
-                        : [spans[i].innerText];
-                    break;
-                case weightRE:
-                    newTags.weight = (newTags.weight)
-                        ? newTags.weight.concat(spans[i].innerText)
-                        : [spans[i].innerText];
-                    break;
-                case indicationRE:
-                    newTags.indication = (newTags.indication)
-                        ? newTags.indication.concat(spans[i].innerText)
-                        : [spans[i].innerText];
-                    break;
-                case interestingRE:
-                    console.log('innerText ' + spans[i].innerText);
-                    newTags.interesting = (newTags.interesting)
-                        ? newTags.interesting.concat(spans[i].innerText)
-                        : [spans[i].innerText];
-                    break;
-                default:
+            for (let i = 0; i < spans.length; i += 1) {
+                console.log('spans ' + spans[i].getAttribute('style'));
+                switch (spans[i].getAttribute('style')) {
+                    case drugRE:
+                        newTags.drug = (newTags.drug)
+                            ? newTags.drug.concat(spans[i].innerText)
+                            : [spans[i].innerText];
+                        break;
+                    case reactionRE:
+                        newTags.reaction = (newTags.reaction)
+                            ? newTags.reaction.concat(spans[i].innerText)
+                            : [spans[i].innerText];
+                        break;
+                    case dosageRE:
+                        newTags.dosage = (newTags.dosage)
+                            ? newTags.dosage.concat(spans[i].innerText)
+                            : [spans[i].innerText];
+                        break;
+                    case ageRE:
+                        newTags.age = (newTags.age)
+                            ? newTags.age.concat(spans[i].innerText)
+                            : [spans[i].innerText];
+                        break;
+                    case sexRE:
+                        newTags.sex = (newTags.sex)
+                            ? newTags.sex.concat(spans[i].innerText)
+                            : [spans[i].innerText];
+                        break;
+                    case weightRE:
+                        newTags.weight = (newTags.weight)
+                            ? newTags.weight.concat(spans[i].innerText)
+                            : [spans[i].innerText];
+                        break;
+                    case indicationRE:
+                        newTags.indication = (newTags.indication)
+                            ? newTags.indication.concat(spans[i].innerText)
+                            : [spans[i].innerText];
+                        break;
+                    case interestingRE:
+                        console.log('innerText ' + spans[i].innerText);
+                        newTags.interesting = (newTags.interesting)
+                            ? newTags.interesting.concat(spans[i].innerText)
+                            : [spans[i].innerText];
+                        break;
+                    default:
+                }
             }
+            console.log('value ' + value);
+            console.log('newTag age ' + newTags.age);
+            console.log('newTag drug ' + newTags.drug);
+            console.log('newTag interesting ' + newTags.interesting);
+            this.setState({success: false, current: {reportText: value, tags: newTags}});
         }
-        console.log('value ' + value);
-        console.log('newTag age ' + newTags.age);
-        console.log('newTag drug ' + newTags.drug);
-        console.log('newTag interesting ' + newTags.interesting);
-        this.setState({ success: false, current: { reportText: value, tags: newTags } });
+        else {
+            this.setState({success: false, addingComment: false});
+        }
 
     };
 
@@ -276,28 +292,36 @@ class QuillEditor extends Component {
         console.log('color background ' + color);
         const { index, length } = this.quill.getSelection();
         this.quill.formatText(index, length, 'background', color);
+
     };
 
     commentMade = (value) => {
 
         var comment = document.getElementById('comment').value;
 
+        var comSpecial = `<p id = ${this.state.userID}>${comment}</p>`;
+
+        console.log('Comment Special ' + comSpecial);
         console.log('comment Made ' + comment);
         console.log('value ' + value);
         var currentText = value;
-        var newText = currentText.concat(comment);
+        var newText = currentText.concat(comSpecial);
+        var newTextSecond = currentText + comSpecial;
 
         console.log('newText ' + newText);
+        console.log('newTextSecond ' + newTextSecond);
 
-        this.setState({text: newText});
+        this.setState({ current: { reportText: newText}});
+        this.setState({ addingComment: true });
+
+        console.log('text after ' + this.state.current.reportText);
 
 
 
 
+    };
 
-    }
-
-    searchTextBox =(event) => {
+    searchTextBox = (event) => {
         this.setState({valueAttr: event.target.value});
         // console.log(event)
 
@@ -318,12 +342,15 @@ class QuillEditor extends Component {
 
     editMode = () => {
         //var x = document.getElementById(`react-quill-${this.props.primaryid}`);
-        console.log('editModeOn ' + this.state.editModeOn)
+        console.log('editModeOn ' + this.state.editModeOn);
         if (this.state.editModeOn) {
+            this.setContainer(`react-quill-${this.state.primaryId}-2`);
             this.setState({editModeOn: false});
+
             this.display();
         }
         else {
+            this.setContainer(`react-quill-${this.state.primaryId}`);
             this.setState({editModeOn: true});
             this.display();
         }
@@ -377,14 +404,6 @@ class QuillEditor extends Component {
                 ?
             </Button>
 
-
-
-            {/* <Button className="ql-colorBackground pull-right" value={annotationColors.interesting} style={{ padding: '0px', margin: '4px', background: annotationColors.interesting }}>
-       Interesting
-     </Button> */}
-            {/* <label className="ql-colorBackground pull" value="search" style={{ padding: '0px', margin: '4px'}}>
-       Search
-     </label> */}
             <div /*style={{position: 'absolute', bottom: 0, right: 0,}}*/>
                 <input className="ql-colorBackground pull-right" id="SearchTextbox" value= "Search.." ref={el => this.inputEntry = el} type="text" name="search" value = {this.state.valueAttr}  onClick= {this.clearText} onChange={this.searchTextBox}  style={{verticalAlign: 'absolute', padding: '0px', margin: '0px' }} />
             </div>
@@ -394,7 +413,8 @@ class QuillEditor extends Component {
 
     customToolbar2 = () => (
 
-        <div id={`react-quill-${this.props.primaryid}`} style={{ padding: '4px' }} ref = 'toolbar'>
+
+        <div id={`react-quill-${this.props.primaryid}-2`} style={{ padding: '4px' }} ref = 'toolbar'>
             <Button id={`edit-${this.props.primaryid}`} style={{color: 'white', background: annotationColors.edit}} onClick = {() => this.editMode()} >
                 Edit Report
             </Button>
@@ -402,13 +422,19 @@ class QuillEditor extends Component {
     );
 
 
+
     modules = {
         toolbar: {
+
             container: `#react-quill-${this.props.primaryid}`,
             handlers: {
                 colorBackground: this.colorBackground,
                 //commentMade: this.commentMade,
                 header: this.setHeaderStyle,
+
+                editModeOn: this.editMode
+
+
             },
         },
         history: {
@@ -431,6 +457,7 @@ class QuillEditor extends Component {
         console.log("Edit Mode " + this.state.editModeOn);
         console.log("State Primary ID " + this.state.primaryId);
         console.log("Props Primary ID " + this.props.primaryid);
+        console.log("User ID " + this.state.userID);
         return (
             <div className={`${this.props.classes.pdfView} container`}>
                 {/* ====== Quil editor for Annotating the Report Text ====== */}
@@ -472,10 +499,11 @@ class QuillEditor extends Component {
                     <div style={{padding: '4px'}}>
                         <textarea id = "comment" cols = "120" rows = "5">  </textarea>
                     </div>
-                    <div style={{padding: '4px'}}>
+                    {console.log("Text in Value " + this.state.current.reportText)}
+                    <div style={{padding: '4px'} }>
                         <Button
                             value={this.state.current.reportText}
-                            onClick={this.commentMade}> Make Note </Button>
+                            onClick={() => this.commentMade(this.state.current.reportText)}> Make Note </Button>
                     </div>
                     {(this.state.editModeOn) ?
                         (<Button style={{color: 'white', background: annotationColors.edit}} onClick = {() => this.editMode()} >
@@ -499,8 +527,12 @@ class QuillEditor extends Component {
     }
 }
 
+const mapStateToProps = state => ({
+    userID: state.user.userID,
+});
+
 export default connect(
-    null,
+    mapStateToProps,
     { getReportNarrativeFromID },
 )(withStyles(styles)(QuillEditor));
 

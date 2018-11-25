@@ -31,7 +31,7 @@ import { CircularProgress } from 'material-ui/Progress';
 import Typography from 'material-ui/Typography';
 import { FormControlLabel } from 'material-ui/Form';
 import _ from 'lodash';
-import { moveReport, getCaseReports, getReportNarrativeFromID, getReportsInCases , setAllReports} from '../../../actions/reportActions';
+import { moveReport, getCaseReports, getReportNarrativeFromID, getReportsInCases , setAllReports, executeSearch} from '../../../actions/reportActions';
 import QuillEditor from '../../editor/components/QuillEditor';
 import ReadCaseIcon from '../../../resources/ReadCaseIcon';
 import ClearFilterIcon from '../../../resources/RemoveFromCaseIcon';
@@ -47,6 +47,7 @@ class ReportTable extends React.PureComponent {
   static propTypes = {
     getCaseReports: PropTypes.func.isRequired,
     setAllReports: PropTypes.func.isRequired,
+      executeSearch: PropTypes.func.isRequired,
     moveReport: PropTypes.func.isRequired,
     getReportNarrativeFromID: PropTypes.func.isRequired,
     getReportsInCases: PropTypes.func.isRequired,
@@ -446,6 +447,19 @@ class ReportTable extends React.PureComponent {
     );
   };
 
+  //EXECUTE SEARCH
+  search = () => {
+
+    var contents = document.getElementById('search').value;
+
+    console.log('Search');
+
+    this.props.executeSearch();
+
+  };
+
+
+
   handleToggleChange = primaryid => (event, checked) => {
     if (!(this.props.bin === 'all reports' || this.props.bin === 'read' || this.props.bin === 'trash')) {
       this.handleMoveReport(
@@ -639,8 +653,16 @@ class ReportTable extends React.PureComponent {
     console.log("HELLO WORLD!");
 
     return (
+
       <Paper id="table-container" className={this.props.classes.tableContainer} elevation={4}>
         {/*eslint-disable */}
+          { <div style={{padding: '4px'}}>
+              <textarea id = "search" cols = "120" rows = "5">  </textarea>
+          </div>}
+          {<div style={{padding: '4px'} }>
+              <Button
+                  onClick={() => this.search()}> Search </Button>
+          </div>}
         {(this.state.loadingData)
           ? <div
               style={{ position: 'absolute', top: '50px', left: '0px', width: '100%', height: 'calc(100% - 50px)', backgroundColor: 'rgba(25, 25, 25, 0.5)', zIndex: '10000' }}
@@ -735,6 +757,7 @@ export default connect(
   {
     moveReport,
     getCaseReports,
+      executeSearch,
     setAllReports,
     getReportNarrativeFromID,
     getReportsInCases,

@@ -832,6 +832,13 @@ app.post('/getvis', (req, res) => {
 
 });
 
+app.post('/executeSearch', (req, res) => {
+
+    console.log('got a request for timeline data');
+
+
+});
+
 /**
  * Endpoint that takes in some body with a date range to query the database and return the data for the timeline visualization
  */

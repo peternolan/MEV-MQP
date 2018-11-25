@@ -285,7 +285,6 @@ class QuillEditor extends Component {
         else {
             this.setState({success: false, addingComment: false});
         }
-
     };
 
     colorBackground(color) {

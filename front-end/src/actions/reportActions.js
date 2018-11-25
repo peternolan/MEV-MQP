@@ -195,6 +195,12 @@ export const getTagsinCase = caseID => () => {
     .catch(err => console.log('Failed to retrieve tags in that case', err));
 };
 
+export const executeSearch = () => () => {
+
+  console.log("executeSearch Action")
+
+};
+
 export const archiveCase = (name, active, userID) => () => {
   const fetchData = {
     method: 'PUT',
@@ -212,6 +218,8 @@ export const archiveCase = (name, active, userID) => () => {
 
   return fetch(`${process.env.REACT_APP_NODE_SERVER}/archivecase`, fetchData);
 };
+
+
 
 export const setAllReports = reports =>
   dispatch => dispatch({ type: 'SET_ALL_REPORTS', all_reports: reports });

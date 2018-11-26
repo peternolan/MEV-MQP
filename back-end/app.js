@@ -834,7 +834,7 @@ app.post('/getvis', (req, res) => {
 
 app.post('/executeSearch', (req, res) => {
 
-    console.log('got a request for timeline data');
+    console.log('got a request for Search');
 
 
 });

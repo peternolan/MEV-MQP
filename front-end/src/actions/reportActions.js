@@ -197,7 +197,15 @@ export const getTagsinCase = caseID => () => {
 
 export const executeSearch = () => () => {
 
-  console.log("executeSearch Action")
+  console.log("executeSearch Action");
+    const fetchData = {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    };
+    return fetch(`${process.env.REACT_APP_NODE_SERVER}/executeSearch`, fetchData);
 
 };
 

@@ -227,7 +227,24 @@ export const archiveCase = (name, active, userID) => () => {
   return fetch(`${process.env.REACT_APP_NODE_SERVER}/archivecase`, fetchData);
 };
 
+export function htmlEncode (str) {
+    return str
+        .replace(/&/g, '&amp;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+};
 
+// I needed the opposite function today, so adding here too:
+export function htmlUnescape(str){
+    return str
+        .replace(/&quot;/g, '"')
+        .replace(/&#39;/g, "'")
+        .replace(/&lt;/g, '<')
+        .replace(/&gt;/g, '>')
+        .replace(/&amp;/g, '&');
+}
 
 export const setAllReports = reports =>
   dispatch => dispatch({ type: 'SET_ALL_REPORTS', all_reports: reports });

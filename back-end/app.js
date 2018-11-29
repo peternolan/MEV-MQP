@@ -834,6 +834,7 @@ app.post('/getvis', (req, res) => {
 
 app.post('/executeSearch', (req, res) => {
 
+
     console.log('got a request for Search');
 
 
@@ -965,7 +966,7 @@ function writeSQL(dataRows, drugReactions, meTypesArray, drugNamesArray, causesA
       }))
     });
     Promise.all(promises).then(() => {
-      console.log(`Done with Chunk`)
+      console.log(`Done with Chunk`);
       wstream.end();
       resolve1('DONE ALL')
     })

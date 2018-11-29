@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import PropTypes, {string} from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import { CircularProgress } from 'material-ui/Progress';
 import ReactQuill from 'react-quill';
@@ -8,7 +8,7 @@ import 'react-quill/dist/quill.snow.css';
 import Paper from 'material-ui/Paper';
 import _ from 'lodash';
 import Button from 'material-ui/Button';
-import { getReportNarrativeFromID } from '../../../actions/reportActions';
+import { getReportNarrativeFromID, htmlEncode, htmlUnescape } from '../../../actions/reportActions';
 import styles from './QuillEditorStyles';
 import annotationColors from './AnnotationColors';
 import Highlighter from 'react-highlight-words';
@@ -21,6 +21,8 @@ class QuillEditor extends Component {
 
     static propTypes = {
         getReportNarrativeFromID: PropTypes.func.isRequired,
+        htmlEncode: PropTypes.func.isRequired,
+        htmlUnescape: PropTypes.func.isRequired,
         incrementSummary: PropTypes.func,
         classes: PropTypes.shape({
             pdfView: PropTypes.string,
@@ -178,20 +180,31 @@ class QuillEditor extends Component {
                 })
                 .catch(err => console.log(err));
         }
-    }
+    };
 
+    getComment = (userID, comments) => {
+        var x = [... comments.children].filter(function(e){return e.getAttribute("id") == userID;})[0];
+        console.log("Comment Child " + x);
+        //return x
+    };
 
     display =() =>{
+        getComment(this.state.userID, this.state.current.reportText);
+        var text = htmlEncode(this.state.current.reportText);
+        text = htmlUnescape(text);
+
+        console.log("Encoded text Display" + text);
         return <div>
             {/* {this.customToolbar()} */}
             {console.log("ReactQuill " + this.props.primaryid)}
-            {console.log("Report text " + this.state.current.reportText)}
+            {console.log("Report text Display" + this.state.current.reportText)}
+
             {
 
                 (!this.state.loading)
                     ? <ReactQuill
                         id={`${this.props.primaryid}` || 'react-quill'}
-                        value={this.state.current.reportText}
+                        value = {text}
                         onChange={this.handleChange}
                         modules={this.modules}
                         theme="snow"
@@ -200,10 +213,11 @@ class QuillEditor extends Component {
                     : null
             }
 
-
         </div>
 
+
     };
+
 
 
     //Need to Set State in order to make sure it doesn't change when we add comments.
@@ -231,6 +245,7 @@ class QuillEditor extends Component {
 
             for (let i = 0; i < spans.length; i += 1) {
                 console.log('spans ' + spans[i].getAttribute('style'));
+                console.log('span ' + i + ' ' + spans[i]);
                 switch (spans[i].getAttribute('style')) {
                     case drugRE:
                         newTags.drug = (newTags.drug)
@@ -276,11 +291,13 @@ class QuillEditor extends Component {
                     default:
                 }
             }
-            console.log('value ' + value);
+            console.log('value NOW REPORT TEXT' + this.state.current.reportText);
             console.log('newTag age ' + newTags.age);
             console.log('newTag drug ' + newTags.drug);
             console.log('newTag interesting ' + newTags.interesting);
-            this.setState({success: false, current: {reportText: value, tags: newTags}});
+            this.setState({success: false, current: {reportText: this.state.current.reportText, tags: newTags}});
+            //this.setState({success: false, current: {reportText: value, tags: newTags}});
+            console.log('Report Text After set state Handle Change' + this.state.current.reportText);
         }
         else {
             this.setState({success: false, addingComment: false});
@@ -298,7 +315,7 @@ class QuillEditor extends Component {
 
         var comment = document.getElementById('comment').value;
 
-        var comSpecial = `<p id = ${this.state.userID}>${comment}</p>`;
+        var comSpecial = `<comment id = ${this.state.userID} class = "comment" >${this.state.userID}: ${comment}</comment>`;
 
         console.log('Comment Special ' + comSpecial);
         console.log('comment Made ' + comment);
@@ -343,15 +360,34 @@ class QuillEditor extends Component {
         //var x = document.getElementById(`react-quill-${this.props.primaryid}`);
         console.log('editModeOn ' + this.state.editModeOn);
         if (this.state.editModeOn) {
-            this.setContainer(`react-quill-${this.state.primaryId}-2`);
+            //this.setContainer(`react-quill-${this.state.primaryId}-2`);
+            var x = document.getElementById(`react-quill-${this.props.primaryid}`);
+            console.log(x);
+            x.style.display = "none";
+            var z = document.getElementById(`commentArea`);
+            console.log(z);
+            z.style.display = "none";
+            var y = document.getElementById(`react-quill-${this.props.primaryid}-2`);
+            console.log(y);
+            y.style.display = "initial";
             this.setState({editModeOn: false});
+            this.saveWork();
 
-            this.display();
+            //this.render();
         }
         else {
-            this.setContainer(`react-quill-${this.state.primaryId}`);
+            //this.setContainer(`react-quill-${this.state.primaryId}`);
+            var y = document.getElementById(`react-quill-${this.props.primaryid}-2`);
+            console.log(y);
+            y.style.display = "none";
+            var z = document.getElementById(`react-quill-${this.props.primaryid}`);
+            console.log(z);
+            z.style.display = "initial";
             this.setState({editModeOn: true});
-            this.display();
+            var z = document.getElementById(`commentArea`);
+            console.log(z);
+            z.style.display = "initial";
+            //this.render();
         }
 
     };
@@ -359,19 +395,17 @@ class QuillEditor extends Component {
 
     clearText= () =>{
         this.setState({valueAttr: ''})
-
     };
 
     customToolbar = () => (
 
-        <div id={`react-quill-${this.state.primaryId}`} style={{height: '100px', width: '1060px', padding: '4px' }}>
+        <div id={`react-quill-${this.state.primaryId}`} style={{height: '100px', width: '1060px', padding: '4px', display: "none" }}>
 
             <select defaultValue="false" className="ql-header" style={{ width: '175px', height: '36px', margin: '4px' }}>
                 <option value="1" />
                 <option value="2" />
                 <option value="false" />
             </select>
-
             <Button className="ql-colorBackground" value={annotationColors.drug} style={{ padding: '0px', margin: '2px', background: annotationColors.drug}}>
                 Drug
             </Button>
@@ -412,15 +446,12 @@ class QuillEditor extends Component {
 
     customToolbar2 = () => (
 
-
-        <div id={`react-quill-${this.props.primaryid}-2`} style={{ padding: '4px' }} ref = 'toolbar'>
+        <div id={`react-quill-${this.props.primaryid}-2`} style={{ padding: '6px' }} ref = 'toolbar'>
             <Button id={`edit-${this.props.primaryid}`} style={{color: 'white', background: annotationColors.edit}} onClick = {() => this.editMode()} >
                 Edit Report
             </Button>
         </div>
     );
-
-
 
     modules = {
         toolbar: {
@@ -431,8 +462,7 @@ class QuillEditor extends Component {
                 //commentMade: this.commentMade,
                 header: this.setHeaderStyle,
 
-                editModeOn: this.editMode
-
+                editModeIsOn: this.editMode
 
             },
         },
@@ -443,8 +473,9 @@ class QuillEditor extends Component {
         },
     };
 
-    render() {
 
+    render() {
+        console.log("Render");
         const { ...props } = this.props;
         const { activeIndex, caseSensitive, searchText } = this.state.textHighlight;
         const  textToHighlight = this.state.current.reportText;
@@ -452,7 +483,7 @@ class QuillEditor extends Component {
 
         const searchWords= searchText.split(/\s/).filter(word => word)
         // console.log(searchWords)
-        console.log("reportText " + this.state.current.reportText);
+        console.log("reportText render" + this.state.current.reportText);
         console.log("Edit Mode " + this.state.editModeOn);
         console.log("State Primary ID " + this.state.primaryId);
         console.log("Props Primary ID " + this.props.primaryid);
@@ -463,8 +494,8 @@ class QuillEditor extends Component {
 
                 <Paper elevation={4} className={this.props.classes.paperWindow}>
 
-
-                    {(!this.state.editModeOn) ? this.customToolbar() : this.customToolbar2()}
+                    {this.customToolbar()}
+                    {this.customToolbar2()}
 
                     {(!this.state.searching)
                         ? this.display()
@@ -494,15 +525,16 @@ class QuillEditor extends Component {
                         onClick={this.saveWork}>
                         Save
                     </Button>
-
-                    <div style={{padding: '4px'}}>
-                        <textarea id = "comment" cols = "120" rows = "5">  </textarea>
-                    </div>
-                    {console.log("Text in Value " + this.state.current.reportText)}
-                    <div style={{padding: '4px'} }>
+                    <div id = "commentArea" style={{display: 'none'}}>
+                        <div style={{padding: '4px'}}>
+                           <textarea id = "comment" cols = "120" rows = "5">  </textarea>
+                         </div>
+                         {console.log("Text in Value " + this.state.current.reportText)}
+                         <div style={{padding: '4px'} }>
                         <Button
                             value={this.state.current.reportText}
                             onClick={() => this.commentMade(this.state.current.reportText)}> Make Note </Button>
+                         </div>
                     </div>
                     {(this.state.editModeOn) ?
                         (<Button style={{color: 'white', background: annotationColors.edit}} onClick = {() => this.editMode()} >
@@ -517,8 +549,6 @@ class QuillEditor extends Component {
                         className={this.props.classes.buttonProgress}
                     />}
 
-
-
                 </div>
 
             </div>
@@ -532,7 +562,9 @@ const mapStateToProps = state => ({
 
 export default connect(
     mapStateToProps,
-    { getReportNarrativeFromID },
+    { getReportNarrativeFromID,
+        htmlEncode,
+        htmlUnescape},
 )(withStyles(styles)(QuillEditor));
 
 

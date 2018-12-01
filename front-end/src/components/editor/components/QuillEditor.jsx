@@ -8,7 +8,7 @@ import 'react-quill/dist/quill.snow.css';
 import Paper from 'material-ui/Paper';
 import _ from 'lodash';
 import Button from 'material-ui/Button';
-import { getReportNarrativeFromID, htmlEncode, htmlUnescape } from '../../../actions/reportActions';
+import { getReportNarrativeFromID, htmlEncode, htmlUnescape, getComment } from '../../../actions/reportActions';
 import styles from './QuillEditorStyles';
 import annotationColors from './AnnotationColors';
 import Highlighter from 'react-highlight-words';
@@ -80,6 +80,7 @@ class QuillEditor extends Component {
         if (this.props.match.params) {
             this.getTextFromID(Number(this.props.match.params.id, 10));
         } else {
+            console.log(this.props.primaryid);
             this.getTextFromID(this.props.primaryid);
         }
     }
@@ -182,14 +183,9 @@ class QuillEditor extends Component {
         }
     };
 
-    getComment = (userID, comments) => {
-        var x = [... comments.children].filter(function(e){return e.getAttribute("id") == userID;})[0];
-        console.log("Comment Child " + x);
-        //return x
-    };
+
 
     display =() =>{
-        getComment(this.state.userID, this.state.current.reportText);
         var text = htmlEncode(this.state.current.reportText);
         text = htmlUnescape(text);
 
@@ -314,24 +310,74 @@ class QuillEditor extends Component {
     commentMade = (value) => {
 
         var comment = document.getElementById('comment').value;
+        getComment(this.state.userID, this.state.current.reportText);
 
-        var comSpecial = `<comment id = ${this.state.userID} class = "comment" >${this.state.userID}: ${comment}</comment>`;
 
-        console.log('Comment Special ' + comSpecial);
-        console.log('comment Made ' + comment);
-        console.log('value ' + value);
-        var currentText = value;
-        var newText = currentText.concat(comSpecial);
-        var newTextSecond = currentText + comSpecial;
+        var dummyNode = document.createElement('div');
 
-        console.log('newText ' + newText);
-        console.log('newTextSecond ' + newTextSecond);
+        dummyNode.innerHTML = this.state.current.reportText;
 
-        this.setState({ current: { reportText: newText}});
-        this.setState({ addingComment: true });
+        if (dummyNode.getElementsByTagName("comments")[0]) {
+            console.log("Comments are in here already.");
+            //console.log("Get Attribute Result " + dummyNode.getElementsByTagName("comment")[0].getAttribute("id"));
 
-        console.log('text after ' + this.state.current.reportText);
+            for (var i in dummyNode.getElementsByTagName("comment")) {
+                console.log("i " + i);
 
+                console.log("UID " + this.state.userID);
+
+                console.log(Number(i));
+
+                if (dummyNode.getElementsByTagName("comment")[i] && Number.isInteger(Number(i))) {
+                    console.log("Get Attribute Again " + dummyNode.getElementsByTagName("comment")[i].getAttribute("id"));
+                    if (dummyNode.getElementsByTagName("comment")[i].getAttribute("id") == this.state.userID) {
+                        console.log("This user has commented.");
+                        console.log("Get Elements " + dummyNode.getElementsByTagName("comment")[i].innerHTML);
+                        dummyNode.getElementsByTagName("comment")[i].innerHTML = `${this.state.userID}: ${comment}`;
+                        console.log("Get Elements " + dummyNode.getElementsByTagName("comment")[i].innerHTML);
+
+                        newText = dummyNode.innerHTML;
+
+                        this.setState({current: {reportText: newText}});
+                        this.setState({addingComment: true});
+                        console.log(dummyNode.innerHTML);
+                        return
+                    }
+                }
+            }
+
+            console.log("This user has not commented.");
+            console.log(dummyNode.getElementsByTagName("comments")[0].innerHTML);
+
+            var newInner = dummyNode.getElementsByTagName("comments")[0].innerHTML.concat(`<comment
+                id=${this.state.userID} className="comment">${this.state.userID}: ${comment}</comment>`);
+            console.log("new Inner" + newInner);
+            dummyNode.getElementsByTagName("comments")[0].innerHTML = newInner;
+
+            newText = dummyNode.innerHTML;
+
+            this.setState({current: {reportText: newText}});
+            this.setState({addingComment: true});
+
+
+        } else {
+            console.log("Comments are not already in here.");
+            var comSpecial = `<comments id = ${this.props.primaryid}><comment id = ${this.state.userID} class = "comment" >${this.state.userID}: ${comment}</comment></comments>`;
+
+            console.log('Comment Special ' + comSpecial);
+            console.log('comment Made ' + comment);
+            console.log('value ' + value);
+            var currentText = value;
+            var newText = currentText.concat(comSpecial);
+
+            console.log('newText ' + newText);
+
+            this.setState({current: {reportText: newText}});
+            this.setState({addingComment: true});
+
+            console.log('text after ' + this.state.current.reportText);
+
+        }
 
 
 
@@ -526,6 +572,9 @@ class QuillEditor extends Component {
                         Save
                     </Button>
                     <div id = "commentArea" style={{display: 'none'}}>
+                        <div id = "commentBox">
+
+                        </div>
                         <div style={{padding: '4px'}}>
                            <textarea id = "comment" cols = "120" rows = "5">  </textarea>
                          </div>
@@ -564,7 +613,8 @@ export default connect(
     mapStateToProps,
     { getReportNarrativeFromID,
         htmlEncode,
-        htmlUnescape},
+        htmlUnescape,
+        getComment,},
 )(withStyles(styles)(QuillEditor));
 
 

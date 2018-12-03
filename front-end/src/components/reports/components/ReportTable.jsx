@@ -598,7 +598,7 @@ class ReportTable extends React.PureComponent {
               (this.props.bin.toLowerCase() !== bin.name.toLowerCase())
                 ? (
                   <MaterialTooltip
-                    title={(bin.name.toLowerCase() === 'trash') ? 'HERE IT IS Warning: Adding this report to the Trash also removes the report from any other cases it is in' : 'Adds this report to this case'}
+                    title={(bin.name.toLowerCase() === 'trash') ? 'Warning: Adding this report to the Trash also removes the report from any other cases it is in' : 'Adds this report to this case'}
                     placement="top"
                     enterDelay={50}
                     classes={{

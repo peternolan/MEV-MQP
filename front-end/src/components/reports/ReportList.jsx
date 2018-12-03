@@ -15,6 +15,7 @@ import MaterialTooltip from 'material-ui/Tooltip';
 import Paper from 'material-ui/Paper';
 import ReportTable from './components/ReportTable';
 import CaseSummaryListing from './components/CaseSummaryListing';
+import ReportPanel from './components/ReportPanel';
 import MEVColors from '../../theme';
 import { getUserCases, createUserBin } from '../../actions/reportActions';
 import CaseIcon from '../../resources/CaseIcon';
@@ -79,7 +80,9 @@ class ReportList extends Component {
       summaryOpen: false,
         primaryChosen: false,
         supportiveChosen: false,
+        reportOpen: false,
       summaryCounter: 0,
+
       searchedReports:[],
     };
     //handleCaseChangePrimary = handleCaseChangePrimary.bind(this);
@@ -195,6 +198,13 @@ class ReportList extends Component {
     this.setState({ summaryOpen: !this.state.summaryOpen });
   };
 
+    /**
+     * Handler for Opening the Report Panel
+     */
+    handleViewReportPanel = () => {
+        this.setState({ reportOpen: !this.state.reportOpen });
+    };
+
   /**
    * Handler for Closing the New Case Modal
    */
@@ -281,6 +291,9 @@ class ReportList extends Component {
     return (
       <MuiThemeProvider theme={defaultTheme} >
         <div className={this.props.classes.ReportList} >
+            <Button fab style={{ margin: 12 }} color="primary" onClick={this.handleViewReportPanel} >
+               ReportPanel
+            </Button>
           {/* ====== Top Bar with Tabs for each Case ====== */}
           <AppBar position="static" color="default">
             <Tabs
@@ -315,7 +328,7 @@ class ReportList extends Component {
           </AppBar>
 
           {/* ====== Table for Viewing the Reports ====== */}
-          <div className={(this.state.summaryOpen) ? this.props.classes.openSummaryTableContainer : this.props.classes.closedSummaryTableContainer} >
+          <div className={(this.state.summaryOpen || this.state.reportOpen) ? this.props.classes.openSummaryTableContainer : this.props.classes.closedSummaryTableContainer} >
             <ReportTable
               bin={this.state.bin}
               bins={this.state.userBins}
@@ -330,6 +343,19 @@ class ReportList extends Component {
 
             />
           </div>
+
+            {/* ====== SideBar for Viewing a report ======*/}
+            {console.log(this.state.reportOpen)}
+            <div id="report-sidebar" className={(this.state.reportOpen) ? this.props.classes.openReportContainer : this.props.classes.closedReportContainer} >
+                <ReportPanel
+                    updateTab={this.updateTab}
+                    bins={this.state.userBins}
+                    primaryid={133674241}
+                    userID={this.props.userID}
+                    reportOpen={this.state.reportOpen}
+
+                />
+            </div>
 
           {/* ====== SideBar for Viewing the Case Summary ====== */}
           <div id="summary-sidebar" className={(this.state.summaryOpen) ? this.props.classes.openSummaryContainer : this.props.classes.closedSummaryContainer} >

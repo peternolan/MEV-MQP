@@ -273,42 +273,7 @@ class CaseSummary extends Component {
       this.props.updateTab(this.state.caseName);
   };
 
-    /************ when case changes, update the reports */
-        //CHANGED HERE. WILL BE USED WITH THE PIE CHART FOR IMPLEMENTATION.
-    /*\
-    handleCaseChangePrimary = (color) => {
 
-        console.log("State Name" + this.state.caseName);
-
-        switch (color) {
-            case this.COLORS.primary:
-                console.log("Primary " + this.COLORS.primary);
-                this.setState (
-                    {
-                        primaryChosen: true,
-                        supportiveChosen: false
-                    }
-                    );
-                console.log("Primary chosen in Case " + this.props.primaryChosen);
-                this.props.updateTab(this.state.caseName, color);
-                break;
-            case this.COLORS.supportive:
-                console.log("Supportive " + this.COLORS.supportive);
-                this.setState(
-                    {
-                    primaryChosen: false,
-                    supportiveChosen: true
-                    }
-                    );
-                console.log("Supportive chosen in Case " + this.props.supportiveChosen);
-                this.props.updateTab(this.state.caseName, color);
-                break;
-            default:
-                return null;
-
-        }
-
-    };
 
 
   /**************** when the search button is pressed,  */

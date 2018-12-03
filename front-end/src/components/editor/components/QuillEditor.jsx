@@ -138,13 +138,6 @@ class QuillEditor extends Component {
         this.quill.format('header', header);
     }
 
-    setContainer(container) {
-
-        this.quill.addContainer(container)
-
-    }
-
-
 
     saveWork = () => {
         if (!this.state.saving && !_.isEqual(this.state.current, this.state.saved)) {

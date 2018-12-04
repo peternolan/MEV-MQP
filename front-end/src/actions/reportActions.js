@@ -195,6 +195,31 @@ export const getTagsinCase = caseID => () => {
     .catch(err => console.log('Failed to retrieve tags in that case', err));
 };
 
+export const executeSearch = (str) => () => {
+
+  if(typeof(String.prototype.trim) === "undefined")
+  {
+    String.prototype.trim = function() 
+    {
+        return String(this).replace(/^\s+|\s+$/g, '');
+    };
+  }
+
+  console.log("executeSearch Action");
+    const fetchData = {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({'search_string':str.trim()}),
+    };
+    return fetch(`${process.env.REACT_APP_NODE_SERVER}/executeSearch`, fetchData)
+            .then(function(response){return response.json();});
+            //.then(function(json){console.log(json)});
+
+};
+
 export const archiveCase = (name, active, userID) => () => {
   const fetchData = {
     method: 'PUT',
@@ -212,6 +237,25 @@ export const archiveCase = (name, active, userID) => () => {
 
   return fetch(`${process.env.REACT_APP_NODE_SERVER}/archivecase`, fetchData);
 };
+
+export function htmlEncode (str) {
+    return str
+        .replace(/&/g, '&amp;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+};
+
+// I needed the opposite function today, so adding here too:
+export function htmlUnescape(str){
+    return str
+        .replace(/&quot;/g, '"')
+        .replace(/&#39;/g, "'")
+        .replace(/&lt;/g, '<')
+        .replace(/&gt;/g, '>')
+        .replace(/&amp;/g, '&');
+}
 
 export const setAllReports = reports =>
   dispatch => dispatch({ type: 'SET_ALL_REPORTS', all_reports: reports });

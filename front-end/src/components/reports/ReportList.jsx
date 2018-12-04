@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Button from 'material-ui/Button';
 import { MuiThemeProvider, createMuiTheme, withStyles } from 'material-ui/styles';
-import { blue, green, red } from 'material-ui/colors';
+import { blue, green, red, yellow } from 'material-ui/colors';
 import TextField from 'material-ui/TextField';
 import AppBar from 'material-ui/AppBar';
 import Typography from 'material-ui/Typography';
@@ -63,21 +63,26 @@ class ReportList extends Component {
       openSummaryTableContainer: PropTypes.string,
       openSummaryContainer: PropTypes.string,
     }).isRequired,
-  }
+  };
 
-  constructor() {
+    constructor() {
     super();
+    this.handleCaseChangePrimary = this.handleCaseChangePrimary.bind(this);
     this.state = {
       bin: 'all reports',
       userBins: [],
       newCaseModalOpen: false,
       snackbarOpen: false,
+
       snackbarMessage: '',
       currentTab: 0,
       summaryOpen: false,
+        primaryChosen: false,
+        supportiveChosen: false,
       summaryCounter: 0,
       searchedReports:[],
     };
+    //handleCaseChangePrimary = handleCaseChangePrimary.bind(this);
   }
 
   componentWillMount() {
@@ -100,18 +105,37 @@ class ReportList extends Component {
           });
         }
       });
-  }
+  };
 
-  updateTab = (name) => {
+  updateTab = (name, color) => {
     const userCreatedArray = this.state.userBins.map(bin => bin.name.toLowerCase()).filter(bin => (bin !== 'trash' && bin !== 'read' && bin !== 'all reports' && bin !== 'new case' && bin !== 'searched reports'));
     const array = ['all reports', 'searched reports', 'read', 'trash', 'new case'].concat(userCreatedArray);
     const index = array.indexOf(name);
     this.setState({
       bin: name,
+        //background: color,
       currentTab: index,
       searchedReports: this.props.searchedReports,
+
     });
-  }
+  };
+
+
+
+    updateColor = (name, color) => {
+        const userCreatedArray = this.state.userBins.map(bin => bin.name.toLowerCase()).filter(bin => (bin !== 'trash' && bin !== 'read' && bin !== 'all reports' && bin !== 'new case' && bin !== 'searched reports'));
+        const array = ['all reports', 'searched reports', 'read', 'trash', 'new case'].concat(userCreatedArray);
+        const index = array.indexOf(name);
+        this.setState({
+            bin: name,
+            //background: color,
+            currentTab: index,
+            searchedReports: this.props.searchedReports,
+
+        });
+    };
+
+
 
   /**
    * Changes the first letter of any word in a string to be capital
@@ -156,6 +180,14 @@ class ReportList extends Component {
     this.setState({ newCaseModalOpen: true });
   };
 
+    handleSupportChosen = () => {
+        this.setState({ supportiveChosen: !this.state.supportiveChosen });
+    };
+
+    handlePrimaryChosen = () => {
+        this.setState({ primaryChosen: !this.state.primaryChosen });
+    };
+
   /**
    * Handler for Opening the New Case Modal
    */
@@ -174,6 +206,46 @@ class ReportList extends Component {
       bin: 'all reports',
     });
   };
+    COLORS = {
+        supportive: '#0CC8E8',
+        primary: '#0CE88E',
+        selected: '#ffff00'
+    };
+    //CHANGED HERE. WILL BE USED WITH THE PIE CHART FOR IMPLEMENTATION.
+    handleCaseChangePrimary = (color, caseName) => {
+
+        console.log("State Name" + caseName);
+        console.log("Color " + color);
+        switch (color) {
+
+            case this.COLORS.primary:
+                console.log("Primary " + this.COLORS.primary);
+                this.setState (
+                    {
+                        primaryChosen: true,
+                        supportiveChosen: false
+                    }
+                );
+                console.log("Primary chosen in Case " + this.state.primaryChosen);
+                this.updateTab(caseName, color);
+                break;
+            case this.COLORS.supportive:
+                console.log("Supportive " + this.COLORS.supportive);
+                this.setState(
+                    {
+                        primaryChosen: false,
+                        supportiveChosen: true
+                    }
+                );
+                console.log("Supportive chosen in Case " + this.state.supportiveChosen);
+                this.updateTab(caseName, color);
+                break;
+            default:
+                return null;
+
+        }
+
+    };
 
   /**
    * Checks name validity of new bin and shows an error or sends a backend fetch request
@@ -198,11 +270,11 @@ class ReportList extends Component {
     } else {
       this.setState({ snackbarOpen: true, snackbarMessage: 'Error! Invalid Case Name' });
     }
-  }
+  };
 
   updateSummary = () => {
     this.setState({ summaryCounter: this.state.summaryCounter + 1 });
-  }
+  };
 
   render() {
     // console.log(this.state.searchedReports)
@@ -252,6 +324,10 @@ class ReportList extends Component {
               tableClass={this.state.summaryOpen}
               incrementSummary={this.updateSummary}
               searchedReports = {this.state.searchedReports}
+              primaryChosen = {this.state.primaryChosen}
+              supportiveChosen = {this.state.supportiveChosen}
+
+
             />
           </div>
 
@@ -263,6 +339,7 @@ class ReportList extends Component {
               userID={this.props.userID}
               summaryOpen={this.state.summaryOpen}
               summaryCounter={this.state.summaryCounter}
+              handleClickPieChart={this.handleCaseChangePrimary}
             />
           </div>
 

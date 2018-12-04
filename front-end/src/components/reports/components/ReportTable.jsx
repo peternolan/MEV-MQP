@@ -31,7 +31,7 @@ import { CircularProgress } from 'material-ui/Progress';
 import Typography from 'material-ui/Typography';
 import { FormControlLabel } from 'material-ui/Form';
 import _ from 'lodash';
-import { moveReport, getCaseReports, getReportNarrativeFromID, getReportsInCases , setAllReports} from '../../../actions/reportActions';
+import { moveReport, getCaseReports, getReportNarrativeFromID, getReportsInCases , setAllReports, executeSearch} from '../../../actions/reportActions';
 import QuillEditor from '../../editor/components/QuillEditor';
 import ReadCaseIcon from '../../../resources/ReadCaseIcon';
 import ClearFilterIcon from '../../../resources/RemoveFromCaseIcon';
@@ -47,10 +47,13 @@ class ReportTable extends React.PureComponent {
   static propTypes = {
     getCaseReports: PropTypes.func.isRequired,
     setAllReports: PropTypes.func.isRequired,
+      executeSearch: PropTypes.func.isRequired,
     moveReport: PropTypes.func.isRequired,
     getReportNarrativeFromID: PropTypes.func.isRequired,
     getReportsInCases: PropTypes.func.isRequired,
     toTitleCase: PropTypes.func.isRequired,
+      primaryChosen:  PropTypes.bool,
+      supportiveChosen:  PropTypes.bool,
     incrementSummary: PropTypes.func.isRequired,
     summaryOpen: PropTypes.bool.isRequired,
     bins: PropTypes.arrayOf(PropTypes.object).isRequired,
@@ -75,7 +78,7 @@ class ReportTable extends React.PureComponent {
       sendToCaseContainer: PropTypes.string,
       tableDetailCell: PropTypes.string,
     }).isRequired,
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -128,7 +131,8 @@ class ReportTable extends React.PureComponent {
         { columnName: 'outc_cod', compare: this.sortText },
         { columnName: 'report_text', compare: this.sortText },
       ],
-    };
+    }
+      //
   }
 
   /**
@@ -203,7 +207,7 @@ class ReportTable extends React.PureComponent {
    */
   onColumnWidthsChange = (widths) => {
     this.setState({ widths });
-  }
+  };
 
   /**
    * Gets the report narrative for a given primaryid
@@ -217,6 +221,8 @@ class ReportTable extends React.PureComponent {
         return 'Unable to Retrieve Narrative';
       });
   };
+
+
 
   /**
    * Names and values for the columns of the table
@@ -290,7 +296,7 @@ class ReportTable extends React.PureComponent {
           }, {}),
         });
       });
-  }
+  };
 
   updateEvidenceRows = () => {
     if (this.props.bin !== 'searched reports') {
@@ -340,6 +346,8 @@ class ReportTable extends React.PureComponent {
   handleCloseSnackbar = () => {
     this.setState({ snackbarOpen: false });
   };
+
+  //handleChoose
 
   /**
    * Sends a backend request to move a report from one bin to another
@@ -401,34 +409,60 @@ class ReportTable extends React.PureComponent {
    */
   TableRow = ({ row, ...props }) => {
     let incase;
-    let evidenceType;
+    //NEED TO PUT IT IN HERE
+      let evidenceType;
     let backgroundColor;
     switch (this.props.bin) {
       case 'all reports':
         incase = this.state.currentlyInCase[props.tableRow.rowId];
+        console.log("incase " + incase);
         if (!incase) {
           backgroundColor = '';
         } else {
-          backgroundColor = (incase.includes('read') && incase.length === 1) ? 'RGBA(211,211,211, 0.2)' : 'RGBA(131, 255, 168, 0.2)';
+          backgroundColor = (incase.includes('read') && incase.length === 1) ? 'RGBA(255,0,255, 0.2)' : 'RGBA(131, 255, 168, 0.2)';
+
         }
         break;
       case 'trash':
       case 'read':
         backgroundColor = '';
         break;
-      default:
+        default:
         evidenceType = this.state.evidenceType[props.tableRow.rowId];
-        backgroundColor = (evidenceType === 'primary') ? this.COLORS.primary : this.COLORS.supportive;
+        console.log("evidence " + evidenceType);
+        console.log("primary " + this.props.primaryChosen);
+        console.log("supportive " + this.props.supportiveChosen);
+        backgroundColor = (evidenceType === 'primary') ? ((this.props.primaryChosen === true) ? 'rgba(255, 0, 255, 0.25)' : this.COLORS.primary)
+            : ((this.props.supportiveChosen === true) ? 'rgba(255, 0, 255, 0.25)' : this.COLORS.supportive );
+
     }
     return (
       <Table.Row
         {...props}
         style={{
           backgroundColor,
+
         }}
       />
     );
   };
+
+  //EXECUTE SEARCH
+  search = () => {
+
+    var contents = document.getElementById('search').value;
+
+    console.log('Search');
+    var results;
+    this.props.executeSearch(contents)
+      .then(function(data){
+        results = JSON.parse(data);
+        console.log(results);
+        // TODO -- after recieving the search object, update the UI accordingly
+      })
+  };
+
+
 
   handleToggleChange = primaryid => (event, checked) => {
     if (!(this.props.bin === 'all reports' || this.props.bin === 'read' || this.props.bin === 'trash')) {
@@ -441,7 +475,7 @@ class ReportTable extends React.PureComponent {
     } else {
       this.setState({ [primaryid]: checked });
     }
-  }
+  };
 
   renderMoveToIcon = (binName, greyOutCaseIcon) => {
     switch (binName) {
@@ -486,7 +520,7 @@ class ReportTable extends React.PureComponent {
           </div>
         );
     }
-  }
+  };
 
   renderTypeToggle = (row) => {
     return (this.props.bin === 'all reports' || this.props.bin === 'read' || this.props.bin === 'trash')
@@ -505,7 +539,7 @@ class ReportTable extends React.PureComponent {
               <Switch
                 checked={this.state[row.row.primaryid]}
                 onChange={this.handleToggleChange(row.row.primaryid)}
-                color="primary"
+                color = "primary"
               />
             }
             label={this.state[row.row.primaryid] ? 'Primary Evidence' : 'Supportive Evidence'}
@@ -534,7 +568,7 @@ class ReportTable extends React.PureComponent {
           />
         </MaterialTooltip>
       );
-  }
+  };
 
 
   /**
@@ -568,7 +602,7 @@ class ReportTable extends React.PureComponent {
               (this.props.bin.toLowerCase() !== bin.name.toLowerCase())
                 ? (
                   <MaterialTooltip
-                    title={(bin.name.toLowerCase() === 'trash') ? 'Warning: Adding this report to the Trash also removes the report from any other cases it is in' : 'Adds this report to this case'}
+                    title={(bin.name.toLowerCase() === 'trash') ? 'HERE IT IS Warning: Adding this report to the Trash also removes the report from any other cases it is in' : 'Adds this report to this case'}
                     placement="top"
                     enterDelay={50}
                     classes={{
@@ -616,12 +650,23 @@ class ReportTable extends React.PureComponent {
         </ExpansionPanel>
       </div>
     </div>
-  )
+  );
+
 
   render() {
+    console.log("HELLO WORLD!");
+
     return (
+
       <Paper id="table-container" className={this.props.classes.tableContainer} elevation={4}>
         {/*eslint-disable */}
+          { <div style={{padding: '4px'}}>
+              <textarea id = "search" cols = "120" rows = "5">  </textarea>
+          </div>}
+          {<div style={{padding: '4px'} }>
+              <Button
+                  onClick={() => this.search()}> Search </Button>
+          </div>}
         {(this.state.loadingData)
           ? <div
               style={{ position: 'absolute', top: '50px', left: '0px', width: '100%', height: 'calc(100% - 50px)', backgroundColor: 'rgba(25, 25, 25, 0.5)', zIndex: '10000' }}
@@ -716,6 +761,7 @@ export default connect(
   {
     moveReport,
     getCaseReports,
+      executeSearch,
     setAllReports,
     getReportNarrativeFromID,
     getReportsInCases,

@@ -1,0 +1,5 @@
+Name: Roana
+Age: 23
+Patient is suffereing from RRMS. Tecfidera (dimethyl fumarate) 240mg twice daily was started two years ago, but has been stopped due to uneffectivness, as a recent MRI showed two new lesions. It has been decided to change the treatment to Gilenya (Fingolimod) 0.5mg daily. 
+
+//adapted from comment https://www.patientslikeme.com/forum/plm/topics/143633

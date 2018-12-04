@@ -63,4 +63,20 @@ export default {
     height: '100%',
     transition: 'width 200ms ease-in-out',
   },
+    openReportContainer: {
+        display: 'inline-block',
+        float: 'right',
+        width: '40%',
+        height: '100%',
+        transition: 'width 200ms ease-in-out',
+    },
+    closedReportContainer: {
+        display: 'inline-block',
+        float: 'right',
+        width: '0%',
+        height: '100%',
+        transition: 'width 200ms ease-in-out',
+        overflow: 'hidden',
+    },
+
 };

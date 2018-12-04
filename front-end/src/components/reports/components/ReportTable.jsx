@@ -455,6 +455,7 @@ class ReportTable extends React.PureComponent {
 
     console.log('Search');
 
+
     var results;
     this.props.executeSearch(contents)
       .then(function(data){

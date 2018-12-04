@@ -195,6 +195,7 @@ export const getTagsinCase = caseID => () => {
     .catch(err => console.log('Failed to retrieve tags in that case', err));
 };
 
+
 export const executeSearch = (str) => () => {
 
   if(typeof(String.prototype.trim) === "undefined")
@@ -212,6 +213,7 @@ export const executeSearch = (str) => () => {
         headers: {
             'Content-Type': 'application/json',
         },
+
         body: JSON.stringify({'search_string':str.trim()}),
     };
     return fetch(`${process.env.REACT_APP_NODE_SERVER}/executeSearch`, fetchData)

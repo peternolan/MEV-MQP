@@ -37,6 +37,7 @@ export default {
       backgroundColor: grey[500],
     },
   },
+
   buttonProgress: {
     color: green[500],
     position: 'absolute',
@@ -44,4 +45,5 @@ export default {
     marginTop: -12,
     marginLeft: 5,
   },
+
 };

@@ -16,6 +16,10 @@ import lunr from 'lunr';
 // import natural from 'natural';
 import  natural from './natural.js';
 import { Quill } from 'quill';
+import {Tab} from "material-ui";
+import TrashIcon from "../../resources/TrashIcon";
+import ReadCaseIcon from "../../resources/ReadCaseIcon";
+import CaseIcon from "../../resources/CaseIcon";
 
 const styles = {};
 class CaseSummary extends Component {
@@ -24,8 +28,9 @@ class CaseSummary extends Component {
     getTagsinCase: PropTypes.func.isRequired,
     getReportsInCases: PropTypes.func.isRequired,
     getCaseNameByID: PropTypes.func.isRequired,
-    getCaseReports: PropTypes.func.isRequired,
+    getCaseReports: PropTypes.func,
     setSearchedReports: PropTypes.func.isRequired,
+      handleClick: PropTypes.func.isRequired,
     summaryCounter: PropTypes.number,
     caseID: PropTypes.number,
     userID: PropTypes.number.isRequired,
@@ -99,7 +104,8 @@ class CaseSummary extends Component {
     this.setState({
       pieChartData,
     });
-  }
+
+  };
 
 
   /******* define funciton  */
@@ -169,7 +175,7 @@ class CaseSummary extends Component {
       highlightedWordsData,
       highlightedWords,
     });
-  }
+  };
 
   updateSummary = () => {
     this.props.getTagsinCase(this.props.caseID)
@@ -258,33 +264,38 @@ class CaseSummary extends Component {
   COLORS = {
     supportive: '#0CC8E8',
     primary: '#0CE88E',
+      selected: '#ffff00'
   };
 
   /************ when case changes, update the reports */
   handleCaseChange = () => {
-    this.props.updateTab(this.state.caseName);
-  }
+      console.log("State Name" + this.state.caseName);
+      this.props.updateTab(this.state.caseName);
+  };
+
+
+
 
   /**************** when the search button is pressed,  */
   handleSearchCaseChange = () =>{
     this.props.updateTab('searched reports');
     // this.props.updateSearchedTab(this.state.searchedReports);
-    // console.log("Helloo")
 
-   
-  }
+
+  };
+
 
    /*************** When search option changes call the corresponding function and set the state */
    handleSearchOptionChange = (value) => {
     this.setState({searchOption :value,});
     
-    if (value=== 'Score Based'){
+    if (value === 'Score Based'){
       this.calculateTfidf();
     }
     else
       this.searchDocs();
 
-  }
+  };
 
   /************** Search and build index to find documents related to highlighted words */
   searchDocs= () => {
@@ -295,7 +306,7 @@ class CaseSummary extends Component {
         var search = new JsSearch.Search('primaryid');
         search.searchIndex = new JsSearch.TfIdfSearchIndex();     
         search.addIndex('report_text');
-        search.addDocuments( this.props.allReports)
+        search.addDocuments( this.props.allReports);
 
 
         // console.log(this.state.highlightedWords, this.props.allReports)
@@ -318,13 +329,23 @@ class CaseSummary extends Component {
           index === self.findIndex((t) => (
             t.primaryid === searchedReports.primaryid
           ))
-        )
+        );
 
         console.log(searchedReports);
         this.props.setSearchedReports (searchedReports);
 
     } 
-  }
+  };
+/*
+//CHANGE HERE
+  getInitialStat = function () {
+      return {currentBackground: "green"};
+  };
+
+  handleColorChange = function (background) {
+      this.setState({currentBackground: background})
+  };
+*/
 
   /*********** Prepare data for keywords barcharts */
   BarChart = ()  => {    
@@ -356,7 +377,7 @@ class CaseSummary extends Component {
     
     } 
     return all_barCharts; 
-  }
+  };
 
   renderBarChart = (barData, d_all,i) => ((barData.length > 0)
   ?(
@@ -387,7 +408,7 @@ class CaseSummary extends Component {
         </ResponsiveContainer>
     </div>    
     )
-    :null)
+    :null);
 
 
   renderPieChart = () => ((this.state.pieChartData.length > 0)
@@ -408,10 +429,12 @@ class CaseSummary extends Component {
               paddingAngle={1}
               label
               legendType="circle"
-            >
+              >
               {
+                  //onClick={this.handleColorChange(this.COLORS[entry.name.toLowerCase()])}
                 this.state.pieChartData.map((entry, index) =>
-                  <Cell key={entry} fill={this.COLORS[entry.name.toLowerCase()]} />)
+                  <Cell key={entry} fill={this.COLORS[entry.name.toLowerCase()]}
+                        onClick ={ () => this.props.handleClick(this.COLORS[entry.name.toLowerCase()], this.state.caseName)} />)
               }
             </Pie>
           </PieChart>
@@ -426,8 +449,9 @@ class CaseSummary extends Component {
     return (
       /*****  casename/case info */
       <div style={{ width: '100%' }} >
-        <Button className="pull-right"  style={{marginLeft:'5px', minHeight:'20px', minWidth:'30px'}} onClick={this.handleCaseChange} raised color="primary">Case Reports</Button>
+
         <Button className="pull-right"  style={{marginLeft:'5px', minHeight:'20px', minWidth:'30px'}} onClick={this.handleSearchCaseChange} raised color="primary">Recommended Reports</Button>
+          <Button className="pull-right"  style={{marginLeft:'5px', minHeight:'20px', minWidth:'30px'}} onClick={this.handleCaseChange} raised color="primary">Primary Reports</Button>
         <Typography type="display1">
           Case Details:
         </Typography>

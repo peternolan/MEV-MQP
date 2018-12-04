@@ -27,7 +27,7 @@ class CaseSummaryListing extends React.PureComponent {
       summaryContainer: PropTypes.string,
       expansionPanelSummary: PropTypes.string,
     }).isRequired,
-  }
+  };
 
   renderListItem = (bin) => {
     switch (bin.name) {
@@ -64,13 +64,15 @@ class CaseSummaryListing extends React.PureComponent {
                   userID={this.props.userID}
                   summaryCounter={this.props.summaryCounter}
                   updateTab={this.props.updateTab}
+                  handleClick={this.props.handleClickPieChart}
+
                 />
               </ExpansionPanelDetails>
             </ExpansionPanel>
           </div>
         );
     }
-  }
+  };
 
 
   render() {

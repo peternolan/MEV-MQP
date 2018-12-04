@@ -832,6 +832,7 @@ app.post('/getvis', (req, res) => {
 
 });
 
+
 const default_search = {
     'search_string':"",//the string the user entered
     'start':0,//the offset of the results (this is to be used for pagination)
@@ -992,7 +993,7 @@ function writeSQL(dataRows, drugReactions, meTypesArray, drugNamesArray, causesA
       }))
     });
     Promise.all(promises).then(() => {
-      console.log(`Done with Chunk`)
+      console.log(`Done with Chunk`);
       wstream.end();
       resolve1('DONE ALL')
     })

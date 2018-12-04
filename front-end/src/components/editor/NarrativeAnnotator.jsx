@@ -10,77 +10,79 @@ import QuillEditor from './components/QuillEditor';
 import styles from './NarrativeAnnotatorStyles';
 
 class NarrativeAnnotator extends Component {
-  static propTypes = {
-    classes: PropTypes.shape({
-      pdfView: PropTypes.string,
-    }).isRequired,
-    match: PropTypes.shape({
-      params: PropTypes.shape({
-        id: PropTypes.string,
-      }),
-    }),
-  }
+    static propTypes = {
+        classes: PropTypes.shape({
+            pdfView: PropTypes.string,
+        }).isRequired,
+        match: PropTypes.shape({
+            params: PropTypes.shape({
+                id: PropTypes.string,
+            }),
+        }),
+    }
 
-  static defaultProps = {
-    match: {},
-  };
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      snackbarOpen: false,
-      snackbarMessage: '',
+    static defaultProps = {
+        match: {},
     };
-  }
 
-  handleClose = () => {
-    this.setState({ snackbarOpen: false });
-  };
+    constructor(props) {
+        super(props);
+        this.state = {
+            snackbarOpen: false,
+            snackbarMessage: '',
+        };
+    }
 
-  render() {
-    return (
-      <div className={`${this.props.classes.pdfView} container`}>
-        <div className="row">
-          <div className="col-sm-12">
-            <h1>Report Narrative</h1>
-            {/* <label className="ql-colorBackground pull-right" value="search" style={{ padding: '0px', margin: '4px'}}>
-             Search
-            </label>
-            <input className="ql-colorBackground pull-right"  type="text" name="search"   onChange={event => this.setState({textHighlight:{searchText: event.target.value}})}  style={{ padding: '0px', margin: '0px' }} /> */}
-            <QuillEditor match={this.props.match} />
-          </div>
-        </div>
+    handleClose = () => {
+        this.setState({ snackbarOpen: false });
+    };
 
-        {/* ====== Snackbar for Notificaitons to the User ====== */}
-        <Snackbar
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'left',
-          }}
-          open={this.state.snackbarOpen}
-          transitionDuration={500}
-          SnackbarContentProps={{
-            'aria-describedby': 'message-id',
-          }}
-          message={<span id="message-id" style={{ color: 'tomato', fontSize: '14px' }} >{this.state.snackbarMessage}</span>}
-          action={[
-            <IconButton
-              key="close"
-              aria-label="Close"
-              color="inherit"
-              onClick={this.handleClose}
-            >
-              <CloseIcon />
-            </IconButton>,
-          ]}
-        />
-      </div>
-    );
-  }
+    render() {
+        return (
+            <div className={`${this.props.classes.pdfView} container`} style = {{width : '1100px'}}>
+                <div className="row">
+                    <div className="col-sm-12">
+                        <h1>Report Narrative</h1>
+                        {/* <label className="ql-colorBackground pull-right" value="search" style={{ padding: '0px', margin: '4px'}}>
+            Search
+           </label>
+           <input className="ql-colorBackground pull-right"  type="text" name="search"   onChange={event => this.setState({textHighlight:{searchText: event.target.value}})}  style={{ padding: '0px', margin: '0px' }} /> */}
+                        <QuillEditor match={this.props.match} />
+                    </div>
+                </div>
+
+                {/* ====== Snackbar for Notificaitons to the User ====== */}
+                <Snackbar
+                    anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'left',
+                    }}
+                    open={this.state.snackbarOpen}
+                    transitionDuration={500}
+                    SnackbarContentProps={{
+                        'aria-describedby': 'message-id',
+                    }}
+                    message={<span id="message-id" style={{ color: 'tomato', fontSize: '14px' }} >{this.state.snackbarMessage}</span>}
+                    action={[
+                        <IconButton
+                            key="close"
+                            aria-label="Close"
+                            color="inherit"
+                            onClick={this.handleClose}
+                        >
+                            <CloseIcon />
+                        </IconButton>,
+                    ]}
+                />
+            </div>
+        );
+    }
 }
 
 export default connect(
-  null,
-  null,
+    null,
+    null,
 )(withStyles(styles)(NarrativeAnnotator));
+
+
 

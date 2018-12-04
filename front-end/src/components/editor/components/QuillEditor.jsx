@@ -398,16 +398,17 @@ class QuillEditor extends Component {
     editMode = () => {
         //var x = document.getElementById(`react-quill-${this.props.primaryid}`);
         console.log('editModeOn ' + this.state.editModeOn);
+        console.log('primaryID ' + this.props.primaryid);
         if (this.state.editModeOn) {
             //this.setContainer(`react-quill-${this.state.primaryId}-2`);
             var x = document.getElementById(`react-quill-${this.props.primaryid}`);
-            console.log(x);
+            console.log("x in " + x);
             x.style.display = "none";
             var z = document.getElementById(`commentArea`);
-            console.log(z);
+            console.log("z in " + z);
             z.style.display = "none";
             var y = document.getElementById(`react-quill-${this.props.primaryid}-2`);
-            console.log(y);
+            console.log("y in " + y);
             y.style.display = "initial";
             this.setState({editModeOn: false});
             this.saveWork();
@@ -417,14 +418,14 @@ class QuillEditor extends Component {
         else {
             //this.setContainer(`react-quill-${this.state.primaryId}`);
             var y = document.getElementById(`react-quill-${this.props.primaryid}-2`);
-            console.log(y);
+            console.log("y in " + y);
             y.style.display = "none";
             var z = document.getElementById(`react-quill-${this.props.primaryid}`);
-            console.log(z);
+            console.log("z in " + z);
             z.style.display = "initial";
             this.setState({editModeOn: true});
-            var z = document.getElementById(`commentArea`);
-            console.log(z);
+            var x = document.getElementById(`commentArea`);
+            console.log("x in " + x);
             z.style.display = "initial";
             //this.render();
         }

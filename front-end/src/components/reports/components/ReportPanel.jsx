@@ -161,7 +161,6 @@ class ReportPanel extends React.PureComponent {
                             )
                         }
                     </div>
-
             </div>
         );
     };
@@ -173,7 +172,9 @@ class ReportPanel extends React.PureComponent {
                     View Report
                 </Typography>
                 {this.renderInside(this.props.primaryid)}
+
             </Paper>
+
         );
     }
 

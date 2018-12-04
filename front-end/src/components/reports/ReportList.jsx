@@ -74,6 +74,7 @@ class ReportList extends Component {
       userBins: [],
       newCaseModalOpen: false,
       snackbarOpen: false,
+        primaryIDReport: 0,
 
       snackbarMessage: '',
       currentTab: 0,
@@ -195,14 +196,16 @@ class ReportList extends Component {
    * Handler for Opening the New Case Modal
    */
   handleViewCaseSummary = () => {
-    this.setState({ summaryOpen: !this.state.summaryOpen });
+
+    this.setState({ summaryOpen: !this.state.summaryOpen});
   };
 
     /**
      * Handler for Opening the Report Panel
      */
-    handleViewReportPanel = () => {
-        this.setState({ reportOpen: !this.state.reportOpen });
+    handleViewReportPanel = (primaryID) => {
+        console.log("primaryID Report " + primaryID );
+        this.setState({ reportOpen: !this.state.reportOpen,  primaryIDReport: Number(primaryID) });
     };
 
   /**
@@ -291,9 +294,6 @@ class ReportList extends Component {
     return (
       <MuiThemeProvider theme={defaultTheme} >
         <div className={this.props.classes.ReportList} >
-            <Button fab style={{ margin: 12 }} color="primary" onClick={this.handleViewReportPanel} >
-               ReportPanel
-            </Button>
           {/* ====== Top Bar with Tabs for each Case ====== */}
           <AppBar position="static" color="default">
             <Tabs
@@ -339,6 +339,9 @@ class ReportList extends Component {
               searchedReports = {this.state.searchedReports}
               primaryChosen = {this.state.primaryChosen}
               supportiveChosen = {this.state.supportiveChosen}
+              handleViewReport = {this.handleViewReportPanel}
+
+
 
 
             />
@@ -350,7 +353,7 @@ class ReportList extends Component {
                 <ReportPanel
                     updateTab={this.updateTab}
                     bins={this.state.userBins}
-                    primaryid={133674241}
+                    primaryid={this.state.primaryIDReport}
                     userID={this.props.userID}
                     reportOpen={this.state.reportOpen}
 

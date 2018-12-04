@@ -832,12 +832,39 @@ app.post('/getvis', (req, res) => {
 
 });
 
+
+const default_search = {
+    'search_string':"",//the string the user entered
+    'start':0,//the offset of the results (this is to be used for pagination)
+    'size':3,//the number of results to return
+};
+
 app.post('/executeSearch', (req, res) => {
-
-
+    console.log(req.body);
     console.log('got a request for Search');
+    console.log(typeof(req.body))
+    json_search = req.body;
 
-
+    //Object.assign({},a,b) is equivalent to a left join on a of b, into a new dictionary.
+    //This preserves our default settings, unless the front end has passed in an overwrite to the default.
+    search = JSON.stringify(Object.assign({}, default_search, json_search));
+    console.log("SEARCH: " + search)
+    const spawn = require("child_process").spawn;
+    const pythonProcess = spawn('python',["../searchElastic.py"]);
+    results = "";
+    pythonProcess.stdout.on('data', function(data) {
+        // combine the data returned from the python script
+        results = results + data.toString();
+        //console.log(results)
+    });
+    pythonProcess.stdout.on("end", function(){
+      res.status(200).send(JSON.stringify(results));
+    })
+    pythonProcess.stderr.on('data', function (data) {
+      console.log('stderr: ' + data);
+    });
+    pythonProcess.stdin.write(JSON.stringify(search));
+    pythonProcess.stdin.end();
 });
 
 /**

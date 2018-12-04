@@ -1,0 +1,13 @@
+Patient:
+Female, 56years old, 165.5lbs
+
+On december 1st, the patient started therapy with desloratadine(AERIUS)tablet, oral, 5.0 mg, 1 every 1 day and used for unknown indication. On december 20th, the patient experienced hallucination, auditory, psychotic disorder and paranoia.    
+
+The action taken with suspect products was unknown.
+The outcome of hallucination, auditory, psychotic disorder and paranoia was recovered on an unspecified date. 
+
+Relatedness between the suspect therapies and the events: hallucination, auditory, psychotic disorder and paranoia was not reported.
+
+The agency considered the events to be medically significant.     
+
+Additional information is not expected due to agency confidentiality clause.

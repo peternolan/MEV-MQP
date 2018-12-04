@@ -195,7 +195,16 @@ export const getTagsinCase = caseID => () => {
     .catch(err => console.log('Failed to retrieve tags in that case', err));
 };
 
-export const executeSearch = () => () => {
+
+export const executeSearch = (str) => () => {
+
+  if(typeof(String.prototype.trim) === "undefined")
+  {
+    String.prototype.trim = function() 
+    {
+        return String(this).replace(/^\s+|\s+$/g, '');
+    };
+  }
 
   console.log("executeSearch Action");
     const fetchData = {
@@ -204,9 +213,12 @@ export const executeSearch = () => () => {
         headers: {
             'Content-Type': 'application/json',
         },
-    };
-    return fetch(`${process.env.REACT_APP_NODE_SERVER}/executeSearch`, fetchData);
 
+        body: JSON.stringify({'search_string':str.trim()}),
+    };
+    return fetch(`${process.env.REACT_APP_NODE_SERVER}/executeSearch`, fetchData)
+            .then(function(response){return response.json();});
+            //.then(function(json){console.log(json)});
 };
 
 export const archiveCase = (name, active, userID) => () => {
@@ -245,6 +257,7 @@ export function htmlUnescape(str){
         .replace(/&gt;/g, '>')
         .replace(/&amp;/g, '&');
 }
+
 
 export function getComment (userID, comments) {
 

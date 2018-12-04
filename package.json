@@ -16,7 +16,11 @@
   "homepage": "https://github.com/CTapply/MEV-MQP#readme",
   "dependencies": {
     "concurrently": "^3.5.0",
-    "cross-os": "^1.2.2"
+    "cross-os": "^1.2.2",
+    "pg": "^7.4.3",
+    "react": "^16.5.0",
+    "react-scripts": "^1.1.5",
+    "redis": "^2.8.0"
   },
   "scripts": {
     "start": "cross-os setup",

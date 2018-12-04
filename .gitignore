@@ -27,4 +27,6 @@ back-end/redis
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+front-end/package.json
 latest.sql
+front-end/.env

@@ -1,0 +1,48 @@
+16-Apr-2015, Spontaneous, Health authority, Patient/Consumer Serious report. (Report duplicates - 01001307081: GB-JNJFOC-20150407438; MHRAUK: GB-MHRA-ADR 22956126)
+A Consumer/other non health professional reported the case of a Female patient (age unknown) who received ERYTHROMYCIN (Product be excluded as a Teva product), DOMPERIDONE (not Teva's product). 
+The patient took ERYTHROMYCIN for GASTROPARESIS (Unknown, Dosage Form: Unspecified) batch: Unknown, DOMPERIDONE for GASTROPARESIS (Unknown, Dosage Form: Unspecified) batch: Unknown.
+While on the suspect medication(s), the patient experienced ARRHYTHMIA(Serious); POSSIBLE DRUG INTERACTION(Serious); UNWELL(Not Serious); SEVERE FATIGUE(Not Serious); DRY EYES(Not Serious); DRY MOUTH(Not Serious); PERIOD STOPPED(Not Serious).
+
+MHRA verbatim: This spontaneous report was received from a consumer (patient's mother) and concerns a female patient of unspecified age from the United Kingdom. 
+The patient's height and weight were not reported. The patient's medical history and concurrent conditions included: Crohn's disease and gastroparesis. The reporter stated that the patient was treated with domperidone (route and formulation unspecified, batch unknown) dosage and frequency unspecified initiated on an unspecified date for gastroparesis and non-company suspect drug erythromycin (route and formulation unspecified) dosage and frequency unspecified initiated on an unspecified date for gastroparesis (possible drug interaction). Concomitant medications included mesalazine for Crohn's disease. On an unspecified date, the patient was unwell and experienced arrhythmia, severe fatigue, dry mouth and dry eyes. The reporter stated that the patient's periods stopped after starting domperidone on an unspecified date and have started again on an unspecified date. Action taken with domperidone and erythromycin was not reported. The patient's outcome was not reported for the events arrhythmia, possible drug interaction, unwell, severe fatigue, dry eyes and dry mouth. The consent for follow up was not reported.
+This report was serious (medically significant).
+
+At the time of the report the outcome of the AEs were: ARRHYTHMIA: Unknown, POSSIBLE DRUG INTERACTION: Unknown, UNWELL: Unknown, SEVERE FATIGUE: Unknown, DRY EYES: Unknown, DRY MOUTH: Unknown, PERIOD STOPPED: recovered/resolved.
+Action taken with suspect drugs: ERYTHROMYCIN - Unknown; DOMPERIDONE - Unknown.
+
+The patient had medical history of CROHN'S DISEASE(Not Continuing), GASTROPARESIS(Not Continuing).
+     
+The patient's concomitant medication included  MESALAZINE( Unknown,  Dosage Form: Unspecified,  for CROHN'S DISEASE). 
+The patient's past medication were unspecified.  
+
+Lab tests were not reported.
+
+This case was considered serious based on the following criteria: (Other Serious (Important Medical Events))
+
+Teva Comment: ERYTHROMYCIN- Events ARRHYTHMIA and POSSIBLE DRUG INTERACTION Un-assessable due to insufficient information.
+
+Because this is a spontaneous case, regulatory distribution will be handled as though it is a related case.
+
+23-Apr-2015:
+Additional information received from MHRA.
+Additional information was received from a consumer (patient's mother) on 13-APR-2015. A phone call attempt was made at 13:21, 13:59 and 15:15 on 10-APR-2015 however phone call was not answered. On 13-APR-2015 company representative spoke to the patient's mother. The patient mother stated that the patient had been taking both domperidone and erythromycin for at least 5 years. The onset of symptoms was 2 months prior. The patient had other auto immune problems. The patient's mother was unsure of exact dose and brand of domperidone and erythromycin but stated that the patient was on a low dose of erythromycin 3 times a day. The patient had stopped taking erythromycin 10 days prior. Treatment with erythromycin was withdrawn on an unspecified date. The symptoms have not yet improved. The patient had not recovered from arrhythmia, unwell, severe fatigue, dry eyes and dry mouth. The reporter stated that the patient would be seeing a specialist on 24-Apr-2015. No further information was available at the time of this report.
+The new information added in this FU included:
+Patient past medical history includes: Autoimmune disorder.
+Therapy start date of Domperidone was provided as: --2010.
+Reporter causality for the events "Arrhythmia", "Drug interaction", "Unwell", "Fatigue", "Dry eyes", "Dry mouth", and "Menses lack of" with regard to "Domperidone" were provided as "Possible" respectively.
+Therapy start date of Erythromycin was provided as: 2010.
+Therapy stop date of Erythromycin was provided as: -Apr-2015.
+Last action taken with drug "Erythromycin" was provided as: Drug Discontinued.
+
+TEva Comment: Erythromycin - Considering the long-term uneventful therapy with suspect drug, its role in the reported events was considered unrelated.
+
+27-Apr-2015:
+Additional information was received from the Health Authority.
+Dosage text for the suspect drug "Erythromycin" was provided as "Dosage form: Unspecified, Low dose".
+"No Medical Assessment".
+
+13-May-2015:
+Additional information was received from a consumer via regulatory authority (MHRA) (GB-MHRA-ADR 22956126) on 16-APR-2015. Health authority numbers were updated in the case ID screen. Follow-up report was received on 23-APR-2015. This report contains no new information and no changes were made to the report. Follow-up report was received on 27-APR-2015. Other company manufacturer's reference number was updated. This report contains no new information and no changes were made to the report. Additional information was received from the patient's mother on 04-MAY-2015. The patient stated that her general practitioner (GP) and specialist did not think that the problems were the side effects of domperidone. No further information was reported at the time of the report.
+Other reference number include - MHRA: 01001307081; 01001307081: GB-JNJFOC-20150407438.
+Duration of suspect drug "Domperidone" was reported as 5 years.
+"No medical assessment".

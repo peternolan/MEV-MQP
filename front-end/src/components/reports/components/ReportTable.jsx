@@ -455,8 +455,14 @@ class ReportTable extends React.PureComponent {
 
     console.log('Search');
 
-    this.props.executeSearch();
 
+    var results;
+    this.props.executeSearch(contents)
+      .then(function(data){
+        results = JSON.parse(data);
+        console.log(results);
+        // TODO -- after recieving the search object, update the UI accordingly
+      })
   };
 
 
@@ -602,7 +608,7 @@ class ReportTable extends React.PureComponent {
               (this.props.bin.toLowerCase() !== bin.name.toLowerCase())
                 ? (
                   <MaterialTooltip
-                    title={(bin.name.toLowerCase() === 'trash') ? 'Warning: Adding this report to the Trash also removes the report from any other cases it is in' : 'Adds this report to this case'}
+                    title={(bin.name.toLowerCase() === 'trash') ? 'HERE IT IS Warning: Adding this report to the Trash also removes the report from any other cases it is in' : 'Adds this report to this case'}
                     placement="top"
                     enterDelay={50}
                     classes={{

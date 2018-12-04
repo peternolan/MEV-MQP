@@ -15,6 +15,7 @@ import MaterialTooltip from 'material-ui/Tooltip';
 import Paper from 'material-ui/Paper';
 import ReportTable from './components/ReportTable';
 import CaseSummaryListing from './components/CaseSummaryListing';
+import ReportPanel from './components/ReportPanel';
 import MEVColors from '../../theme';
 import { getUserCases, createUserBin } from '../../actions/reportActions';
 import CaseIcon from '../../resources/CaseIcon';
@@ -73,13 +74,16 @@ class ReportList extends Component {
       userBins: [],
       newCaseModalOpen: false,
       snackbarOpen: false,
+        primaryIDReport: 0,
 
       snackbarMessage: '',
       currentTab: 0,
       summaryOpen: false,
         primaryChosen: false,
         supportiveChosen: false,
+        reportOpen: false,
       summaryCounter: 0,
+
       searchedReports:[],
     };
     //handleCaseChangePrimary = handleCaseChangePrimary.bind(this);
@@ -192,8 +196,17 @@ class ReportList extends Component {
    * Handler for Opening the New Case Modal
    */
   handleViewCaseSummary = () => {
-    this.setState({ summaryOpen: !this.state.summaryOpen });
+
+    this.setState({ summaryOpen: !this.state.summaryOpen});
   };
+
+    /**
+     * Handler for Opening the Report Panel
+     */
+    handleViewReportPanel = (primaryID) => {
+        console.log("primaryID Report " + primaryID );
+        this.setState({ reportOpen: !this.state.reportOpen,  primaryIDReport: Number(primaryID) });
+    };
 
   /**
    * Handler for Closing the New Case Modal
@@ -315,7 +328,7 @@ class ReportList extends Component {
           </AppBar>
 
           {/* ====== Table for Viewing the Reports ====== */}
-          <div className={(this.state.summaryOpen) ? this.props.classes.openSummaryTableContainer : this.props.classes.closedSummaryTableContainer} >
+          <div className={(this.state.summaryOpen || this.state.reportOpen) ? this.props.classes.openSummaryTableContainer : this.props.classes.closedSummaryTableContainer} >
             <ReportTable
               bin={this.state.bin}
               bins={this.state.userBins}
@@ -326,10 +339,26 @@ class ReportList extends Component {
               searchedReports = {this.state.searchedReports}
               primaryChosen = {this.state.primaryChosen}
               supportiveChosen = {this.state.supportiveChosen}
+              handleViewReport = {this.handleViewReportPanel}
+
+
 
 
             />
           </div>
+
+            {/* ====== SideBar for Viewing a report ======*/}
+            {console.log(this.state.reportOpen)}
+            <div id="report-sidebar" className={(this.state.reportOpen) ? this.props.classes.openReportContainer : this.props.classes.closedReportContainer} >
+                <ReportPanel
+                    updateTab={this.updateTab}
+                    bins={this.state.userBins}
+                    primaryid={this.state.primaryIDReport}
+                    userID={this.props.userID}
+                    reportOpen={this.state.reportOpen}
+
+                />
+            </div>
 
           {/* ====== SideBar for Viewing the Case Summary ====== */}
           <div id="summary-sidebar" className={(this.state.summaryOpen) ? this.props.classes.openSummaryContainer : this.props.classes.closedSummaryContainer} >

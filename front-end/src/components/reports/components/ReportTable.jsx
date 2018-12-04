@@ -54,6 +54,7 @@ class ReportTable extends React.PureComponent {
     toTitleCase: PropTypes.func.isRequired,
       primaryChosen:  PropTypes.bool,
       supportiveChosen:  PropTypes.bool,
+      handleViewReport: PropTypes.func,
     incrementSummary: PropTypes.func.isRequired,
     summaryOpen: PropTypes.bool.isRequired,
     bins: PropTypes.arrayOf(PropTypes.object).isRequired,
@@ -396,7 +397,7 @@ class ReportTable extends React.PureComponent {
       tableHeight: parseInt(containerHeight || 800, 10),
       stillResizingTimer: '',
     });
-  }
+  };
 
   COLORS = {
     supportive: 'rgba(12, 200, 232, 0.25)',
@@ -453,6 +454,7 @@ class ReportTable extends React.PureComponent {
     var contents = document.getElementById('search').value;
 
     console.log('Search');
+
     var results;
     this.props.executeSearch(contents)
       .then(function(data){
@@ -465,6 +467,7 @@ class ReportTable extends React.PureComponent {
 
 
   handleToggleChange = primaryid => (event, checked) => {
+      console.log("handleToggleChange");
     if (!(this.props.bin === 'all reports' || this.props.bin === 'read' || this.props.bin === 'trash')) {
       this.handleMoveReport(
         primaryid,
@@ -523,6 +526,7 @@ class ReportTable extends React.PureComponent {
   };
 
   renderTypeToggle = (row) => {
+
     return (this.props.bin === 'all reports' || this.props.bin === 'read' || this.props.bin === 'trash')
       ? (
         <MaterialTooltip
@@ -556,6 +560,7 @@ class ReportTable extends React.PureComponent {
             popper: this.props.classes.tooltipStyle,
           }}
         >
+
           <FormControlLabel
             control={
               <Switch
@@ -637,8 +642,8 @@ class ReportTable extends React.PureComponent {
       </div>
       <div style={{ marginTop: '10px' }} className="col-sm-12">
         <ExpansionPanel elevation={6}>
-          <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography type="subheading">Annotate Narrative</Typography>
+          <ExpansionPanelSummary  onClick={this.props.handleViewReport(row.row.primaryid)} expandIcon={<ExpandMoreIcon />}>
+            <Typography type="subheading" >Annotate Narrative</Typography>
           </ExpansionPanelSummary>
           <Divider light />
           <ExpansionPanelDetails>

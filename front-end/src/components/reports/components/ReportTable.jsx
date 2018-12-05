@@ -582,7 +582,7 @@ class ReportTable extends React.PureComponent {
    * of the table
    */
   renderDetailRowContent = row => (
-    <div>
+    <div onClick={this.props.handleViewReport(row.row.primaryid)}>
       <div className="col-sm-3" style={{ marginBottom: '15px' }}>
         <Paper elevation={6} style={{ padding: '5px' }} >
           <div className="col-sm-12">
@@ -641,9 +641,11 @@ class ReportTable extends React.PureComponent {
           </div>
         </Paper>
       </div>
+      {/*
       <div style={{ marginTop: '10px' }} className="col-sm-12">
+
         <ExpansionPanel elevation={6}>
-          <ExpansionPanelSummary  onClick={this.props.handleViewReport(row.row.primaryid)} expandIcon={<ExpandMoreIcon />}>
+          <ExpansionPanelSummary   expandIcon={<ExpandMoreIcon />}>
             <Typography type="subheading" >Annotate Narrative</Typography>
           </ExpansionPanelSummary>
           <Divider light />
@@ -651,10 +653,12 @@ class ReportTable extends React.PureComponent {
             <QuillEditor
               primaryid={Number(row.row.primaryid, 10)}
               incrementSummary={this.props.incrementSummary}
+
             />
           </ExpansionPanelDetails>
         </ExpansionPanel>
       </div>
+      */}
     </div>
   );
 

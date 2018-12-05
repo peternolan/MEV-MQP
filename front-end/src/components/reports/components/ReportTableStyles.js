@@ -1,7 +1,8 @@
 export default {
   tableContainer: {
     height: '100%',
-    margin: '20px',
+    width: '40%',
+    margin: '0px',
     overflow: 'scroll',
   },
   moveToCaseDetailsContainer: {
@@ -14,7 +15,7 @@ export default {
   },
   caseGridList: {
     padding: '5px',
-    margin: '5px',
+    margin: '0px',
     width: 'auto',
     height: 'auto',
   },

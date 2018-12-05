@@ -103,34 +103,34 @@ class ReportTable extends React.PureComponent {
        * Default widths for the columns of the table
        */
       widths: {
-        init_fda_dt: 85,
-        primaryid: 90,
-        caseid: 80,
-        caseversion: 95,
+        //init_fda_dt: 85,
+        //primaryid: 90,
+        caseid: 60,
+        //caseversion: 95,
         age_year: 50,
         sex: 50,
         wt_lb: 65,
         drugname: 200,
         me_type: 180,
-        outc_cod: 85,
-        report_text: 200,
+        //outc_cod: 85,
+        //report_text: 200,
       },
 
       /**
        * Custom Sorting Functions
        */
       customSorting: [
-        { columnName: 'init_fda_dt', compare: this.sortNumbers },
-        { columnName: 'primaryid', compare: this.sortNumbers },
+        //{ columnName: 'init_fda_dt', compare: this.sortNumbers },
+        //{ columnName: 'primaryid', compare: this.sortNumbers },
         { columnName: 'caseid', compare: this.sortNumbers },
-        { columnName: 'caseversion', compare: this.sortNumbers },
+        //{ columnName: 'caseversion', compare: this.sortNumbers },
         { columnName: 'age_year', compare: this.sortNumbers },
         { columnName: 'sex', compare: this.sortText },
         { columnName: 'wt_lb', compare: this.sortNumbers },
         { columnName: 'drugname', compare: this.sortText },
         { columnName: 'me_type', compare: this.sortText },
-        { columnName: 'outc_cod', compare: this.sortText },
-        { columnName: 'report_text', compare: this.sortText },
+        //{ columnName: 'outc_cod', compare: this.sortText },
+        //{ columnName: 'report_text', compare: this.sortText },
       ],
     }
       //
@@ -230,20 +230,16 @@ class ReportTable extends React.PureComponent {
    */
   columns = [
     {
-      title: 'Event Date',
-      name: 'init_fda_dt',
-    },
-    {
-      title: 'Primary ID',
-      name: 'primaryid',
-    },
-    {
-      title: 'Case ID',
+      title: 'Report ID',
       name: 'caseid',
     },
     {
-      title: 'Case Version',
-      name: 'caseversion',
+      title: 'Drugs',
+      name: 'drugname',
+    },
+    {
+      title: 'Medication Error',
+      name: 'me_type',
     },
     {
       title: 'Age',
@@ -256,22 +252,6 @@ class ReportTable extends React.PureComponent {
     {
       title: 'Weight',
       name: 'wt_lb',
-    },
-    {
-      title: 'Drugs',
-      name: 'drugname',
-    },
-    {
-      title: 'Medication Error',
-      name: 'me_type',
-    },
-    {
-      title: 'Outcome',
-      name: 'outc_cod',
-    },
-    {
-      title: 'Narrative',
-      name: 'report_text',
     },
   ];
 

@@ -850,7 +850,7 @@ app.post('/executeSearch', (req, res) => {
     search = JSON.stringify(Object.assign({}, default_search, json_search));
     console.log("SEARCH: " + search)
     const spawn = require("child_process").spawn;
-    const pythonProcess = spawn('python',["../searchElastic.py"]);
+    const pythonProcess = spawn('python3',["../searchElastic.py"]);
     results = "";
     pythonProcess.stdout.on('data', function(data) {
         // combine the data returned from the python script

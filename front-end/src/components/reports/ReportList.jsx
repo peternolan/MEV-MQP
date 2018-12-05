@@ -415,7 +415,7 @@ class ReportList extends Component {
                 }}
             >
               <Link href="/visualization" to="/visualization" >
-                <Button fab style={{ margin: 12 }} color="primary">
+                <Button fab style={{ margin: 0 }} color="primary">
                   <img src={GoToVisualizationIcon} className={this.props.classes.goToVisualizationSVG} alt="Go Back To Visualization" />
                 </Button>
               </Link>
@@ -433,7 +433,7 @@ class ReportList extends Component {
                 popper: this.props.classes.tooltipStyle,
                 }}
             >
-              <Button fab style={{ margin: 12 }} color="primary" onClick={this.handleViewCaseSummary} >
+              <Button fab style={{ margin: 0 }} color="primary" onClick={this.handleViewCaseSummary} >
                 <img src={ViewCaseSummary} className={this.props.classes.caseSummarySVG} alt="Open Case Summary" />
               </Button>
             </MaterialTooltip>

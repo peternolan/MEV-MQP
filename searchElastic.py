@@ -23,6 +23,11 @@ params = json.loads(read_in())
 # THIS IS ONLY FOR DEV/DEBUGGING
 connections.create_connection(hosts=['localhost'])
 
+def listFiles(path):
+    """returns a list of abspaths of files with .txt extentions in directory path"""
+    allfiles = list(map(lambda s: os.path.join(path, s), filter(
+        lambda s: os.path.isfile(os.path.join(path, s)), os.listdir(os.path.abspath(path)))))
+    return list(filter(lambda x: x.endswith("txt"), allfiles))
 
 reportdir = os.path.abspath("./Reports/")
 
@@ -54,12 +59,6 @@ if not reportsIndex.exists():
 else:
     reportsIndex.refresh()
 
-
-def listFiles(path):
-    """returns a list of abspaths of files with .txt extentions in directory path"""
-    allfiles = list(map(lambda s: os.path.join(path, s), filter(
-        lambda s: os.path.isfile(os.path.join(path, s)), os.listdir(os.path.abspath(path)))))
-    return list(filter(lambda x: x.endswith("txt"), allfiles))
 
 class Report(Document):
     """A @Report contains the text for a report, as well as its sql unique ID"""

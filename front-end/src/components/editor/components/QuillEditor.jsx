@@ -59,7 +59,7 @@ class QuillEditor extends Component {
             editModeOn: false,
             primaryId: this.props.primaryid,
             userID: this.props.userID,
-            comment: '',
+            comment: ``,
             report: '',
             current: {
                 reportText: '',
@@ -122,19 +122,27 @@ class QuillEditor extends Component {
                         console.log( "commentHTML " + commentHTML);
                         if (dummyNode.getElementsByTagName("comments")[0]) {
                             console.log("holder " + dummyNode.getElementsByTagName("comments")[0].outerHTML);
+                            console.log("innerText holder " + dummyNode.getElementsByTagName("comments")[0].innerText);
+                            document.getElementById('commentBox').value = dummyNode.getElementsByTagName("comments")[0].innerText;
                             commentHTML =  dummyNode.getElementsByTagName("comments")[0];
-                            console.log( "commentHTML " + commentHTML.innerHTML);
+                            console.log( "commentHTML " + commentHTML);
+
+                            var commentFinal = commentHTML.outerHTML;
+
+                            console.log("Commentfinal " + commentFinal);
+                            console.log("Commentfinal " + commentFinal.innerText);
 
                             dummyNode.getElementsByTagName("comments")[0].remove();
                             console.log("reportText " + dummyNode.innerHTML );
+
                         }
                         else {
-                            commentHTML = ``;
+                            commentFinal = ``;
                         }
 
                         var reportHTML = dummyNode.innerHTML;
 
-                        var reportText = reportHTML + commentHTML;
+                        var reportText = reportHTML + commentFinal;
 
                         console.log("Report Text beginning Final " + reportText);
 
@@ -143,7 +151,7 @@ class QuillEditor extends Component {
                             success: true,
                             loading: false,
                             report: reportHTML,
-                            comment: commentHTML,
+                            comment: commentFinal,
                             current: {
                                 reportText: reportText,
                                 tags: rows[0].tags,
@@ -314,7 +322,17 @@ class QuillEditor extends Component {
 
 
             this.setState({report: value});
-            var finalText = this.state.report + this.state.comment;
+            console.log("Comment in alternate change " + this.state.comment);
+
+            var dummyNode = document.createElement('div');
+            dummyNode.innerHTML = this.state.comment;
+            console.log("comment in alternate change dummy Node " + dummyNode.innerHTML);
+            console.log("dummynode InnerText " + dummyNode.innerText);
+
+            var comment = dummyNode.innerHTML;
+
+
+            var finalText = this.state.report + comment;
 
             console.log('STATE WILL CHANGE TO : ' + finalText);
 
@@ -325,7 +343,7 @@ class QuillEditor extends Component {
         }
         else {
 
-            console.log("this.state.comment.innerText " + this.state.comment.innerText);
+            //console.log("this.state.comment.innerText " + this.state.comment);
             console.log("this.state.comment " + this.state.comment);
 
             var dummyNode = document.createElement('div');
@@ -366,8 +384,8 @@ class QuillEditor extends Component {
         console.log("Comment Text " + comment);
 
         var dummyNode = document.createElement('div');
-        console.log("commentMade Begin state comment " + this.state.comment.outerHTML);
-        dummyNode.innerHTML = this.state.comment.outerHTML;
+        console.log("commentMade Begin state comment " + this.state.comment);
+        dummyNode.innerHTML = this.state.comment;
 
         console.log("dummyNode.innerHTML commentMade " + dummyNode.innerHTML);
 
@@ -436,7 +454,7 @@ class QuillEditor extends Component {
 
         } else {
             console.log("Comments are not already in here.");
-            var comSpecial = `<comments id = ${this.props.primaryid}><comment id = ${this.state.userID} class = "comment" >${this.state.userID}: ${comment}<br></comment></comments>`;
+            var comSpecial = `<comments id = 'comment-${this.props.primaryid}'><comment id = ${this.state.userID} class = "comment" >${this.state.userID}: ${comment}<br></comment></comments>`;
 
             console.log('Comment Special ' + comSpecial);
             console.log('Comment Special Outer ' + comSpecial.outerHTML);
@@ -644,10 +662,10 @@ class QuillEditor extends Component {
                         onClick={this.saveWork}>
                         Save
                     </Button>
-                    {console.log("this.state.comment.innerText " + this.state.comment.innerText)}
+
                     <div id = "commentArea" >
                         <div>
-                            <textarea id = "commentBox" cols = "120" rows = "5" value = {this.state.comment.innerText} readOnly>  </textarea>
+                            <textarea id = "commentBox" cols = "120" rows = "5" readOnly>  </textarea>
                         </div>
                         <div style={{padding: '4px'}}>
                            <textarea id = "comment" cols = "120" rows = "5" >  </textarea>

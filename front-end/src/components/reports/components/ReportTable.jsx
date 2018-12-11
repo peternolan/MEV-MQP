@@ -668,7 +668,7 @@ class ReportTable extends React.PureComponent {
 
     return (
 
-      <Paper id="table-container" className={this.props.classes.tableContainer} elevation={4}>
+      <Paper id="table-container" className={this.props.classes.tableContainer} padding = '0px' elevation={4}>
         {/*eslint-disable */}
           { <div style={{padding: '4px'}}>
               <textarea id = "search" cols = "120" rows = "5">  </textarea>

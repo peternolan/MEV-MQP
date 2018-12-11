@@ -1,3 +1,6 @@
+import ReportPanel from "./components/ReportPanel";
+import React from "react";
+
 export default {
   newCaseArea: {
     width: 'calc(100%)',
@@ -50,12 +53,22 @@ export default {
     transition: 'width 200ms ease-in-out',
     overflow: 'hidden',
   },
+
   openSummaryTableContainer: {
     display: 'inline-block',
     width: '50%',
     height: '100%',
     transition: 'width 200ms ease-in-out',
   },
+    tableContainer: {
+        display: 'inline-block',
+        width: '60%',
+        height: '100%',
+        padding: '0px',
+        margin: '0px',
+        transition: 'width 200ms ease-in-out',
+    },
+
   openSummaryContainer: {
     display: 'inline-block',
     float: 'right',
@@ -63,20 +76,14 @@ export default {
     height: '100%',
     transition: 'width 200ms ease-in-out',
   },
-    openReportContainer: {
+    reportContainer: {
         display: 'inline-block',
-        float: 'right',
-        width: '50%',
+        float: 'left',
+        width: '40%',
         height: '100%',
+        padding: '0px',
         transition: 'width 200ms ease-in-out',
     },
-    closedReportContainer: {
-        display: 'inline-block',
-        float: 'right',
-        width: '0%',
-        height: '100%',
-        transition: 'width 200ms ease-in-out',
-        overflow: 'hidden',
-    },
+
 
 };

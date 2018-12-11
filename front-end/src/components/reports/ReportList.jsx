@@ -328,9 +328,10 @@ class ReportList extends Component {
           </AppBar>
 
           {/* ====== Table for Viewing the Reports ====== */}
-          <div className={(this.state.summaryOpen || this.state.reportOpen) ? this.props.classes.openSummaryTableContainer : this.props.classes.closedSummaryTableContainer} >
+          <div className={ this.props.classes.tableContainer} >
             <ReportTable
               bin={this.state.bin}
+              padding = '0px'
               bins={this.state.userBins}
               summaryOpen={this.state.summaryOpen}
               toTitleCase={this.toTitleCase}
@@ -342,16 +343,15 @@ class ReportList extends Component {
               handleViewReport = {this.handleViewReportPanel}
 
 
-
-
             />
           </div>
 
             {/* ====== SideBar for Viewing a report ======*/}
             {console.log(this.state.reportOpen)}
-            <div id="report-sidebar" className={(this.state.reportOpen) ? this.props.classes.openReportContainer : this.props.classes.closedReportContainer} >
+            <div id="report-sidebar" className={this.props.classes.reportContainer}  >
                 <ReportPanel
                     updateTab={this.updateTab}
+
                     bins={this.state.userBins}
                     primaryid={this.state.primaryIDReport}
                     userID={this.props.userID}

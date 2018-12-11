@@ -71,14 +71,14 @@ export default {
 
   openSummaryContainer: {
     display: 'inline-block',
-    float: 'right',
+    float: 'left',
     width: '50%',
     height: '100%',
     transition: 'width 200ms ease-in-out',
   },
     reportContainer: {
         display: 'inline-block',
-        float: 'left',
+        float: 'right',
         width: '40%',
         height: '100%',
         padding: '0px',

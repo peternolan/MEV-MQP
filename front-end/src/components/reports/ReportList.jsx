@@ -328,7 +328,7 @@ class ReportList extends Component {
           </AppBar>
 
           {/* ====== Table for Viewing the Reports ====== */}
-          <div className={ this.props.classes.tableContainer} >
+          <div className={ (this.state.summaryOpen) ? this.props.classes.openSummaryTableContainer : this.props.classes.tableContainer} >
             <ReportTable
               bin={this.state.bin}
               padding = '0px'

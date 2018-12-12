@@ -84,6 +84,8 @@ class ReportTable extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
+      firstId: 0,
+      firstFound: false,
       data: [],
       allData:[],
       expandedRows: [],
@@ -409,6 +411,16 @@ class ReportTable extends React.PureComponent {
    * if the report is in any case for the current user
    */
   TableRow = ({ row, ...props }) => {
+
+    if (!this.state.firstFound) {
+
+      this.setState({firstFound : true}, function () {
+        console.log("Table Row " + props.tableRow.rowId);
+        this.props.handleViewReport(props.tableRow.rowId);
+
+      });
+    }
+
     let incase;
     //NEED TO PUT IT IN HERE
       let evidenceType;
@@ -582,7 +594,7 @@ class ReportTable extends React.PureComponent {
    * of the table
    */
   renderDetailRowContent = row => (
-    <div>
+    <div onClick={this.props.handleViewReport(row.row.primaryid)}>
       <div className="col-sm-3" style={{ marginBottom: '15px' }}>
         <Paper elevation={6} style={{ padding: '5px' }} >
           <div className="col-sm-12">
@@ -641,9 +653,11 @@ class ReportTable extends React.PureComponent {
           </div>
         </Paper>
       </div>
+      {/*
       <div style={{ marginTop: '10px' }} className="col-sm-12">
+
         <ExpansionPanel elevation={6}>
-          <ExpansionPanelSummary  onClick={this.props.handleViewReport(row.row.primaryid)} expandIcon={<ExpandMoreIcon />}>
+          <ExpansionPanelSummary   expandIcon={<ExpandMoreIcon />}>
             <Typography type="subheading" >Annotate Narrative</Typography>
           </ExpansionPanelSummary>
           <Divider light />
@@ -651,20 +665,22 @@ class ReportTable extends React.PureComponent {
             <QuillEditor
               primaryid={Number(row.row.primaryid, 10)}
               incrementSummary={this.props.incrementSummary}
+
             />
           </ExpansionPanelDetails>
         </ExpansionPanel>
       </div>
+      */}
     </div>
   );
 
 
   render() {
-    console.log("HELLO WORLD!");
+
+    //console.log("Hello World " + this.state.data[0].primaryId);
 
     return (
-
-      <Paper id="table-container" className={this.props.classes.tableContainer} elevation={4}>
+      <Paper id="table-container" className={this.props.classes.tableContainer} padding = '0px' elevation={4}>
         {/*eslint-disable */}
           { <div style={{padding: '4px'}}>
               <textarea id = "search" cols = "120" rows = "5">  </textarea>
@@ -685,9 +701,10 @@ class ReportTable extends React.PureComponent {
           {(this.state.tableHeight !== 0 && this.state.stillResizingTimer === '' && (!this.state.loadingData || this.state.keepTableWhileLoading))
             ? (
               <Grid
-                rows={ this.state.data}
+                rows={this.state.data}
                 columns={this.columns}
                 getRowId={row => row.primaryid}
+
               >
                 <RowDetailState
                   expandedRows={this.state.expandedRows}

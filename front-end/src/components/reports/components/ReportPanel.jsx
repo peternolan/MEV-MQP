@@ -149,6 +149,7 @@ class ReportPanel extends React.PureComponent {
                         ? (<QuillEditor
                             primaryid={Number(primaryID)}
                             incrementSummary={this.props.incrementSummary}
+                            match={this.props.match}
                         />)
                         : (
                             <Highlighter
@@ -167,7 +168,7 @@ class ReportPanel extends React.PureComponent {
 
     render = () => {
         return (
-            <Paper id="summary-container" className={this.props.classes.summaryContainer} elevation={4}>
+            <Paper id="summary-container" className={this.props.classes.summaryContainer} padding = '0px' elevation={4}>
                 <Typography type="title" style={{ padding: '20px' }}>
                     View Report
                 </Typography>

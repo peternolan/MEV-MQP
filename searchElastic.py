@@ -29,6 +29,14 @@ connections.create_connection(hosts=['localhost'])
 
 reportdir = os.path.abspath("./Reports/")
 
+
+def listFiles(path):
+    """returns a list of abspaths of files with .txt extentions in directory path"""
+    allfiles = list(map(lambda s: os.path.join(path, s), filter(
+        lambda s: os.path.isfile(os.path.join(path, s)), os.listdir(os.path.abspath(path)))))
+    return list(filter(lambda x: x.endswith("txt"), allfiles))
+
+
 def IndexFromDirectory(reportdir):
     """add/update documents to/in the index"""
     for f in listFiles(reportdir):
@@ -57,12 +65,6 @@ if not reportsIndex.exists():
 else:
     reportsIndex.refresh()
 
-
-def listFiles(path):
-    """returns a list of abspaths of files with .txt extentions in directory path"""
-    allfiles = list(map(lambda s: os.path.join(path, s), filter(
-        lambda s: os.path.isfile(os.path.join(path, s)), os.listdir(os.path.abspath(path)))))
-    return list(filter(lambda x: x.endswith("txt"), allfiles))
 
 class Report(Document):
     """A @Report contains the text for a report, as well as its sql unique ID"""

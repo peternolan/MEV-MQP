@@ -263,7 +263,7 @@ export function getComment (userID, comments) {
 
     //var reportHtml = `${comments}`;
 
-    //var x = [... comments.children].filter(function(e){return e.getAttribute("id") == userID;})[0];
+    var x = [... comments.children].filter(function(e){return e.getAttribute("id") == userID;})[0];
     //var x = comments.getAttribute('id') == userID;
 
    // console.log("Comment Child " + x);

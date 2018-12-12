@@ -351,7 +351,6 @@ class ReportList extends Component {
             <div id="report-sidebar" className={this.props.classes.reportContainer}  >
                 <ReportPanel
                     updateTab={this.updateTab}
-
                     bins={this.state.userBins}
                     primaryid={this.state.primaryIDReport}
                     userID={this.props.userID}

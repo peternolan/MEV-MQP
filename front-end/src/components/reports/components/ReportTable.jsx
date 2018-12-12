@@ -84,6 +84,8 @@ class ReportTable extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
+      firstId: 0,
+      firstFound: false,
       data: [],
       allData:[],
       expandedRows: [],
@@ -409,6 +411,16 @@ class ReportTable extends React.PureComponent {
    * if the report is in any case for the current user
    */
   TableRow = ({ row, ...props }) => {
+
+    if (!this.state.firstFound) {
+
+      this.setState({firstFound : true}, function () {
+        console.log("Table Row " + props.tableRow.rowId);
+        this.props.handleViewReport(props.tableRow.rowId);
+
+      });
+    }
+
     let incase;
     //NEED TO PUT IT IN HERE
       let evidenceType;
@@ -664,10 +676,10 @@ class ReportTable extends React.PureComponent {
 
 
   render() {
-    console.log("HELLO WORLD!");
+
+    //console.log("Hello World " + this.state.data[0].primaryId);
 
     return (
-
       <Paper id="table-container" className={this.props.classes.tableContainer} padding = '0px' elevation={4}>
         {/*eslint-disable */}
           { <div style={{padding: '4px'}}>
@@ -689,9 +701,10 @@ class ReportTable extends React.PureComponent {
           {(this.state.tableHeight !== 0 && this.state.stillResizingTimer === '' && (!this.state.loadingData || this.state.keepTableWhileLoading))
             ? (
               <Grid
-                rows={ this.state.data}
+                rows={this.state.data}
                 columns={this.columns}
                 getRowId={row => row.primaryid}
+
               >
                 <RowDetailState
                   expandedRows={this.state.expandedRows}

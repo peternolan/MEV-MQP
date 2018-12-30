@@ -122,7 +122,7 @@ class QuillEditor extends Component {
                         console.log( "commentHTML " + commentHTML);
                         if (dummyNode.getElementsByTagName("comments")[0]) {
                             console.log("holder " + dummyNode.getElementsByTagName("comments")[0].outerHTML);
-                            console.log("innerText holder " + dummyNode.getElementsByTagName("comments")[0].innerText);
+                            console.log("innerText holder " + dummyNode.getElementsByTagName("comments")[0].innerText.toString());
                             document.getElementById('commentBox').value = dummyNode.getElementsByTagName("comments")[0].innerText;
                             commentHTML =  dummyNode.getElementsByTagName("comments")[0];
                             console.log( "commentHTML " + commentHTML);
@@ -407,7 +407,7 @@ class QuillEditor extends Component {
                     if (dummyNode.getElementsByTagName("comment")[i].getAttribute("id") == this.state.userID) {
                         console.log("This user has commented.");
                         console.log("Get Elements " + dummyNode.getElementsByTagName("comment")[i].innerHTML);
-                        dummyNode.getElementsByTagName("comment")[i].innerHTML = `${this.state.userID}: ${comment}`;
+                        dummyNode.getElementsByTagName("comment")[i].innerHTML = `${this.state.userID}: ${comment}\n<br/>`;
                         console.log("Get Elements " + dummyNode.getElementsByTagName("comment")[i].innerHTML);
 
                         newText = dummyNode.innerHTML;
@@ -434,7 +434,7 @@ class QuillEditor extends Component {
             console.log(dummyNode.getElementsByTagName("comments")[0].innerHTML);
 
             var newInner = dummyNode.getElementsByTagName("comments")[0].innerHTML.concat(`<comment
-                id=${this.state.userID} className="comment">${this.state.userID}: ${comment}<br></comment>`);
+                id=${this.state.userID} className="comment">${this.state.userID}: ${comment}\n<br/></comment>`);
             console.log("new Inner" + newInner);
             dummyNode.getElementsByTagName("comments")[0].innerHTML = newInner;
 
@@ -454,7 +454,7 @@ class QuillEditor extends Component {
 
         } else {
             console.log("Comments are not already in here.");
-            var comSpecial = `<comments id = 'comment-${this.props.primaryid}'><comment id = ${this.state.userID} class = "comment" >${this.state.userID}: ${comment}<br></comment></comments>`;
+            var comSpecial = `<comments id = 'comment-${this.props.primaryid}'><comment id = ${this.state.userID} class = "comment" >${this.state.userID}: ${comment}\n<br/></comment></comments>`;
 
             console.log('Comment Special ' + comSpecial);
             console.log('Comment Special Outer ' + comSpecial.outerHTML);

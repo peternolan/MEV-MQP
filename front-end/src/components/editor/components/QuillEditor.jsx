@@ -112,6 +112,8 @@ class QuillEditor extends Component {
                 .then((rows) => {
 
                     if (rows.length > 0) {
+                        var reportHTML;
+                        var reportText;
                         var dummyNode = document.createElement('div');
                         dummyNode.className = 'holder';
                         dummyNode.innerHTML = rows[0].report_text;
@@ -122,8 +124,39 @@ class QuillEditor extends Component {
                         console.log( "commentHTML " + commentHTML);
                         if (dummyNode.getElementsByTagName("comments")[0]) {
                             console.log("holder " + dummyNode.getElementsByTagName("comments")[0].outerHTML);
+                            console.log("holder first comment " + dummyNode.getElementsByTagName("comments")[0].getElementsByTagName("comment")[0].outerHTML);
                             console.log("innerText holder " + dummyNode.getElementsByTagName("comments")[0].innerText.toString());
-                            document.getElementById('commentBox').value = dummyNode.getElementsByTagName("comments")[0].innerText;
+
+
+                            if (dummyNode.getElementsByTagName("comments")[0].getElementsByTagName("comment"))
+                            {
+                                console.log("Found Comment " + dummyNode.getElementsByTagName("comments")[0].getElementsByTagName("comment"));
+                                var text = '';
+
+                                for (var i in dummyNode.getElementsByTagName("comment")) {
+                                    console.log("i " + i);
+                                    console.log("Found Comment in for loop id " +  dummyNode.getElementsByTagName("comment")[i].id.toString());
+
+
+                                    if (dummyNode.getElementsByTagName("comment")[i].id.toString() === this.state.userID.toString() && Number.isInteger(Number(i))) {
+
+                                        text = text.concat(dummyNode.getElementsByTagName("comment")[0].innerText);
+
+                                        console.log("Text Load " + text);
+
+                                        document.getElementById('commentBox').value = text;
+
+                                        //document.getElementById('commentBox').value = text.concat(dummyNode.getElementsByTagName("comments")[0].innerText);
+
+                                    }
+                                    else {
+                                        break;
+                                    }
+                                }
+
+
+                            }
+
                             commentHTML =  dummyNode.getElementsByTagName("comments")[0];
                             console.log( "commentHTML " + commentHTML);
 
@@ -133,18 +166,22 @@ class QuillEditor extends Component {
                             console.log("Commentfinal " + commentFinal.innerText);
 
                             dummyNode.getElementsByTagName("comments")[0].remove();
-                            console.log("reportText " + dummyNode.innerHTML );
+                            console.log("reportText " + dummyNode.innerHTML);
+                            reportHTML = dummyNode.innerHTML;
 
+                            reportText = reportHTML + commentFinal;
+
+                            console.log("Report Text beginning Final " + reportText);
                         }
                         else {
                             commentFinal = ``;
+                            reportHTML = dummyNode.innerHTML;
+                            reportText = reportHTML + commentFinal;
+
+                            console.log("Report Text beginning Final NO COMMENT " + reportText);
                         }
 
-                        var reportHTML = dummyNode.innerHTML;
 
-                        var reportText = reportHTML + commentFinal;
-
-                        console.log("Report Text beginning Final " + reportText);
 
                         this.setState({
                             saving: false,
@@ -350,8 +387,30 @@ class QuillEditor extends Component {
             dummyNode.innerHTML = this.state.comment;
             console.log("commentMade Begin state comment " + dummyNode.innerHTML);
             console.log("Comment InnerText " + dummyNode.innerText);
+            var text;
 
-            document.getElementById('commentBox').value = dummyNode.innerText;
+            for (var i in dummyNode.getElementsByTagName("comment")) {
+                console.log("i " + i);
+                console.log("Found Comment in for loop id " +  dummyNode.getElementsByTagName("comment")[i].id.toString());
+
+
+                if (dummyNode.getElementsByTagName("comment")[i].id.toString() === this.state.userID.toString() && Number.isInteger(Number(i))) {
+
+                    text = text.concat(dummyNode.getElementsByTagName("comment")[0].innerText);
+
+                    console.log("Text Load " + text);
+
+                    document.getElementById('commentBox').value = text;
+
+                    //document.getElementById('commentBox').value = text.concat(dummyNode.getElementsByTagName("comments")[0].innerText);
+
+                }
+                else {
+                    break;
+                }
+            }
+
+            //document.getElementById('commentBox').value = dummyNode.innerText;
 
             var finalTextComm = this.state.report + this.state.comment;
 
@@ -404,9 +463,10 @@ class QuillEditor extends Component {
 
                 if (dummyNode.getElementsByTagName("comment")[i] && Number.isInteger(Number(i))) {
                     console.log("Get Attribute Again " + dummyNode.getElementsByTagName("comment")[i].getAttribute("id"));
-                    if (dummyNode.getElementsByTagName("comment")[i].getAttribute("id") == this.state.userID) {
+                    if (dummyNode.getElementsByTagName("comment")[i].getAttribute("id") === this.state.userID) {
                         console.log("This user has commented.");
                         console.log("Get Elements " + dummyNode.getElementsByTagName("comment")[i].innerHTML);
+                        console.log("Get Elements doc id " + document.getElementById(this.state.userID)[i].innerHTML);
                         dummyNode.getElementsByTagName("comment")[i].innerHTML = `${this.state.userID}: ${comment}\n<br/>`;
                         console.log("Get Elements " + dummyNode.getElementsByTagName("comment")[i].innerHTML);
 

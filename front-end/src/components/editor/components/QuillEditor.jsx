@@ -130,23 +130,38 @@ class QuillEditor extends Component {
 
                             if (dummyNode.getElementsByTagName("comments")[0].getElementsByTagName("comment"))
                             {
-                                console.log("Found Comment " + dummyNode.getElementsByTagName("comments")[0].getElementsByTagName("comment"));
+                                console.log("Found Comment " + dummyNode.getElementsByTagName("comments")[0].getElementsByTagName("comment")[0]);
                                 var text = '';
+                                console.log("viewable " + dummyNode.getElementsByTagName("comments")[0].getElementsByTagName("comment")[0].getAttribute("viewable").toString());
 
                                 for (var i in dummyNode.getElementsByTagName("comment")) {
                                     console.log("i " + i);
-                                    console.log("Found Comment in for loop id " +  dummyNode.getElementsByTagName("comment")[i].id.toString());
 
+                                    //console.log("Found Comment in for loop id " +  dummyNode.getElementsByTagName("comment")[i].id.toString());
 
-                                    if (dummyNode.getElementsByTagName("comment")[i].id.toString() === this.state.userID.toString() && Number.isInteger(Number(i))) {
+                                    /*
+                                    if (dummyNode.getElementsByTagName("comment")[i].id.toString() === this.state.userID.toString()) {
+                                        console.log("IDs are equal");
+                                    }
+                                    else {
+                                        console.log("IDs are NOT equal");
+                                    }
+                                    */
 
-                                        text = text.concat(dummyNode.getElementsByTagName("comment")[0].innerText);
+                                    if (Number.isInteger(Number(i))) {
+                                        console.log("viewable " + dummyNode.getElementsByTagName("comment")[i].getAttribute("viewable").toString());
+                                        if (dummyNode.getElementsByTagName("comment")[i].id.toString() === this.state.userID.toString()
+                                            || dummyNode.getElementsByTagName("comment")[i].getAttribute("viewable").toString() === "public") {
 
-                                        console.log("Text Load " + text);
+                                            text = text.concat(dummyNode.getElementsByTagName("comment")[i].innerText);
 
-                                        document.getElementById('commentBox').value = text;
+                                            console.log("Text Load " + text);
 
-                                        //document.getElementById('commentBox').value = text.concat(dummyNode.getElementsByTagName("comments")[0].innerText);
+                                            document.getElementById('commentBox').value = text;
+
+                                            //document.getElementById('commentBox').value = text.concat(dummyNode.getElementsByTagName("comments")[0].innerText);
+
+                                        }
 
                                     }
                                     else {
@@ -387,27 +402,42 @@ class QuillEditor extends Component {
             dummyNode.innerHTML = this.state.comment;
             console.log("commentMade Begin state comment " + dummyNode.innerHTML);
             console.log("Comment InnerText " + dummyNode.innerText);
-            var text;
 
-            for (var i in dummyNode.getElementsByTagName("comment")) {
-                console.log("i " + i);
-                console.log("Found Comment in for loop id " +  dummyNode.getElementsByTagName("comment")[i].id.toString());
+            if (dummyNode.getElementsByTagName("comment")) {
+                var text = '';
 
+                for (var i in dummyNode.getElementsByTagName("comment")) {
+                    console.log("i " + i);
 
-                if (dummyNode.getElementsByTagName("comment")[i].id.toString() === this.state.userID.toString() && Number.isInteger(Number(i))) {
+                    //console.log("Found Comment id " + dummyNode.getElementsByTagName("comment")[i].id.toString());
+                    //console.log("Current id" + this.state.userID.toString());
 
-                    text = text.concat(dummyNode.getElementsByTagName("comment")[0].innerText);
+                    if (Number.isInteger(Number(i))) {
+                        if (dummyNode.getElementsByTagName("comment")[i].id.toString() === this.state.userID.toString()) {
 
-                    console.log("Text Load " + text);
+                            console.log("Found Comment in for loop id " + dummyNode.getElementsByTagName("comment")[i].id.toString());
 
-                    document.getElementById('commentBox').value = text;
+                            text = text.concat(dummyNode.getElementsByTagName("comment")[i].innerText);
 
-                    //document.getElementById('commentBox').value = text.concat(dummyNode.getElementsByTagName("comments")[0].innerText);
+                            console.log("Text Load " + text);
 
+                            document.getElementById('commentBox').value = text;
+
+                            //document.getElementById('commentBox').value = text.concat(dummyNode.getElementsByTagName("comments")[0].innerText);
+                        }
+
+                    } //else {
+                      //  break;
+                    //}
                 }
-                else {
-                    break;
-                }
+            }
+            else {
+
+                console.log("commentMade Begin State comment " + dummyNode.innerHTML);
+                console.log("comment innerText " + dummyNode.innerText);
+
+                document.getElementById('commentBox').value = dummyNode.innerText;
+
             }
 
             //document.getElementById('commentBox').value = dummyNode.innerText;
@@ -449,6 +479,7 @@ class QuillEditor extends Component {
         console.log("dummyNode.innerHTML commentMade " + dummyNode.innerHTML);
 
         var newText = '';
+        var radios = document.getElementsByName("viewable");
 
         if (dummyNode.getElementsByTagName("comments")[0]) {
             console.log("Comments are in here already.");
@@ -468,6 +499,14 @@ class QuillEditor extends Component {
                         console.log("Get Elements " + dummyNode.getElementsByTagName("comment")[i].innerHTML);
                         console.log("Get Elements doc id " + document.getElementById(this.state.userID)[i].innerHTML);
                         dummyNode.getElementsByTagName("comment")[i].innerHTML = `${this.state.userID}: ${comment}\n<br/>`;
+
+                        for (var j in radios) {
+                            if (radios[j].checked) {
+                                dummyNode.getElementsByTagName("comment")[i].getAttribute().value = radios[j].value;
+                            }
+
+                        }
+
                         console.log("Get Elements " + dummyNode.getElementsByTagName("comment")[i].innerHTML);
 
                         newText = dummyNode.innerHTML;
@@ -493,8 +532,17 @@ class QuillEditor extends Component {
             console.log("This user has not commented.");
             console.log(dummyNode.getElementsByTagName("comments")[0].innerHTML);
 
-            var newInner = dummyNode.getElementsByTagName("comments")[0].innerHTML.concat(`<comment
-                id=${this.state.userID} className="comment">${this.state.userID}: ${comment}\n<br/></comment>`);
+
+            var newInner;
+
+            for (var k in radios) {
+                if (radios[k].checked) {
+                    newInner = dummyNode.getElementsByTagName("comments")[0].innerHTML.concat(`<comment id=${this.state.userID} viewable = ${radios[k].value} className="comment">${this.state.userID}: ${comment}\n<br/></comment>`);
+                }
+
+            }
+
+
             console.log("new Inner" + newInner);
             dummyNode.getElementsByTagName("comments")[0].innerHTML = newInner;
 
@@ -514,8 +562,14 @@ class QuillEditor extends Component {
 
         } else {
             console.log("Comments are not already in here.");
-            var comSpecial = `<comments id = 'comment-${this.props.primaryid}'><comment id = ${this.state.userID} class = "comment" >${this.state.userID}: ${comment}\n<br/></comment></comments>`;
 
+            for (var i in radios) {
+                if (radios[i].checked) {
+                    var comSpecial = `<comments id = 'comment-${this.props.primaryid}'><comment id = ${this.state.userID} viewable = ${radios[i].value} class = "comment" >${this.state.userID}: ${comment}\n<br/></comment></comments>`;
+
+                }
+
+            }
             console.log('Comment Special ' + comSpecial);
             console.log('Comment Special Outer ' + comSpecial.outerHTML);
             console.log('comment Made ' + comment);
@@ -730,12 +784,17 @@ class QuillEditor extends Component {
                         <div style={{padding: '4px'}}>
                            <textarea id = "comment" cols = "120" rows = "5" >  </textarea>
                          </div>
-                        {//console.log("Text in Comment Value " + this.state.comment.outerHTML)}
-                        }
-                         <div style={{padding: '4px'} }>
-                        <Button
 
-                            onClick={() => this.commentMade()}> Make Note </Button>
+                         <div style={{padding: '4px'} }>
+                             <Button onClick={() => this.commentMade()}> Make Note </Button>
+                             <form>
+
+                                 <input type ="radio" name = "viewable" value = "private" checked ="yes" style={{padding: '4px'}}/>Private
+                                 <input type="radio" name = "viewable" value = "public" style={{padding: '4px'}}/>Public
+
+
+                             </form>
+
                          </div>
                     </div>
                     {(this.state.editModeOn) ?

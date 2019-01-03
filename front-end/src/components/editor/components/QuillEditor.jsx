@@ -483,11 +483,59 @@ class QuillEditor extends Component {
 
         if (dummyNode.getElementsByTagName("comments")[0]) {
             console.log("Comments are in here already.");
-            //console.log("Get Attribute Result " + dummyNode.getElementsByTagName("comment")[0].getAttribute("id"));
-
+            console.log("Comments in desc " + dummyNode.getElementsByTagName("comment")[0].outerHTML);
             for (var i in dummyNode.getElementsByTagName("comment")) {
-                console.log("i " + i);
 
+                console.log("Comment Found" + dummyNode.getElementsByTagName("comment")[i].innerHTML);
+                if (dummyNode.getElementsByTagName("comment")[i]) {
+                    console.log("Does exist");
+                } else {
+                    console.log("Does NOT exist");
+                }
+                console.log("i " + i);
+                console.log("Is Number " + Number.isInteger(Number(i)));
+
+                if (Number.isInteger(Number(i))) {
+                    console.log("IS A NUMBER");
+                    if (dummyNode.getElementsByTagName("comment")[i]) {
+                        console.log("COMMENT EXISTS");
+                        console.log("Get Attribute Again " + dummyNode.getElementsByTagName("comment")[i].getAttribute("id"));
+
+                        if (dummyNode.getElementsByTagName("comment")[i].getAttribute("id").toString() === this.state.userID.toString()) {
+                            console.log("This user has commented.");
+                            console.log("Get Elements " + dummyNode.getElementsByTagName("comment")[i].outerHTML);
+
+                            dummyNode.getElementsByTagName("comment")[i].innerHTML = `${this.state.userID}: ${comment}\n<br/>`;
+
+                            for (var j in radios) {
+                                if (radios[j].checked) {
+                                    dummyNode.getElementsByTagName("comment")[i].setAttribute("viewable", radios[j].value);
+                                }
+
+                            }
+
+                            console.log("Get Elements " + dummyNode.getElementsByTagName("comment")[i].innerHTML);
+
+                            newText = dummyNode.innerHTML;
+
+
+                            this.setState({comment: newText, addingComment: true}, function () {
+                                this.handleChange(this.state.report);
+
+                            });
+
+
+                            console.log("this.addingcomment inside make comment " + this.state.addingComment);
+                            console.log(dummyNode.innerHTML);
+                            console.log("After comment is done " + this.state.comment);
+
+                            return
+                        }
+                    }
+                }
+            }
+            /*
+            for (var i in dummyNode.getElementsByTagName("comment")) {
                 console.log("UID " + this.state.userID);
 
                 console.log(Number(i));
@@ -528,7 +576,7 @@ class QuillEditor extends Component {
                     }
                 }
             }
-
+            */
             console.log("This user has not commented.");
             console.log(dummyNode.getElementsByTagName("comments")[0].innerHTML);
 
@@ -563,9 +611,9 @@ class QuillEditor extends Component {
         } else {
             console.log("Comments are not already in here.");
 
-            for (var i in radios) {
-                if (radios[i].checked) {
-                    var comSpecial = `<comments id = 'comment-${this.props.primaryid}'><comment id = ${this.state.userID} viewable = ${radios[i].value} class = "comment" >${this.state.userID}: ${comment}\n<br/></comment></comments>`;
+            for (var x in radios) {
+                if (radios[x].checked) {
+                    var comSpecial = `<comments id = 'comment-${this.props.primaryid}'><comment id = ${this.state.userID} viewable = ${radios[x].value} class = "comment" >${this.state.userID}: ${comment}\n<br/></comment></comments>`;
 
                 }
 

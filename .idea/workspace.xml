@@ -19,8 +19,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/front-end/src/components/editor/components/QuillEditor.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="352">
-              <caret line="522" column="69" selection-start-line="522" selection-start-column="69" selection-end-line="522" selection-end-column="69" />
+            <state relative-caret-position="260">
+              <caret line="360" column="124" selection-start-line="360" selection-start-column="124" selection-end-line="360" selection-end-column="124" />
               <folding>
                 <element signature="e#0#41#0" expanded="true" />
               </folding>
@@ -93,7 +93,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>quilleditor</find>
       <find>annotate</find>
       <find>text in comment</find>
       <find>python</find>
@@ -119,10 +118,11 @@
       <find>===</find>
       <find>==</find>
       <find>commentbox</find>
-      <find>var i</find>
       <find>radios</find>
       <find>var i in</find>
       <find>viewable</find>
+      <find>console.log</find>
+      <find>var i</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -172,6 +172,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -293,7 +294,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -413,14 +413,17 @@
       <workItem from="1546372292851" duration="7570000" />
       <workItem from="1546380181063" duration="8903000" />
       <workItem from="1546463004930" duration="7481000" />
+      <workItem from="1546502542524" duration="241000" />
+      <workItem from="1546551444781" duration="1813000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="477944000" />
+    <option name="totallyTimeSpent" value="479998000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="67" y="25" width="1853" height="925" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.05464481" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -740,8 +743,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/front-end/src/components/editor/components/QuillEditor.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="352">
-          <caret line="522" column="69" selection-start-line="522" selection-start-column="69" selection-end-line="522" selection-end-column="69" />
+        <state relative-caret-position="260">
+          <caret line="360" column="124" selection-start-line="360" selection-start-column="124" selection-end-line="360" selection-end-column="124" />
           <folding>
             <element signature="e#0#41#0" expanded="true" />
           </folding>

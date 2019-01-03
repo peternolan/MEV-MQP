@@ -118,44 +118,23 @@ class QuillEditor extends Component {
                         dummyNode.className = 'holder';
                         dummyNode.innerHTML = rows[0].report_text;
 
-                        console.log('innerHTML At Beginning ' + dummyNode.innerHTML);
-
                         var commentHTML = '';
-                        console.log( "commentHTML " + commentHTML);
+
                         if (dummyNode.getElementsByTagName("comments")[0]) {
-                            console.log("holder " + dummyNode.getElementsByTagName("comments")[0].outerHTML);
-                            console.log("holder first comment " + dummyNode.getElementsByTagName("comments")[0].getElementsByTagName("comment")[0].outerHTML);
-                            console.log("innerText holder " + dummyNode.getElementsByTagName("comments")[0].innerText.toString());
 
 
                             if (dummyNode.getElementsByTagName("comments")[0].getElementsByTagName("comment"))
                             {
-                                console.log("Found Comment " + dummyNode.getElementsByTagName("comments")[0].getElementsByTagName("comment")[0]);
-                                var text = '';
-                                console.log("viewable " + dummyNode.getElementsByTagName("comments")[0].getElementsByTagName("comment")[0].getAttribute("viewable").toString());
+                               var text = '';
 
                                 for (var i in dummyNode.getElementsByTagName("comment")) {
-                                    console.log("i " + i);
-
-                                    //console.log("Found Comment in for loop id " +  dummyNode.getElementsByTagName("comment")[i].id.toString());
-
-                                    /*
-                                    if (dummyNode.getElementsByTagName("comment")[i].id.toString() === this.state.userID.toString()) {
-                                        console.log("IDs are equal");
-                                    }
-                                    else {
-                                        console.log("IDs are NOT equal");
-                                    }
-                                    */
 
                                     if (Number.isInteger(Number(i))) {
-                                        console.log("viewable " + dummyNode.getElementsByTagName("comment")[i].getAttribute("viewable").toString());
-                                        if (dummyNode.getElementsByTagName("comment")[i].id.toString() === this.state.userID.toString()
+                                       if (dummyNode.getElementsByTagName("comment")[i].id.toString() === this.state.userID.toString()
                                             || dummyNode.getElementsByTagName("comment")[i].getAttribute("viewable").toString() === "public") {
 
                                             text = text.concat(dummyNode.getElementsByTagName("comment")[i].innerText);
 
-                                            console.log("Text Load " + text);
 
                                             document.getElementById('commentBox').value = text;
 
@@ -173,27 +152,21 @@ class QuillEditor extends Component {
                             }
 
                             commentHTML =  dummyNode.getElementsByTagName("comments")[0];
-                            console.log( "commentHTML " + commentHTML);
 
                             var commentFinal = commentHTML.outerHTML;
 
-                            console.log("Commentfinal " + commentFinal);
-                            console.log("Commentfinal " + commentFinal.innerText);
 
                             dummyNode.getElementsByTagName("comments")[0].remove();
-                            console.log("reportText " + dummyNode.innerHTML);
                             reportHTML = dummyNode.innerHTML;
 
                             reportText = reportHTML + commentFinal;
 
-                            console.log("Report Text beginning Final " + reportText);
                         }
                         else {
                             commentFinal = ``;
                             reportHTML = dummyNode.innerHTML;
                             reportText = reportHTML + commentFinal;
 
-                            console.log("Report Text beginning Final NO COMMENT " + reportText);
                         }
 
 
@@ -273,8 +246,6 @@ class QuillEditor extends Component {
 
         return <div>
             {/* {this.customToolbar()} */}
-            {console.log("ReactQuill " + this.props.primaryid)}
-            {console.log("Report text Display" + this.state.report)}
 
             {
 
@@ -300,10 +271,6 @@ class QuillEditor extends Component {
     //Need to Set State in order to make sure it doesn't change when we add comments.
     handleChange = (value) => {
 
-        console.log("Handle Change " + value);
-        console.log("Handle Change Report Text " + this.state.current.reportText);
-        console.log("this.state.addingComment " + this.state.addingComment);
-
         if (!this.state.addingComment) {
             const drugRE = `background-color: ${annotationColors.drug};`;
             const reactionRE = `background-color: ${annotationColors.reaction};`;
@@ -315,15 +282,13 @@ class QuillEditor extends Component {
             const interestingRE = `background-color: ${annotationColors.interesting};`;
             const newTags = {};
 
-            console.log('This ' + `${this.props.primaryid}`);
             const spans = document.getElementById(`${this.props.primaryid}` || 'react-quill')
                 .getElementsByClassName('ql-editor')[0]
                 .getElementsByTagName('span');
 
 
             for (let i = 0; i < spans.length; i += 1) {
-                console.log('spans ' + spans[i].getAttribute('style'));
-                console.log('span ' + i + ' ' + spans[i]);
+
                 switch (spans[i].getAttribute('style')) {
                     case drugRE:
                         newTags.drug = (newTags.drug)
@@ -361,7 +326,6 @@ class QuillEditor extends Component {
                             : [spans[i].innerText];
                         break;
                     case interestingRE:
-                        console.log('innerText ' + spans[i].innerText);
                         newTags.interesting = (newTags.interesting)
                             ? newTags.interesting.concat(spans[i].innerText)
                             : [spans[i].innerText];
@@ -370,56 +334,34 @@ class QuillEditor extends Component {
                 }
             }
 
-            console.log('value ' + value);
-
-
             this.setState({report: value});
-            console.log("Comment in alternate change " + this.state.comment);
-
             var dummyNode = document.createElement('div');
             dummyNode.innerHTML = this.state.comment;
-            console.log("comment in alternate change dummy Node " + dummyNode.innerHTML);
-            console.log("dummynode InnerText " + dummyNode.innerText);
 
             var comment = dummyNode.innerHTML;
 
 
             var finalText = this.state.report + comment;
 
-            console.log('STATE WILL CHANGE TO : ' + finalText);
-
 
             this.setState({success: false, current: {reportText: finalText, tags: newTags}});
-            //this.setState({success: false, current: {reportText: value, tags: newTags}});
-            console.log('Report Text After set state Handle Change' + this.state.current.reportText);
         }
         else {
 
-            //console.log("this.state.comment.innerText " + this.state.comment);
-            console.log("this.state.comment " + this.state.comment);
+            var dummyNode2 = document.createElement('div');
+            dummyNode2.innerHTML = this.state.comment;
 
-            var dummyNode = document.createElement('div');
-            dummyNode.innerHTML = this.state.comment;
-            console.log("commentMade Begin state comment " + dummyNode.innerHTML);
-            console.log("Comment InnerText " + dummyNode.innerText);
-
-            if (dummyNode.getElementsByTagName("comment")) {
+            if (dummyNode2.getElementsByTagName("comment")) {
                 var text = '';
 
-                for (var i in dummyNode.getElementsByTagName("comment")) {
-                    console.log("i " + i);
-
-                    //console.log("Found Comment id " + dummyNode.getElementsByTagName("comment")[i].id.toString());
-                    //console.log("Current id" + this.state.userID.toString());
+                for (var i in dummyNode2.getElementsByTagName("comment")) {
 
                     if (Number.isInteger(Number(i))) {
-                        if (dummyNode.getElementsByTagName("comment")[i].id.toString() === this.state.userID.toString()) {
+                        if (dummyNode2.getElementsByTagName("comment")[i].id.toString() === this.state.userID.toString()
+                            || dummyNode.getElementsByTagName("comment")[i].getAttribute("viewable").toString() === "public") {
 
-                            console.log("Found Comment in for loop id " + dummyNode.getElementsByTagName("comment")[i].id.toString());
+                            text = text.concat(dummyNode2.getElementsByTagName("comment")[i].innerText);
 
-                            text = text.concat(dummyNode.getElementsByTagName("comment")[i].innerText);
-
-                            console.log("Text Load " + text);
 
                             document.getElementById('commentBox').value = text;
 
@@ -433,9 +375,6 @@ class QuillEditor extends Component {
             }
             else {
 
-                console.log("commentMade Begin State comment " + dummyNode.innerHTML);
-                console.log("comment innerText " + dummyNode.innerText);
-
                 document.getElementById('commentBox').value = dummyNode.innerText;
 
             }
@@ -445,7 +384,7 @@ class QuillEditor extends Component {
             var finalTextComm = this.state.report + this.state.comment;
 
 
-            console.log('STATE WILL CHANGE TO : ' + finalTextComm);
+
 
             this.setState({success: false, addingComment: false,  current: {reportText: finalTextComm}});
 
@@ -457,7 +396,7 @@ class QuillEditor extends Component {
 
 
     colorBackground(color) {
-        console.log('color background ' + color);
+
         const { index, length } = this.quill.getSelection();
         this.quill.formatText(index, length, 'background', color);
 
@@ -470,40 +409,25 @@ class QuillEditor extends Component {
 
         var comment = document.getElementById('comment').value;
 
-        console.log("Comment Text " + comment);
-
         var dummyNode = document.createElement('div');
-        console.log("commentMade Begin state comment " + this.state.comment);
-        dummyNode.innerHTML = this.state.comment;
 
-        console.log("dummyNode.innerHTML commentMade " + dummyNode.innerHTML);
+        dummyNode.innerHTML = this.state.comment;
 
         var newText = '';
         var radios = document.getElementsByName("viewable");
 
         if (dummyNode.getElementsByTagName("comments")[0]) {
-            console.log("Comments are in here already.");
-            console.log("Comments in desc " + dummyNode.getElementsByTagName("comment")[0].outerHTML);
+
             for (var i in dummyNode.getElementsByTagName("comment")) {
 
-                console.log("Comment Found" + dummyNode.getElementsByTagName("comment")[i].innerHTML);
-                if (dummyNode.getElementsByTagName("comment")[i]) {
-                    console.log("Does exist");
-                } else {
-                    console.log("Does NOT exist");
-                }
-                console.log("i " + i);
-                console.log("Is Number " + Number.isInteger(Number(i)));
 
                 if (Number.isInteger(Number(i))) {
-                    console.log("IS A NUMBER");
+
                     if (dummyNode.getElementsByTagName("comment")[i]) {
-                        console.log("COMMENT EXISTS");
-                        console.log("Get Attribute Again " + dummyNode.getElementsByTagName("comment")[i].getAttribute("id"));
+
 
                         if (dummyNode.getElementsByTagName("comment")[i].getAttribute("id").toString() === this.state.userID.toString()) {
-                            console.log("This user has commented.");
-                            console.log("Get Elements " + dummyNode.getElementsByTagName("comment")[i].outerHTML);
+
 
                             dummyNode.getElementsByTagName("comment")[i].innerHTML = `${this.state.userID}: ${comment}\n<br/>`;
 
@@ -514,7 +438,6 @@ class QuillEditor extends Component {
 
                             }
 
-                            console.log("Get Elements " + dummyNode.getElementsByTagName("comment")[i].innerHTML);
 
                             newText = dummyNode.innerHTML;
 
@@ -524,61 +447,12 @@ class QuillEditor extends Component {
 
                             });
 
-
-                            console.log("this.addingcomment inside make comment " + this.state.addingComment);
-                            console.log(dummyNode.innerHTML);
-                            console.log("After comment is done " + this.state.comment);
-
                             return
                         }
                     }
                 }
             }
-            /*
-            for (var i in dummyNode.getElementsByTagName("comment")) {
-                console.log("UID " + this.state.userID);
 
-                console.log(Number(i));
-
-                if (dummyNode.getElementsByTagName("comment")[i] && Number.isInteger(Number(i))) {
-                    console.log("Get Attribute Again " + dummyNode.getElementsByTagName("comment")[i].getAttribute("id"));
-                    if (dummyNode.getElementsByTagName("comment")[i].getAttribute("id") === this.state.userID) {
-                        console.log("This user has commented.");
-                        console.log("Get Elements " + dummyNode.getElementsByTagName("comment")[i].innerHTML);
-                        console.log("Get Elements doc id " + document.getElementById(this.state.userID)[i].innerHTML);
-                        dummyNode.getElementsByTagName("comment")[i].innerHTML = `${this.state.userID}: ${comment}\n<br/>`;
-
-                        for (var j in radios) {
-                            if (radios[j].checked) {
-                                dummyNode.getElementsByTagName("comment")[i].getAttribute().value = radios[j].value;
-                            }
-
-                        }
-
-                        console.log("Get Elements " + dummyNode.getElementsByTagName("comment")[i].innerHTML);
-
-                        newText = dummyNode.innerHTML;
-
-
-                        this.setState({comment: newText, addingComment: true}, function () {
-                            this.handleChange(this.state.report);
-
-                        });
-
-
-
-
-                        console.log("this.addingcomment inside make comment " + this.state.addingComment);
-                        console.log(dummyNode.innerHTML);
-                        console.log("After comment is done " + this.state.comment);
-
-                        return
-                    }
-                }
-            }
-            */
-            console.log("This user has not commented.");
-            console.log(dummyNode.getElementsByTagName("comments")[0].innerHTML);
 
 
             var newInner;
@@ -591,25 +465,18 @@ class QuillEditor extends Component {
             }
 
 
-            console.log("new Inner" + newInner);
             dummyNode.getElementsByTagName("comments")[0].innerHTML = newInner;
 
             newText = dummyNode.innerHTML;
-
-            console.log("newText Not Yet Commented " + newInner );
 
             this.setState({comment: newText, addingComment: true}, function () {
                 this.handleChange(this.state.report);
                 //document.getElementById('commentBox').value = this.state.comment.innerText;
             });
-            console.log("this.addingcomment inside make comment " + this.state.addingComment);
-            console.log("After comment is done " + this.state.comment);
 
-            //this.handleChange(this.state.report);
 
 
         } else {
-            console.log("Comments are not already in here.");
 
             for (var x in radios) {
                 if (radios[x].checked) {
@@ -618,15 +485,6 @@ class QuillEditor extends Component {
                 }
 
             }
-            console.log('Comment Special ' + comSpecial);
-            console.log('Comment Special Outer ' + comSpecial.outerHTML);
-            console.log('comment Made ' + comment);
-            //console.log('value ' + value);
-            //var currentText = value;
-            //var newText = currentText.concat(comSpecial);
-
-            //console.log('newText ' + newText);
-
 
             this.setState({comment: comSpecial, addingComment: true}, function () {
                 this.handleChange(this.state.report);
@@ -643,7 +501,7 @@ class QuillEditor extends Component {
 
     searchTextBox = (event) => {
         this.setState({valueAttr: event.target.value});
-        // console.log(event)
+
 
         if (event.target.value==='') {
             this.setState({searching:false})
@@ -661,17 +519,15 @@ class QuillEditor extends Component {
 
 
     editMode = () => {
-        //var x = document.getElementById(`react-quill-${this.props.primaryid}`);
-        console.log('editModeOn ' + this.state.editModeOn);
-        console.log('primaryID ' + this.props.primaryid);
+
         if (this.state.editModeOn) {
             //this.setContainer(`react-quill-${this.state.primaryId}-2`);
             var x = document.getElementById(`react-quill-${this.props.primaryid}`);
-            console.log("x in " + x);
             x.style.display = "none";
+
             var y = document.getElementById(`react-quill-${this.props.primaryid}-2`);
-            console.log("y in " + y);
             y.style.display = "initial";
+
             this.setState({editModeOn: false});
             this.saveWork();
 
@@ -680,10 +536,10 @@ class QuillEditor extends Component {
         else {
             //this.setContainer(`react-quill-${this.state.primaryId}`);
             var a = document.getElementById(`react-quill-${this.props.primaryid}-2`);
-            console.log("a in " + a);
+
             a.style.display = "none";
             var b = document.getElementById(`react-quill-${this.props.primaryid}`);
-            console.log("b in " + b);
+
             b.style.display = "initial";
             this.setState({editModeOn: true});
             //this.render();
@@ -774,19 +630,14 @@ class QuillEditor extends Component {
 
 
     render() {
-        console.log("Render");
+
         const { ...props } = this.props;
         const { activeIndex, caseSensitive, searchText } = this.state.textHighlight;
         const  textToHighlight = this.state.current.reportText;
-        // console.log(searchText)
+
 
         const searchWords= searchText.split(/\s/).filter(word => word)
-        // console.log(searchWords)
-        console.log("reportText render" + this.state.current.reportText);
-        console.log("Edit Mode " + this.state.editModeOn);
-        console.log("State Primary ID " + this.state.primaryId);
-        console.log("Props Primary ID " + this.props.primaryid);
-        console.log("User ID " + this.state.userID);
+
         return (
             <div className={`${this.props.classes.pdfView} container`}>
                 {/* ====== Quill editor for Annotating the Report Text ====== */}

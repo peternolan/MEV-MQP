@@ -71,6 +71,7 @@ class ReportTable extends React.PureComponent {
     }).isRequired,
     bin: PropTypes.string.isRequired,
     userID: PropTypes.number.isRequired,
+    userEmail: PropTypes.string,
     searchReports: PropTypes.array,
     classes: PropTypes.shape({
       tableContainer: PropTypes.string,

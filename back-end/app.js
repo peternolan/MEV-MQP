@@ -666,6 +666,19 @@ console.log('user quer: \n', query);
   });
 });
 
+app.get('/getUserName', (req, res) => {
+  console.log('looking for user with request body: \n', req.body);
+  let query =
+      'SELECT email '
+      + 'FROM users '
+      + 'WHERE user_id=\'' + req.body.email + '\'';
+  console.log('user quer: \n', query);
+  db.query(query, (err, data) => {
+    //console.log(data);
+    res.status(200).send(data);
+  });
+})
+
 app.put('/saveuser', (req, res) => {
   let query =
   'INSERT INTO users(email) VALUES (\''+ req.body.email +'\');';

@@ -51,6 +51,7 @@ class ReportList extends Component {
     getUserCases: PropTypes.func.isRequired,
     createUserBin: PropTypes.func.isRequired,
     userID: PropTypes.number.isRequired,
+      userEmail: PropTypes.string,
     isLoggedIn: PropTypes.bool.isRequired,
     classes: PropTypes.shape({
       newCaseArea: PropTypes.string,
@@ -348,12 +349,14 @@ class ReportList extends Component {
 
             {/* ====== SideBar for Viewing a report ======*/}
             {console.log(this.state.reportOpen)}
+            {console.log("Report List userEmail " + this.props.userEmail)}
             <div id="report-sidebar" className={this.props.classes.reportContainer}  >
                 <ReportPanel
                     updateTab={this.updateTab}
                     bins={this.state.userBins}
                     primaryid={this.state.primaryIDReport}
                     userID={this.props.userID}
+                    userEmail={this.props.userEmail}
                     reportOpen={this.state.reportOpen}
 
                 />
@@ -460,6 +463,7 @@ class ReportList extends Component {
 
 const mapStateToProps = state => ({
   userID: state.user.userID,
+    userEmail: state.user.userEmail,
   isLoggedIn: state.user.isLoggedIn,
     /**********  Searched reports */
   searchedReports: state.all_reports.searched_reports,

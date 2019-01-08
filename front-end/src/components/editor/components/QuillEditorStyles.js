@@ -46,4 +46,77 @@ export default {
     marginLeft: 5,
   },
 
+    squareCadetBlue: {
+        display: 'inline-block',
+        width: '20px',
+        height: '20px',
+        margin: '3px',
+        backgroundColor: 'chartreuse',
+
+    },
+    squareReuse: {
+
+        display: 'inline-block',
+        width: '20px',
+        height: '20px',
+        margin: '3px',
+        backgroundColor: 'cadetblue',
+
+
+    },
+    squareOrange: {
+        display: 'inline-block',
+        width: '20px',
+        height: '20px',
+        margin: '3px',
+        backgroundColor: 'darkorange',
+        textAlign: 'right',
+
+    },
+    squareGold: {
+        display: 'inline-block',
+        width: '20px',
+        height: '20px',
+        margin: '3px',
+        backgroundColor: 'gold',
+        textAlign: 'right',
+
+    },
+    squarePink: {
+        display: 'inline-block',
+        width: '20px',
+        height: '20px',
+        margin: '3px',
+        backgroundColor: 'lightpink',
+        textAlign: 'right',
+
+    },
+    squareOrchid: {
+        display: 'inline-block',
+        width: '20px',
+        height: '20px',
+        margin: '3px',
+        backgroundColor: 'orchid',
+        textAlign: 'right',
+
+    },
+    squareSilver: {
+        display: 'inline-block',
+        width: '20px',
+        height: '20px',
+        margin: '3px',
+        backgroundColor: 'silver',
+        textAlign: 'right',
+
+    },
+    squareCyan: {
+        display: 'inline-block',
+        width: '20px',
+        height: '20px',
+        margin: '3px',
+        backgroundColor: 'cyan',
+        textAlign: 'right',
+
+    },
+
 };

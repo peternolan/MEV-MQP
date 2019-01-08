@@ -1,7 +1,7 @@
 export default {
     summaryContainer: {
         height: '100%',
-        margin: '20px 20px 20px 0px',
+        margin: '0px',
         overflow: 'scroll',
     },
     expansionPanelSummary: {
@@ -22,32 +22,6 @@ export default {
     };
 */
 
-    squareBlue: {
-        display: 'inline-block',
-        width: '5px',
-        height: '5px',
-        padding: '10px',
-        backgroundColor: 'cadetblue',
-        textAlign: 'right',
 
-    },
-    squareReuse: {
-        display: 'inline-block',
-        width: '5px',
-        height: '5px',
-        padding: '10px',
-        backgroundColor: 'chartreuse',
-        textAlign: 'right',
-
-    },
-    squareOrange: {
-        display: 'inline-block',
-        width: '5px',
-        height: '5px',
-        padding: '10px',
-        backgroundColor: 'darkorange',
-        textAlign: 'right',
-
-    }
 
 };

@@ -1,16 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="de05d0a9-4644-4286-a9e9-4b20757cbfc0" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/src/components/editor/components/QuillEditor.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/components/editor/components/QuillEditor.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/src/components/editor/components/QuillEditorStyles.js" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/components/editor/components/QuillEditorStyles.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/src/components/reports/ReportList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/components/reports/ReportList.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/src/components/reports/components/ReportPanel.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/components/reports/components/ReportPanel.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/src/components/reports/components/ReportPanelStyles.js" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/components/reports/components/ReportPanelStyles.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/src/components/reports/components/ReportTable.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/components/reports/components/ReportTable.jsx" afterDir="false" />
-    </list>
+    <list default="true" id="de05d0a9-4644-4286-a9e9-4b20757cbfc0" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -45,7 +36,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/front-end/src/components/editor/components/QuillEditorStyles.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="191">
+            <state relative-caret-position="1196">
               <caret line="53" column="36" selection-start-line="53" selection-start-column="36" selection-end-line="53" selection-end-column="36" />
               <folding>
                 <element signature="e#0#45#0" expanded="true" />
@@ -71,7 +62,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/front-end/src/components/reports/components/ReportPanel.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-529">
+            <state relative-caret-position="3358">
               <caret line="160" column="55" selection-start-line="160" selection-start-column="49" selection-end-line="160" selection-end-column="55" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
@@ -420,11 +411,12 @@
       <workItem from="1546824970166" duration="9195000" />
       <workItem from="1546838625253" duration="878000" />
       <workItem from="1546893053012" duration="8464000" />
+      <workItem from="1546908146728" duration="125000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="534623000" />
+    <option name="totallyTimeSpent" value="534748000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="67" y="25" width="1853" height="925" extended-state="6" />
@@ -752,19 +744,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/front-end/src/components/reports/components/ReportPanel.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-529">
-          <caret line="160" column="55" selection-start-line="160" selection-start-column="49" selection-end-line="160" selection-end-column="55" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/front-end/src/components/editor/NarrativeAnnotatorStyles.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/front-end/src/components/portal/Dashboard.jsx">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="191">
@@ -775,23 +754,6 @@
     <entry file="file://$PROJECT_DIR$/front-end/src/components/portal/DashboardStyles.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-499" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/front-end/src/components/editor/components/AnnotationColors.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="46">
-          <caret line="2" column="2" selection-start-line="2" selection-start-column="2" selection-end-line="2" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/front-end/src/components/editor/components/QuillEditorStyles.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="191">
-          <caret line="53" column="36" selection-start-line="53" selection-start-column="36" selection-end-line="53" selection-end-column="36" />
-          <folding>
-            <element signature="e#0#45#0" expanded="true" />
-          </folding>
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/front-end/src/components/editor/components/QuillEditor.jsx">
@@ -808,6 +770,36 @@
             <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/front-end/src/components/editor/components/QuillEditorStyles.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1196">
+          <caret line="53" column="36" selection-start-line="53" selection-start-column="36" selection-end-line="53" selection-end-column="36" />
+          <folding>
+            <element signature="e#0#45#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/front-end/src/components/editor/components/AnnotationColors.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="46">
+          <caret line="2" column="2" selection-start-line="2" selection-start-column="2" selection-end-line="2" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/front-end/src/components/editor/NarrativeAnnotatorStyles.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/front-end/src/components/reports/components/ReportPanel.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3358">
+          <caret line="160" column="55" selection-start-line="160" selection-start-column="49" selection-end-line="160" selection-end-column="55" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
           </folding>
         </state>
       </provider>

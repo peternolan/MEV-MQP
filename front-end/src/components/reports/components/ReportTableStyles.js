@@ -1,9 +1,20 @@
 export default {
+  tableWrapper: {
+    maxHeight: '82vh',
+    width: '35vw',
+    margin: '0',
+    borderWidth: '4px',
+    borderColor: '#aaa',
+    backgroundColor: '#fff',
+    display: 'border-box'
+  },
   tableContainer: {
-    height: '100%',
     margin: '0px',
     padding: '0px',
+    width: 'calc(100%-2px)',
+    maxHeight: '77vh',
     overflow: 'scroll',
+    display: 'inline-block'
   },
   moveToCaseDetailsContainer: {
     display: 'flex',
@@ -30,4 +41,13 @@ export default {
     fontSize: '10pt',
     'pointer-events': 'none',
   },
+  searchBar: {
+    fontSize: '1em',
+    width: 'calc(100% - 6px)',
+    margin: '2px',
+    display: 'inline-block',
+    height: '40px',
+    padding: '5px',
+    borderRadius: '4px'
+  }
 };

@@ -4,10 +4,12 @@ export default {
   topNavigationContainer: {
     margin: '0px',
     width: '100%',
+    minHeight: '4vh',
     'background-color': MEVColors.navBar,
     zIndex: 500,
     border: 'none',
     position: 'relative',
+    borderRadius: '0px'
   },
   wpiLogoContainer: {
     position: 'absolute',
@@ -35,6 +37,7 @@ export default {
     'padding-top': '5px',
     'margin-top': '5px',
     'background-color': '#fff',
+    'height': 'inherit'
   },
   listItem: {
     'font-size': '16px !important',

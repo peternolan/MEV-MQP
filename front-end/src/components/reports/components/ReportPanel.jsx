@@ -33,7 +33,6 @@ class ReportPanel extends React.PureComponent {
         }).isRequired,
         primaryid: PropTypes.number,
         userID: PropTypes.number.isRequired,
-        userEmail: PropTypes.string,
         match: PropTypes.shape({
             params: PropTypes.shape({
                 id: PropTypes.string,
@@ -58,7 +57,6 @@ class ReportPanel extends React.PureComponent {
             editModeOn: false,
             primaryId: this.props.primaryid,
             userID: this.props.userID,
-            userEmail: this.props.userEmail,
             current: {
                 reportText: '',
                 tags: [],
@@ -146,13 +144,10 @@ class ReportPanel extends React.PureComponent {
                 Placeholder Information
 
                 <Divider light/>
-                <h3 style = {{position: 'relative', left: '20px' }}>Report Text</h3>
                 <div>
                     {(!this.state.searching)
-                        ? (
-                            <QuillEditor
+                        ? (<QuillEditor
                             primaryid={Number(primaryID)}
-                            userEmail={this.props.userEmail}
                             incrementSummary={this.props.incrementSummary}
                             match={this.props.match}
                         />)
@@ -179,7 +174,7 @@ class ReportPanel extends React.PureComponent {
                 </Typography>
                 {this.renderInside(this.props.primaryid)}
 
-        </Paper>
+            </Paper>
 
         );
     }
@@ -188,7 +183,6 @@ class ReportPanel extends React.PureComponent {
 
 const mapStateToProps = state => ({
     userID: state.user.userID,
-    userEmail: state.user.userEmail,
 });
 
 export default connect(

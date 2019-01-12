@@ -143,6 +143,7 @@ export default {
   severeLight: '#276db4',
   severeDark: '#1b2681',
   severeStroke: '#1a237e',
+  zDepthShadows: 'none'
 
   // Purple THEME
   // navBar: '#280945',

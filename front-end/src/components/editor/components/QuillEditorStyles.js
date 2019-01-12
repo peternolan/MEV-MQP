@@ -118,5 +118,42 @@ export default {
         textAlign: 'right',
 
     },
+/*
+    toolTip: {
+      position: 'relative',
+      display: 'inline-block',
+        borderBottom: '1px dotted black',
+    },
+
+    toolTipText: {
+
+      visibility: 'hidden',
+        width: '120px',
+        backgroundColor: '#555',
+        color: '#fff',
+        textAlign: 'center',
+        borderRadius: '6px',
+        padding: '5px 0',
+        position: 'absolute',
+        zIndex: '1',
+        bottom: '125%',
+        left: '50%',
+        marginLeft: '-60px',
+        opacity: '0',
+        transition: 'opacity 0.3s'
+    },
+
+    toolTipAfter: {
+      content: '',
+        position: 'absolute',
+        top: '100%',
+        left: '50%',
+        marginLeft: '-5px',
+        borderWidth: '5px',
+        borderStyle: 'solid',
+        borderColor: '#555 transparent transparent transparent',
+
+    }
+*/
 
 };

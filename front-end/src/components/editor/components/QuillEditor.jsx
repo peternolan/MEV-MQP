@@ -5,16 +5,19 @@ import { withStyles } from 'material-ui/styles';
 import { CircularProgress } from 'material-ui/Progress';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import Paper from 'material-ui/Paper';
 import _ from 'lodash';
 import Button from 'material-ui/Button';
 import { getReportNarrativeFromID, htmlEncode, htmlUnescape, getComment } from '../../../actions/reportActions';
 import styles from './QuillEditorStyles';
 import annotationColors from './AnnotationColors';
 import Highlighter from 'react-highlight-words';
+import MaterialTooltip from 'material-ui/Tooltip';
 // import styles from 'react-highlight-words.example.css'
 // import latinize from 'latinize';
 import './NarrativeAnnotator.css';
+import CustomTooltip from "../../visualization/components/demographics/components/ReportedBy";
+import {Link} from "react-router-dom";
+import GoToVisualizationIcon from "../../../resources/goToVisualizationIcon.svg";
 //const ToolTip = Quill.import('ui/tooltip');
 
 class QuillEditor extends Component {
@@ -40,6 +43,8 @@ class QuillEditor extends Component {
             squareOrchid: PropTypes.string,
             squareSilver: PropTypes.string,
             squareCyan: PropTypes.string,
+            tooltipStyle: PropTypes.string,
+            newCaseModal: PropTypes.string,
         }).isRequired,
         primaryid: PropTypes.number,
         userID: PropTypes.number.isRequired,
@@ -180,6 +185,7 @@ class QuillEditor extends Component {
                             reportHTML = dummyNode.innerHTML;
 
                             reportText = reportHTML + commentFinal;
+                            console.log("reportText " + reportText);
 
                         }
                         else {
@@ -291,8 +297,12 @@ class QuillEditor extends Component {
 
     //Need to Set State in order to make sure it doesn't change when we add comments.
     handleChange = (value) => {
+        console.log("HandleChange");
+
+        console.log("addingComment " + this.state.addingComment);
 
         if (!this.state.addingComment) {
+
             const drugRE = `background-color: ${annotationColors.drug};`;
             const reactionRE = `background-color: ${annotationColors.reaction};`;
             const dosageRE = `background-color: ${annotationColors.dosage};`;
@@ -400,15 +410,9 @@ class QuillEditor extends Component {
                       //  break;
                     //}
                 }
+                console.log("Comments after " + document.getElementById('commentList').innerHTML);
             }
-            /*
-            else {
 
-                document.getElementById('commentList').innerHTML = dummyNode2.innerHTML;
-
-            }
-            */
-            //document.getElementById('commentBox').value = dummyNode.innerText;
 
             var finalTextComm = this.state.report + this.state.comment;
 
@@ -649,10 +653,23 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
             <Button className="ql-colorBackground" value="" style={{ padding: '0px', margin: '2px', minWidth:'50px', border: '1px solid black',  background: annotationColors.clear }}>
                 Clear
             </Button>
-            <Button style={{ padding: '0px', margin: '2px', minHeight: '2px', minWidth:'2px', border: '1px solid black',
-                borderRadius: '15px',  background: annotationColors.clear, left: '130px', bottom: '45px'}}>
-                ?
-            </Button>
+
+                <MaterialTooltip
+                    title="In order to highlight the below text, first highlight the desired text and then, with the text still highlighted, click on the button that matches your note."
+                    placement="top"
+                    enterDelay={50}
+                    classes={{
+                        tooltip: this.props.classes.tooltipStyle,
+                        popper: this.props.classes.tooltipStyle,
+                    }}
+                >
+                    <Button style={{ padding: '0px', margin: '2px', minHeight: '2px', minWidth:'2px', border: '1px solid black',
+                        borderRadius: '15px',  background: annotationColors.clear, left: '130px', bottom: '45px'}}>
+                        ? </Button>
+                </MaterialTooltip>
+
+            {/*<div class = 'tooltip' >Tooltip <span class = 'tooltiptext'></span></div>*/}
+
 
             {/*
             <div style={{position: 'absolute', bottom: 0, right: 0,}}>

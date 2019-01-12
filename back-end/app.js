@@ -861,18 +861,20 @@ app.post('/executeSearch', (req, res) => {
     //Object.assign({},a,b) is equivalent to a left join on a of b, into a new dictionary.
     //This preserves our default settings, unless the front end has passed in an overwrite to the default.
     search = JSON.stringify(Object.assign({}, default_search, json_search));
-    console.log("SEARCH: " + search)
+    console.log("SEARCH: " + search);
     const spawn = require("child_process").spawn;
     const pythonProcess = spawn('python3',["../searchElastic.py"]);
     results = "";
     pythonProcess.stdout.on('data', function(data) {
+        console.log("stdout data ");
         // combine the data returned from the python script
         results = results + data.toString();
-        //console.log(results)
+        console.log("results: " + results);
     });
     pythonProcess.stdout.on("end", function(){
+        console.log("stdout end ");
       res.status(200).send(JSON.stringify(results));
-    })
+    });
     pythonProcess.stderr.on('data', function (data) {
       console.log('stderr: ' + data);
     });

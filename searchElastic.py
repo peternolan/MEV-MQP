@@ -24,7 +24,7 @@ params = json.loads(read_in())
 connections.create_connection(hosts=['localhost'])
 
 
-reportdir = os.path.abspath("./Reports/")
+reportdir = os.path.abspath("../Reports/")
 
 
 def listFiles(path):
@@ -32,35 +32,6 @@ def listFiles(path):
     allfiles = list(map(lambda s: os.path.join(path, s), filter(
         lambda s: os.path.isfile(os.path.join(path, s)), os.listdir(os.path.abspath(path)))))
     return list(filter(lambda x: x.endswith("txt"), allfiles))
-
-
-def IndexFromDirectory(reportdir):
-    """add/update documents to/in the index"""
-    for f in listFiles(reportdir):
-        with open(f, encoding="utf-8") as file:
-            #print(os.path.basename(f))
-            uid = os.path.basename(f)
-            report = Report(meta={'id': uid}, uid=uid, body=file.read())
-            if os.path.exists(f[:-3] + "drugs"):
-                with open(f[:-3] + "drugs", encoding="utf-8") as drugsfile:
-                    report.drugs = drugsfile.read()
-            if os.path.exists(f[:-3] + "advs"):
-                with open(f[:-3] + "advs", encoding="utf-8") as advsfile:
-                    report.advs = advsfile.read()
-            report.save()
-
-
-reportsIndex = Index("reports")
-
-if not reportsIndex.exists():
-    # if the reports index does not exist, create it
-    reportsIndex.create()
-    # then populate the directory with dummy data from the directory folder
-    # TODO : POPULATE FROM DATABASE
-    IndexFromDirectory(reportdir)
-    reportsIndex.refresh()
-else:
-    reportsIndex.refresh()
 
 
 class Report(Document):
@@ -82,6 +53,35 @@ class Report(Document):
 # create the mappings in Elasticsearch
 Report.init()
 
+
+def IndexFromDirectory(reportdir):
+    """add/update documents to/in the index"""
+    for f in listFiles(reportdir):
+        with open(f, encoding="utf-8") as file:
+            #print(os.path.basename(f))
+            uid = os.path.basename(f)
+            report = Report(meta={'id': uid}, uid=uid, body=file.read())
+            if os.path.exists(f[:-3] + "drugs"):
+                with open(f[:-3] + "drugs", encoding="utf-8") as drugsfile:
+                    report.drugs = drugsfile.read()
+            if os.path.exists(f[:-3] + "advs"):
+                with open(f[:-3] + "advs", encoding="utf-8") as advsfile:
+                    report.advs = advsfile.read()
+            report.save()
+
+
+reportsIndex = Index("reports")
+reportsIndex.refresh()
+
+if not reportsIndex.exists():
+    # if the reports index does not exist, create it
+    reportsIndex.create()
+    # then populate the directory with dummy data from the directory folder
+    # TODO : POPULATE FROM DATABASE
+    IndexFromDirectory(reportdir)
+    reportsIndex.refresh()
+else:
+    reportsIndex.refresh()
 
 
 def genSearch(string, start=0, size=3):

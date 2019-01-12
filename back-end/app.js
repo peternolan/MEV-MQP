@@ -6,7 +6,7 @@ const { Client } = require('pg')
 const bodyParser = require('body-parser');
 const Promise = require('bluebird');
 const os = require('os');
-const fs = require('fs')
+const fs = require('fs');
 
 let cache;
 

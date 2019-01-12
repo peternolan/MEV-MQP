@@ -445,9 +445,33 @@ class ReportTable extends React.PureComponent {
     var results;
     this.props.executeSearch(contents)
       .then(function(data){
+        console.log("data " + data);
         results = JSON.parse(data);
         console.log(results);
+        console.log(results.results[0].id);
         // TODO -- after recieving the search object, update the UI accordingly
+
+        var printOut = '';
+
+        console.log("length " + results.results.length);
+
+        var j = 0;
+
+        while (results.results[j]) {
+          if (Number.isInteger(Number(j))) {
+
+            console.log(results.results[j].id);
+
+            printOut = printOut.concat(results.results[j].id + '\n' + results.results[j].body_highlights[0] + '\n');
+
+            j++;
+
+          }
+        }
+
+
+        document.getElementById("searchResults").value = printOut;
+
       })
   };
 
@@ -656,6 +680,9 @@ class ReportTable extends React.PureComponent {
     return (
       <div id='table-wrapper' className={this.props.classes.tableWrapper}>
       <input id='search' type='text' className={this.props.classes.searchBar} placeholder="Search through reports..." onKeyDown={(e) => {if(e.key === 'Enter'){this.search()}}} />
+      <div style={{padding: '4px'}}>
+        <textarea id = "searchResults" cols = "120" rows = "5" >  </textarea>
+      </div>
       <Paper id="table-container" className={this.props.classes.tableContainer} elevation={4}>
         {(this.state.loadingData)
           ? <div

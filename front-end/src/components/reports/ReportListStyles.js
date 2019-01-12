@@ -64,6 +64,7 @@ export default {
       height: '82vh',
       transition: 'width 200ms ease-in-out',
       borderWidthLeft: '1px',
+      backgroundColor: '#808080'
   },
   closedSummaryContainer: {
     float: 'left',

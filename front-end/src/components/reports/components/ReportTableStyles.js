@@ -48,6 +48,5 @@ export default {
     display: 'inline-block',
     height: '40px',
     padding: '5px',
-    borderRadius: '4px'
   }
 };

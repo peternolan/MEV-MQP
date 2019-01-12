@@ -13,6 +13,7 @@ import Tabs, { Tab } from 'material-ui/Tabs';
 import Snackbar from 'material-ui/Snackbar';
 import MaterialTooltip from 'material-ui/Tooltip';
 import Paper from 'material-ui/Paper';
+import Divider from 'material-ui/Divider';
 import ReportTable from './components/ReportTable';
 import CaseSummaryListing from './components/CaseSummaryListing';
 import ReportPanel from './components/ReportPanel';
@@ -338,7 +339,7 @@ class ReportList extends Component {
               handleClickPieChart={this.handleCaseChangePrimary}
             />
           </div>
-          
+          <Divider vertical/>
           {/* ====== Table for Viewing the table of reports ====== */}
           <div className={ this.props.classes.tableContainer} >
             <ReportTable
@@ -355,6 +356,7 @@ class ReportList extends Component {
               handleViewReport = {this.handleViewReportPanel}
             />
           </div>
+          <Divider vertical/>
             {/* ====== SideBar for reading a report ======*/}
             {console.log(this.state.reportOpen)}
             <div id="report-sidebar" className={(this.state.summaryOpen) ? this.props.classes.smallreportContainer : this.props.classes.reportContainer}  >

@@ -6,6 +6,7 @@ from elasticsearch_dsl.connections import connections
 import sys
 import json
 
+DEBUG = False
 
 #if(len(sys.argv) > 1):
 #    params = json.loads(" ".join(sys.argv[1:]))
@@ -17,8 +18,10 @@ def read_in(string = None):
     lines = sys.stdin.readlines()
     return json.loads("".join(lines))
 
-params = json.loads(read_in())
-#params = read_in(string='{"search_string":"patient","start":0,"size":3}')
+if DEBUG:
+    params = read_in(string='{"search_string":"patient","start":0,"size":3}')
+else:
+    params = json.loads(read_in())
 
 # THIS IS ONLY FOR DEV/DEBUGGING
 connections.create_connection(hosts=['localhost'])
@@ -96,10 +99,10 @@ def genSearch(string, start=0, size=3):
 
     search = Search()\
             .from_dict({"from": start, "size": size}) \
-            .query(Q("multi_match", query=positives, fields=["body", "drugs", "advs"]))
+            .query(Q("multi_match", query=positives, fields=["body", "drugs", "advs"], fuzziness='AUTO'))
     
     if negatives:
-        search = search.exclude(Q("multi_match", query=negatives, fields=["body", "drugs", "advs"])) \
+        search = search.exclude(Q("multi_match", query=negatives, fields=["body", "drugs", "advs"], fuzziness='AUTO')) \
 
     search = search.highlight('body', fragment_size=100)\
             .highlight('drugs')\
@@ -110,8 +113,8 @@ def genSearch(string, start=0, size=3):
 s = genSearch(params["search_string"], start=params["start"], size=params["size"])
 
 results = s.execute()
-"""
-if(len(sys.argv) == 1): #if we were NOT called via terminal
+
+if(DEBUG): #if we were NOT called via terminal
     print("Took " + str(results.took) + " ms to process this search!")
     for result in results:
         print("\n------------------------\n")
@@ -131,29 +134,24 @@ if(len(sys.argv) == 1): #if we were NOT called via terminal
             print(" - Highlights from advs - ")
             for i in range(len(result.meta.highlight.advs)):
                 print("Excerpt " + str(i) + ": ", result.meta.highlight.advs[i])
-"""
-resObj = {}
-resObj["searchtime"] = results.took
-resObj["results"] = {}
-index = -1
-for result in results:
-    index += 1
-    resObj["results"][index] = {
-        "id":result.meta.id,
-        "score":result.meta.score,
-        "body_highlights":  (list(result.meta.highlight.body) if hasattr(result.meta.highlight, "body") else []),
-        "drugs_highlights": (list(result.meta.highlight.drugs)if hasattr(result.meta.highlight, "drugs")else []),
-        "advs_highlights":  (list(result.meta.highlight.advs) if hasattr(result.meta.highlight, "advs") else [])
-    }
-"""
-with open("C:\\Users\\qwertey6\\Documents\\GitHub\\MEV-MQP\\SEARCH_OUTPUT.txt", mode="w") as file:
-    print(file.writable(), file=sys.stderr)
-    file.write(json.dumps(resObj))
-    file.flush()
-    file.close()
-"""  
-print(json.dumps(resObj), file=sys.stdout)
-#sys.stdout.write(str(type(json.dumps(resObj))))
-#sys.stdout.write(json.dumps(resObj))
-#sys.stdout.flush()
-#sys.stdout.flush()
+
+else:
+    resObj = {}
+    resObj["searchtime"] = results.took
+    resObj["results"] = {}
+    index = -1
+    for result in results:
+        index += 1
+        resObj["results"][index] = {
+            "id":result.meta.id,
+            "score":result.meta.score,
+            "body_highlights":  (list(result.meta.highlight.body) if hasattr(result.meta.highlight, "body") else []),
+            "drugs_highlights": (list(result.meta.highlight.drugs)if hasattr(result.meta.highlight, "drugs")else []),
+            "advs_highlights":  (list(result.meta.highlight.advs) if hasattr(result.meta.highlight, "advs") else [])
+        }
+
+    print(json.dumps(resObj), file=sys.stdout)
+    #sys.stdout.write(str(type(json.dumps(resObj))))
+    #sys.stdout.write(json.dumps(resObj))
+    #sys.stdout.flush()
+    #sys.stdout.flush()

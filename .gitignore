@@ -30,3 +30,7 @@ yarn-error.log*
 front-end/package.json
 latest.sql
 front-end/.env
+_2.cfe
+_2.cfs
+_2.si
+*.pyc

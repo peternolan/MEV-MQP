@@ -45,6 +45,8 @@ import styles from './ReportTableStyles';
  */
 class ReportTable extends React.PureComponent {
   static propTypes = {
+    printSearchResults: PropTypes.func.isRequired,
+    changeTab: PropTypes.func.isRequired,
     getCaseReports: PropTypes.func.isRequired,
     setAllReports: PropTypes.func.isRequired,
       executeSearch: PropTypes.func.isRequired,
@@ -102,6 +104,7 @@ class ReportTable extends React.PureComponent {
       keepTableWhileLoading: false,
       pageSize: 50,
       currentPage: 0,
+        returnedResults: [1, 2, 3],
 
       /**
        * Default widths for the columns of the table
@@ -161,7 +164,7 @@ class ReportTable extends React.PureComponent {
   componentWillReceiveProps(nextProps){
     // console.log(this.state.allData)
     if (nextProps.searchedReports.length!==0){
-      console.log(nextProps)
+      console.log(nextProps);
       this.setState({ data:nextProps.searchedReports});
     }
   }
@@ -416,9 +419,6 @@ class ReportTable extends React.PureComponent {
         break;
         default:
         evidenceType = this.state.evidenceType[props.tableRow.rowId];
-        console.log("evidence " + evidenceType);
-        console.log("primary " + this.props.primaryChosen);
-        console.log("supportive " + this.props.supportiveChosen);
         backgroundColor = (evidenceType === 'primary') ? ((this.props.primaryChosen === true) ? 'rgba(255, 0, 255, 0.25)' : this.COLORS.primary)
             : ((this.props.supportiveChosen === true) ? 'rgba(255, 0, 255, 0.25)' : this.COLORS.supportive );
 
@@ -442,14 +442,19 @@ class ReportTable extends React.PureComponent {
     console.log('Search');
 
 
+
     var results;
+    var resultsArr = [];
+
     this.props.executeSearch(contents)
-      .then(function(data){
+      .then((data)=> {
         console.log("data " + data);
         results = JSON.parse(data);
         console.log(results);
         console.log(results.results[0].id);
-        // TODO -- after recieving the search object, update the UI accordingly
+
+
+        //console.log("this.state.returnedResults " +  this.state.returnedResults);
 
         var printOut = '';
 
@@ -457,25 +462,53 @@ class ReportTable extends React.PureComponent {
 
         var j = 0;
 
-        while (results.results[j]) {
+        var allGood = true;
+
+          while (results.results[j] && allGood) {
           if (Number.isInteger(Number(j))) {
 
             console.log(results.results[j].id);
 
             printOut = printOut.concat(results.results[j].id + '\n' + results.results[j].body_highlights[0] + '\n');
 
-            j++;
+              console.log("resultsArr j " + j );
 
+              resultsArr[j] = results.results[j].id;
+
+              console.log( "resultsArr at j" + resultsArr[j]);
+
+              j++;
+
+
+          }
+          else {
+              allGood = false;
+              console.log("NaN")
           }
         }
 
+        console.log("Outside While");
+          console.log("resultsArr " +  resultsArr);
 
-        document.getElementById("searchResults").value = printOut;
+          //console.log("returnedResults" + this.state.returnedResults);
+          document.getElementById("searchResults").value = printOut;
+          this.handleSearchResults(resultsArr);
 
-      })
+
+
+
+      });
+
+
   };
 
+  handleSearchResults = (array) => {
 
+    this.props.changeTab(1);
+
+    this.props.printSearchResults(array);
+
+  };
 
   handleToggleChange = primaryid => (event, checked) => {
       console.log("handleToggleChange");
@@ -681,7 +714,9 @@ class ReportTable extends React.PureComponent {
       <div id='table-wrapper' className={this.props.classes.tableWrapper}>
       <input id='search' type='text' className={this.props.classes.searchBar} placeholder="Search through reports..." onKeyDown={(e) => {if(e.key === 'Enter'){this.search()}}} />
       <div style={{padding: '4px'}}>
-        <textarea id = "searchResults" cols = "120" rows = "5" >  </textarea>
+        {(this.props.currentTab.toString() == 1) ?
+        <textarea id = "searchResults" style={{ display: 'block'}} cols = "80" rows = "5" >  </textarea> :
+            <textarea id = "searchResults" style={{ display: 'none'}} cols = "80" rows = "5" >  </textarea>}
       </div>
       <Paper id="table-container" className={this.props.classes.tableContainer} elevation={4}>
         {(this.state.loadingData)

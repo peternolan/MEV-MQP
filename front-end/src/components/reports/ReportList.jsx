@@ -88,6 +88,8 @@ class ReportList extends Component {
       summaryCounter: 0,
 
       searchedReports:[],
+        returnedResults: [1, 2, 3],
+
     };
     //handleCaseChangePrimary = handleCaseChangePrimary.bind(this);
   }
@@ -148,6 +150,26 @@ class ReportList extends Component {
    * Changes the first letter of any word in a string to be capital
    */
   toTitleCase = str => str.replace(/\w\S*/g, txt => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
+
+
+  changeTab = (currentTab) => {
+
+      if (currentTab === 1) {  // This is the searched tab
+          //***************  Searched reports can be accessed */
+          console.log("Search clicked");
+          this.setState({currentTab});
+
+      }
+  };
+
+  printSearchResults = (array) => {
+        this.setState({returnedResults: array}, () => {console.log("this.state.returnedResults " +  this.state.returnedResults)});
+
+
+    };
+
+
+
 
   /**
    * Handler for Tab bar clicks
@@ -307,7 +329,7 @@ class ReportList extends Component {
               centered
             >
               <Tab icon={<AllReportsIcon />} label="All Reports" key="All Reports" name="All Reports" />
-              <Tab icon={<AllReportsIcon />} label="Searched Reports" name="Searched Reports" />
+              <Tab icon={<AllReportsIcon />} label="Searched Reports" key = "Searched Reports" name="Searched Reports" />
               <Tab icon={<ReadCaseIcon />} label="Read" key="Read" name="Read" />
               <Tab icon={<TrashIcon />} label="Trash" key="Trash" name="Trash" />
               <Tab icon={<NewCaseIcon />} label="New Case" name="New Case" />
@@ -342,6 +364,7 @@ class ReportList extends Component {
           <Divider vertical/>
           {/* ====== Table for Viewing the table of reports ====== */}
           <div className={ this.props.classes.tableContainer} >
+
             <ReportTable
               bin={this.state.bin}
               padding = '0px'
@@ -354,6 +377,9 @@ class ReportList extends Component {
               primaryChosen = {this.state.primaryChosen}
               supportiveChosen = {this.state.supportiveChosen}
               handleViewReport = {this.handleViewReportPanel}
+              changeTab = {this.changeTab}
+              printSearchResults = {this.printSearchResults}
+              currentTab={this.state.currentTab}
             />
           </div>
           <Divider vertical/>

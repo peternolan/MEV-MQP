@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="de05d0a9-4644-4286-a9e9-4b20757cbfc0" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front-end/src/components/reports/ReportList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/components/reports/ReportList.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/front-end/src/components/reports/components/ReportTable.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/components/reports/components/ReportTable.jsx" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -19,19 +20,10 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/front-end/src/components/editor/components/QuillEditor.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="442">
-              <caret line="150" column="70" lean-forward="true" selection-start-line="150" selection-start-column="36" selection-end-line="150" selection-end-column="70" />
+            <state relative-caret-position="208">
+              <caret line="583" column="28" lean-forward="true" selection-start-line="583" selection-start-column="28" selection-end-line="583" selection-end-column="28" />
               <folding>
                 <element signature="e#0#41#0" expanded="true" />
-                <element signature="e#778#812#0" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -40,8 +32,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/front-end/src/components/reports/components/ReportTable.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="268">
-              <caret line="464" column="88" selection-start-line="464" selection-start-column="88" selection-end-line="464" selection-end-column="88" />
+            <state relative-caret-position="258">
+              <caret line="721" column="33" lean-forward="true" selection-start-line="721" selection-start-column="33" selection-end-line="721" selection-end-column="33" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
@@ -50,10 +42,43 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/front-end/src/components/reports/ReportList.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1559">
+              <caret line="381" column="42" selection-start-line="381" selection-start-column="42" selection-end-line="381" selection-end-column="42" />
+              <folding>
+                <element signature="e#0#41#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/front-end/src/components/reports/components/CaseSummaryListing.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-438">
+              <caret line="56" column="28" lean-forward="true" selection-start-line="56" selection-start-column="28" selection-end-line="56" selection-end-column="28" />
+              <folding>
+                <element signature="e#0#26#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/front-end/src/components/cases/CaseSummary.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="391">
+              <caret line="66" column="6" selection-start-line="66" selection-start-column="6" selection-end-line="66" selection-end-column="6" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/back-end/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-4737">
-              <caret line="749" column="24" lean-forward="true" selection-start-line="749" selection-start-column="24" selection-end-line="749" selection-end-column="24" />
+            <state relative-caret-position="17227">
+              <caret line="749" column="24" selection-start-line="749" selection-start-column="24" selection-end-line="749" selection-end-column="24" />
             </state>
           </provider>
         </entry>
@@ -78,36 +103,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>pdfview</find>
-      <find>styles</find>
-      <find>clearfix</find>
-      <find>buttonProgress</find>
-      <find>style</find>
-      <find>string_</find>
-      <find>_string</find>
-      <find>executesearch</find>
-      <find>python</find>
-      <find>search:</find>
-      <find>getcomment</find>
-      <find>?</find>
-      <find>savebutton</find>
-      <find>addingcomment</find>
-      <find>quilleditor</find>
-      <find>tooltipstyle</find>
-      <find>classes</find>
-      <find>squareOrchid</find>
-      <find>tooltiptext</find>
-      <find>tooltip</find>
-      <find>materialtooltop</find>
-      <find>materialtooltip</find>
-      <find>id = 'comm</find>
-      <find>react-quill-${this.props.primaryid}</find>
       <find>comment</find>
       <find>search</find>
       <find>concat</find>
       <find>nan</find>
-      <find>data</find>
       <find>number</find>
+      <find>Searched reports</find>
+      <find>key = &quot;Searched Reports&quot;</find>
+      <find>read</find>
+      <find>state</find>
+      <find>this.setState</find>
+      <find>firstfound</find>
+      <find>resultsarr</find>
+      <find>editModeOn</find>
+      <find>returnedResults</find>
+      <find>searchresults</find>
+      <find>firstid</find>
+      <find>data</find>
+      <find>alldata</find>
+      <find>returnedresults</find>
+      <find>table-container</find>
+      <find>this.setstate</find>
+      <find>all re</find>
+      <find>all reports</find>
+      <find>searched reports</find>
+      <find>current</find>
+      <find>printsearch</find>
+      <find>print</find>
+      <find>this.state</find>
+      <find>summaryopen</find>
+      <find>currenttab</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -130,9 +155,7 @@
         <option value="$PROJECT_DIR$/front-end/src/components/editor/components/AnnotationColors.js" />
         <option value="$PROJECT_DIR$/front-end/src/components/editor/NarrativeAnnotator.jsx" />
         <option value="$PROJECT_DIR$/front-end/src/components/reports/components/ReportTableStyles.js" />
-        <option value="$PROJECT_DIR$/front-end/src/components/reports/components/CaseSummaryListing.jsx" />
         <option value="$PROJECT_DIR$/front-end/src/components/reports/ReportListStyles.js" />
-        <option value="$PROJECT_DIR$/front-end/src/components/reports/ReportList.jsx" />
         <option value="$PROJECT_DIR$/front-end/src/components/reports/components/ReportPanel.jsx" />
         <option value="$PROJECT_DIR$/front-end/src/components/reports/components/ReportPanelStyles.js" />
         <option value="$PROJECT_DIR$/searchElastic.py" />
@@ -141,6 +164,8 @@
         <option value="$PROJECT_DIR$/front-end/src/components/editor/components/NarrativeAnnotator.css" />
         <option value="$PROJECT_DIR$/front-end/src/components/editor/components/QuillEditor.jsx" />
         <option value="$PROJECT_DIR$/back-end/app.js" />
+        <option value="$PROJECT_DIR$/front-end/src/components/reports/components/CaseSummaryListing.jsx" />
+        <option value="$PROJECT_DIR$/front-end/src/components/reports/ReportList.jsx" />
         <option value="$PROJECT_DIR$/front-end/src/components/reports/components/ReportTable.jsx" />
       </list>
     </option>
@@ -369,16 +394,16 @@
       <workItem from="1547142802740" duration="5566000" />
       <workItem from="1547223247957" duration="19057000" />
       <workItem from="1547266508946" duration="3759000" />
-      <workItem from="1547309961796" duration="12531000" />
+      <workItem from="1547309961796" duration="13354000" />
+      <workItem from="1547418313774" duration="26277000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="588215000" />
+    <option name="totallyTimeSpent" value="615315000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="67" y="25" width="1853" height="925" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.14972678" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -522,32 +547,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/front-end/src/components/portal/userComponents/UserReportTable.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="27" column="14" selection-start-line="27" selection-start-column="14" selection-end-line="27" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/front-end/src/index.css">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/front-end/src/components/reports/components/CaseSummaryListing.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1173">
-          <caret line="66" column="46" selection-start-line="66" selection-start-column="46" selection-end-line="66" selection-end-column="46" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/front-end/src/components/cases/CaseSummary.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="368">
-          <caret line="32" column="14" selection-start-line="32" selection-start-column="14" selection-end-line="32" selection-end-column="14" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/front-end/src/components/reports/components/CaseSummaryListingStyles.js">
       <provider selected="true" editor-type-id="text-editor">
@@ -594,16 +595,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="552">
           <caret line="24" column="4" selection-start-line="24" selection-start-column="4" selection-end-line="24" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/front-end/src/components/reports/ReportList.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="480">
-          <caret line="476" column="3" selection-start-line="476" selection-start-column="3" selection-end-line="476" selection-end-column="3" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -715,31 +706,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/front-end/src/components/editor/components/NarrativeAnnotator.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="322">
-          <caret line="14" column="21" selection-start-line="14" selection-start-column="21" selection-end-line="14" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/back-end/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-4737">
-          <caret line="749" column="24" lean-forward="true" selection-start-line="749" selection-start-column="24" selection-end-line="749" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/searchElastic.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1011">
           <caret line="96" column="37" selection-start-line="96" selection-start-column="37" selection-end-line="96" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/front-end/src/actions/reportActions.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="91">
-          <caret line="191" column="21" selection-start-line="191" selection-start-column="21" selection-end-line="191" selection-end-column="21" />
         </state>
       </provider>
     </entry>
@@ -753,29 +723,78 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/back-end/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17227">
+          <caret line="749" column="24" selection-start-line="749" selection-start-column="24" selection-end-line="749" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/front-end/src/components/editor/components/NarrativeAnnotator.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="322">
+          <caret line="14" column="21" selection-start-line="14" selection-start-column="21" selection-end-line="14" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/front-end/src/components/cases/CaseSummary.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="66" column="6" selection-start-line="66" selection-start-column="6" selection-end-line="66" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/front-end/src/components/portal/userComponents/UserReportTable.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2738">
+          <caret line="35" column="21" selection-start-line="35" selection-start-column="21" selection-end-line="35" selection-end-column="21" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/front-end/src/actions/reportActions.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="26" column="13" selection-start-line="26" selection-start-column="13" selection-end-line="26" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/front-end/src/components/reports/components/CaseSummaryListing.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-438">
+          <caret line="56" column="28" lean-forward="true" selection-start-line="56" selection-start-column="28" selection-end-line="56" selection-end-column="28" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/front-end/src/components/editor/components/QuillEditor.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="150" column="70" lean-forward="true" selection-start-line="150" selection-start-column="36" selection-end-line="150" selection-end-column="70" />
+        <state relative-caret-position="208">
+          <caret line="583" column="28" lean-forward="true" selection-start-line="583" selection-start-column="28" selection-end-line="583" selection-end-column="28" />
           <folding>
             <element signature="e#0#41#0" expanded="true" />
-            <element signature="e#778#812#0" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/front-end/src/components/reports/ReportList.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1559">
+          <caret line="381" column="42" selection-start-line="381" selection-start-column="42" selection-end-line="381" selection-end-column="42" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/front-end/src/components/reports/components/ReportTable.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="268">
-          <caret line="464" column="88" selection-start-line="464" selection-start-column="88" selection-end-line="464" selection-end-column="88" />
+        <state relative-caret-position="258">
+          <caret line="721" column="33" lean-forward="true" selection-start-line="721" selection-start-column="33" selection-end-line="721" selection-end-column="33" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>

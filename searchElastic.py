@@ -81,6 +81,7 @@ if not reportsIndex.exists():
     IndexFromDirectory(reportdir)
     reportsIndex.refresh()
 else:
+    IndexFromDirectory(reportdir)
     reportsIndex.refresh()
 
 

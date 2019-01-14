@@ -13,6 +13,7 @@ import Tabs, { Tab } from 'material-ui/Tabs';
 import Snackbar from 'material-ui/Snackbar';
 import MaterialTooltip from 'material-ui/Tooltip';
 import Paper from 'material-ui/Paper';
+import Divider from 'material-ui/Divider';
 import ReportTable from './components/ReportTable';
 import CaseSummaryListing from './components/CaseSummaryListing';
 import ReportPanel from './components/ReportPanel';
@@ -41,6 +42,7 @@ const defaultTheme = createMuiTheme({
     ...MEVColors,
     error: red,
   },
+  shadows: ["none"],
 });
 
 /**
@@ -51,6 +53,7 @@ class ReportList extends Component {
     getUserCases: PropTypes.func.isRequired,
     createUserBin: PropTypes.func.isRequired,
     userID: PropTypes.number.isRequired,
+      userEmail: PropTypes.string,
     isLoggedIn: PropTypes.bool.isRequired,
     classes: PropTypes.shape({
       newCaseArea: PropTypes.string,
@@ -85,6 +88,8 @@ class ReportList extends Component {
       summaryCounter: 0,
 
       searchedReports:[],
+        returnedResults: [1, 2, 3],
+
     };
     //handleCaseChangePrimary = handleCaseChangePrimary.bind(this);
   }
@@ -146,6 +151,26 @@ class ReportList extends Component {
    */
   toTitleCase = str => str.replace(/\w\S*/g, txt => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
 
+
+  changeTab = (currentTab) => {
+
+      if (currentTab === 1) {  // This is the searched tab
+          //***************  Searched reports can be accessed */
+          console.log("Search clicked");
+          this.setState({currentTab});
+
+      }
+  };
+
+  printSearchResults = (array) => {
+        this.setState({returnedResults: array}, () => {console.log("this.state.returnedResults " +  this.state.returnedResults)});
+
+
+    };
+
+
+
+
   /**
    * Handler for Tab bar clicks
    */
@@ -196,10 +221,8 @@ class ReportList extends Component {
    * Handler for Opening the New Case Modal
    */
   handleViewCaseSummary = () => {
-
     this.setState({ summaryOpen: !this.state.summaryOpen});
   };
-
     /**
      * Handler for Opening the Report Panel
      */
@@ -306,7 +329,7 @@ class ReportList extends Component {
               centered
             >
               <Tab icon={<AllReportsIcon />} label="All Reports" key="All Reports" name="All Reports" />
-              <Tab icon={<AllReportsIcon />} label="Searched Reports" name="Searched Reports" />
+              <Tab icon={<AllReportsIcon />} label="Searched Reports" key = "Searched Reports" name="Searched Reports" />
               <Tab icon={<ReadCaseIcon />} label="Read" key="Read" name="Read" />
               <Tab icon={<TrashIcon />} label="Trash" key="Trash" name="Trash" />
               <Tab icon={<NewCaseIcon />} label="New Case" name="New Case" />
@@ -327,8 +350,21 @@ class ReportList extends Component {
             </Tabs>
           </AppBar>
 
-          {/* ====== Table for Viewing the Reports ====== */}
-          <div className={ (this.state.summaryOpen) ? this.props.classes.openSummaryTableContainer : this.props.classes.tableContainer} >
+          {/* ====== SideBar for Viewing the Case Summary ====== */}
+          <div id="summary-sidebar" className={(this.state.summaryOpen) ? this.props.classes.openSummaryContainer : this.props.classes.closedSummaryContainer} >
+            <CaseSummaryListing
+              updateTab={this.updateTab}
+              bins={this.state.userBins}
+              userID={this.props.userID}
+              summaryOpen={this.state.summaryOpen}
+              summaryCounter={this.state.summaryCounter}
+              handleClickPieChart={this.handleCaseChangePrimary}
+            />
+          </div>
+          <Divider vertical/>
+          {/* ====== Table for Viewing the table of reports ====== */}
+          <div className={ this.props.classes.tableContainer} >
+
             <ReportTable
               bin={this.state.bin}
               padding = '0px'
@@ -341,36 +377,25 @@ class ReportList extends Component {
               primaryChosen = {this.state.primaryChosen}
               supportiveChosen = {this.state.supportiveChosen}
               handleViewReport = {this.handleViewReportPanel}
-
-
+              changeTab = {this.changeTab}
+              printSearchResults = {this.printSearchResults}
+              currentTab={this.state.currentTab}
             />
           </div>
-
-            {/* ====== SideBar for Viewing a report ======*/}
+          <Divider vertical/>
+            {/* ====== SideBar for reading a report ======*/}
             {console.log(this.state.reportOpen)}
-            <div id="report-sidebar" className={this.props.classes.reportContainer}  >
+            <div id="report-sidebar" className={(this.state.summaryOpen) ? this.props.classes.smallreportContainer : this.props.classes.reportContainer}  >
                 <ReportPanel
                     updateTab={this.updateTab}
                     bins={this.state.userBins}
                     primaryid={this.state.primaryIDReport}
                     userID={this.props.userID}
+                    userEmail={this.props.userEmail}
                     reportOpen={this.state.reportOpen}
 
                 />
             </div>
-
-          {/* ====== SideBar for Viewing the Case Summary ====== */}
-          <div id="summary-sidebar" className={(this.state.summaryOpen) ? this.props.classes.openSummaryContainer : this.props.classes.closedSummaryContainer} >
-            <CaseSummaryListing
-              updateTab={this.updateTab}
-              bins={this.state.userBins}
-              userID={this.props.userID}
-              summaryOpen={this.state.summaryOpen}
-              summaryCounter={this.state.summaryCounter}
-              handleClickPieChart={this.handleCaseChangePrimary}
-            />
-          </div>
-
           {/* ====== Modal for Creating a New Case ====== */}
           <Modal
             aria-labelledby="simple-modal-title"
@@ -403,7 +428,7 @@ class ReportList extends Component {
           </Modal>
 
           {/* ====== Floating Action Button for Going back to Main Visualization ====== */}
-          <div style={{ position: 'absolute', left: '0px', bottom: '0px', padding: '20px' }} >
+          <div style={{ position: 'absolute', right: '0px', bottom: '0px', padding: '20px' }} >
             <MaterialTooltip
               title="Go Back To Visualization"
               placement="top"
@@ -422,7 +447,7 @@ class ReportList extends Component {
           </div>
 
           {/* ====== Floating Action Button for Opening Case Summary ====== */}
-          <div style={{ position: 'absolute', right: '0px', bottom: '0px', padding: '20px' }} >
+          <div style={{ position: 'absolute', left: '0px', bottom: '0px', padding: '20px' }} >
             <MaterialTooltip
               title={(this.state.summaryOpen) ? 'Close Case Summary' : 'Open Case Summary'}
               placement="top"
@@ -460,6 +485,7 @@ class ReportList extends Component {
 
 const mapStateToProps = state => ({
   userID: state.user.userID,
+    userEmail: state.user.userEmail,
   isLoggedIn: state.user.isLoggedIn,
     /**********  Searched reports */
   searchedReports: state.all_reports.searched_reports,

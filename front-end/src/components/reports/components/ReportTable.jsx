@@ -45,6 +45,8 @@ import styles from './ReportTableStyles';
  */
 class ReportTable extends React.PureComponent {
   static propTypes = {
+    printSearchResults: PropTypes.func.isRequired,
+    changeTab: PropTypes.func.isRequired,
     getCaseReports: PropTypes.func.isRequired,
     setAllReports: PropTypes.func.isRequired,
       executeSearch: PropTypes.func.isRequired,
@@ -71,9 +73,12 @@ class ReportTable extends React.PureComponent {
     }).isRequired,
     bin: PropTypes.string.isRequired,
     userID: PropTypes.number.isRequired,
+    userEmail: PropTypes.string,
     searchReports: PropTypes.array,
     classes: PropTypes.shape({
+      tableWrapper: PropTypes.string,
       tableContainer: PropTypes.string,
+      searchBar: PropTypes.string,
       moveToCaseDetailsContainer: PropTypes.string,
       caseGridList: PropTypes.string,
       sendToCaseContainer: PropTypes.string,
@@ -97,42 +102,34 @@ class ReportTable extends React.PureComponent {
       snackbarMessage: '',
       loadingData: true,
       keepTableWhileLoading: false,
-      pageSize: 0,
-      pageSizes: [10, 25, 50],
+      pageSize: 50,
       currentPage: 0,
+        returnedResults: [1, 2, 3],
 
       /**
        * Default widths for the columns of the table
        */
       widths: {
-        init_fda_dt: 85,
-        primaryid: 90,
-        caseid: 80,
-        caseversion: 95,
-        age_year: 50,
-        sex: 50,
-        wt_lb: 65,
-        drugname: 200,
-        me_type: 180,
-        outc_cod: 85,
-        report_text: 200,
+        //init_fda_dt: 85,
+        primaryid: 80,
+        age_year: 30,
+        sex: 30,
+        drugname: 150,
+        me_type: 100,
+        outc_cod: 50
       },
 
       /**
        * Custom Sorting Functions
        */
       customSorting: [
-        { columnName: 'init_fda_dt', compare: this.sortNumbers },
+        //{ columnName: 'init_fda_dt', compare: this.sortNumbers },
         { columnName: 'primaryid', compare: this.sortNumbers },
-        { columnName: 'caseid', compare: this.sortNumbers },
-        { columnName: 'caseversion', compare: this.sortNumbers },
         { columnName: 'age_year', compare: this.sortNumbers },
         { columnName: 'sex', compare: this.sortText },
-        { columnName: 'wt_lb', compare: this.sortNumbers },
         { columnName: 'drugname', compare: this.sortText },
         { columnName: 'me_type', compare: this.sortText },
-        { columnName: 'outc_cod', compare: this.sortText },
-        { columnName: 'report_text', compare: this.sortText },
+        { columnName: 'outc_cod', compare: this.sortText }
       ],
     }
       //
@@ -167,7 +164,7 @@ class ReportTable extends React.PureComponent {
   componentWillReceiveProps(nextProps){
     // console.log(this.state.allData)
     if (nextProps.searchedReports.length!==0){
-      console.log(nextProps)
+      console.log(nextProps);
       this.setState({ data:nextProps.searchedReports});
     }
   }
@@ -232,20 +229,8 @@ class ReportTable extends React.PureComponent {
    */
   columns = [
     {
-      title: 'Event Date',
-      name: 'init_fda_dt',
-    },
-    {
-      title: 'Primary ID',
+      title: 'Report ID',
       name: 'primaryid',
-    },
-    {
-      title: 'Case ID',
-      name: 'caseid',
-    },
-    {
-      title: 'Case Version',
-      name: 'caseversion',
     },
     {
       title: 'Age',
@@ -254,10 +239,6 @@ class ReportTable extends React.PureComponent {
     {
       title: 'Sex',
       name: 'sex',
-    },
-    {
-      title: 'Weight',
-      name: 'wt_lb',
     },
     {
       title: 'Drugs',
@@ -270,10 +251,6 @@ class ReportTable extends React.PureComponent {
     {
       title: 'Outcome',
       name: 'outc_cod',
-    },
-    {
-      title: 'Narrative',
-      name: 'report_text',
     },
   ];
 
@@ -442,9 +419,6 @@ class ReportTable extends React.PureComponent {
         break;
         default:
         evidenceType = this.state.evidenceType[props.tableRow.rowId];
-        console.log("evidence " + evidenceType);
-        console.log("primary " + this.props.primaryChosen);
-        console.log("supportive " + this.props.supportiveChosen);
         backgroundColor = (evidenceType === 'primary') ? ((this.props.primaryChosen === true) ? 'rgba(255, 0, 255, 0.25)' : this.COLORS.primary)
             : ((this.props.supportiveChosen === true) ? 'rgba(255, 0, 255, 0.25)' : this.COLORS.supportive );
 
@@ -468,16 +442,73 @@ class ReportTable extends React.PureComponent {
     console.log('Search');
 
 
+
     var results;
+    var resultsArr = [];
+
     this.props.executeSearch(contents)
-      .then(function(data){
+      .then((data)=> {
+        console.log("data " + data);
         results = JSON.parse(data);
         console.log(results);
-        // TODO -- after recieving the search object, update the UI accordingly
-      })
+        console.log(results.results[0].id);
+
+
+        //console.log("this.state.returnedResults " +  this.state.returnedResults);
+
+        var printOut = '';
+
+        console.log("length " + results.results.length);
+
+        var j = 0;
+
+        var allGood = true;
+
+          while (results.results[j] && allGood) {
+          if (Number.isInteger(Number(j))) {
+
+            console.log(results.results[j].id);
+
+            printOut = printOut.concat(results.results[j].id + '\n' + results.results[j].body_highlights[0] + '\n');
+
+              console.log("resultsArr j " + j );
+
+              resultsArr[j] = results.results[j].id;
+
+              console.log( "resultsArr at j" + resultsArr[j]);
+
+              j++;
+
+
+          }
+          else {
+              allGood = false;
+              console.log("NaN")
+          }
+        }
+
+        console.log("Outside While");
+          console.log("resultsArr " +  resultsArr);
+
+          //console.log("returnedResults" + this.state.returnedResults);
+          document.getElementById("searchResults").value = printOut;
+          this.handleSearchResults(resultsArr);
+
+
+
+
+      });
+
+
   };
 
+  handleSearchResults = (array) => {
 
+    this.props.changeTab(1);
+
+    this.props.printSearchResults(array);
+
+  };
 
   handleToggleChange = primaryid => (event, checked) => {
       console.log("handleToggleChange");
@@ -680,18 +711,17 @@ class ReportTable extends React.PureComponent {
     //console.log("Hello World " + this.state.data[0].primaryId);
 
     return (
-      <Paper id="table-container" className={this.props.classes.tableContainer} padding = '0px' elevation={4}>
-        {/*eslint-disable */}
-          { <div style={{padding: '4px'}}>
-              <textarea id = "search" cols = "120" rows = "5">  </textarea>
-          </div>}
-          {<div style={{padding: '4px'} }>
-              <Button
-                  onClick={() => this.search()}> Search </Button>
-          </div>}
+      <div id='table-wrapper' className={this.props.classes.tableWrapper}>
+      <input id='search' type='text' className={this.props.classes.searchBar} placeholder="Search through reports..." onKeyDown={(e) => {if(e.key === 'Enter'){this.search()}}} />
+      <div style={{padding: '4px'}}>
+        {(this.props.currentTab.toString() == 1) ?
+        <textarea id = "searchResults" style={{ display: 'block'}} cols = "80" rows = "5" >  </textarea> :
+            <textarea id = "searchResults" style={{ display: 'none'}} cols = "80" rows = "5" >  </textarea>}
+      </div>
+      <Paper id="table-container" className={this.props.classes.tableContainer} elevation={4}>
         {(this.state.loadingData)
           ? <div
-              style={{ position: 'absolute', top: '50px', left: '0px', width: '100%', height: 'calc(100% - 50px)', backgroundColor: 'rgba(25, 25, 25, 0.5)', zIndex: '10000' }}
+              style={{ position: 'absolute', top: '50px', left: '0px', width: '100%', height: 'calc(100% - 50px)', backgroundColor: 'rgba(25, 25, 25, 0.5)', zIndex: '10000', overflow: 'scroll' }}
             >
               <div style={{ width: 'fit-content', position: 'absolute', top: '50%', left: '50%', transform: 'translateY(-50%) translateX(-50%)' }}> 
                 <CircularProgress size={300} />
@@ -727,9 +757,7 @@ class ReportTable extends React.PureComponent {
                 />
                 <IntegratedPaging />
                 <Table rowComponent={this.TableRow} height={this.state.tableHeight} />
-                <PagingPanel
-                  pageSizes={this.state.pageSizes}
-                />
+                <PagingPanel/>
                 <TableColumnResizing
                   columnWidths={this.state.widths}
                   onColumnWidthsChange={this.onColumnWidthsChange}
@@ -763,6 +791,7 @@ class ReportTable extends React.PureComponent {
           }
         />
       </Paper>
+      </div>
     );
   }
 }

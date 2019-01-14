@@ -6,7 +6,7 @@ const { Client } = require('pg')
 const bodyParser = require('body-parser');
 const Promise = require('bluebird');
 const os = require('os');
-const fs = require('fs')
+const fs = require('fs');
 
 let cache;
 
@@ -666,6 +666,19 @@ console.log('user quer: \n', query);
   });
 });
 
+app.get('/getUserName', (req, res) => {
+  console.log('looking for user with request body: \n', req.body);
+  let query =
+      'SELECT email '
+      + 'FROM users '
+      + 'WHERE user_id=\'' + req.body.email + '\'';
+  console.log('user quer: \n', query);
+  db.query(query, (err, data) => {
+    //console.log(data);
+    res.status(200).send(data);
+  });
+})
+
 app.put('/saveuser', (req, res) => {
   let query =
   'INSERT INTO users(email) VALUES (\''+ req.body.email +'\');';
@@ -848,18 +861,20 @@ app.post('/executeSearch', (req, res) => {
     //Object.assign({},a,b) is equivalent to a left join on a of b, into a new dictionary.
     //This preserves our default settings, unless the front end has passed in an overwrite to the default.
     search = JSON.stringify(Object.assign({}, default_search, json_search));
-    console.log("SEARCH: " + search)
+    console.log("SEARCH: " + search);
     const spawn = require("child_process").spawn;
     const pythonProcess = spawn('python3',["../searchElastic.py"]);
     results = "";
     pythonProcess.stdout.on('data', function(data) {
+        console.log("stdout data ");
         // combine the data returned from the python script
         results = results + data.toString();
-        //console.log(results)
+        console.log("results: " + results);
     });
     pythonProcess.stdout.on("end", function(){
+        console.log("stdout end ");
       res.status(200).send(JSON.stringify(results));
-    })
+    });
     pythonProcess.stderr.on('data', function (data) {
       console.log('stderr: ' + data);
     });

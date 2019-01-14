@@ -29,7 +29,10 @@ export default {
     float: 'right',
   },
   ReportList: {
-    height: 'calc(100vh - 162px)',
+    maxheight: '82vh',
+    width: '100vw',
+    display: 'inline-block',
+    boxShadow: 'none'
   },
   newCaseModal: {
     position: 'absolute',
@@ -39,51 +42,60 @@ export default {
     padding: '20px',
     width: '600px',
   },
-  closedSummaryTableContainer: {
-    display: 'inline-block',
-    width: '100%',
-    height: '100%',
-    transition: 'width 200ms ease-in-out',
+  /* Table styles */
+  tableContainer: {
+      float: 'left',
+      display: 'inline-block',
+      width: '35vw', /* This element is constantly on the screen, so we want it's width to be pretty much static. */
+      height: '82vh',
+      padding: '0px',
+      margin: '0px',
+      transition: 'width 200ms ease-in-out',
+      backgroundColor: '#fff',
+      borderColor: '#808080',
+      borderWidth: '2px'
+  },
+  /* The only variable elements should be the report and summary panels, when the case summary expands the report should shrink to accomodate. */
+  /*.Case summary panel styles */
+  openSummaryContainer: {
+      float: 'left',
+      display: 'inline-block',
+      width: '20vw',
+      height: '82vh',
+      transition: 'width 200ms ease-in-out',
+      borderWidthLeft: '1px',
+      backgroundColor: '#808080'
   },
   closedSummaryContainer: {
+    float: 'left',
     display: 'inline-block',
-    float: 'right',
-    width: '0%',
-    height: '100%',
+    width: '0vw',
+    height: '82vh',
     transition: 'width 200ms ease-in-out',
     overflow: 'hidden',
   },
-
-  openSummaryTableContainer: {
-    display: 'inline-block',
-    width: '50%',
-    height: '100%',
-    transition: 'width 200ms ease-in-out',
+  /* Report panel styles */
+  reportContainer: {
+      float: 'right',
+      display: 'inline-block',
+      width: '65vw',
+      height: '82vh',
+      padding: '0px',
+      transition: 'width 200ms ease-in-out',
+      boxShadow: 'none',
+      borderRadius: '2' ,
+      borderWidth: '0.5',
+      borderColor: '#808080'
   },
-    tableContainer: {
-        display: 'inline-block',
-        width: '60%',
-        height: '100%',
-        padding: '0px',
-        margin: '0px',
-        transition: 'width 200ms ease-in-out',
-    },
-
-  openSummaryContainer: {
-    display: 'inline-block',
-    float: 'left',
-    width: '50%',
-    height: '100%',
-    transition: 'width 200ms ease-in-out',
-  },
-    reportContainer: {
-        display: 'inline-block',
+  smallreportContainer: {
         float: 'right',
-        width: '40%',
-        height: '100%',
+        display: 'inline-block',
+        width: '45vw',
+        height: '82vh',
         padding: '0px',
         transition: 'width 200ms ease-in-out',
-    },
+        boxShadow: 'none'
+  },
 
 
 };

@@ -1,8 +1,9 @@
 export default {
     summaryContainer: {
         height: '100%',
-        margin: '20px 20px 20px 0px',
         overflow: 'scroll',
+        borderLeftWidth: '5px',
+        borderLeftColor: '#808080'
     },
     expansionPanelSummary: {
         justifyContent: 'center',

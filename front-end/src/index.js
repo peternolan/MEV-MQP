@@ -53,7 +53,7 @@ ReactDOM.render(
   <PersistGate persistor={persistor}>
     <Provider store={store}>
       <ConnectedRouter history={history}>
-        <div>
+        <div class="page">
           {/* <TopNavigation showFilters={test}/> */}
           <Route exact path="/" component={(props) => {
               return (

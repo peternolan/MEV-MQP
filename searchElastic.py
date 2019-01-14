@@ -101,7 +101,7 @@ def genSearch(string, start=0, size=3):
             .query(Q("multi_match", query=positives, fields=["body", "drugs", "advs"], fuzziness='AUTO'))
     
     if negatives:
-        search = search.exclude(Q("multi_match", query=negatives, fields=["body", "drugs", "advs"])) \
+        search = search.exclude(Q("multi_match", query=negatives, fields=["body", "drugs", "advs"], fuzziness='AUTO')) \
 
     search = search.highlight('body', fragment_size=100)\
             .highlight('drugs')\

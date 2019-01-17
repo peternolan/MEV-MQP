@@ -164,8 +164,6 @@ class QuillEditor extends Component {
 
     getTextFromID = (id) => {
 
-        console.log('userEmail ' + this.state.userEmail);
-
         if (isNaN(id)) {
             this.setState({
                 saving: true,
@@ -213,8 +211,8 @@ class QuillEditor extends Component {
 
                                                var block = `<div style='width: 685px; border-radius: 25px; background-color: #c5cbd6; position: relative; padding: 6px ' >
                                                                  <div style ='left: 20px'>${dummyNode.getElementsByTagName("comment")[i].innerText.replace("n$", "</br>")} </div>
-                                                                 <span style = ${dummyNode.getElementsByTagName("comment")[i].getAttribute("id").toString() === this.state.userID.toString() ? 'display:block' : 'display:none'} onClick = ${this.state.commentMade}>Delete </span></div>
-                                                                  `;
+                                                                 <button type ='button' style = "${dummyNode.getElementsByTagName("comment")[i].getAttribute("id").toString() === this.state.userID.toString() ? 'display:block' : 'display:none'}" onclick= "${ () => this.commentDelete()}"></button>
+                                                                  </div>`;
 
                                                commentLines = commentLines.concat(block);
                                            }

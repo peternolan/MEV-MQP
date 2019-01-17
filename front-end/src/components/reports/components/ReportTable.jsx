@@ -116,8 +116,10 @@ class ReportTable extends React.PureComponent {
         sex: 30,
         drugname: 150,
         me_type: 100,
-        outc_cod: 50
+        outc_cod: 50,
+        id: 80,
       },
+
 
       /**
        * Custom Sorting Functions
@@ -259,7 +261,7 @@ class ReportTable extends React.PureComponent {
   columns2 = [
     {
       title: 'Report ID',
-      name: 'primaryid',
+      name: 'id',
     },
 
   ];
@@ -483,7 +485,7 @@ class ReportTable extends React.PureComponent {
 
               console.log("resultsArr j " + j );
 
-              resultsArr[j] = results.results[j].id;
+              resultsArr[j] = results.results[j];
 
               console.log( "resultsArr at j" + resultsArr[j]);
 
@@ -518,7 +520,7 @@ class ReportTable extends React.PureComponent {
 
     this.props.printSearchResults(array);
 
-    this.setState({data : array});
+    this.setState({returnedResults : array});
   };
 
   handleToggleChange = primaryid => (event, checked) => {
@@ -740,13 +742,16 @@ class ReportTable extends React.PureComponent {
             </div>
           : null}
         {console.log("data In ReportTable")}
+        {console.log("currentTab " + this.props.currentTab)}
+        {console.log("returned results " + this.state.returnedResults)}
           {(this.state.tableHeight !== 0 && this.state.stillResizingTimer === '' && (!this.state.loadingData || this.state.keepTableWhileLoading))
             ? (
 
               <Grid
-                rows={this.state.data}
-                columns={(this.props.currentTab.toString() == 1) ? this.columns2 : this.columns}
+                rows={(this.props.currentTab == 1) ? this.state.returnedResults : this.state.data}
+                columns={(this.props.currentTab == 1) ? this.columns2 : this.columns}
                 getRowId={row => row.primaryid}
+
 
               >
                 <RowDetailState

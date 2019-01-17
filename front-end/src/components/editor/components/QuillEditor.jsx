@@ -66,7 +66,9 @@ class QuillEditor extends Component {
     constructor(props){
 
         super(props);
+
         this.state = {
+            commentDelete: this.commentDelete,
             searching:false,
             valueAttr:'Search..',
             addingComment: false,
@@ -91,6 +93,8 @@ class QuillEditor extends Component {
                 activeIndex: -1,
                 caseSensitive: false
             }
+
+
         };
     }
 
@@ -114,6 +118,49 @@ class QuillEditor extends Component {
     }
 
     onUnload = () => this.saveWork();
+
+
+    commentDelete = () => {
+
+
+        var dummyNode = document.createElement('div');
+
+        dummyNode.innerHTML = this.state.comment;
+
+        console.log("comment Delete " + dummyNode.innerHTML);
+
+        var newText = '';
+
+        if (dummyNode.getElementsByTagName("comments")[0]) {
+
+            for (var i in dummyNode.getElementsByTagName("comment")) {
+
+
+                if (Number.isInteger(Number(i))) {
+
+                    if (dummyNode.getElementsByTagName("comment")[i]) {
+
+
+                        if (dummyNode.getElementsByTagName("comment")[i].getAttribute("id").toString() === this.state.userID.toString()) {
+
+                            var el = dummyNode.getElementsByTagName("comment")[i];
+                            el.remove();
+
+                            newText = dummyNode.innerHTML;
+
+
+                            this.setState({comment: newText, addingComment: true},  () => {
+                                this.handleChange(this.state.report);
+
+                            });
+
+                        }
+                    }
+                }
+            }
+        }
+    };
+
 
     getTextFromID = (id) => {
 
@@ -156,9 +203,20 @@ class QuillEditor extends Component {
                                             text = text.concat(dummyNode.getElementsByTagName("comment")[i].innerText);
 
                                            if (dummyNode.getElementsByTagName("comment")[i].getAttribute('viewable').toString() === "public") {
-                                               commentLines = commentLines.concat(`<div style='width: 685px; border-radius: 25px; background-color: #43e8e8; position: relative; padding: 6px ' > <div style ='left: 20px'>${dummyNode.getElementsByTagName("comment")[i].innerText}</div> </div>`);
+                                               commentLines = commentLines.concat(`<div style='width: 685px; border-radius: 25px; background-color: #43e8e8; position: relative; padding: 6px ' >
+                                                                                        <div style ='left: 20px'>${dummyNode.getElementsByTagName("comment")[i].innerText.replace("n$", "</br>")}
+                                                                                        <span style = "${dummyNode.getElementsByTagName("comment")[i].getAttribute("id").toString() === this.state.userID.toString() ? 'display:block' : 'display:none'}" >
+                                                                                       
+                                                                                        </div>
+                                                                                         </div>`);
                                            } else {
-                                               commentLines = commentLines.concat(`<div style='width: 685px; border-radius: 25px; background-color: #c5cbd6; position: relative; padding: 6px ' > <div style ='left: 20px'>${dummyNode.getElementsByTagName("comment")[i].innerText}</div> </div>`);
+
+                                               var block = `<div style='width: 685px; border-radius: 25px; background-color: #c5cbd6; position: relative; padding: 6px ' >
+                                                                 <div style ='left: 20px'>${dummyNode.getElementsByTagName("comment")[i].innerText.replace("n$", "</br>")} </div>
+                                                                 <span style = ${dummyNode.getElementsByTagName("comment")[i].getAttribute("id").toString() === this.state.userID.toString() ? 'display:block' : 'display:none'} onClick = ${this.state.commentMade}>Delete </span></div>
+                                                                  `;
+
+                                               commentLines = commentLines.concat(block);
                                            }
 
                                             //document.getElementById('commentBox').value = text;
@@ -229,6 +287,10 @@ class QuillEditor extends Component {
         this.quill.format('header', header);
     }
 
+    setAlignStyle(align) {
+        this.quill.format('align', align);
+    }
+
 
     saveWork = () => {
         if (!this.state.saving && !_.isEqual(this.state.current, this.state.saved)) {
@@ -282,7 +344,7 @@ class QuillEditor extends Component {
                         value = {this.state.report}
                         onChange={this.handleChange}
                         modules={this.modules}
-                        style ={{boxShadow: 'none'}}
+                        style ={{textAlign: 'justify', height: '300px', boxShadow: 'none'}}
                         theme="snow"
                         readOnly
                     />
@@ -396,9 +458,20 @@ class QuillEditor extends Component {
                             text = text.concat(dummyNode2.getElementsByTagName("comment")[i].innerText);
 
                             if (dummyNode2.getElementsByTagName("comment")[i].getAttribute('viewable').toString() === "public") {
-                                commentLines = commentLines.concat(`<div style='width: 685px; border-radius: 25px; background-color: #43e8e8; position: relative; padding: 6px ' > <div style ='left: 20px'>${dummyNode2.getElementsByTagName("comment")[i].innerText}</div> </div>`);
+
+                                commentLines = commentLines.concat(`<div style='width: 685px; border-radius: 25px; background-color: #43e8e8; position: relative; padding: 6px ' >
+                                                                         <div style ='left: 20px'>${dummyNode2.getElementsByTagName("comment")[i].innerText.replace("n$", "</br>")}>
+                                                                         <span style = "${dummyNode2.getElementsByTagName("comment")[i].getAttribute("id").toString() === this.state.userID.toString() ? 'display:block' : 'display:none'}" >
+                                                                         </div>
+                                                                         </div>`);
                             } else {
-                                commentLines = commentLines.concat(`<div style='width: 685px; border-radius: 25px; background-color: #c5cbd6; position: relative; padding: 6px ' > <div style ='left: 20px'>${dummyNode2.getElementsByTagName("comment")[i].innerText}</div> </div>`);
+
+
+                                commentLines = commentLines.concat(`<div style='width: 685px; border-radius: 25px; background-color: #c5cbd6; position: relative; padding: 6px ' >
+                                                                         <div style ='left: 20px'>${dummyNode2.getElementsByTagName("comment")[i].innerText.replace("n$", "</br>")}>
+                                                                         <span style = "${dummyNode2.getElementsByTagName("comment")[i].getAttribute("id").toString() === this.state.userID.toString() ? 'display:block' : 'display:none'}" >
+                                                                         </div>
+                                                                         </div>`);
                             }
                             //document.getElementById('commentBox').value = text;
 
@@ -463,7 +536,7 @@ class QuillEditor extends Component {
                         if (dummyNode.getElementsByTagName("comment")[i].getAttribute("id").toString() === this.state.userID.toString()) {
 
 
-                            dummyNode.getElementsByTagName("comment")[i].innerHTML = `${this.state.userEmail}: ${comment}\n<br/>`;
+                            dummyNode.getElementsByTagName("comment")[i].innerHTML = `${this.state.userEmail}: ${comment.replace(/\n/g, " n$")}\n<br/>`;
 
                             for (var j in radios) {
                                 if (radios[j].checked) {
@@ -494,7 +567,7 @@ class QuillEditor extends Component {
             for (var k in radios) {
                 if (radios[k].checked) {
                     newInner = dummyNode.getElementsByTagName("comments")[0].innerHTML.concat(`<comment id=${this.state.userID} 
-viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${comment}\n<br/></comment>`);
+viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${comment.replace(/\n/g, " n$")}\n<br/></comment>`);
                 }
 
             }
@@ -515,7 +588,8 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
 
             for (var x in radios) {
                 if (radios[x].checked) {
-                    var comSpecial = `<comments id = 'comment-${this.props.primaryid}'><comment id = ${this.state.userID} viewable = ${radios[x].value} class = "comment" >${this.state.userEmail}: ${comment}\n<br/></comment></comments>`;
+                    console.log("comment " + comment.replace(/\n/g, " n$"));
+                    var comSpecial = `<comments id = 'comment-${this.props.primaryid}'><comment id = ${this.state.userID} viewable = ${radios[x].value} class = "comment" >${this.state.userEmail}: ${comment.replace(/\n/g, " n$")}\n<br/></comment></comments>`;
 
                 }
 
@@ -620,12 +694,17 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
 
     customToolbar = () => (
 
-        <div id={`react-quill-${this.state.primaryId}`} style={{height: '100px', width: '685px', display: 'none'}}>
+        <div id={`react-quill-${this.state.primaryId}`} style={{height: '60px', width: '1090px', display: 'none'}}>
 
             <select defaultValue="false" className="ql-header" style={{ width: '175px', height: '36px', margin: '4px' }}>
                 <option value="1" />
                 <option value="2" />
                 <option value="false" />
+            </select>
+            <select defaultValue="justify" className="ql-align" style={{ width: '50px', height: '36px', margin: '4px' }}>
+                <option value="center" />
+                <option value="right" />
+                <option value="justify" />
             </select>
             <Button className="ql-colorBackground" value={annotationColors.drug} style={{ padding: '0px', margin: '2px', background: annotationColors.drug}}>
                 Drug
@@ -665,7 +744,7 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
                     }}
                 >
                     <Button style={{ padding: '0px', margin: '2px', minHeight: '2px', minWidth:'2px', border: '1px solid black',
-                        borderRadius: '15px',  background: annotationColors.clear, left: '130px', bottom: '45px'}}>
+                        borderRadius: '15px',  background: annotationColors.clear, left: '10px', bottom: '0px'}}>
                         ? </Button>
                 </MaterialTooltip>
 
@@ -690,6 +769,8 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
         </div>
     );
 
+
+
     modules = {
         toolbar: {
 
@@ -699,7 +780,9 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
                 //commentMade: this.commentMade,
                 header: this.setHeaderStyle,
 
-                editModeIsOn: this.editMode
+                editModeIsOn: this.editMode,
+
+                align: this.setAlignStyle,
 
             },
         },

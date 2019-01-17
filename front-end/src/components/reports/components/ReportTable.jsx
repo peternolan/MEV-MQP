@@ -253,6 +253,16 @@ class ReportTable extends React.PureComponent {
       name: 'outc_cod',
     },
   ];
+  /**
+   * Names and values for the columns of the table
+   */
+  columns2 = [
+    {
+      title: 'Report ID',
+      name: 'primaryid',
+    },
+
+  ];
 
   /**
    * Sets what rows are expanded in the table
@@ -508,6 +518,7 @@ class ReportTable extends React.PureComponent {
 
     this.props.printSearchResults(array);
 
+    this.setState({data : array});
   };
 
   handleToggleChange = primaryid => (event, checked) => {
@@ -728,11 +739,13 @@ class ReportTable extends React.PureComponent {
               </div>
             </div>
           : null}
+        {console.log("data In ReportTable")}
           {(this.state.tableHeight !== 0 && this.state.stillResizingTimer === '' && (!this.state.loadingData || this.state.keepTableWhileLoading))
             ? (
+
               <Grid
                 rows={this.state.data}
-                columns={this.columns}
+                columns={(this.props.currentTab.toString() == 1) ? this.columns2 : this.columns}
                 getRowId={row => row.primaryid}
 
               >

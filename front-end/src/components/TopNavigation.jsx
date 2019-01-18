@@ -151,7 +151,7 @@ class TopNavigation extends Component {
                   <Divider style={{ backgroundColor: 'rgb(255,255,255)' }} />
                 </div>
                 <div className={`${this.props.classes.wpiLogoContainer}`} >
-                  <img src={wpiLogo} className={`${this.props.classes.wpiLogoClass} img-responsive`} />
+                  <img src={wpiLogo} className={`${this.props.classes.wpiLogoClass} img-responsive`} alt="to help"/>
                   <Link to="/help" className={this.props.classes.listLink}>
                     <Typography style={{
  fontSize: '12px', color: '#fff', marginTop: '15px', display: 'inline-block',

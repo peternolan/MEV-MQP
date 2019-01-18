@@ -3,16 +3,16 @@ export default {
     maxHeight: '82vh',
     width: '35vw',
     margin: '0',
-    borderWidth: '4px',
+    borderRightWidth: '4px',
     borderColor: '#aaa',
     backgroundColor: '#fff',
-    display: 'border-box'
+    display: 'inline-block'
   },
   tableContainer: {
     margin: '0px',
     padding: '0px',
     width: 'calc(100%-2px)',
-    maxHeight: '77vh',
+    maxHeight: '70vh',
     overflow: 'scroll',
     display: 'inline-block'
   },

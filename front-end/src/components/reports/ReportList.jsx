@@ -43,6 +43,7 @@ const defaultTheme = createMuiTheme({
     error: red,
   },
   shadows: ["none"],
+  borderRadius: 0
 });
 
 /**
@@ -361,10 +362,8 @@ class ReportList extends Component {
               handleClickPieChart={this.handleCaseChangePrimary}
             />
           </div>
-          <Divider vertical/>
           {/* ====== Table for Viewing the table of reports ====== */}
           <div className={ this.props.classes.tableContainer} >
-
             <ReportTable
               bin={this.state.bin}
               padding = '0px'
@@ -382,7 +381,6 @@ class ReportList extends Component {
               currentTab={this.state.currentTab}
             />
           </div>
-          <Divider vertical/>
             {/* ====== SideBar for reading a report ======*/}
             {console.log(this.state.reportOpen)}
             <div id="report-sidebar" className={(this.state.summaryOpen) ? this.props.classes.smallreportContainer : this.props.classes.reportContainer}  >
@@ -393,7 +391,6 @@ class ReportList extends Component {
                     userID={this.props.userID}
                     userEmail={this.props.userEmail}
                     reportOpen={this.state.reportOpen}
-
                 />
             </div>
           {/* ====== Modal for Creating a New Case ====== */}

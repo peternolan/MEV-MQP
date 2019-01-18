@@ -713,7 +713,7 @@ class ReportTable extends React.PureComponent {
     return (
       <div id='table-wrapper' className={this.props.classes.tableWrapper}>
       <input id='search' type='text' className={this.props.classes.searchBar} placeholder="Search through reports..." onKeyDown={(e) => {if(e.key === 'Enter'){this.search()}}} />
-      <div style={{padding: '4px'}}>
+      <div>
         {(this.props.currentTab.toString() == 1) ?
         <textarea id = "searchResults" style={{ display: 'block'}} cols = "80" rows = "5" >  </textarea> :
             <textarea id = "searchResults" style={{ display: 'none'}} cols = "80" rows = "5" >  </textarea>}

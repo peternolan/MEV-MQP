@@ -105,6 +105,7 @@ class ReportTable extends React.PureComponent {
       pageSize: 50,
       currentPage: 0,
         returnedResults: [1, 2, 3],
+        returnedExcerpts: [],
 
       /**
        * Default widths for the columns of the table
@@ -117,7 +118,8 @@ class ReportTable extends React.PureComponent {
         drugname: 150,
         me_type: 100,
         outc_cod: 50,
-        id: 80,
+        id: 100,
+          body_highlights: 300,
       },
 
 
@@ -260,10 +262,13 @@ class ReportTable extends React.PureComponent {
    */
   columns2 = [
     {
-      title: 'Report ID',
+      title: 'ID',
       name: 'id',
     },
-
+      {
+          title: 'Excerpts',
+          name: 'body_highlights',
+      },
   ];
 
   /**
@@ -414,6 +419,8 @@ class ReportTable extends React.PureComponent {
     //NEED TO PUT IT IN HERE
       let evidenceType;
     let backgroundColor;
+    let text;
+
     switch (this.props.bin) {
       case 'all reports':
         incase = this.state.currentlyInCase[props.tableRow.rowId];
@@ -436,13 +443,22 @@ class ReportTable extends React.PureComponent {
 
     }
     return (
-      <Table.Row
-        {...props}
-        style={{
-          backgroundColor,
+        <div>
+            <div>
+                <Table.Row
+                    {...props}
+                    style={{
+                        backgroundColor,
+                    }}
+                />
+            </div>
 
-        }}
-      />
+          { text = this.state.returnedResults.find(function (element) {
+            return element.id === props.tableRow.rowId;
+          })}
+          {(Number(this.props.currentTab) === 1) ? <div> ${JSON.stringify(text.body_highlights[0].toString())}  </div>
+                 : null}
+        </div>
     );
   };
 
@@ -514,13 +530,13 @@ class ReportTable extends React.PureComponent {
 
   };
 
-  handleSearchResults = (array) => {
+  handleSearchResults = (array1, array2) => {
+
+    this.props.printSearchResults(array1);
+
+    this.setState({returnedResults : array1, returnedExcerpts: array2});
 
     this.props.changeTab(1);
-
-    this.props.printSearchResults(array);
-
-    this.setState({returnedResults : array});
   };
 
   handleToggleChange = primaryid => (event, checked) => {
@@ -741,19 +757,17 @@ class ReportTable extends React.PureComponent {
               </div>
             </div>
           : null}
-        {console.log("data In ReportTable")}
-        {console.log("currentTab " + this.props.currentTab)}
-        {console.log("returned results " + this.state.returnedResults)}
           {(this.state.tableHeight !== 0 && this.state.stillResizingTimer === '' && (!this.state.loadingData || this.state.keepTableWhileLoading))
             ? (
 
               <Grid
-                rows={(this.props.currentTab == 1) ? this.state.returnedResults : this.state.data}
-                columns={(this.props.currentTab == 1) ? this.columns2 : this.columns}
-                getRowId={row => row.primaryid}
+                rows={(Number(this.props.currentTab) === 1) ? this.state.returnedResults : this.state.data}
+                columns={(Number(this.props.currentTab) === 1) ? this.columns2 : this.columns}
+                getRowId={(Number(this.props.currentTab) === 1) ? row => row.id : row => row.primaryid }
 
 
               >
+
                 <RowDetailState
                   expandedRows={this.state.expandedRows}
                   onExpandedRowsChange={this.changeExpandedDetails}
@@ -774,7 +788,9 @@ class ReportTable extends React.PureComponent {
                   columnExtensions={this.state.customSorting}
                 />
                 <IntegratedPaging />
+
                 <Table rowComponent={this.TableRow} height={this.state.tableHeight} />
+
                 <PagingPanel/>
                 <TableColumnResizing
                   columnWidths={this.state.widths}

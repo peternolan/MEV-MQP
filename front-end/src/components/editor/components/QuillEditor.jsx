@@ -66,9 +66,9 @@ class QuillEditor extends Component {
     constructor(props){
 
         super(props);
-
+        this.commentDelete = this.commentDelete.bind(this);
         this.state = {
-            commentDelete: this.commentDelete,
+            //commentDelete: this.commentDelete,
             searching:false,
             valueAttr:'Search..',
             addingComment: false,
@@ -211,7 +211,7 @@ class QuillEditor extends Component {
 
                                                var block = `<div style='width: 685px; border-radius: 25px; background-color: #c5cbd6; position: relative; padding: 6px ' >
                                                                  <div style ='left: 20px'>${dummyNode.getElementsByTagName("comment")[i].innerText.replace("n$", "</br>")} </div>
-                                                                 <button type ='button' style = "${dummyNode.getElementsByTagName("comment")[i].getAttribute("id").toString() === this.state.userID.toString() ? 'display:block' : 'display:none'}" onclick= "${ () => this.commentDelete()}"></button>
+                                                                 <button id = 'delete' type ='button' style = "${dummyNode.getElementsByTagName("comment")[i].getAttribute("id").toString() === this.state.userID.toString() ? 'display:block' : 'display:none'}" onClick={this.commentDelete()}></button>
                                                                   </div>`;
 
                                                commentLines = commentLines.concat(block);

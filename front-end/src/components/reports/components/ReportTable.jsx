@@ -419,7 +419,6 @@ class ReportTable extends React.PureComponent {
     //NEED TO PUT IT IN HERE
       let evidenceType;
     let backgroundColor;
-    let text;
 
     switch (this.props.bin) {
       case 'all reports':
@@ -653,6 +652,31 @@ class ReportTable extends React.PureComponent {
       console.log("returned results " + this.state.returnedResults);
 
     console.log(this.props.currentTab === 1);
+    let incase;
+    let evidenceType;
+    let backgroundColor;
+
+    switch (this.props.bin) {
+      case 'all reports':
+        incase = this.state.currentlyInCase[row.row.id];
+        console.log("incase " + incase);
+        if (!incase) {
+          backgroundColor = '';
+        } else {
+          backgroundColor = (incase.includes('read') && incase.length === 1) ? 'RGBA(255,0,255, 0.2)' : 'RGBA(131, 255, 168, 0.2)';
+
+        }
+        break;
+      case 'trash':
+      case 'read':
+        backgroundColor = '';
+        break;
+      default:
+        evidenceType = this.state.evidenceType[row.row.id];
+        backgroundColor = (evidenceType === 'primary') ? ((this.props.primaryChosen === true) ? 'rgba(255, 0, 255, 0.25)' : this.COLORS.primary)
+            : ((this.props.supportiveChosen === true) ? 'rgba(255, 0, 255, 0.25)' : this.COLORS.supportive );
+
+    }
 
     (this.props.currentTab === 1) ?
         text = this.state.returnedResults.find(function (element) {
@@ -660,8 +684,11 @@ class ReportTable extends React.PureComponent {
           console.log("element " + element.id);
           return element.id === row.row.id;
         })
+
         :
         null;
+
+
 
       return (
 
@@ -727,7 +754,7 @@ class ReportTable extends React.PureComponent {
                   </div>
               </div>
               :
-              <Paper elevation={6} style={{padding: '5px'}}>
+              <Paper elevation={6} style={{padding: '5px', backgroundColor}}>
                 <div> {JSON.stringify(text.body_highlights[0].toString())}  </div>
               </Paper>
       )

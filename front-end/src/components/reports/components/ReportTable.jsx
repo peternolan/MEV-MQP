@@ -688,6 +688,14 @@ class ReportTable extends React.PureComponent {
         :
         null;
 
+    var dummyNode = document.createElement('div');
+
+    console.log("test " + text.body_highlights[0]);
+
+    dummyNode.innerHTML = text.body_highlights[0];
+
+    console.log("test " + dummyNode.innerText);
+
 
 
       return (
@@ -755,7 +763,9 @@ class ReportTable extends React.PureComponent {
               </div>
               :
               <Paper elevation={6} style={{padding: '5px', backgroundColor}}>
-                <div> {JSON.stringify(text.body_highlights[0].toString())}  </div>
+                <div> {/*JSON.stringify(text.body_highlights[0].toString())*/}
+                  {dummyNode.innerText}
+                </div>
               </Paper>
       )
   };
@@ -824,8 +834,9 @@ class ReportTable extends React.PureComponent {
                 />
                 <TableHeaderRow showSortingControls />
                 <TableColumnReordering defaultOrder={this.columns.map(column => column.name)} />
+                {/*cellComponent={(props) => <TableRowDetail.Cell className={this.props.classes.tableDetailCell} {...props} /> }*/}
                 <TableRowDetail
-                  cellComponent={(props) => <TableRowDetail.Cell className={this.props.classes.tableDetailCell} {...props} /> }
+
                   contentComponent={this.renderDetailRowContent}
                 />
               </Grid>

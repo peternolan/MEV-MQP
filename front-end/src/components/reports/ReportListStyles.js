@@ -52,8 +52,6 @@ export default {
       margin: '0px',
       transition: 'width 200ms ease-in-out',
       backgroundColor: '#fff',
-      borderColor: '#808080',
-      borderWidth: '2px'
   },
   /* The only variable elements should be the report and summary panels, when the case summary expands the report should shrink to accomodate. */
   /*.Case summary panel styles */
@@ -64,7 +62,6 @@ export default {
       height: '82vh',
       transition: 'width 200ms ease-in-out',
       borderWidthLeft: '1px',
-      backgroundColor: '#808080'
   },
   closedSummaryContainer: {
     float: 'left',
@@ -79,13 +76,11 @@ export default {
       float: 'right',
       display: 'inline-block',
       width: '65vw',
-      height: '82vh',
+      maxHeight: '82vh',
       padding: '0px',
       transition: 'width 200ms ease-in-out',
       boxShadow: 'none',
-      borderRadius: '2' ,
-      borderWidth: '0.5',
-      borderColor: '#808080'
+      overflow: 'scroll'
   },
   smallreportContainer: {
         float: 'right',

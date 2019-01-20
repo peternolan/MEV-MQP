@@ -41,7 +41,6 @@ class CaseSummaryListing extends React.PureComponent {
             <ExpansionPanel style={{ margin: '5px 2px' }}>
               <ExpansionPanelSummary
                 expandIcon={<ExpandMoreIcon />}
-                classes={{ content: this.props.classes.expansionPanelSummary }}
               >
                 <CaseIcon
                   width={30}
@@ -57,7 +56,6 @@ class CaseSummaryListing extends React.PureComponent {
                   {bin.name}
                 </Typography>
               </ExpansionPanelSummary>
-              <Divider light />
               <ExpansionPanelDetails>
                 <CaseSummary
                   caseID={bin.case_id}
@@ -78,9 +76,10 @@ class CaseSummaryListing extends React.PureComponent {
   render() {
     return (
       <Paper className={this.props.classes.summaryContainer} elevation={4}>
-        <Typography type="title" style={{ padding: '20px' }}>
-          View Case Summary:
+        <Typography type="title" style={{ padding: '10px' }}>
+          Case Summaries
         </Typography>
+        <Divider light />
         {this.props.bins.map(bin => (
           this.renderListItem(bin)
           ))}

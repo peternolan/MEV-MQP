@@ -105,7 +105,7 @@ class ReportTable extends React.PureComponent {
       pageSize: 50,
       currentPage: 0,
         returnedResults: [1, 2, 3],
-        returnedExcerpts: [],
+        returnedIds: [],
 
       /**
        * Default widths for the columns of the table
@@ -443,22 +443,14 @@ class ReportTable extends React.PureComponent {
 
     }
     return (
-        <div>
-            <div>
-                <Table.Row
-                    {...props}
-                    style={{
-                        backgroundColor,
-                    }}
-                />
-            </div>
 
-          { text = this.state.returnedResults.find(function (element) {
-            return element.id === props.tableRow.rowId;
-          })}
-          {(Number(this.props.currentTab) === 1) ? <div> ${JSON.stringify(text.body_highlights[0].toString())}  </div>
-                 : null}
-        </div>
+        <Table.Row
+            {...props}
+            style={{
+                backgroundColor,
+            }}
+        />
+
     );
   };
 
@@ -473,6 +465,7 @@ class ReportTable extends React.PureComponent {
 
     var results;
     var resultsArr = [];
+    var resultIds  = [];
 
     this.props.executeSearch(contents)
       .then((data)=> {
@@ -502,6 +495,7 @@ class ReportTable extends React.PureComponent {
               console.log("resultsArr j " + j );
 
               resultsArr[j] = results.results[j];
+              resultIds[j] = results.results[j].id;
 
               console.log( "resultsArr at j" + resultsArr[j]);
 
@@ -520,7 +514,7 @@ class ReportTable extends React.PureComponent {
 
           //console.log("returnedResults" + this.state.returnedResults);
           document.getElementById("searchResults").value = printOut;
-          this.handleSearchResults(resultsArr);
+          this.handleSearchResults(resultsArr, resultIds);
 
 
 
@@ -534,7 +528,7 @@ class ReportTable extends React.PureComponent {
 
     this.props.printSearchResults(array1);
 
-    this.setState({returnedResults : array1, returnedExcerpts: array2});
+    this.setState({returnedResults : array1, returnedIds: array2});
 
     this.props.changeTab(1);
   };
@@ -649,90 +643,95 @@ class ReportTable extends React.PureComponent {
   };
 
 
-  /**
+
+    /**
    * Defines the html content inside each expandable dropdown area for each row
    * of the table
    */
-  renderDetailRowContent = row => (
-    <div onClick={this.props.handleViewReport(row.row.primaryid)}>
-      <div className="col-sm-3" style={{ marginBottom: '15px' }}>
-        <Paper elevation={6} style={{ padding: '5px' }} >
-          <div className="col-sm-12">
-            {this.renderTypeToggle(row)}
-          </div>
-          <div className="col-sm-12">
-            <Link href="/" to={`/pdf/${row.row.primaryid}`} target="_blank">
-              <Button raised className="cal-button" color="primary">Go to report text</Button>
-            </Link>
-          </div>
-          <div style={{ clear: 'both', float: 'none' }}>&nbsp;</div>
-        </Paper>
-      </div>
-      <div className={`${this.props.classes.sendToCaseContainer} col-sm-9`}>
-        <Paper elevation={6}>
-          <div className="col-sm-12" style={{ padding: '5px 10px' }}>
-            <Typography style={{ fontSize: '14px' }} type="button">
-              Add Report to Case:
-            </Typography>
-          </div>
-          <div className={this.props.classes.moveToCaseDetailsContainer}>
-            {this.props.bins.map((bin, index) => (
-              (this.props.bin.toLowerCase() !== bin.name.toLowerCase())
-                ? (
-                  <MaterialTooltip
-                    title={(bin.name.toLowerCase() === 'trash') ? 'HERE IT IS Warning: Adding this report to the Trash also removes the report from any other cases it is in' : 'Adds this report to this case'}
-                    placement="top"
-                    enterDelay={50}
-                    classes={{
-                      tooltip: this.props.classes.tooltipStyle,
-                      popper: this.props.classes.tooltipStyle,
-                    }}
-                  >
-                    <Button
-                      flat="true"
-                      key={bin.case_id}
-                      className={this.props.classes.caseGridList}
-                      onClick={() => {
-                        this.handleMoveReport(
-                          row.row.primaryid,
-                          this.props.bin,
-                          this.props.bins[index].name.toLowerCase(),
-                          this.state[row.row.primaryid],
-                        );
-                      }}
-                    >
-                      {(this.state.currentlyInCase[row.row.primaryid]
-                        && this.state.currentlyInCase[row.row.primaryid].includes(bin.name.toLowerCase()))
-                        ? this.renderMoveToIcon(bin.name, true)
-                        : this.renderMoveToIcon(bin.name)}
-                    </Button>
-                  </MaterialTooltip>
-                )
-                : null
-            ))}
-          </div>
-        </Paper>
-      </div>
-      {/*
-      <div style={{ marginTop: '10px' }} className="col-sm-12">
+  renderDetailRowContent = row => {
+      var text = '';
+      console.log("returned results " + this.state.returnedResults);
 
-        <ExpansionPanel elevation={6}>
-          <ExpansionPanelSummary   expandIcon={<ExpandMoreIcon />}>
-            <Typography type="subheading" >Annotate Narrative</Typography>
-          </ExpansionPanelSummary>
-          <Divider light />
-          <ExpansionPanelDetails>
-            <QuillEditor
-              primaryid={Number(row.row.primaryid, 10)}
-              incrementSummary={this.props.incrementSummary}
+    console.log(this.props.currentTab === 1);
 
-            />
-          </ExpansionPanelDetails>
-        </ExpansionPanel>
-      </div>
-      */}
-    </div>
-  );
+    (this.props.currentTab === 1) ?
+        text = this.state.returnedResults.find(function (element) {
+          console.log("row " + row.row.id);
+          console.log("element " + element.id);
+          return element.id === row.row.id;
+        })
+        :
+        null;
+
+      return (
+
+          (this.props.currentTab.toString() != 1) ?
+              <div onClick={this.props.handleViewReport(row.row.primaryid)}>
+                  <div className="col-sm-3" style={{marginBottom: '15px'}}>
+                      <Paper elevation={6} style={{padding: '5px'}}>
+                          <div className="col-sm-12">
+                              {this.renderTypeToggle(row)}
+                          </div>
+                          <div className="col-sm-12">
+                              <Link href="/" to={`/pdf/${row.row.primaryid}`} target="_blank">
+                                  <Button raised className="cal-button" color="primary">Go to report text</Button>
+                              </Link>
+                          </div>
+                          <div style={{clear: 'both', float: 'none'}}>&nbsp;</div>
+                      </Paper>
+                  </div>
+                  <div className={`${this.props.classes.sendToCaseContainer} col-sm-9`}>
+                      <Paper elevation={6}>
+                          <div className="col-sm-12" style={{padding: '5px 10px'}}>
+                              <Typography style={{fontSize: '14px'}} type="button">
+                                  Add Report to Case:
+                              </Typography>
+                          </div>
+                          <div className={this.props.classes.moveToCaseDetailsContainer}>
+                              {this.props.bins.map((bin, index) => (
+                                  (this.props.bin.toLowerCase() !== bin.name.toLowerCase())
+                                      ? (
+                                          <MaterialTooltip
+                                              title={(bin.name.toLowerCase() === 'trash') ? 'HERE IT IS Warning: Adding this report to the Trash also removes the report from any other cases it is in' : 'Adds this report to this case'}
+                                              placement="top"
+                                              enterDelay={50}
+                                              classes={{
+                                                  tooltip: this.props.classes.tooltipStyle,
+                                                  popper: this.props.classes.tooltipStyle,
+                                              }}
+                                          >
+                                              <Button
+                                                  flat="true"
+                                                  key={bin.case_id}
+                                                  className={this.props.classes.caseGridList}
+                                                  onClick={() => {
+                                                      this.handleMoveReport(
+                                                          row.row.primaryid,
+                                                          this.props.bin,
+                                                          this.props.bins[index].name.toLowerCase(),
+                                                          this.state[row.row.primaryid],
+                                                      );
+                                                  }}
+                                              >
+                                                  {(this.state.currentlyInCase[row.row.primaryid]
+                                                      && this.state.currentlyInCase[row.row.primaryid].includes(bin.name.toLowerCase()))
+                                                      ? this.renderMoveToIcon(bin.name, true)
+                                                      : this.renderMoveToIcon(bin.name)}
+                                              </Button>
+                                          </MaterialTooltip>
+                                      )
+                                      : null
+                              ))}
+                          </div>
+                      </Paper>
+                  </div>
+              </div>
+              :
+              <Paper elevation={6} style={{padding: '5px'}}>
+                <div> {JSON.stringify(text.body_highlights[0].toString())}  </div>
+              </Paper>
+      )
+  };
 
 
   render() {
@@ -767,9 +766,9 @@ class ReportTable extends React.PureComponent {
 
 
               >
-
+                {console.log("expanded " + this.state.expandedRows)}
                 <RowDetailState
-                  expandedRows={this.state.expandedRows}
+                  expandedRows={(Number(this.props.currentTab) === 1) ? this.state.returnedIds : this.state.expandedRows}
                   onExpandedRowsChange={this.changeExpandedDetails}
                 />
                 <DragDropProvider />

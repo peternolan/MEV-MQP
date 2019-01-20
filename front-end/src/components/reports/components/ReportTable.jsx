@@ -489,7 +489,7 @@ class ReportTable extends React.PureComponent {
 
             console.log(results.results[j].id);
 
-            printOut = printOut.concat(results.results[j].id + '\n' + results.results[j].body_highlights[0] + '\n');
+            //printOut = printOut.concat(results.results[j].id + '\n' + results.results[j].body_highlights[0] + '\n');
 
               console.log("resultsArr j " + j );
 
@@ -512,7 +512,7 @@ class ReportTable extends React.PureComponent {
           console.log("resultsArr " +  resultsArr);
 
           //console.log("returnedResults" + this.state.returnedResults);
-          document.getElementById("searchResults").value = printOut;
+          //document.getElementById("searchResults").value = printOut;
           this.handleSearchResults(resultsArr, resultIds);
 
 
@@ -699,6 +699,7 @@ class ReportTable extends React.PureComponent {
 
 
       return (
+
           (this.props.currentTab.toString() != 1) ?
               <div onClick={this.props.handleViewReport(row.row.primaryid)}>
                   <div className="col-sm-3" style={{marginBottom: '15px'}}>
@@ -778,9 +779,10 @@ class ReportTable extends React.PureComponent {
       <div id='table-wrapper' className={this.props.classes.tableWrapper}>
       <input id='search' type='text' className={this.props.classes.searchBar} placeholder="Search through reports..." onKeyDown={(e) => {if(e.key === 'Enter'){this.search()}}} />
       <div>
-        {(this.props.currentTab.toString() == 1) ?
+        {/*(this.props.currentTab.toString() == 1) ?
         <textarea id = "searchResults" style={{ display: 'block'}} cols = "80" rows = "5" >  </textarea> :
-            <textarea id = "searchResults" style={{ display: 'none'}} cols = "80" rows = "5" >  </textarea>}
+            <textarea id = "searchResults" style={{ display: 'none'}} cols = "80" rows = "5" >  </textarea>
+            */}
       </div>
       <Paper id="table-container" className={this.props.classes.tableContainer} elevation={4}>
         {(this.state.loadingData)

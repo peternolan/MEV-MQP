@@ -691,7 +691,6 @@ class ReportTable extends React.PureComponent {
 
 
       return (
-
           (this.props.currentTab.toString() != 1) ?
               <div onClick={this.props.handleViewReport(row.row.primaryid)}>
                   <div className="col-sm-3" style={{marginBottom: '15px'}}>

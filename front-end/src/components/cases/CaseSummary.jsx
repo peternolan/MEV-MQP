@@ -91,7 +91,7 @@ class CaseSummary extends Component {
 
   getReportTypeData = () => {
     // console.log(getReportsInCases);
-    // console.log(this.state.reportsInCase)
+
     const typeObject = this.state.reportsInCase.reduce((acc, report) => {
       acc[report.type] = (acc[report.type]) ? acc[report.type] + 1 : 1;
       return acc;
@@ -194,7 +194,7 @@ class CaseSummary extends Component {
           this.updateGraphs();
         });
       });
-  }
+  };
 
   updateGraphs = () => {
     /********* reports assigned to the variable */
@@ -269,7 +269,7 @@ class CaseSummary extends Component {
 
   /************ when case changes, update the reports */
   handleCaseChange = () => {
-      console.log("State Name" + this.state.caseName);
+      console.log("State caseName" + this.state.caseName);
       this.props.updateTab(this.state.caseName);
   };
 
@@ -446,6 +446,7 @@ class CaseSummary extends Component {
   render() { 
     // this.searchDocs();
     // this.calculateTfidf();
+
     return (
       /*****  casename/case info */
       <div style={{ width: '100%' }} >

@@ -117,7 +117,7 @@ class ReportList extends Component {
       });
   };
 
-  updateTab = (name, color) => {
+   updateTab = (name, color) => {
     const userCreatedArray = this.state.userBins.map(bin => bin.name.toLowerCase()).filter(bin => (bin !== 'trash' && bin !== 'read' && bin !== 'all reports' && bin !== 'new case' && bin !== 'searched reports'));
     const array = ['all reports', 'searched reports', 'read', 'trash', 'new case'].concat(userCreatedArray);
     const index = array.indexOf(name);

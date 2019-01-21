@@ -90,11 +90,78 @@ export const getCaseNameByID = caseID => () => {
     .then(reports => (reports.rows ? reports.rows : []));
 };
 
+
+const countInstance = (array) => {
+    var ind = 0;
+    var duplicates = [];
+    for (var i in array) {
+
+        if (!duplicates.find(function(item) {
+            console.log("Here " + item.word);
+            return item.word === array[i]
+        })) {
+
+            console.log("Not Present");
+
+            duplicates.push({word: array[i], count: 1});
+        }
+        else {
+            console.log("Present");
+            ind = duplicates.findIndex(function(item) {return item.word === array[i]});
+            duplicates[ind].count++;
+        }
+
+    }
+
+    return duplicates;
+
+}
+
+
+/**
+ * Gets the amount of instances of  a term from within the array
+ *
+ */
+export const getInstances= (bins) => {
+
+  var printing = '';
+
+  /*
+  printing += Object.getOwnPropertyNames(bins[0]);
+
+
+  console.log("printing " + printing);
+  */
+
+
+  var sexArray = bins.map(function(item){ return item.sex });
+    var ageArray = bins.map(function(item){ return item.age_year });
+    var errorArray = bins.map(function(item){ return item.me_type });
+    var outArray = bins.map(function(item){ return item.outc_cod});
+
+    //If we find a new string, put it in the duplicate list.
+    //If
+
+
+
+
+    console.log("duplicates sex " + countInstance(sexArray)[0].word + " " + countInstance(sexArray)[0].count);
+    console.log("duplicates age " + countInstance(ageArray)[1].word + " "  + countInstance(ageArray)[1].count);
+    console.log("duplicates error " + countInstance(errorArray)[0].count);
+    console.log("duplicates out " + countInstance(outArray)[0].count);
+
+
+
+};
+
+
+
 /**
  * Queries the Database with currently selected filters, a bin, and a userID to retrieve
  * that user's reports contained in specified bin that fit in filters
  */
 export const getCaseReports = (bin, userID, filters) => (dispatch, getState) => {
+  console.log("getCaseReports");
   const defaultFilters = {
     init_fda_dt: {
       start: '1',
@@ -124,9 +191,12 @@ export const getCaseReports = (bin, userID, filters) => (dispatch, getState) => 
     }),
   };
 
+
+
   return fetch(`${process.env.REACT_APP_NODE_SERVER}/getreports`, fetchData)
     .then(response => response.json())
-    .then(reports => (reports.rows ? reports.rows : []));
+    .then(reports => (reports.rows ? reports.rows : []))
+
 };
 
 /**

@@ -165,7 +165,7 @@ class ReportPanel extends React.PureComponent {
     render = () => {
         return (
             <Paper id="summary-container" className={this.props.classes.summaryContainer} padding = '0px' elevation={4}>
-                <Typography type="title" style={{ padding: '20px' }}>
+                <Typography type="title" style={{ padding: '5px' }}>
                     View Report
                 </Typography>
                 {this.renderInside(this.props.primaryid)}

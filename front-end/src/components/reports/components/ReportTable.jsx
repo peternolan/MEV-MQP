@@ -420,6 +420,8 @@ class ReportTable extends React.PureComponent {
       let evidenceType;
     let backgroundColor;
 
+    console.log("bin " + this.props.bin);
+
     switch (this.props.bin) {
       case 'all reports':
         incase = this.state.currentlyInCase[props.tableRow.rowId];
@@ -690,11 +692,8 @@ class ReportTable extends React.PureComponent {
 
     var dummyNode = document.createElement('div');
 
-    console.log("test " + text.body_highlights[0]);
+    (this.props.currentTab === 1) ? dummyNode.innerHTML = text.body_highlights[0] : null;
 
-    dummyNode.innerHTML = text.body_highlights[0];
-
-    console.log("test " + dummyNode.innerText);
 
 
 

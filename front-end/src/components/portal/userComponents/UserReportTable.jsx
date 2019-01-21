@@ -25,7 +25,7 @@ import ExpansionPanel, {
 } from 'material-ui/ExpansionPanel';
 import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
-import { moveReport, getCaseReports } from '../../../actions/reportActions';
+import { moveReport, getCaseReports, getInstances } from '../../../actions/reportActions';
 
 const styles = {};
 
@@ -36,6 +36,7 @@ class UserReportTable extends React.PureComponent {
   static propTypes = {
     getCaseReports: PropTypes.func.isRequired,
     moveReport: PropTypes.func.isRequired,
+    getInstances: PropTypes.func.isRequired,
     bins: PropTypes.arrayOf(PropTypes.string).isRequired,
     filters: PropTypes.shape({
       init_fda_dt: PropTypes.object,
@@ -67,14 +68,21 @@ class UserReportTable extends React.PureComponent {
     };
   }
 
+
+
   /**
    * Sends fetch request to retrieve list of reports to be shown in table
    */
   componentDidMount() {
+
     this.props.getCaseReports(this.props.bin, this.props.userID, {})
       .then(bins => {
-        this.props.setReportCount(bins.length)
+        this.props.setReportCount(bins.length);
         this.setState({ data: bins });
+
+        this.props.getInstances(bins);
+
+
       });
   }
 
@@ -257,5 +265,5 @@ const mapStateToProps = state => ({
  */
 export default connect(
   mapStateToProps,
-  { moveReport, getCaseReports },
+  { moveReport, getCaseReports, getInstances  },
 )(withStyles(styles)(UserReportTable));

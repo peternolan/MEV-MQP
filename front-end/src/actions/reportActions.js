@@ -122,16 +122,16 @@ const countInstance = (array) => {
  * Gets the amount of instances of  a term from within the array
  *
  */
-export const getInstances= (bins) => {
+export const getInstances = (bins) => {
 
   var printing = '';
 
-  /*
+
   printing += Object.getOwnPropertyNames(bins[0]);
 
 
   console.log("printing " + printing);
-  */
+
 
 
   var sexArray = bins.map(function(item){ return item.sex });
@@ -146,7 +146,7 @@ export const getInstances= (bins) => {
 
 
     console.log("duplicates sex " + countInstance(sexArray)[0].word + " " + countInstance(sexArray)[0].count);
-    console.log("duplicates age " + countInstance(ageArray)[1].word + " "  + countInstance(ageArray)[1].count);
+    console.log("duplicates age " + countInstance(ageArray)[0].word + " "  + countInstance(ageArray)[0].count);
     console.log("duplicates error " + countInstance(errorArray)[0].count);
     console.log("duplicates out " + countInstance(outArray)[0].count);
 

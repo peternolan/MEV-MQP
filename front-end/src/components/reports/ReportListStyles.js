@@ -61,7 +61,6 @@ export default {
       width: '20vw',
       height: '82vh',
       transition: 'width 200ms ease-in-out',
-      borderWidthLeft: '1px',
   },
   closedSummaryContainer: {
     float: 'left',
@@ -80,7 +79,7 @@ export default {
       padding: '0px',
       transition: 'width 200ms ease-in-out',
       boxShadow: 'none',
-      overflow: 'scroll'
+      overflow: 'scroll',
   },
   smallreportContainer: {
         float: 'right',

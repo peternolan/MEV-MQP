@@ -83,6 +83,7 @@ class ReportTable extends React.PureComponent {
       caseGridList: PropTypes.string,
       sendToCaseContainer: PropTypes.string,
       tableDetailCell: PropTypes.string,
+      tableHeader: PropTypes.string,
     }).isRequired,
   };
 
@@ -446,7 +447,7 @@ class ReportTable extends React.PureComponent {
         <Table.Row
             {...props}
             style={{
-                backgroundColor,
+                backgroundColor,height:''
             }}
         />
 
@@ -689,30 +690,24 @@ class ReportTable extends React.PureComponent {
         null;
 
     var dummyNode = document.createElement('div');
-
+    /*
     console.log("test " + text.body_highlights[0]);
 
     dummyNode.innerHTML = text.body_highlights[0];
 
     console.log("test " + dummyNode.innerText);
-
+    */
 
 
       return (
 
           (this.props.currentTab.toString() != 1) ?
               <div onClick={this.props.handleViewReport(row.row.primaryid)}>
-                  <div className="col-sm-3" style={{marginBottom: '15px'}}>
-                      <Paper elevation={6} style={{padding: '5px'}}>
+                  <div className="col-sm-3" style={{marginBottom: '1px'}}>
+                      <Paper elevation={6} style={{padding: '1px'}}>
                           <div className="col-sm-12">
                               {this.renderTypeToggle(row)}
                           </div>
-                          <div className="col-sm-12">
-                              <Link href="/" to={`/pdf/${row.row.primaryid}`} target="_blank">
-                                  <Button raised className="cal-button" color="primary">Go to report text</Button>
-                              </Link>
-                          </div>
-                          <div style={{clear: 'both', float: 'none'}}>&nbsp;</div>
                       </Paper>
                   </div>
                   <div className={`${this.props.classes.sendToCaseContainer} col-sm-9`}>
@@ -778,12 +773,6 @@ class ReportTable extends React.PureComponent {
     return (
       <div id='table-wrapper' className={this.props.classes.tableWrapper}>
       <input id='search' type='text' className={this.props.classes.searchBar} placeholder="Search through reports..." onKeyDown={(e) => {if(e.key === 'Enter'){this.search()}}} />
-      <div>
-        {/*(this.props.currentTab.toString() == 1) ?
-        <textarea id = "searchResults" style={{ display: 'block'}} cols = "80" rows = "5" >  </textarea> :
-            <textarea id = "searchResults" style={{ display: 'none'}} cols = "80" rows = "5" >  </textarea>
-            */}
-      </div>
       <Paper id="table-container" className={this.props.classes.tableContainer} elevation={4}>
         {(this.state.loadingData)
           ? <div
@@ -801,8 +790,6 @@ class ReportTable extends React.PureComponent {
                 rows={(Number(this.props.currentTab) === 1) ? this.state.returnedResults : this.state.data}
                 columns={(Number(this.props.currentTab) === 1) ? this.columns2 : this.columns}
                 getRowId={(Number(this.props.currentTab) === 1) ? row => row.id : row => row.primaryid }
-
-
               >
                 {console.log("expanded " + this.state.expandedRows)}
                 <RowDetailState
@@ -833,7 +820,7 @@ class ReportTable extends React.PureComponent {
                   columnWidths={this.state.widths}
                   onColumnWidthsChange={this.onColumnWidthsChange}
                 />
-                <TableHeaderRow showSortingControls />
+                <TableHeaderRow showSortingControls className="tableHeader"/>
                 <TableColumnReordering defaultOrder={this.columns.map(column => column.name)} />
                 {/*cellComponent={(props) => <TableRowDetail.Cell className={this.props.classes.tableDetailCell} {...props} /> }*/}
                 <TableRowDetail

@@ -1,7 +1,14 @@
 export default {
     summaryContainer: {
         overflow: 'scroll',
-        height: '100%'
+        height: '100%',
+        borderRadius: 0,
+        borderLeftWidth: '1px',
+        borderTopWidth: 0,
+        borderBottomWidth: 0,
+        borderRightWidth: 0,
+        borderColor: 'rgba(0, 0, 0, 0.08)',
+        borderStyle: 'solid'
     },
     expansionPanelSummary: {
         justifyContent: 'center',

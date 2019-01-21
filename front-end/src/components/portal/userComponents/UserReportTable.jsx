@@ -137,10 +137,6 @@ class UserReportTable extends React.PureComponent {
       title: 'Outcome',
       name: 'outc_cod',
     },
-    {
-      title: 'Narrative',
-      name: 'report_text',
-    },
   ];
 
   /**

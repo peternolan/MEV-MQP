@@ -7,7 +7,7 @@ import Button from 'material-ui/Button';
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer, BarChart, XAxis, YAxis, CartesianGrid, Bar } from 'recharts';
 // import Select from 'react-select';
 import {Combobox} from 'react-widgets';
-import { getTagsinCase, getReportsInCases, getCaseNameByID, getCaseReports,setSearchedReports } from '../../actions/reportActions';
+import { getTagsinCase, getReportsInCases, getCaseNameByID, getCaseReports,setSearchedReports , getInstances } from '../../actions/reportActions';
 import annotationColors from '../editor/components/AnnotationColors';
 import * as JsSearch from 'js-search';
 import "react-widgets/dist/css/react-widgets.css";
@@ -29,7 +29,8 @@ class CaseSummary extends Component {
     getReportsInCases: PropTypes.func.isRequired,
     getCaseNameByID: PropTypes.func.isRequired,
     getCaseReports: PropTypes.func,
-    setSearchedReports: PropTypes.func.isRequired,
+      getInstances: PropTypes.func,
+      setSearchedReports: PropTypes.func.isRequired,
       handleClick: PropTypes.func.isRequired,
     summaryCounter: PropTypes.number,
     caseID: PropTypes.number,
@@ -69,7 +70,7 @@ class CaseSummary extends Component {
     };
   }
 
-  componentWillMount() {    
+  componentWillMount() {
     this.props.getCaseNameByID(this.props.caseID)
       .then(rows => this.setState({
         caseName: (rows[0] ? rows[0].name : ''),
@@ -91,7 +92,7 @@ class CaseSummary extends Component {
 
   getReportTypeData = () => {
     // console.log(getReportsInCases);
-    // console.log(this.state.reportsInCase)
+
     const typeObject = this.state.reportsInCase.reduce((acc, report) => {
       acc[report.type] = (acc[report.type]) ? acc[report.type] + 1 : 1;
       return acc;
@@ -108,7 +109,7 @@ class CaseSummary extends Component {
   };
 
 
-  /******* define funciton  */
+  /******* define function  */
 
   getTagData = () => {
    
@@ -194,7 +195,7 @@ class CaseSummary extends Component {
           this.updateGraphs();
         });
       });
-  }
+  };
 
   updateGraphs = () => {
     /********* reports assigned to the variable */
@@ -269,7 +270,7 @@ class CaseSummary extends Component {
 
   /************ when case changes, update the reports */
   handleCaseChange = () => {
-      console.log("State Name" + this.state.caseName);
+      console.log("State caseName" + this.state.caseName);
       this.props.updateTab(this.state.caseName);
   };
 
@@ -446,6 +447,7 @@ class CaseSummary extends Component {
   render() { 
     // this.searchDocs();
     // this.calculateTfidf();
+
     return (
       /*****  casename/case info */
       <div style={{ width: '100%' }} >
@@ -505,6 +507,6 @@ const mapStateToProps = state => ({
  */
 export default connect(
   mapStateToProps,
-  { getTagsinCase, getReportsInCases, getCaseNameByID , getCaseReports, setSearchedReports},
+  { getTagsinCase, getReportsInCases, getCaseNameByID , getCaseReports, setSearchedReports, getInstances},
 )(withStyles(styles)(CaseSummary));
 

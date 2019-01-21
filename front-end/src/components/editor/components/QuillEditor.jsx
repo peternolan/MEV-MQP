@@ -342,7 +342,7 @@ class QuillEditor extends Component {
                         value = {this.state.report}
                         onChange={this.handleChange}
                         modules={this.modules}
-                        style ={{textAlign: 'justify', height: '300px', boxShadow: 'none'}}
+                        style ={{textAlign: 'justify', height: '210px', boxShadow: 'none'}}
                         theme="snow"
                         readOnly
                     />
@@ -809,14 +809,14 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
                     Legend
                 </legend>
 
-                    <span style = {{position: 'relative', bottom: '9px' }}>Drug</span> <div className = {this.props.classes.squareReuse}></div>
-                    <span style = {{position: 'relative', bottom: '9px' }}>Adverse Reaction</span> <div className = {this.props.classes.squareCadetBlue}></div>
-                    <span style = {{position: 'relative', bottom: '9px' }}>Dosage</span> <div className = {this.props.classes.squareOrange}></div>
-                    <span style = {{position: 'relative', bottom: '9px' }}>Age</span> <div className = {this.props.classes.squareGold}></div>
-                    <span style = {{position: 'relative', bottom: '9px' }}>Sex</span> <div className = {this.props.classes.squarePink}></div>
-                    <span style = {{position: 'relative', bottom: '9px' }}>Weight</span> <div className = {this.props.classes.squareOrchid}></div>
-                    <span style = {{position: 'relative', bottom: '9px' }}>Indication</span> <div className = {this.props.classes.squareSilver}></div>
-                    <span style = {{position: 'relative', bottom: '9px' }}>Interesting</span> <div className = {this.props.classes.squareCyan}></div>
+                    <span style = {{position: 'relative', bottom: '9px' }}>Drug </span><div className = {this.props.classes.squareReuse}></div><span style = {{position: 'relative', bottom: '9px' }}>|</span>
+                    <span style = {{position: 'relative', bottom: '9px' }}>Adverse Reaction </span><div className = {this.props.classes.squareCadetBlue}></div><span style = {{position: 'relative', bottom: '9px' }}>|</span>
+                    <span style = {{position: 'relative', bottom: '9px' }}>Dosage </span><div className = {this.props.classes.squareOrange}></div><span style = {{position: 'relative', bottom: '9px' }}>|</span>
+                    <span style = {{position: 'relative', bottom: '9px' }}>Age </span><div className = {this.props.classes.squareGold}></div><span style = {{position: 'relative', bottom: '9px' }}>|</span>
+                    <span style = {{position: 'relative', bottom: '9px' }}>Sex </span><div className = {this.props.classes.squarePink}></div><span style = {{position: 'relative', bottom: '9px' }}>|</span>
+                    <span style = {{position: 'relative', bottom: '9px' }}>Weight </span><div className = {this.props.classes.squareOrchid}></div><span style = {{position: 'relative', bottom: '9px' }}>|</span>
+                    <span style = {{position: 'relative', bottom: '9px' }}>Indication </span><div className = {this.props.classes.squareSilver}></div><span style = {{position: 'relative', bottom: '9px' }}>|</span>
+                    <span style = {{position: 'relative', bottom: '9px' }}>Interesting </span><div className = {this.props.classes.squareCyan}></div><span style = {{position: 'relative', bottom: '9px' }}>|</span>
 
                 </fieldset>
 
@@ -858,16 +858,7 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
 
                 {/* ====== Save Button Area ====== */}
                 <div className={this.props.classes.wrapper}>
-                    <Button
-                        id = "saveButton2"
-                        raised
-                        color="primary"
-                        className={(this.state.success) ? this.props.classes.buttonSuccess : ''}
-                        disabled={this.state.saving}
-                        onClick={this.saveWork}
-                        style = {{display: 'none'}}>
-                        Save
-                    </Button>
+
 
                     <div id = "commentArea" >
                         {/*<div>
@@ -882,7 +873,6 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
                          </div>
 
                          <div style={{padding: '4px'} }>
-                             <Button id = "MakeNote" style={{display: 'none'}} onClick={() => this.commentMade()}> Make Note </Button>
                              <form id = "radio-form" style={{display: 'none'}}>
 
                                  <input type ="radio" name = "viewable" value = "private" checked ="yes" style={{padding: '4px'}}/>Private
@@ -890,6 +880,18 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
 
 
                              </form>
+                             <Button id = "MakeNote" style={{display: 'none'}} onClick={() => this.commentMade()}> Make Note </Button>
+                             <Button
+                                 id = "saveButton2"
+                                 raised
+                                 color="primary"
+                                 className={(this.state.success) ? this.props.classes.buttonSuccess : ''}
+                                 disabled={this.state.saving}
+                                 onClick={this.saveWork}
+                                 style = {{display: 'none'}}>
+                                 Save
+                             </Button>
+
 
                          </div>
                     </div>

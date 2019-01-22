@@ -3,8 +3,6 @@ export default {
     width: '35vw',
     margin: '0',
     maxHeight: 'calc(100vh - 122px)',
-    borderRightWidth: '4px',
-    borderColor: '#aaa',
     backgroundColor: '#fff',
     display: 'inline-block'
   },
@@ -42,10 +40,22 @@ export default {
   },
   searchBar: {
     fontSize: '1em',
-    width: 'calc(100% - 10px)',
+    width: 'calc(80% - 5px)',
     margin: '5px',
+    marginRight: 0,
     display: 'inline-block',
-    height: '40px',
+    height: '35px',
     padding: '10px',
+    float: 'left'
   },
+  searchDD: {
+    height: 35,
+    width: 'calc(20% - 5px)',
+    boxShadow: 'none',
+    borderColor: 'rgba(51, 51, 51, 0.08)',
+    float: 'left',
+    margin: 5,
+    marginLeft: 0,
+    borderRadius: 0,
+  }
 };

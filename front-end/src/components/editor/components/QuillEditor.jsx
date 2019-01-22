@@ -131,6 +131,7 @@ class QuillEditor extends Component {
 
         var newText = '';
 
+
         if (dummyNode.getElementsByTagName("comments")[0]) {
 
             for (var i in dummyNode.getElementsByTagName("comment")) {
@@ -142,14 +143,20 @@ class QuillEditor extends Component {
 
 
                         if (dummyNode.getElementsByTagName("comment")[i].getAttribute("id").toString() === this.state.userID.toString()) {
-
+                            console.log("Will be deleted");
                             var el = dummyNode.getElementsByTagName("comment")[i];
                             el.remove();
 
+
+
                             newText = dummyNode.innerHTML;
+
+                            console.log("new Comment " + newText);
 
 
                             this.setState({comment: newText, addingComment: true},  () => {
+
+                                console.log("this.state.newtext " + this.state.comment);
                                 this.handleChange(this.state.report);
 
                             });
@@ -209,9 +216,12 @@ class QuillEditor extends Component {
                                                                                          </div>`);
                                            } else {
 
+                                               /*<button id = 'delete' type ='button'
+                                               style = "${dummyNode.getElementsByTagName("comment")[i].getAttribute("id").toString() === this.state.userID.toString() ? 'display:block' : 'display:none'}"
+                                               onClick={this.commentDelete()}></button>*/
+
                                                var block = `<div style='width: 685px; border-radius: 25px; background-color: #c5cbd6; position: relative; padding: 6px ' >
                                                                  <div style ='left: 20px'>${dummyNode.getElementsByTagName("comment")[i].innerText.replace("n$", "</br>")} </div>
-                                                                 <button id = 'delete' type ='button' style = "${dummyNode.getElementsByTagName("comment")[i].getAttribute("id").toString() === this.state.userID.toString() ? 'display:block' : 'display:none'}" onClick={this.commentDelete()}></button>
                                                                   </div>`;
 
                                                commentLines = commentLines.concat(block);
@@ -441,46 +451,55 @@ class QuillEditor extends Component {
         else {
 
             var dummyNode2 = document.createElement('div');
+            console.log("this.state.comment " + this.state.comment.innerHTML);
             dummyNode2.innerHTML = this.state.comment;
 
             if (dummyNode2.getElementsByTagName("comment")) {
                 var text = '';
                 var commentLines = '';
 
-                for (var i in dummyNode2.getElementsByTagName("comment")) {
+                console.log("comment " + dummyNode2.getElementsByTagName("comment"))
+                if (dummyNode2.getElementsByTagName("comment").length) {
+                    for (var i in dummyNode2.getElementsByTagName("comment")) {
 
-                    if (Number.isInteger(Number(i))) {
-                        if (dummyNode2.getElementsByTagName("comment")[i].id.toString() === this.state.userID.toString()
-                            || dummyNode2.getElementsByTagName("comment")[i].getAttribute("viewable").toString() === "public") {
+                        if (Number.isInteger(Number(i))) {
+                            if (dummyNode2.getElementsByTagName("comment")[i].id.toString() === this.state.userID.toString()
+                                || dummyNode2.getElementsByTagName("comment")[i].getAttribute("viewable").toString() === "public") {
 
-                            text = text.concat(dummyNode2.getElementsByTagName("comment")[i].innerText);
+                                text = text.concat(dummyNode2.getElementsByTagName("comment")[i].innerText);
 
-                            if (dummyNode2.getElementsByTagName("comment")[i].getAttribute('viewable').toString() === "public") {
+                                if (dummyNode2.getElementsByTagName("comment")[i].getAttribute('viewable').toString() === "public") {
 
-                                commentLines = commentLines.concat(`<div style='width: 685px; border-radius: 25px; background-color: #43e8e8; position: relative; padding: 6px ' >
+                                    commentLines = commentLines.concat(`<div style='width: 685px; border-radius: 25px; background-color: #43e8e8; position: relative; padding: 6px ' >
                                                                          <div style ='left: 20px'>${dummyNode2.getElementsByTagName("comment")[i].innerText.replace("n$", "</br>")}>
                                                                          <span style = "${dummyNode2.getElementsByTagName("comment")[i].getAttribute("id").toString() === this.state.userID.toString() ? 'display:block' : 'display:none'}" >
                                                                          </div>
                                                                          </div>`);
-                            } else {
+                                } else {
 
 
-                                commentLines = commentLines.concat(`<div style='width: 685px; border-radius: 25px; background-color: #c5cbd6; position: relative; padding: 6px ' >
+                                    commentLines = commentLines.concat(`<div style='width: 685px; border-radius: 25px; background-color: #c5cbd6; position: relative; padding: 6px ' >
                                                                          <div style ='left: 20px'>${dummyNode2.getElementsByTagName("comment")[i].innerText.replace("n$", "</br>")}>
                                                                          <span style = "${dummyNode2.getElementsByTagName("comment")[i].getAttribute("id").toString() === this.state.userID.toString() ? 'display:block' : 'display:none'}" >
                                                                          </div>
                                                                          </div>`);
+                                }
+                                //document.getElementById('commentBox').value = text;
+
+                                document.getElementById('commentList').innerHTML = commentLines;
+
+                                //document.getElementById('commentBox').value = text.concat(dummyNode.getElementsByTagName("comments")[0].innerText);
                             }
-                            //document.getElementById('commentBox').value = text;
 
-                            document.getElementById('commentList').innerHTML = commentLines;
+                        } //else {
+                          //  break;
+                        //}
+                    }
+                }
+            else {
 
-                            //document.getElementById('commentBox').value = text.concat(dummyNode.getElementsByTagName("comments")[0].innerText);
-                        }
+                    document.getElementById('commentList').innerHTML = ``;
 
-                    } //else {
-                      //  break;
-                    //}
                 }
                 console.log("Comments after " + document.getElementById('commentList').innerHTML);
             }
@@ -647,6 +666,9 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
             var xxx = document.getElementById(`MakeNote`);
             xxx.style.display = "none";
 
+            var xy = document.getElementById(`delete`);
+            xy.style.display = "none";
+
             var y = document.getElementById(`react-quill-${this.props.primaryid}-2`);
             y.style.display = "block";
 
@@ -661,7 +683,7 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
             a.style.display = "none";
 
             var aa = document.getElementById(`radio-form`);
-            aa.style.display = "block";
+            aa.style.display = "inline-block";
 
             var bb = document.getElementById(`comment`);
             console.log("comment " + document.getElementById(`comment`));
@@ -674,7 +696,10 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
             bbb.style.display = "block";
 
             var aaa = document.getElementById(`MakeNote`);
-            aaa.style.display = "block";
+            aaa.style.display = "inline-block";
+
+            var ab = document.getElementById(`delete`);
+            ab.style.display = "inline-block";
 
             var b = document.getElementById(`react-quill-${this.props.primaryid}`);
             b.style.display = "block";
@@ -881,6 +906,7 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
 
                              </form>
                              <Button id = "MakeNote" style={{display: 'none'}} onClick={() => this.commentMade()}> Make Note </Button>
+                             <Button id = 'delete' style = {{position: 'relative', left : '300px', display:'none'}} onClick= {() => this.commentDelete()}>Delete</Button>
                              <Button
                                  id = "saveButton2"
                                  raised

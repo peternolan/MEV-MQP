@@ -224,7 +224,6 @@ class CaseSummary extends Component {
         this.getTagData();
 
          // (reports.length > 0) ? this.props.getInstances(reports) : null;
-
       }));
   }
 

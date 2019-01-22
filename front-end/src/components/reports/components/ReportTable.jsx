@@ -31,7 +31,7 @@ import { CircularProgress } from 'material-ui/Progress';
 import Typography from 'material-ui/Typography';
 import { FormControlLabel } from 'material-ui/Form';
 import _ from 'lodash';
-import { moveReport, getCaseReports, getReportNarrativeFromID, getReportsInCases , setAllReports, executeSearch} from '../../../actions/reportActions';
+import { moveReport, getCaseReports, getReportNarrativeFromID, getReportsInCases , setAllReports, executeSearch, getInstances} from '../../../actions/reportActions';
 import QuillEditor from '../../editor/components/QuillEditor';
 import ReadCaseIcon from '../../../resources/ReadCaseIcon';
 import ClearFilterIcon from '../../../resources/RemoveFromCaseIcon';
@@ -50,6 +50,7 @@ class ReportTable extends React.PureComponent {
     getCaseReports: PropTypes.func.isRequired,
     setAllReports: PropTypes.func.isRequired,
       executeSearch: PropTypes.func.isRequired,
+      getInstances: PropTypes.func,
     moveReport: PropTypes.func.isRequired,
     getReportNarrativeFromID: PropTypes.func.isRequired,
     getReportsInCases: PropTypes.func.isRequired,
@@ -147,7 +148,9 @@ class ReportTable extends React.PureComponent {
     if(this.props.bin !== 'searched reports'){
       this.props.getCaseReports(this.props.bin, this.props.userID)
       .then(reports => {
-        this.props.setAllReports(reports)
+        this.props.setAllReports(reports);
+          console.log("setAllReports " + Object.getOwnPropertyNames(reports[0]));
+
         this.setState({
         data: reports,
         allData: reports,
@@ -155,6 +158,7 @@ class ReportTable extends React.PureComponent {
       })
       });
     }
+
     this.updateHighlightedRows();
     this.updateEvidenceRows();
   }
@@ -194,6 +198,7 @@ class ReportTable extends React.PureComponent {
                 loadingData: false,
               });
               this.changeExpandedDetails([]);
+                (this.state.currentTab != 0 || this.state.currentTab != 1)
             });
       }
       // else {
@@ -410,7 +415,7 @@ class ReportTable extends React.PureComponent {
     if (!this.state.firstFound) {
 
       this.setState({firstFound : true}, function () {
-        console.log("Table Row " + props.tableRow.rowId);
+
         this.props.handleViewReport(props.tableRow.rowId);
 
       });
@@ -420,8 +425,6 @@ class ReportTable extends React.PureComponent {
     //NEED TO PUT IT IN HERE
       let evidenceType;
     let backgroundColor;
-
-    console.log("bin " + this.props.bin);
 
     switch (this.props.bin) {
       case 'all reports':
@@ -882,5 +885,6 @@ export default connect(
     setAllReports,
     getReportNarrativeFromID,
     getReportsInCases,
+      getInstances
   },
 )(withStyles(styles)(ReportTable));

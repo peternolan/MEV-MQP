@@ -126,8 +126,11 @@ class ReportList extends Component {
         //background: color,
       currentTab: index,
       searchedReports: this.props.searchedReports,
+    } , () => {
 
-    });
+        console.log(this.props.searchedReports)
+
+       });
   };
 
 
@@ -231,7 +234,7 @@ class ReportList extends Component {
      * Handler for Opening the Report Panel
      */
     handleViewReportPanel = (primaryID) => {
-        console.log("primaryID Report " + primaryID );
+
         this.setState({ reportOpen: !this.state.reportOpen,  primaryIDReport: Number(primaryID) });
     };
 
@@ -254,8 +257,6 @@ class ReportList extends Component {
     //CHANGED HERE. WILL BE USED WITH THE PIE CHART FOR IMPLEMENTATION.
     handleCaseChangePrimary = (color, caseName) => {
 
-        console.log("State Name" + caseName);
-        console.log("Color " + color);
         switch (color) {
 
             case this.COLORS.primary:
@@ -356,6 +357,7 @@ class ReportList extends Component {
 
           {/* ====== SideBar for Viewing the Case Summary ====== */}
           <div id="summary-sidebar" className={(this.state.summaryOpen) ? this.props.classes.openSummaryContainer : this.props.classes.closedSummaryContainer} >
+
             <CaseSummaryListing
               updateTab={this.updateTab}
               bins={this.state.userBins}

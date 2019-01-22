@@ -892,9 +892,9 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
 
 
                              </form>
-                             <Button id = "MakeNote" style={{display: 'none'}} onClick={() => this.commentMade()}> Make Note </Button>
+                             <Button id = "MakeNote" style={{display: 'none', border: '2px solid #1d00ff', left : '30px'}} onClick={() => this.commentMade()}> Make Note </Button>
 
-                             <Button id = "delete" style={{display: 'none', left : '720px'}} onClick={() => this.commentDelete()}> Delete </Button>
+                             <Button id = "delete" style={{display: 'none', left : '690px', border: '2px solid #ff0000'}} onClick={() => this.commentDelete()}> Delete </Button>
 
                              <Button
                                  id = "saveButton2"

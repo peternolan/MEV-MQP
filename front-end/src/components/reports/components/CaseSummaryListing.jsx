@@ -76,7 +76,6 @@ class CaseSummaryListing extends React.PureComponent {
 
 
   render() {
-
     return (
       <Paper className={this.props.classes.summaryContainer} elevation={4}>
         <Typography type="title" style={{ padding: '10px' }}>

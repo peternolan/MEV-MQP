@@ -203,13 +203,13 @@ class CaseSummary extends Component {
 
   getReports = () => {
       /********* reports assigned to the variable */
-      //console.log("case name " + this.state.caseName);
-      //console.log("userID " + this.props.userID);
+      console.log("case name " + this.state.caseName);
+      console.log("userID " + this.props.userID);
       this.props.getCaseReports(this.state.caseName, this.props.userID)
           .then(reports => {
           console.log("setAllReports getreports " + Object.getOwnPropertyNames(reports[0]));
-          console.log("reports " + reports);
-              return (reports.length > 0) ? this.props.getInstances(reports) : null;
+          console.log(this.props.getInstances(reports));
+              (reports.length > 0) ? this.props.getInstances(reports) : null;
       });
   };
 
@@ -431,9 +431,9 @@ class CaseSummary extends Component {
     :null);
 
   drawChart = (cdata) => {
-    const svg = d3.select("#bargraph")
+    var svg = d3.select("#bargraph")
       .append('svg')
-      .attr('class', this.props.classes.bargraph)
+      .attr('class', this.props.classes.bargraph);
   }
 
   renderPieChart = () => ((this.state.pieChartData.length > 0)
@@ -468,23 +468,16 @@ class CaseSummary extends Component {
     )
     : null);
 
-  render() { 
-    // this.searchDocs();
-    // this.calculateTfidf();
-
-      console.log("case render");
-
-      {this.getReports()}
-
+  render() { {this.getReports()}
     return (
-      /*****  casename/case info */
       <div style={{ width: '100%' }} >
         <div style={{padding: 10}}>
           <Typography type="button">{this.state.caseDescription || 'No Description' }</Typography>
-          <Typography type="body1"> Total Count of Reports: {this.state.reportsInCase.length} </Typography>
-          <Typography type='button'> Case Breakdown: <div id="selector"></div></Typography>
+          <Typography type="body1">Total Count of Reports: {this.state.reportsInCase.length} </Typography>
+          <Typography type='button'>Case Breakdown:<div id="selector"></div></Typography>
         </div>
         <div id="bargraph"></div>
+        <div id="keywords"style={{padding: 10}}><Typography type='button'>Keyword Summary</Typography></div>
       </div>
     );
   }

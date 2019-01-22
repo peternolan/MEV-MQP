@@ -130,7 +130,7 @@ export const getInstances = (bins) => {
   printing += Object.getOwnPropertyNames(bins[0]);
 
 
-  console.log("printing " + printing);
+  console.log(bins);
 
 
 
@@ -138,12 +138,6 @@ export const getInstances = (bins) => {
     var ageArray = bins.map(function(item){ return item.age_year });
     var errorArray = bins.map(function(item){ return item.me_type });
     var outArray = bins.map(function(item){ return item.outc_cod});
-
-    //If we find a new string, put it in the duplicate list.
-    //If
-
-
-
 
     console.log("duplicates sex " + countInstance(sexArray)[0].word + " " + countInstance(sexArray)[0].count);
     console.log("duplicates age " + countInstance(ageArray)[0].word + " "  + countInstance(ageArray)[0].count);

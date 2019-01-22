@@ -27,6 +27,7 @@ class CaseSummaryListing extends React.PureComponent {
     classes: PropTypes.shape({
       summaryContainer: PropTypes.string,
       expansionPanelSummary: PropTypes.string,
+      styledEPSummary: PropTypes.string,
     }).isRequired,
   };
 
@@ -40,8 +41,9 @@ class CaseSummaryListing extends React.PureComponent {
       default:
         return (
           <div key={bin.case_id} >
-            <ExpansionPanel style={{ margin: '5px 2px' }}>
+            <ExpansionPanel>
               <ExpansionPanelSummary
+                className={this.props.classes.styledEPSummary}
                 expandIcon={<ExpandMoreIcon />}
               >
                 <CaseIcon
@@ -65,7 +67,6 @@ class CaseSummaryListing extends React.PureComponent {
                   summaryCounter={this.props.summaryCounter}
                   updateTab={this.props.updateTab}
                   handleClick={this.props.handleClickPieChart}
-
                 />
               </ExpansionPanelDetails>
             </ExpansionPanel>

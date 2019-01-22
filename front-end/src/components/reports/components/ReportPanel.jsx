@@ -9,6 +9,7 @@ import styles from "./ReportPanelStyles";
 import Highlighter from "react-highlight-words";
 import Typography from "material-ui/Typography/Typography";
 import QuillEditor from "../../editor/components/QuillEditor";
+import AnimateHeight from 'react-animate-height';
 //import CaseIcon from '../../../resources/CaseIcon';
 
 class ReportPanel extends React.PureComponent {
@@ -26,6 +27,7 @@ class ReportPanel extends React.PureComponent {
             wrapper: PropTypes.string,
             buttonSuccess: PropTypes.string,
             buttonProgress: PropTypes.string,
+            hideBtn: PropTypes.string,
         }).isRequired,
         primaryid: PropTypes.number,
         userID: PropTypes.number.isRequired,
@@ -66,7 +68,8 @@ class ReportPanel extends React.PureComponent {
                 textToHighlight:'FDA contacted the patient for follow-up after',
                 activeIndex: -1,
                 caseSensitive: false
-            }
+            },
+            summaryShown: true,
         };
     };
 
@@ -128,18 +131,25 @@ class ReportPanel extends React.PureComponent {
 
     };
 
-
-
+    handleHideSummary = () => {
+        this.setState({ summaryShown: !this.state.summaryShown});
+    };
 
     renderInside = (primaryID) => {
         console.log("Render Panel");
         console.log("renderInside " + primaryID);
         return (
             <div key={primaryID}>
-
-                Placeholder Information
-
-                <Divider light/>
+                <AnimateHeight 
+                    duration={500}
+                    height={'auto'}
+                >
+                    <div className={(this.state.summaryShown) ? this.props.classes.summarySummary : this.props.classes.hiddenSummary}>
+                        <Typography>Lorem ipsum dolor sit amet, eam soleat aliquando te, rebum possim mandamus at vix. Debet errem impedit cu vis, vix cu case principes scriptorem. In probo timeam sea. Est similique appellantur cu, ius ut pertinax ocurreret, liber docendi deterruisset ei quo. Ius ea ocurreret reformidans.</Typography>
+                    </div>
+                </AnimateHeight>
+                <Typography onClick={this.handleHideSummary} className={this.props.classes.hideBtn}>Hide Summary</Typography>
+                <Divider />
                 <div>
                     {(!this.state.searching)
                         ? (<QuillEditor
@@ -165,7 +175,7 @@ class ReportPanel extends React.PureComponent {
     render = () => {
         return (
             <Paper id="summary-container" className={this.props.classes.summaryContainer} padding = '0px' elevation={4}>
-                <Typography type="title"> Report {this.props.primaryid} </Typography>
+                <Paper id='summarytitle' className={this.props.classes.summaryTitle}><Typography type="title">Report {this.props.primaryid}</Typography></Paper>
                 {this.renderInside(this.props.primaryid)}
             </Paper>
 

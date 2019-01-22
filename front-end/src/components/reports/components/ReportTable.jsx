@@ -692,7 +692,6 @@ class ReportTable extends React.PureComponent {
         null;
 
     var dummyNode = document.createElement('div');
-<<<<<<< HEAD
     /*
     console.log("test " + text.body_highlights[0]);
 
@@ -700,12 +699,8 @@ class ReportTable extends React.PureComponent {
 
     console.log("test " + dummyNode.innerText);
     */
-=======
 
     (this.props.currentTab === 1) ? dummyNode.innerHTML = text.body_highlights[0] : null;
-
-
->>>>>>> aa2003503aa037326e2fdddf9874c9b74fa62d0c
 
 
       return (

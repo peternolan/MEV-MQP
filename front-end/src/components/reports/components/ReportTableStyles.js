@@ -2,6 +2,7 @@ export default {
   tableWrapper: {
     width: '35vw',
     margin: '0',
+    maxHeight: 'calc(100vh - 122px)',
     borderRightWidth: '4px',
     borderColor: '#aaa',
     backgroundColor: '#fff',
@@ -11,7 +12,6 @@ export default {
     margin: '0px',
     padding: '0px',
     width: 'calc(100%-2px)',
-    maxHeight: '76vh',
     overflow: 'scroll',
     display: 'inline-block'
   },

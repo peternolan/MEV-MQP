@@ -19,8 +19,7 @@ export default {
         fontSize: '12px'
     },
     hideBtn: {
-        marginRight: '5%',
-        marginLeft: 'auto',
+        marginLeft: '85%',
         color: '#1D1F83',
     },
     summarySummary: {

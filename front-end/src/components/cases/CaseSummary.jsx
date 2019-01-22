@@ -20,8 +20,8 @@ import {Tab} from "material-ui";
 import TrashIcon from "../../resources/TrashIcon";
 import ReadCaseIcon from "../../resources/ReadCaseIcon";
 import CaseIcon from "../../resources/CaseIcon";
-
-const styles = {};
+import * as d3 from "d3";
+import styles from "./CaseSummaryStyles.js";
 class CaseSummary extends Component {
 
   static propTypes = {
@@ -88,6 +88,10 @@ class CaseSummary extends Component {
         summaryCounter: incomingProps.summaryCounter,
       });
     }
+  }
+
+  componentDidMount() {
+    this.drawChart();
   }
 
   getReportTypeData = () => {
@@ -199,14 +203,13 @@ class CaseSummary extends Component {
 
   getReports = () => {
       /********* reports assigned to the variable */
-      console.log("case name " + this.state.caseName);
-      console.log("userID " + this.props.userID);
+      //console.log("case name " + this.state.caseName);
+      //console.log("userID " + this.props.userID);
       this.props.getCaseReports(this.state.caseName, this.props.userID)
           .then(reports => {
           console.log("setAllReports getreports " + Object.getOwnPropertyNames(reports[0]));
           console.log("reports " + reports);
-              (reports.length > 0) ? this.props.getInstances(reports) : null;
-
+              return (reports.length > 0) ? this.props.getInstances(reports) : null;
       });
   };
 
@@ -428,6 +431,11 @@ class CaseSummary extends Component {
     )
     :null);
 
+  drawChart = (cdata) => {
+    const svg = d3.select("#bargraph")
+      .append('svg')
+      .attr('class', this.props.classes.bargraph)
+  }
 
   renderPieChart = () => ((this.state.pieChartData.length > 0)
     ? (
@@ -472,41 +480,12 @@ class CaseSummary extends Component {
     return (
       /*****  casename/case info */
       <div style={{ width: '100%' }} >
-
-        <Button className="pull-right"  style={{marginLeft:'5px', minHeight:'20px', minWidth:'30px'}} onClick={this.handleSearchCaseChange} raised color="primary">Recommended Reports</Button>
-          <Button className="pull-right"  style={{marginLeft:'5px', minHeight:'20px', minWidth:'30px'}} onClick={this.handleCaseChange} raised color="primary">Primary Reports</Button>
-        <Typography type="display1">
-          Case Details:
-        </Typography>
-        <br />
-        <div style={{width:'50%', height:'70px', float: 'left', marginBottom:'20px' }}>
-          <Typography type="headline">
-            {this.toTitleCase(this.state.caseName)}
-          </Typography>
-          <Typography type="button">
-            {this.state.caseDescription || 'No Description' }
-          </Typography>
-          <Typography type="body1">
-            Total Count of Reports: {this.state.reportsInCase.length}
-          </Typography>
-        </div>
-        <div style={{ width:'50%', height:'70px',float: 'left', marginBottom:'20px' }}>
-          <Typography type="headline">
-              {'Keywords Summary'}
-          </Typography>
-          <Combobox 
-              data={['User Defined Keywords', 'Score Based']}
-              defaultValue={"User Defined Keywords"}
-              // dropUp
-              onChange = {this.handleSearchOptionChange}
-          />
-        </div>
         <div>
-            {this.BarChart()}
-        </div> 
-        <div>
-            {this.renderPieChart()}
+          <Typography type="button">{this.state.caseDescription || 'No Description' }</Typography>
+          <Typography type="body1"> Total Count of Reports: {this.state.reportsInCase.length} </Typography>
         </div>
+        <Typography type='body1'> Case Breakdown: <div id="selector"></div></Typography>
+        <div id="bargraph"></div>
       </div>
     );
   }

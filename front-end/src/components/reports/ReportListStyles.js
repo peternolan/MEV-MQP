@@ -47,7 +47,7 @@ export default {
       float: 'left',
       display: 'inline-block',
       width: '35vw', /* This element is constantly on the screen, so we want it's width to be pretty much static. */
-      maxHeight: 'calc(100vh-90px)',
+      maxHeight: 'calc(100vh - 122px)',
       padding: '0px',
       margin: '0px',
       transition: 'width 200ms ease-in-out',

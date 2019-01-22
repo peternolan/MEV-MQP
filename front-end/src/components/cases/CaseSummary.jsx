@@ -197,6 +197,20 @@ class CaseSummary extends Component {
       });
   };
 
+  getReports = () => {
+      /********* reports assigned to the variable */
+      console.log("case name " + this.state.caseName);
+      console.log("userID " + this.props.userID);
+      this.props.getCaseReports(this.state.caseName, this.props.userID)
+          .then(reports => {
+          console.log("setAllReports getreports " + Object.getOwnPropertyNames(reports[0]));
+          console.log("reports " + reports);
+          this.props.getInstances(reports);
+
+      });
+  };
+
+
   updateGraphs = () => {
     /********* reports assigned to the variable */
     this.props.getReportsInCases(this.props.userID, this.state.caseName)
@@ -205,6 +219,9 @@ class CaseSummary extends Component {
       }, () => {
         this.getReportTypeData();
         this.getTagData();
+
+          (reports.length > 0) ? this.props.getInstances(reports) : null;
+
       }));
   }
 
@@ -447,6 +464,10 @@ class CaseSummary extends Component {
   render() { 
     // this.searchDocs();
     // this.calculateTfidf();
+
+      console.log("case render");
+
+      {this.getReports()}
 
     return (
       /*****  casename/case info */

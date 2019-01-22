@@ -11,7 +11,7 @@ import ExpansionPanel, {
 import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
 import Typography from 'material-ui/Typography';
 import CaseSummary from '../../cases/CaseSummary';
-import { moveReport, getCaseReports, getInstances } from '../../../actions/reportActions';
+import { moveReport, getCaseReports, getInstances, getReportsInCases } from '../../../actions/reportActions';
 import CaseIcon from '../../../resources/CaseIcon';
 import styles from './CaseSummaryListingStyles';
 
@@ -23,7 +23,7 @@ class CaseSummaryListing extends React.PureComponent {
     bins: PropTypes.arrayOf(PropTypes.object).isRequired,
     summaryCounter: PropTypes.number.isRequired,
     userID: PropTypes.number.isRequired,
-      getInstances: PropTypes.func,
+    getReportsInCases: PropTypes.func,
     classes: PropTypes.shape({
       summaryContainer: PropTypes.string,
       expansionPanelSummary: PropTypes.string,
@@ -76,7 +76,6 @@ class CaseSummaryListing extends React.PureComponent {
 
 
   render() {
-     // (this.props.bins.length > 0) ? this.props.getInstances(this.props.bins) : null;
     return (
       <Paper className={this.props.classes.summaryContainer} elevation={4}>
         <Typography type="title" style={{ padding: '10px' }}>
@@ -106,5 +105,5 @@ const mapStateToProps = state => ({
  */
 export default connect(
   mapStateToProps,
-  { moveReport, getCaseReports, getInstances },
+  { moveReport, getReportsInCases, getCaseReports, getInstances },
 )(withStyles(styles)(CaseSummaryListing));

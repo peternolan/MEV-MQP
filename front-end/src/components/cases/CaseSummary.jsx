@@ -205,7 +205,7 @@ class CaseSummary extends Component {
           .then(reports => {
           console.log("setAllReports getreports " + Object.getOwnPropertyNames(reports[0]));
           console.log("reports " + reports);
-          this.props.getInstances(reports);
+              (reports.length > 0) ? this.props.getInstances(reports) : null;
 
       });
   };

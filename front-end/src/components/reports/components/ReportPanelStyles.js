@@ -8,10 +8,24 @@ export default {
         borderBottomWidth: 0,
         borderRightWidth: 0,
         borderColor: 'rgba(0, 0, 0, 0.08)',
-        borderStyle: 'solid'
+        borderStyle: 'solid',
+        fontFamily: 'Roboto'
     },
     expansionPanelSummary: {
         justifyContent: 'center',
+    },
+    summaryTitle: {
+        padding: '5px',
+    },
+    summarySummary: {
+        fontSize: '10pt',
+        padding: '10px',
+        borderBottomWidth: '1px',
+        borderRightWidth: 0,
+        borderTopWidth: 0,
+        borderLeftWidth: 0,
+        borderStyle: 'solid',
+        borderColor: 'rgba(0, 0, 0, 0.08)',
     },
 /*
     export default {

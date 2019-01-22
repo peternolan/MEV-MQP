@@ -136,10 +136,9 @@ class ReportPanel extends React.PureComponent {
         console.log("renderInside " + primaryID);
         return (
             <div key={primaryID}>
-
-                Placeholder Information
-
-                <Divider light/>
+                <div className={this.props.classes.summarySummary}>
+                    Placeholder Information
+                </div>
                 <div>
                     {(!this.state.searching)
                         ? (<QuillEditor
@@ -165,7 +164,7 @@ class ReportPanel extends React.PureComponent {
     render = () => {
         return (
             <Paper id="summary-container" className={this.props.classes.summaryContainer} padding = '0px' elevation={4}>
-                <Typography type="title"> Report {this.props.primaryid} </Typography>
+                <Paper id='summarytitle' className={this.props.classes.summaryTitle}><Typography type="title">Report {this.props.primaryid}</Typography></Paper>
                 {this.renderInside(this.props.primaryid)}
             </Paper>
 

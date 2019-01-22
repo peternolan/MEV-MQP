@@ -1,6 +1,5 @@
 export default {
   tableWrapper: {
-    maxHeight: '82vh',
     width: '35vw',
     margin: '0',
     borderRightWidth: '4px',
@@ -12,7 +11,7 @@ export default {
     margin: '0px',
     padding: '0px',
     width: 'calc(100%-2px)',
-    maxHeight: '70vh',
+    maxHeight: '76vh',
     overflow: 'scroll',
     display: 'inline-block'
   },
@@ -43,10 +42,10 @@ export default {
   },
   searchBar: {
     fontSize: '1em',
-    width: 'calc(100% - 6px)',
-    margin: '2px',
+    width: 'calc(100% - 10px)',
+    margin: '5px',
     display: 'inline-block',
     height: '40px',
-    padding: '5px',
+    padding: '10px',
   },
 };

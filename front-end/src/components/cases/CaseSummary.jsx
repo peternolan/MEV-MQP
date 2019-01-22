@@ -480,11 +480,11 @@ class CaseSummary extends Component {
     return (
       /*****  casename/case info */
       <div style={{ width: '100%' }} >
-        <div>
+        <div style={{padding: 10}}>
           <Typography type="button">{this.state.caseDescription || 'No Description' }</Typography>
           <Typography type="body1"> Total Count of Reports: {this.state.reportsInCase.length} </Typography>
+          <Typography type='button'> Case Breakdown: <div id="selector"></div></Typography>
         </div>
-        <Typography type='body1'> Case Breakdown: <div id="selector"></div></Typography>
         <div id="bargraph"></div>
       </div>
     );

@@ -325,6 +325,7 @@ class ReportList extends Component {
           {/* ====== Top Bar with Tabs for each Case ====== */}
           <AppBar position="static" color="default">
             <Tabs
+              style={{height: '72px'}}
               value={this.state.currentTab}
               onChange={this.handleTabClick}
               indicatorColor="primary"

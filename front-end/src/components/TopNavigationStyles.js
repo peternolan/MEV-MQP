@@ -4,7 +4,7 @@ export default {
   topNavigationContainer: {
     margin: '0px',
     width: '100%',
-    height: 50,
+    maxHeight: 50,
     'background-color': MEVColors.navBar,
     zIndex: 500,
     border: 'none',

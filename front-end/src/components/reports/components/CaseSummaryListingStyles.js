@@ -14,4 +14,10 @@ export default {
   expansionPanelSummary: {
     //justifyContent: 'center',
   },
+  styledEPSummary: {
+    maxHeight: 56,
+    '&:hover':{
+      backgroundColor:'#dbf0ff',
+    },
+  },
 };

@@ -16,16 +16,25 @@ export default {
     },
     summaryTitle: {
         padding: '5px',
+        fontSize: '12px'
+    },
+    hideBtn: {
+        marginRight: '5%',
+        marginLeft: 'auto',
+        color: '#1D1F83',
     },
     summarySummary: {
-        fontSize: '10pt',
-        padding: '10px',
-        borderBottomWidth: '1px',
-        borderRightWidth: 0,
-        borderTopWidth: 0,
-        borderLeftWidth: 0,
-        borderStyle: 'solid',
-        borderColor: 'rgba(0, 0, 0, 0.08)',
+        fontSize: '12px',
+        paddingTop: 0,
+        paddingLeft: 25,
+        width: '100%',
+        maxHeight: 'auto',
+        transition: ' height 200ms ease-in-out',
+    },
+    hiddenSummary: {
+        overflow: 'hidden',
+        height: 0,
+        transition: 'all 500ms ease-in-out',
     },
 /*
     export default {

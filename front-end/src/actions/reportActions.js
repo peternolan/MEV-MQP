@@ -119,32 +119,28 @@ const countInstance = (array) => {
 
 
 /**
- * Gets the amount of instances of  a term from within the array
+ * counts the number of times certain terms are present within a list of reports
  *
  */
-export const getInstances = (bins) => {
+export const getInstances = (reports) => {
+  //reports is an array of report objects
+  const fields = ["sex", "age_year", "me_type", "outc_cod"];//the fields we will be counting terms from
+  var results = {};
+  
+  for(var field of fields){
+    if(results[field] == undefined){results[field] = {}}
+    for(var report of reports){
+      if(results[field][reports[field]] == undefined){
+        results[field][reports[field]] = 0;
+      }
+      results[field][reports[field]]++;
+    }
+  }
+  
 
-  var printing = '';
+  console.log(results);
 
-
-  printing += Object.getOwnPropertyNames(bins[0]);
-
-
-  console.log(bins);
-
-
-
-  var sexArray = bins.map(function(item){ return item.sex });
-    var ageArray = bins.map(function(item){ return item.age_year });
-    var errorArray = bins.map(function(item){ return item.me_type });
-    var outArray = bins.map(function(item){ return item.outc_cod});
-
-    console.log("duplicates sex " + countInstance(sexArray)[0].word + " " + countInstance(sexArray)[0].count);
-    console.log("duplicates age " + countInstance(ageArray)[0].word + " "  + countInstance(ageArray)[0].count);
-    console.log("duplicates error " + countInstance(errorArray)[0].count);
-    console.log("duplicates out " + countInstance(outArray)[0].count);
-
-
+  return ()=>{return results};
 
 };
 

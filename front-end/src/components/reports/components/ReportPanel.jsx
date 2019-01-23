@@ -132,7 +132,9 @@ class ReportPanel extends React.PureComponent {
     };
 
     handleHideSummary = () => {
-        this.setState({ summaryShown: !this.state.summaryShown});
+        this.setState({ 
+            summaryShown: !this.state.summaryShown,
+        });
     };
 
     renderInside = (primaryID) => {
@@ -148,8 +150,8 @@ class ReportPanel extends React.PureComponent {
                         <Typography>Lorem ipsum dolor sit amet, eam soleat aliquando te, rebum possim mandamus at vix. Debet errem impedit cu vis, vix cu case principes scriptorem. In probo timeam sea. Est similique appellantur cu, ius ut pertinax ocurreret, liber docendi deterruisset ei quo. Ius ea ocurreret reformidans.</Typography>
                     </div>
                 </AnimateHeight>
-                <Typography onClick={this.handleHideSummary} className={this.props.classes.hideBtn}>Hide Summary</Typography>
                 <Divider />
+                <Typography onClick={this.handleHideSummary} className={this.props.classes.hideBtn}>Hide Summary</Typography>
                 <div>
                     {(!this.state.searching)
                         ? (<QuillEditor

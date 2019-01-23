@@ -233,7 +233,7 @@ class ReportTable extends React.PureComponent {
       });
   };
 
-  handleTargetChange(event) {
+  handleTargetChange = (event) => {
     this.setState({searchTarget: event.target.value});
   }
 

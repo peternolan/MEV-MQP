@@ -11,6 +11,7 @@ export default {
     padding: '0px',
     width: 'calc(100%-2px)',
     overflow: 'scroll',
+    maxHeight: 'calc(100vh - 160px)',
     display: 'inline-block'
   },
   moveToCaseDetailsContainer: {

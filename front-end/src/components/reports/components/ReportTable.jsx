@@ -732,6 +732,7 @@ class ReportTable extends React.PureComponent {
                                   (this.props.bin.toLowerCase() !== bin.name.toLowerCase())
                                       ? (
                                           <MaterialTooltip
+                                              key={bin.name}
                                               title={(bin.name.toLowerCase() === 'trash') ? 'HERE IT IS Warning: Adding this report to the Trash also removes the report from any other cases it is in' : 'Adds this report to this case'}
                                               placement="top"
                                               enterDelay={50}
@@ -791,7 +792,7 @@ class ReportTable extends React.PureComponent {
             return null;
             default:
               return(
-                <option value={bin.name}><Typography type='button'>{bin.name}</Typography></option>
+                <option value={bin.name} key={bin.name}>{bin.name}</option>
               );
           }
         })};

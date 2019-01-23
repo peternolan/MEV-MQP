@@ -379,9 +379,9 @@ app.post('/getdemographicdata', (req, res) => {
   })
 });
 
-//WHERE THE REPORTS COME FROM?
+//WHERE THE REPORTS COME FROM? -- yes, but you can not get reports from cases using this method
 app.post('/getreports', (req, res) => {
-  console.log('got a report request with body:\n ', req.body);
+  //console.log('got a report request with body:\n ', req.body);
   let query = '';
   if (req.body.bin === 'all reports') {
     query =
@@ -422,12 +422,14 @@ app.post('/getreports', (req, res) => {
     + `WHERE user_id = ${req.body.userID} AND `
     + `name = '${req.body.bin}')`;
   }
-  console.log(query)
+  //console.log(query)
   db.query(query, (err, data) => {
     res.status(200).send(data);
   });
 });
 
+/*NOTE : this doesn't actually get reports... blame the first MQP 
+  The 2nd MQP group made another call which actually gets REPORTS -- see next function */
 app.post('/getreportsincases', (req, res) => {
   console.log('got a report in cases request with body:\n ', req.body);
   if (req.body.userID) {
@@ -449,6 +451,29 @@ app.post('/getreportsincases', (req, res) => {
     res.status(200).send({ rows: [] });
   }
 });
+
+/* Get a list of reports from primary IDs. This is what the previous function should do based on function name
+*/
+app.post('/getreportsfromcasename', (req, res) => {
+  if (req.body.userID && req.body.caseName) {
+    let query = `SELECT * FROM reports WHERE primaryid IN `
+    +`( SELECT primaryid FROM cases `
+    + `WHERE user_id='${req.body.userID}' `
+    + `AND NOT primaryid='-1' `
+    + `AND active=TRUE `
+    + `AND name='${req.body.caseName}' );`;
+
+    db.query(query, (err, data) => {
+      console.log("/getreportsfromcaseid")
+      console.log("query    "+query);
+      console.log(data);
+      res.status(200).send(data);
+    });
+  } else {
+    res.status(200).send({ rows: [] });
+  }
+});
+
 
 app.post('/getcasename', (req, res) => {
   console.log('got a request with body for case tags:\n ', req.body);

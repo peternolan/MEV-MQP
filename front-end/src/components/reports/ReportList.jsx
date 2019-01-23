@@ -54,7 +54,7 @@ class ReportList extends Component {
     getUserCases: PropTypes.func.isRequired,
     createUserBin: PropTypes.func.isRequired,
     userID: PropTypes.number.isRequired,
-      userEmail: PropTypes.string,
+    userEmail: PropTypes.string,
     isLoggedIn: PropTypes.bool.isRequired,
     classes: PropTypes.shape({
       newCaseArea: PropTypes.string,
@@ -78,18 +78,16 @@ class ReportList extends Component {
       userBins: [],
       newCaseModalOpen: false,
       snackbarOpen: false,
-        primaryIDReport: 0,
-
+      primaryIDReport: 0,
       snackbarMessage: '',
       currentTab: 0,
       summaryOpen: false,
-        primaryChosen: false,
-        supportiveChosen: false,
-        reportOpen: false,
+      primaryChosen: false,
+      supportiveChosen: false,
+      reportOpen: false,
       summaryCounter: 0,
-
       searchedReports:[],
-        returnedResults: [1, 2, 3],
+      returnedResults: [1, 2, 3],
 
     };
     //handleCaseChangePrimary = handleCaseChangePrimary.bind(this);
@@ -123,7 +121,7 @@ class ReportList extends Component {
     const index = array.indexOf(name);
     this.setState({
       bin: name,
-        //background: color,
+      //background: color,
       currentTab: index,
       searchedReports: this.props.searchedReports,
     } , () => {
@@ -355,7 +353,7 @@ class ReportList extends Component {
               })}
             </Tabs>
           </AppBar>
-
+          
           {/* ====== SideBar for Viewing the Case Summary ====== */}
           <div id="summary-sidebar" className={(this.state.summaryOpen) ? this.props.classes.openSummaryContainer : this.props.classes.closedSummaryContainer} >
 

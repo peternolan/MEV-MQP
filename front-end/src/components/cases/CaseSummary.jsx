@@ -7,7 +7,7 @@ import Button from 'material-ui/Button';
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer, BarChart, XAxis, YAxis, CartesianGrid, Bar } from 'recharts';
 // import Select from 'react-select';
 import {Combobox} from 'react-widgets';
-import { getTagsinCase, getReportsInCases, getCaseNameByID, getCaseReports,setSearchedReports , getInstances } from '../../actions/reportActions';
+import { getTagsinCase, getReportsInCases, getReportsFromCase, getCaseNameByID, getCaseReports, setSearchedReports , getInstances } from '../../actions/reportActions';
 import annotationColors from '../editor/components/AnnotationColors';
 import * as JsSearch from 'js-search';
 import "react-widgets/dist/css/react-widgets.css";
@@ -27,6 +27,7 @@ class CaseSummary extends Component {
   static propTypes = {
     getTagsinCase: PropTypes.func.isRequired,
     getReportsInCases: PropTypes.func.isRequired,
+    getReportsFromCase: PropTypes.func.isRequired,
     getCaseNameByID: PropTypes.func.isRequired,
     getCaseReports: PropTypes.func,
       getInstances: PropTypes.func,
@@ -59,6 +60,7 @@ class CaseSummary extends Component {
       caseName: '',
       caseDescription: '',
       reportsInCase: [],
+      reports:[],
       pieChartData: [],
       barChartData: [],
       highlightedWordsData:[],
@@ -91,10 +93,7 @@ class CaseSummary extends Component {
   }
 
   componentDidMount() {
-    var param = this.props.getInstances(this.getReports())
-    console.log(param);
-
-    this.drawChart(param);
+    /*Unused for now*/
   }
 
   getReportTypeData = () => {
@@ -228,6 +227,13 @@ class CaseSummary extends Component {
 
          // (reports.length > 0) ? this.props.getInstances(reports) : null;
       }));
+  }
+
+  updateReports = () => {
+    /********* reports assigned to the variable */
+    this.props.getReportsFromCase(this.props.userID, this.state.caseName)
+      .then((reports)=>{this.drawChart(reports);}
+      );
   }
 
   getCaseNarratives = () => {
@@ -433,16 +439,21 @@ class CaseSummary extends Component {
     )
     :null);
 
-  drawChart = (cdata) => {
+  drawChart = (reports) => {
+    console.log(this.props.getInstances(reports));
     var svg = d3.select("#bargraph")
-      //.select("svg")
-      //.data([1])
-      //.enter()
+      .selectAll("svg")
+      .data([1])//a little trick to create a new svg IFF one does not exist, else we use the existing one
+      .enter()
       .append('svg')
       .attr('class', this.props.classes.bargraph);
-      console.log(cdata)
-      //console.log(this.getReports());
-      //console.log(this.getInstances())
+
+      svg.append("text")
+        .text("text")
+        .attr("transform", "translate(40,40)");
+    //console.log(cdata)
+    //console.log(this.getReports());
+    //console.log(this.getInstances())
 
 
   }
@@ -479,7 +490,9 @@ class CaseSummary extends Component {
     )
     : null);
 
-  render() { {this.getReports()}
+  render() { {this.getReports();
+              this.updateReports();
+            }
     return (
       <div style={{ width: '100%' }} >
         <div style={{padding: 10}}>
@@ -510,6 +523,6 @@ const mapStateToProps = state => ({
  */
 export default connect(
   mapStateToProps,
-  { getTagsinCase, getReportsInCases, getCaseNameByID , getCaseReports, setSearchedReports, getInstances},
+  { getTagsinCase, getReportsFromCase, getReportsInCases, getCaseNameByID , getCaseReports, setSearchedReports, getInstances},
 )(withStyles(styles)(CaseSummary));
 

@@ -123,21 +123,34 @@ const countInstance = (array) => {
  *
  */
 export const getInstances = (reports) => {
-  //reports is an array of report objects
-  const fields = ["sex", "age_year", "me_type", "outc_cod"];//the fields we will be counting terms from
+  if(reports == undefined){return ()=>{null;}}
+  //at this point, reports is an array of report objects
+  const fields = ["sex", "age_year", "me_type", "outc_cod"];//the fields we will be counting terms from (keeping it seperate allows us to modify fields of interest easily)
   var results = {};
   
-  for(var field of fields){
+  for(var field of fields){//iterate over each report 4 times -- once for each field we're interested in
     if(results[field] == undefined){results[field] = {}}
     for(var report of reports){
-      if(results[field][reports[field]] == undefined){
-        results[field][reports[field]] = 0;
+      if(report[field] == null){continue;}//ignore null fields
+      if(typeof report[field][Symbol.iterator] === 'function' && report[field].__proto__ != String.prototype){//if the field is iterable but NOT a string (ie a dict or an array of some sort)
+        for(var element of report[field]){//then let's iterate through each element of the field
+          if(element == null){continue;}
+          if(results[field][element] == undefined){
+            results[field][element] = 0;
+          }
+          results[field][element]++;
+        }
       }
-      results[field][reports[field]]++;
+      else if(results[field][report[field]] == undefined){
+        results[field][report[field]] = 1;
+      }
+      else{
+        results[field][report[field]]++;
+      }
     }
   }
   
-
+  console.log(reports);
   console.log(results);
 
   return ()=>{return results};
@@ -232,6 +245,31 @@ export const getReportsInCases = (userID, caseName) => () => {
     .then(response => (response.rows ? response.rows : []))
     .catch(err => console.log('Failed to retrieve reports in Cases', err));
 };
+
+/**
+ * Queries the Database with a userID and a caseName
+ * returns actual reports.
+ */
+export const getReportsFromCase = (userID, caseName) => () => {
+  const fetchData = {
+    method: 'POST',
+    mode: 'cors',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      userID,
+      caseName,
+    }),
+  };
+
+  return fetch(`${process.env.REACT_APP_NODE_SERVER}/getreportsfromcasename`, fetchData)
+    .then(response => {return response.json();})
+    .then(response => (response.rows ? response.rows : []))
+    .catch(err => console.log('Failed to retrieve reports from cases', err));
+};
+
+
 
 /**
  * Queries the Database with a caseID to get

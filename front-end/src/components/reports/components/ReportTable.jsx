@@ -105,6 +105,7 @@ class ReportTable extends React.PureComponent {
       loadingData: true,
       keepTableWhileLoading: false,
       pageSize: 50,
+      searchTarget: 'All Reports',
       currentPage: 0,
         returnedResults: [1, 2, 3],
         returnedIds: [],
@@ -232,7 +233,9 @@ class ReportTable extends React.PureComponent {
       });
   };
 
-
+  handleTargetChange(event) {
+    this.setState({searchTarget: event.target.value});
+  }
 
   /**
    * Names and values for the columns of the table
@@ -780,6 +783,19 @@ class ReportTable extends React.PureComponent {
     return (
       <div id='table-wrapper' className={this.props.classes.tableWrapper}>
       <input id='search' type='text' className={this.props.classes.searchBar} placeholder="Search through reports..." onKeyDown={(e) => {if(e.key === 'Enter'){this.search()}}} />
+      <select value={this.state.searchTarget} onChange={this.handleTargetChange} className={this.props.classes.searchDD}>
+        {this.props.bins.map((bin) => {
+          switch(bin.name){
+            case 'Trash':
+            case 'Read':
+            return null;
+            default:
+              return(
+                <option value={bin.name}><Typography type='button'>{bin.name}</Typography></option>
+              );
+          }
+        })};
+      </select>
       <Paper id="table-container" className={this.props.classes.tableContainer} elevation={4}>
         {(this.state.loadingData)
           ? <div

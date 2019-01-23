@@ -373,7 +373,7 @@ class CaseSummary extends Component {
   /*********** Prepare data for keywords barcharts */
   BarChart = ()  => {    
     const total_bars=4;
-    const keywords_count= 10;  
+    const keywords_count= 20;  
     var counter = 0;
     let all_barCharts = [];
     var data=[];

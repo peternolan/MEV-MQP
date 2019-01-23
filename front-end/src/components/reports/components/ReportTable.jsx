@@ -274,10 +274,6 @@ class ReportTable extends React.PureComponent {
       title: 'ID',
       name: 'id',
     },
-      {
-          title: 'Excerpts',
-          name: 'body_highlights',
-      },
   ];
 
   /**

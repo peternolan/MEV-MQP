@@ -157,6 +157,7 @@ class ReportPanel extends React.PureComponent {
                         ? (<QuillEditor
                             primaryid={Number(primaryID)}
                             incrementSummary={this.props.incrementSummary}
+                            userEmail={this.props.userEmail}
                             match={this.props.match}
                         />)
                         : (

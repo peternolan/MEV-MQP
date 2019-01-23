@@ -91,7 +91,10 @@ class CaseSummary extends Component {
   }
 
   componentDidMount() {
-    this.drawChart();
+    var param = this.props.getInstances(this.getReports())
+    console.log(param);
+
+    this.drawChart(param);
   }
 
   getReportTypeData = () => {
@@ -206,10 +209,10 @@ class CaseSummary extends Component {
       console.log("case name " + this.state.caseName);
       console.log("userID " + this.props.userID);
       this.props.getCaseReports(this.state.caseName, this.props.userID)
-          .then(reports => {
-          console.log("setAllReports getreports " + Object.getOwnPropertyNames(reports[0]));
-          console.log(this.props.getInstances(reports));
-              (reports.length > 0) ? this.props.getInstances(reports) : null;
+          .then((reports)=>{
+          //console.log(reports)
+          //if(reports.length > 0){console.log(this.props.getInstances(reports));}
+          return ()=>{return (reports.length > 0) ? this.props.getInstances(reports) : null;}
       });
   };
 
@@ -432,8 +435,16 @@ class CaseSummary extends Component {
 
   drawChart = (cdata) => {
     var svg = d3.select("#bargraph")
+      //.select("svg")
+      //.data([1])
+      //.enter()
       .append('svg')
       .attr('class', this.props.classes.bargraph);
+      console.log(cdata)
+      //console.log(this.getReports());
+      //console.log(this.getInstances())
+
+
   }
 
   renderPieChart = () => ((this.state.pieChartData.length > 0)

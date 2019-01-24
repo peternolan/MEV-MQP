@@ -77,6 +77,7 @@ class QuillEditor extends Component {
             addingComment: false,
             loading: true,
             editModeOn: false,
+            commentsOn: false,
             primaryId: this.props.primaryid,
             userID: this.props.userID,
             userEmail: this.props.userEmail,
@@ -621,6 +622,18 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
     };
 
 
+    showComments = () => {
+
+        if (this.state.commentsOn) {
+            this.setState({commentsOn: false});
+        }
+        else {
+            this.setState({commentsOn: true});
+        }
+    };
+
+
+
     editMode = () => {
 
         if (this.state.editModeOn) {
@@ -867,9 +880,18 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
                         {/*<div>
                             <textarea id = "commentBox" cols = "120" rows = "5" readOnly>  </textarea>
                         </div> */}
-                        <h1>Comments</h1>
-                        <div id ="commentList">
-
+                        <button onClick={() => this.showComments()}
+                                style = {{background: 'none', border: 'none', color: '#282bfc', display : (this.state.commentsOn || this.state.editModeOn) ? 'none' : 'block'}}>
+                            View Comments
+                        </button>
+                        <button onClick={() => this.showComments()}
+                                style = {{background: 'none', border: 'none', color: '#282bfc', display : (this.state.commentsOn || this.state.editModeOn) ? 'block' : 'none'}}>
+                            Hide Comments
+                        </button>
+                        <div id = "commentsView" style= {{ display : (this.state.commentsOn || this.state.editModeOn) ? 'block' : 'none'}}>
+                            <h1>Comments</h1>
+                            <div id ="commentList">
+                        </div>
                         </div>
                         <div style={{padding: '4px'}}>
                            <textarea id = "comment" cols = "120" rows = "5" style={{display: 'none'}}>  </textarea>

@@ -150,8 +150,8 @@ export const getInstances = (reports) => {
     }
   }
   
-  console.log(reports);
-  console.log(results);
+  //console.log(reports);
+  //console.log(results);
 
   return ()=>{return results};
 

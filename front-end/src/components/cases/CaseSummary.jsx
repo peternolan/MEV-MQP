@@ -459,7 +459,7 @@ class CaseSummary extends Component {
     };
     var data = this.props.getInstances(reports);
     var formatted_data = fmt(data);
-    console.log(formatted_data);
+    //console.log(formatted_data);
     var labels = formatted_data["fields"];
     var counts = formatted_data["counts"];
     if(counts[0].length == 0){return;}
@@ -495,12 +495,12 @@ class CaseSummary extends Component {
         .style("alignment-baseline", "hanging");
 
     let textelmt = chart.select("text").node();
-    console.log(textelmt);
+    //console.log(textelmt);
     if(textelmt != null){
       var text_height = textelmt.getBBox().height;
     }
     var total_reports = reports.length;
-    console.log(x);
+    //console.log(x);
     chart.selectAll("rect")
         .data((d,i)=>{console.log(formatted_data.counts); return counts[i];})
         .enter()
@@ -510,7 +510,7 @@ class CaseSummary extends Component {
         .attr("width", d=> x((d.end-d.start)/total_reports))
         .attr("height",text_height)
         .attr("fill", (d,i)=> i%2?"red":"green")
-        .attr("opacity", "50%");
+        .attr("opacity", .5);
         /*.each((datum, index) =>{
           console.log(this)
           d3.select(this)

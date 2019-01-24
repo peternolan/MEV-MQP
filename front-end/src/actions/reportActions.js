@@ -130,28 +130,28 @@ export const getInstances = (reports) => {
   
   for(var field of fields){//iterate over each report 4 times -- once for each field we're interested in
     if(results[field] == undefined){results[field] = {}}
-    for(var report of reports){
+    for(var report of reports){ //for each report in the list of reports
       if(report[field] == null){continue;}//ignore null fields
       if(typeof report[field][Symbol.iterator] === 'function' && report[field].__proto__ != String.prototype){//if the field is iterable but NOT a string (ie a dict or an array of some sort)
         for(var element of report[field]){//then let's iterate through each element of the field
-          if(element == null){continue;}
-          if(results[field][element] == undefined){
-            results[field][element] = 0;
+          if(element == null){continue;} //skip nulled elements
+          if(results[field][element] == undefined){ //if we have not encountered the current element
+            results[field][element] = 0; //make a new dict entry for it
           }
-          results[field][element]++;
+          results[field][element]++;// increase the currently encountered dict entry
         }
       }
       else if(results[field][report[field]] == undefined){
-        results[field][report[field]] = 1;
+        results[field][report[field]] = 1; //if we haven't seen the dict entry, then make a new one and increment it
       }
       else{
-        results[field][report[field]]++;
+        results[field][report[field]]++;//if we have seen this dict entry, then increment it
       }
     }
   }
   
-  console.log(reports);
-  console.log(results);
+  //console.log(reports);
+  //console.log(results);
 
   return ()=>{return results};
 

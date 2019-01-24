@@ -440,22 +440,90 @@ class CaseSummary extends Component {
     :null);
 
   drawChart = (reports) => {
-    console.log(this.props.getInstances(reports));
+    function fmt(data){
+      var data2 = [],keys = [];
+      for(let key in data){
+        data2.push(data[key]);
+        keys.push(key);
+      }
+      var vals = []
+      for(let datum of data2){
+        vals.push([]);
+        var cumsum = 0;
+        for(let key in datum){
+          vals[vals.length-1].push({"label":key,"start":cumsum, "end":datum[key] + cumsum});
+          cumsum += datum[key];
+        }
+      }
+      return {"fields":keys, "counts":vals};
+    };
+    var data = this.props.getInstances(reports);
+    var formatted_data = fmt(data);
+    //console.log(formatted_data);
+    var labels = formatted_data["fields"];
+    var counts = formatted_data["counts"];
+    if(counts[0].length == 0){return;}
+
     var svg = d3.select("#bargraph")
       .selectAll("svg")
       .data([1])//a little trick to create a new svg IFF one does not exist, else we use the existing one
       .enter()
       .append('svg')
-      .attr('class', this.props.classes.bargraph);
+      .attr('class', this.props.classes.bargraph)
+      .attr("viewBox","0 0 100 100")
+      .attr("width","100%");
 
-      svg.append("text")
-        .text("text")
-        .attr("transform", "translate(40,40)");
+    var bounds = d3.select("#bargraph").node().getBoundingClientRect();
+    var x = d3.scaleLinear()
+      .domain([0,1])
+      .range([0, 100]);
+    //  let x = (a)=>a;
+    //bounds.height;
+    var chart = svg.append("g")//append a group to hold the chart
+        .selectAll("g")//for each bar, append a new group
+        .data(formatted_data.fields)
+        .enter()
+        .append("g")
+        .attr("class", d=>d+" bar")
+        .attr("transform", (d,i)=>{return "translate("+ 0+","+(20*i)+")"});
+
+    chart.append("text")
+        .text(d=>d)
+        .attr("x",0)
+        .attr("y",2)
+        .style("text-anchor", "mid")
+        .style("alignment-baseline", "hanging");
+
+    let textelmt = chart.select("text").node();
+    //console.log(textelmt);
+    if(textelmt != null){
+      var text_height = textelmt.getBBox().height;
+    }
+    var total_reports = reports.length;
+    //console.log(x);
+    chart.selectAll("rect")
+        .data((d,i)=>{console.log(formatted_data.counts); return counts[i];})
+        .enter()
+        .append("rect")
+        .attr("x", d=> x(d.start/total_reports))
+        .attr("y", 0)
+        .attr("width", d=> x((d.end-d.start)/total_reports))
+        .attr("height",text_height)
+        .attr("fill", (d,i)=> i%2?"red":"green")
+        .attr("opacity", .5);
+        /*.each((datum, index) =>{
+          console.log(this)
+          d3.select(this)
+            .selectAll("text")
+            .data([datum])
+            .enter()
+            .append("text")
+            .text(d=>d)
+            .attr("x", function(d, i){return index * i * 20})
+        })*/
     //console.log(cdata)
     //console.log(this.getReports());
     //console.log(this.getInstances())
-
-
   }
 
   renderPieChart = () => ((this.state.pieChartData.length > 0)

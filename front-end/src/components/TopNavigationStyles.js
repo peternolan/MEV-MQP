@@ -59,16 +59,15 @@ export default {
     width: '100px',
     height: '100%',
     margin: '4px',
-    transform: 'translateY(5px)',
   },
   clearFilterChip: {
     'font-size': '9pt',
     height: '14pt',
-    position: 'absolute',
+    position: 'relative',
   },
   chipAvatar: {
-    height: '13pt',
-    width: '13pt',
+   height: '13pt',
+   width: '13pt',
     transform: 'translateX(1px)',
     'box-shadow': '0px 1px 2px 1px rgba(0,0,0,0.3)',
   },
@@ -80,7 +79,7 @@ export default {
     padding: '0px',
     display: 'inline-block',
     width: '100px',
-    height: '37px',
+    height: '100%',
     margin: '4px',
   },
   tooltipStyle: {

@@ -200,7 +200,7 @@ class TopNavigation extends Component {
               </Typography>
             </Paper>
             <CurrentlySelectedFilters />
-            <Paper className={`${this.props.classes.filterPaper} pull-right`} elevation={4}>
+            <Paper className={`${this.props.classes.filterPaper} pull-right`} style = {{position: 'relative' , height : '37px'}} elevation={4}>
               <MaterialTooltip
                 title="Note: This does not clear the date range, it only sets it back to the most recent week of data."
                 placement="top"
@@ -218,9 +218,11 @@ class TopNavigation extends Component {
                   classes={{ label: this.props.classes.chipLabel }}
                 />
               </MaterialTooltip>
-              <Typography type="subheading" align="center" style={{ lineHeight: '2.3rem' }} >
+
+              <Typography align="center" style={{ position: 'relative' , bottom: '20px' , lineHeight: '2.3rem' }} >
                 Clear Filters
               </Typography>
+
             </Paper>
           </div>
           : null}

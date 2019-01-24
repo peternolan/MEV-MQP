@@ -19,6 +19,9 @@ import './NarrativeAnnotator.css';
 import CustomTooltip from "../../visualization/components/demographics/components/ReportedBy";
 import {Link} from "react-router-dom";
 import GoToVisualizationIcon from "../../../resources/goToVisualizationIcon.svg";
+import ViewCaseSummary from "../../../resources/caseSummary.svg";
+import DeleteIcon from '../../../resources/Delete.svg';
+
 //const ToolTip = Quill.import('ui/tooltip');
 
 class QuillEditor extends Component {
@@ -202,17 +205,13 @@ class QuillEditor extends Component {
 
                                            if (dummyNode.getElementsByTagName("comment")[i].getAttribute('viewable').toString() === "public") {
                                                commentLines = commentLines.concat(`<div style='width: 685px; border-radius: 25px; background-color: #43e8e8; position: relative; padding: 6px ' >
-                                                                                        <div style ='left: 20px'>${dummyNode.getElementsByTagName("comment")[i].innerText.replace("n$", "</br>")}
-                                                                                        <span style = "${dummyNode.getElementsByTagName("comment")[i].getAttribute("id").toString() === this.state.userID.toString() ? 'display:block' : 'display:none'}" >
-                                                                                       
-                                                                                        </div>
+                                                                                        <div style ='left: 20px'>${dummyNode.getElementsByTagName("comment")[i].innerText.replace("n$", "</br>")}></div>
                                                                                          </div>`);
                                            } else {
 
                                                var block = `<div style='width: 685px; border-radius: 25px; background-color: #c5cbd6; position: relative; padding: 6px ' >
                                                                  <div style ='left: 20px'>${dummyNode.getElementsByTagName("comment")[i].innerText.replace("n$", "</br>")} </div>
-                                                                 <button id = 'delete' type ='button' style = "${dummyNode.getElementsByTagName("comment")[i].getAttribute("id").toString() === this.state.userID.toString() ? 'display:block' : 'display:none'}" onClick={this.commentDelete()}></button>
-                                                                  </div>`;
+                                                                 </div>`;
 
                                                commentLines = commentLines.concat(block);
                                            }
@@ -362,31 +361,29 @@ class QuillEditor extends Component {
 
         console.log("addingComment " + this.state.addingComment);
 
-        if (!this.state.addingComment) {
+        const drugRE = `background-color: ${annotationColors.drug};`;
+        const reactionRE = `background-color: ${annotationColors.reaction};`;
+        const dosageRE = `background-color: ${annotationColors.dosage};`;
+        const ageRE = `background-color: ${annotationColors.age};`;
+        const sexRE = `background-color: ${annotationColors.sex};`;
+        const weightRE = `background-color: ${annotationColors.weight};`;
+        const indicationRE = `background-color: ${annotationColors.indication};`;
+        const interestingRE = `background-color: ${annotationColors.interesting};`;
+        const newTags = {};
 
-            const drugRE = `background-color: ${annotationColors.drug};`;
-            const reactionRE = `background-color: ${annotationColors.reaction};`;
-            const dosageRE = `background-color: ${annotationColors.dosage};`;
-            const ageRE = `background-color: ${annotationColors.age};`;
-            const sexRE = `background-color: ${annotationColors.sex};`;
-            const weightRE = `background-color: ${annotationColors.weight};`;
-            const indicationRE = `background-color: ${annotationColors.indication};`;
-            const interestingRE = `background-color: ${annotationColors.interesting};`;
-            const newTags = {};
-
-            const spans = document.getElementById(`${this.props.primaryid}` || 'react-quill')
-                .getElementsByClassName('ql-editor')[0]
-                .getElementsByTagName('span');
+        const spans = document.getElementById(`${this.props.primaryid}` || 'react-quill')
+            .getElementsByClassName('ql-editor')[0]
+            .getElementsByTagName('span');
 
 
-            for (let i = 0; i < spans.length; i += 1) {
+        for (let i = 0; i < spans.length; i += 1) {
 
-                switch (spans[i].getAttribute('style')) {
-                    case drugRE:
-                        newTags.drug = (newTags.drug)
-                            ? newTags.drug.concat(spans[i].innerText)
-                            : [spans[i].innerText];
-                        break;
+            switch (spans[i].getAttribute('style')) {
+                case drugRE:
+                    newTags.drug = (newTags.drug)
+                        ? newTags.drug.concat(spans[i].innerText)
+                        : [spans[i].innerText];
+                    break;
                     case reactionRE:
                         newTags.reaction = (newTags.reaction)
                             ? newTags.reaction.concat(spans[i].innerText)
@@ -426,20 +423,17 @@ class QuillEditor extends Component {
                 }
             }
 
-            this.setState({report: value});
-            var dummyNode = document.createElement('div');
-            dummyNode.innerHTML = this.state.comment;
+        this.setState({report: value});
+        var dummyNode = document.createElement('div');
+        dummyNode.innerHTML = this.state.comment;
 
-            var comment = dummyNode.innerHTML;
+        var comment = dummyNode.innerHTML;
 
+        var finalText = this.state.report + comment;
 
-            var finalText = this.state.report + comment;
+        this.setState({success: false, current: {reportText: finalText, tags: newTags}});
 
-
-            this.setState({success: false, current: {reportText: finalText, tags: newTags}});
-        }
-        else {
-
+        if (this.state.addingComment) {
             var dummyNode2 = document.createElement('div');
             dummyNode2.innerHTML = this.state.comment;
 
@@ -461,17 +455,13 @@ class QuillEditor extends Component {
                                 if (dummyNode2.getElementsByTagName("comment")[i].getAttribute('viewable').toString() === "public") {
 
                                     commentLines = commentLines.concat(`<div style='width: 685px; border-radius: 25px; background-color: #43e8e8; position: relative; padding: 6px ' >
-                                                                         <div style ='left: 20px'>${dummyNode2.getElementsByTagName("comment")[i].innerText.replace("n$", "</br>")}>
-                                                                         <span style = "${dummyNode2.getElementsByTagName("comment")[i].getAttribute("id").toString() === this.state.userID.toString() ? 'display:block' : 'display:none'}" >
-                                                                         </div>
+                                                                        <div style ='left: 20px'>${dummyNode.getElementsByTagName("comment")[i].innerText.replace("n$", "</br>")} </div>
                                                                          </div>`);
                                 } else {
 
 
                                     commentLines = commentLines.concat(`<div style='width: 685px; border-radius: 25px; background-color: #c5cbd6; position: relative; padding: 6px ' >
-                                                                         <div style ='left: 20px'>${dummyNode2.getElementsByTagName("comment")[i].innerText.replace("n$", "</br>")}>
-                                                                         <span style = "${dummyNode2.getElementsByTagName("comment")[i].getAttribute("id").toString() === this.state.userID.toString() ? 'display:block' : 'display:none'}" > </span>
-                                                                         </div>
+                                                                        <div style ='left: 20px'>${dummyNode.getElementsByTagName("comment")[i].innerText.replace("n$", "</br>")} </div>
                                                                          </div>`);
                                 }
                                 //document.getElementById('commentBox').value = text;
@@ -482,8 +472,7 @@ class QuillEditor extends Component {
                             }
 
                         }
-                    }
-                    else {
+                    } else {
                         document.getElementById('commentList').innerHTML = ``;
                     }
                 }
@@ -491,14 +480,15 @@ class QuillEditor extends Component {
             }
 
 
-            var finalTextComm = this.state.report + this.state.comment;
-
-
-
-
-            this.setState({success: false, addingComment: false,  current: {reportText: finalTextComm}});
+            this.setState({ addingComment: false});
 
         }
+
+        var finalTextComm = this.state.report + this.state.comment;
+
+        this.setState({success: false, addingComment: false,  current: {reportText: finalTextComm}});
+
+
     };
 
 
@@ -821,14 +811,14 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
                     Legend
                 </legend>
 
-                    <span style = {{position: 'relative', bottom: '9px' }}>Drug </span><div className = {this.props.classes.squareReuse}></div><span style = {{position: 'relative', bottom: '9px' }}>|</span>
-                    <span style = {{position: 'relative', bottom: '9px' }}>Adverse Reaction </span><div className = {this.props.classes.squareCadetBlue}></div><span style = {{position: 'relative', bottom: '9px' }}>|</span>
-                    <span style = {{position: 'relative', bottom: '9px' }}>Dosage </span><div className = {this.props.classes.squareOrange}></div><span style = {{position: 'relative', bottom: '9px' }}>|</span>
-                    <span style = {{position: 'relative', bottom: '9px' }}>Age </span><div className = {this.props.classes.squareGold}></div><span style = {{position: 'relative', bottom: '9px' }}>|</span>
-                    <span style = {{position: 'relative', bottom: '9px' }}>Sex </span><div className = {this.props.classes.squarePink}></div><span style = {{position: 'relative', bottom: '9px' }}>|</span>
-                    <span style = {{position: 'relative', bottom: '9px' }}>Weight </span><div className = {this.props.classes.squareOrchid}></div><span style = {{position: 'relative', bottom: '9px' }}>|</span>
-                    <span style = {{position: 'relative', bottom: '9px' }}>Indication </span><div className = {this.props.classes.squareSilver}></div><span style = {{position: 'relative', bottom: '9px' }}>|</span>
-                    <span style = {{position: 'relative', bottom: '9px' }}>Interesting </span><div className = {this.props.classes.squareCyan}></div><span style = {{position: 'relative', bottom: '9px' }}>|</span>
+                    <span style = {{position: 'relative', bottom: '9px' }}>Drug </span><div className = {this.props.classes.squareReuse}></div><span style = {{position: 'relative', bottom: '9px' }}></span>
+                    <span style = {{position: 'relative', bottom: '9px' }}>Adverse Reaction </span><div className = {this.props.classes.squareCadetBlue}></div><span style = {{position: 'relative', bottom: '9px' }}></span>
+                    <span style = {{position: 'relative', bottom: '9px' }}>Dosage </span><div className = {this.props.classes.squareOrange}></div><span style = {{position: 'relative', bottom: '9px' }}></span>
+                    <span style = {{position: 'relative', bottom: '9px' }}>Age </span><div className = {this.props.classes.squareGold}></div><span style = {{position: 'relative', bottom: '9px' }}></span>
+                    <span style = {{position: 'relative', bottom: '9px' }}>Sex </span><div className = {this.props.classes.squarePink}></div><span style = {{position: 'relative', bottom: '9px' }}></span>
+                    <span style = {{position: 'relative', bottom: '9px' }}>Weight </span><div className = {this.props.classes.squareOrchid}></div><span style = {{position: 'relative', bottom: '9px' }}></span>
+                    <span style = {{position: 'relative', bottom: '9px' }}>Indication </span><div className = {this.props.classes.squareSilver}></div><span style = {{position: 'relative', bottom: '9px' }}></span>
+                    <span style = {{position: 'relative', bottom: '9px' }}>Interesting </span><div className = {this.props.classes.squareCyan}></div><span style = {{position: 'relative', bottom: '9px' }}></span>
 
                 </fieldset>
 
@@ -894,7 +884,9 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
                              </form>
                              <Button id = "MakeNote" style={{display: 'none', border: '2px solid #1d00ff', left : '30px'}} onClick={() => this.commentMade()}> Make Note </Button>
 
-                             <Button id = "delete" style={{display: 'none', left : '690px', border: '2px solid #ff0000'}} onClick={() => this.commentDelete()}> Delete </Button>
+                             <Button id = "delete" style={{display: 'none', left : '690px', border: '2px solid #ff0000'}} onClick={() => this.commentDelete()}>
+                                 <img src={DeleteIcon} style={{ width: '40px' , height: '45px'}} />
+                             </Button>
 
                              <Button
                                  id = "saveButton2"

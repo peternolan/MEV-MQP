@@ -47,7 +47,7 @@ class QuillEditor extends Component {
             squareOrchid: PropTypes.string,
             squareSilver: PropTypes.string,
             squareCyan: PropTypes.string,
-            tooltipStyle: PropTypes.string,
+            toolTipStyle: PropTypes.string,
             newCaseModal: PropTypes.string,
         }).isRequired,
         primaryid: PropTypes.number,
@@ -739,9 +739,10 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
                     placement="top"
                     enterDelay={50}
                     classes={{
-                        tooltip: this.props.classes.tooltipStyle,
+                        tooltip: this.props.classes.toolTipStyle,
                         popper: this.props.classes.tooltipStyle,
                     }}
+                    style ={{ fontSize: '20pt',}}
                 >
                     <Button style={{ padding: '0px', margin: '2px', minHeight: '2px', minWidth:'2px', border: '1px solid black',
                         borderRadius: '15px',  background: annotationColors.clear, left: '10px', bottom: '0px'}}>
@@ -804,7 +805,7 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
         const searchWords= searchText.split(/\s/).filter(word => word)
 
         return (
-            <div className={`${this.props.classes.pdfView} container`}>
+            <div className={`${this.props.classes.pdfView} container`} style = {{position: 'relative', left: '4px'}}>
 
                 <fieldset>
                 <legend>
@@ -884,9 +885,20 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
                              </form>
                              <Button id = "MakeNote" style={{display: 'none', border: '2px solid #1d00ff', left : '30px'}} onClick={() => this.commentMade()}> Make Note </Button>
 
-                             <Button id = "delete" style={{display: 'none', left : '690px', border: '2px solid #ff0000'}} onClick={() => this.commentDelete()}>
-                                 <img src={DeleteIcon} style={{ width: '40px' , height: '45px'}} />
-                             </Button>
+                             <MaterialTooltip
+                                 title="Delete Comment"
+                                 placement="top"
+                                 enterDelay={50}
+                                 classes={{
+                                     tooltip: this.props.classes.toolTipStyle,
+                                     popper: this.props.classes.tooltipStyle,
+                                 }}
+                                 style ={{ fontSize: '20pt',}}
+                             >
+                             <button id = "delete" style={{display: 'none', borderRadius: '20px' , position: 'relative', left : '720px', border: '2px solid #ff0000'}} onClick={() => this.commentDelete()}>
+                                 <img src={DeleteIcon} style={{ width: '15px' , height: '20px'}} />
+                             </button>
+                             </MaterialTooltip>
 
                              <Button
                                  id = "saveButton2"

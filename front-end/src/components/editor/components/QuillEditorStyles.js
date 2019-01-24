@@ -118,6 +118,14 @@ export default {
         textAlign: 'right',
 
     },
+
+    toolTipStyle: {
+        position: 'relative',
+        display: 'inline-block',
+        borderBottom: '1px dotted black',
+        fontSize: '12px',
+    },
+
 /*
     toolTip: {
       position: 'relative',

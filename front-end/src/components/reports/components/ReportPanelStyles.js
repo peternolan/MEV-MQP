@@ -16,7 +16,9 @@ export default {
     },
     summaryTitle: {
         padding: '5px',
-        fontSize: '12px'
+        fontSize: '12px',
+        position: 'relative',
+        left: '5px'
     },
     hideBtn: {
         marginLeft: '85%',

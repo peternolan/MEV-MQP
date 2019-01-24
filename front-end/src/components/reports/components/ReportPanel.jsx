@@ -138,8 +138,6 @@ class ReportPanel extends React.PureComponent {
     };
 
     renderInside = (primaryID) => {
-        console.log("Render Panel");
-        console.log("renderInside " + primaryID);
         return (
             <div key={primaryID}>
                 <AnimateHeight 

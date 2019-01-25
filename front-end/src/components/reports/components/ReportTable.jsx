@@ -274,6 +274,27 @@ class ReportTable extends React.PureComponent {
       title: 'ID',
       name: 'id',
     },
+
+    {
+      title: 'Age',
+      name: 'age_year',
+    },
+    {
+      title: 'Sex',
+      name: 'sex',
+    },
+    {
+      title: 'Drugs',
+      name: 'drugname',
+    },
+    {
+      title: 'Medication Error',
+      name: 'me_type',
+    },
+    {
+      title: 'Outcome',
+      name: 'outc_cod',
+    },
   ];
 
   /**
@@ -500,6 +521,7 @@ class ReportTable extends React.PureComponent {
 
               resultsArr[j] = results.results[j];
               resultIds[j] = results.results[j].id;
+
 
               console.log( "resultsArr at j" + resultsArr[j]);
 

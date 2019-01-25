@@ -9,6 +9,7 @@ import styles from "./ReportPanelStyles";
 import Highlighter from "react-highlight-words";
 import Typography from "material-ui/Typography/Typography";
 import QuillEditor from "../../editor/components/QuillEditor";
+import CommentPanel from "./CommentPanel";
 import AnimateHeight from 'react-animate-height';
 //import CaseIcon from '../../../resources/CaseIcon';
 
@@ -152,12 +153,15 @@ class ReportPanel extends React.PureComponent {
                 <Typography onClick={this.handleHideSummary} className={this.props.classes.hideBtn}>Hide Summary</Typography>
                 <div>
                     {(!this.state.searching)
-                        ? (<QuillEditor
+                        ? (<div>
+                            <QuillEditor
                             primaryid={Number(primaryID)}
                             incrementSummary={this.props.incrementSummary}
                             userEmail={this.props.userEmail}
                             match={this.props.match}
-                        />)
+                            />
+
+                        </div>)
                         : (
                             <Highlighter
                                 activeClassName={styles.Active}

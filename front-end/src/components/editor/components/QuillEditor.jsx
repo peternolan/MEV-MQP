@@ -13,6 +13,7 @@ import styles from './QuillEditorStyles';
 import annotationColors from './AnnotationColors';
 import Highlighter from 'react-highlight-words';
 import MaterialTooltip from 'material-ui/Tooltip';
+import Divider from 'material-ui/Divider';
 // import styles from 'react-highlight-words.example.css'
 // import latinize from 'latinize';
 import './NarrativeAnnotator.css';
@@ -49,6 +50,9 @@ class QuillEditor extends Component {
             squareCyan: PropTypes.string,
             toolTipStyle: PropTypes.string,
             newCaseModal: PropTypes.string,
+            commentSec: PropTypes.string,
+            commentButton: PropTypes.string,
+            commentContent: PropTypes.string,
         }).isRequired,
         primaryid: PropTypes.number,
         userID: PropTypes.number.isRequired,
@@ -342,7 +346,7 @@ class QuillEditor extends Component {
                         value = {this.state.report}
                         onChange={this.handleChange}
                         modules={this.modules}
-                        style ={{textAlign: 'justify', height: '210px', boxShadow: 'none'}}
+                        style ={{textAlign: 'justify', height: '150px', boxShadow: 'none'}}
                         theme="snow"
                         readOnly
                     />
@@ -626,9 +630,11 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
 
         if (this.state.commentsOn) {
             this.setState({commentsOn: false});
+            document.getElementById('MakeNote').focus()
         }
         else {
             this.setState({commentsOn: true});
+            document.getElementById('MakeNote').focus()
         }
     };
 
@@ -641,23 +647,8 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
             var x = document.getElementById(`react-quill-${this.props.primaryid}`);
             x.style.display = "none";
 
-            var xx = document.getElementById(`radio-form`);
-            xx.style.display = "none";
-
-            var yy = document.getElementById(`comment`);
-            yy.style.display = "none";
-
             var yyy = document.getElementById(`saveButton1`);
             yyy.style.display = "none";
-
-            var zzz = document.getElementById(`saveButton2`);
-            zzz.style.display = "none";
-
-            var xxx = document.getElementById(`MakeNote`);
-            xxx.style.display = "none";
-
-            var xy = document.getElementById(`delete`);
-            xy.style.display = "none";
 
             var y = document.getElementById(`react-quill-${this.props.primaryid}-2`);
             y.style.display = "block";
@@ -672,24 +663,9 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
             var a = document.getElementById(`react-quill-${this.props.primaryid}-2`);
             a.style.display = "none";
 
-            var aa = document.getElementById(`radio-form`);
-            aa.style.display = "inline-block";
-
-            var bb = document.getElementById(`comment`);
-            console.log("comment " + document.getElementById(`comment`));
-            bb.style.display = "block";
 
             var cc = document.getElementById(`saveButton1`);
             cc.style.display = "block";
-
-            var bbb = document.getElementById(`saveButton2`);
-            bbb.style.display = "block";
-
-            var aaa = document.getElementById(`MakeNote`);
-            aaa.style.display = "inline-block";
-
-            var ab = document.getElementById(`delete`);
-            ab.style.display = "inline-block";
 
             var b = document.getElementById(`react-quill-${this.props.primaryid}`);
             b.style.display = "block";
@@ -872,71 +848,7 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
 
                 {/* <!--</Paper>--> */}
 
-                {/* ====== Save Button Area ====== */}
                 <div className={this.props.classes.wrapper}>
-
-
-                    <div id = "commentArea" >
-                        {/*<div>
-                            <textarea id = "commentBox" cols = "120" rows = "5" readOnly>  </textarea>
-                        </div> */}
-                        <button onClick={() => this.showComments()}
-                                style = {{background: 'none', border: 'none', color: '#282bfc', display : (this.state.commentsOn || this.state.editModeOn) ? 'none' : 'block'}}>
-                            View Comments
-                        </button>
-                        <button onClick={() => this.showComments()}
-                                style = {{background: 'none', border: 'none', color: '#282bfc', display : (this.state.commentsOn || this.state.editModeOn) ? 'block' : 'none'}}>
-                            Hide Comments
-                        </button>
-                        <div id = "commentsView" style= {{ display : (this.state.commentsOn || this.state.editModeOn) ? 'block' : 'none'}}>
-                            <h1>Comments</h1>
-                            <div id ="commentList">
-                        </div>
-                        </div>
-                        <div style={{padding: '4px'}}>
-                           <textarea id = "comment" cols = "120" rows = "5" style={{display: 'none'}}>  </textarea>
-                         </div>
-
-                         <div style={{padding: '4px'} }>
-                             <form id = "radio-form" style={{display: 'none'}}>
-
-                                 <input type ="radio" name = "viewable" value = "private" checked ="yes" style={{padding: '4px'}}/>Private
-                                 <input type="radio" name = "viewable" value = "public" style={{padding: '4px'}}/>Public
-
-
-                             </form>
-                             <Button id = "MakeNote" style={{display: 'none', border: '2px solid #1d00ff', left : '30px'}} onClick={() => this.commentMade()}> Make Note </Button>
-
-                             <MaterialTooltip
-                                 title="Delete Comment"
-                                 placement="top"
-                                 enterDelay={50}
-                                 classes={{
-                                     tooltip: this.props.classes.toolTipStyle,
-                                     popper: this.props.classes.tooltipStyle,
-                                 }}
-                                 style ={{ fontSize: '20pt',}}
-                             >
-                             <button id = "delete" style={{display: 'none', borderRadius: '20px' , position: 'relative', left : '720px', border: '2px solid #ff0000'}} onClick={() => this.commentDelete()}>
-                                 <img src={DeleteIcon} style={{ width: '15px' , height: '20px'}} />
-                             </button>
-                             </MaterialTooltip>
-
-                             <Button
-                                 id = "saveButton2"
-                                 raised
-                                 color="primary"
-                                 className={(this.state.success) ? this.props.classes.buttonSuccess : ''}
-                                 disabled={this.state.saving}
-                                 onClick={this.saveWork}
-                                 style = {{display: 'none'}}>
-                                 Save
-                             </Button>
-
-
-
-                         </div>
-                    </div>
                     {(this.state.editModeOn) ?
                         (<Button style={{color: 'white', background: annotationColors.edit}} onClick = {() => this.editMode()} >
                             Stop Editing
@@ -950,6 +862,69 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
                         className={this.props.classes.buttonProgress}
                     />}
 
+                <Divider/>
+                </div>
+
+
+                <div id="commentArea" className={this.props.classes.commentSec}>
+                    {/*data-toggle = 'collapse' target = 'commentContent'*/}
+                    <button className = {this.props.classes.commentButton} onClick={() => this.showComments()}>
+                        {(this.state.commentsOn) ? <h5> Hide Comments </h5> : <h5> View Comments </h5>}
+
+                    </button>
+
+                    <div id  = 'commentContent' style={{display: (this.state.commentsOn) ? 'block' : 'none'}}>
+                        <div id="commentsView">
+                            <h3>Comments</h3>
+                            <div id="commentList">
+
+                            </div>
+                        </div>
+                        <div style={{padding: '4px'}}>
+                            <textarea id="comment" cols="120" rows="4">  </textarea>
+                        </div>
+
+                        <div style={{padding: '4px', display: 'inline-block'}}>
+                            <form id="radio-form" style={{display: 'inline-block'}}>
+                                <input type="radio" name="viewable" value="private" checked="yes" style={{padding: '4px'}}/>Private
+                                <input type="radio" name="viewable" value="public" style={{padding: '4px'}}/>Public
+                            </form>
+
+                            <Button id="MakeNote" style={{border: '2px solid #1d00ff', left: '30px'}}
+                                    onClick={() => this.commentMade()}> Make Note </Button>
+                            <Button
+                                id="saveButton2"
+                                raised
+                                color="primary"
+                                className={(this.state.success) ? this.props.classes.buttonSuccess : ''}
+                                disabled={this.state.saving}
+                                onClick={this.saveWork}
+                                style={{ left: '40px'}}>
+
+                                Save
+                            </Button>
+                            <MaterialTooltip
+                                title="Delete Comment"
+                                placement="top"
+                                enterDelay={50}
+                                classes={{
+                                    tooltip: this.props.classes.toolTipStyle,
+                                    popper: this.props.classes.tooltipStyle,
+                                }}
+                                style={{fontSize: '20pt',}}
+                            >
+                                <button id="delete" style={{
+                                    borderRadius: '20px',
+                                    position: 'relative',
+                                    left: '650px',
+                                    border: '2px solid #ff0000'
+                                }} onClick={() => this.commentDelete()}>
+                                    <img src={DeleteIcon} style={{width: '15px', height: '20px'}}/>
+                                </button>
+                            </MaterialTooltip>
+
+                        </div>
+                    </div>
                 </div>
 
             </div>

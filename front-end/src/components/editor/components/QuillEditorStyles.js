@@ -8,6 +8,33 @@ export default {
     margin: 'auto',
     padding: '10px',
   },
+    commentSec: {
+        border: '2px solid black',
+        position: 'absolute',
+        width: '98.5%',
+        elevation: '4',
+        transition: '0.4s'
+    },
+
+    commentButton: {
+
+        background: 'none',
+        color: 'black',
+        cursor: 'pointer',
+        padding: '5px',
+        width: '98.5%',
+        border: 'none',
+        fontSize: '8px',
+
+    },
+
+    commentContent: {
+      padding: '0 10px',
+        display: 'none',
+        overflow: 'hidden',
+
+    },
+
   dialog: {
     width: '100%',
     padding: '0px 20px 0px 20px',

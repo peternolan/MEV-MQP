@@ -4,9 +4,10 @@ import grey from 'material-ui/colors/grey';
 export default {
   pdfView: {
     width: '100%',
-    height: '560px',
+    height: '550px',
     margin: 'auto',
     padding: '10px',
+      overflow : 'auto'
   },
     commentSec: {
         position: 'absolute',
@@ -14,26 +15,41 @@ export default {
         elevation: '4',
         transition: '0.4s',
         bottom: '0',
+        background: 'white',
+        zIndex: '3',
+        overflow : 'auto'
+
+    },
+
+    quillArea: {
+        width: '100%',
+        margin: 'auto',
+        padding: '10px',
+        overflow: 'auto',
+        zIndex: '-1'
     },
 
     commentButton: {
 
-        background: 'none',
+        background: 'white',
         color: '#1317f2',
         cursor: 'pointer',
         padding: '5px',
         width: '98.5%',
-        border: 'none',
-        fontSize: '8px',
+        border: 'white',
+        textAlign: 'left'
+
 
     },
 
     commentContent: {
       padding: '0 0px',
         display: 'none',
-        overflow: 'hidden',
+        overflow: 'auto',
+
 
     },
+
 
   dialog: {
     width: '100%',

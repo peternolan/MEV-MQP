@@ -186,10 +186,11 @@ class ReportList extends Component {
     } else if (currentTab === 1) {  // This is the searched tab
       //***************  Searched reports can be accessed */
         console.log("Current Tab is 1");
-        console.log("Here " + this.props.searchedReports);
-        if(this.props.searchedReports.length > 0)
-            console.log("Here");
+        console.log("Here " + this.props.searchedReports.length);
+        if(this.props.searchedReports.length > 0){
+          console.log("Here")
           this.setState({ currentTab, searchedReports : this.props.searchedReports , bin: 'searched reports', })
+        }
 
     } else {
       this.setState({

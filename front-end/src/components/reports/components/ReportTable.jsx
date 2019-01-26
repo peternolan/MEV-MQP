@@ -832,10 +832,8 @@ class ReportTable extends React.PureComponent {
                 columns={(Number(this.props.currentTab) === 1) ? this.columns2 : this.columns}
                 getRowId={(Number(this.props.currentTab) === 1) ? row => row.id : row => row.primaryid }
               >
-                {console.log("expanded " + this.state.expandedRows)}
                 <RowDetailState
                   expandedRows={(Number(this.props.currentTab) === 1) ? this.state.returnedIds : this.state.expandedRows}
-                  onExpandedRowsChange={this.changeExpandedDetails}
                 />
                 <DragDropProvider />
                 <SortingState
@@ -864,9 +862,7 @@ class ReportTable extends React.PureComponent {
                 <TableHeaderRow showSortingControls className="tableHeader"/>
                 <TableColumnReordering defaultOrder={this.columns.map(column => column.name)} />
                 {/*cellComponent={(props) => <TableRowDetail.Cell className={this.props.classes.tableDetailCell} {...props} /> }*/}
-                <TableRowDetail
-                  contentComponent={this.renderDetailRowContent}
-                />
+
               </Grid>
             )
             : null

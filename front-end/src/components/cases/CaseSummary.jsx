@@ -580,7 +580,6 @@ class CaseSummary extends Component {
           <Typography type='button'>Total Count of Reports: {this.state.reportsInCase.length} </Typography>
           <Typography type='button'>Case Breakdown:
             <select ref='values' value={this.state.graphdata} onChange={this.handleDataChange} className={this.props.classes.dataSelector}>
-            <select value={this.state.graphdata} onChange={this.handleDataChange}>
               <option value='dataone'>Primary v. Supportive</option>
               <option value='datatwo'>Outcome</option>
               <option value='datathree'>Medication Error</option>

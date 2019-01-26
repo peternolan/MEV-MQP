@@ -30,9 +30,9 @@ class CaseSummary extends Component {
     getReportsFromCase: PropTypes.func.isRequired,
     getCaseNameByID: PropTypes.func.isRequired,
     getCaseReports: PropTypes.func,
-      getInstances: PropTypes.func,
-      setSearchedReports: PropTypes.func.isRequired,
-      handleClick: PropTypes.func.isRequired,
+    getInstances: PropTypes.func,
+    setSearchedReports: PropTypes.func.isRequired,
+    handleClick: PropTypes.func.isRequired,
     summaryCounter: PropTypes.number,
     caseID: PropTypes.number,
     userID: PropTypes.number.isRequired,
@@ -94,9 +94,12 @@ class CaseSummary extends Component {
   }
 
   componentDidMount() {
-    /*Unused for now*/
+    //d3.select(this.refs.wavePath)
   }
 
+  componentDidUpdate() {
+    //console.log(this.refs);
+  }
   getReportTypeData = () => {
     // console.log(getReportsInCases);
 
@@ -471,7 +474,7 @@ class CaseSummary extends Component {
     var counts = formatted_data["counts"];
     if(counts[0].length == 0){return;}
 
-    var svg = d3.select("#bargraph")
+    var svg = d3.select(this.refs.bargraph)
       .selectAll("svg")
       .data([1])//a little trick to create a new svg IFF one does not exist, else we use the existing one
       .enter()
@@ -480,7 +483,7 @@ class CaseSummary extends Component {
       .attr("viewBox","0 0 100 100")
       .attr("width","100%");
 
-    var bounds = d3.select("#bargraph").node().getBoundingClientRect();
+    var bounds = d3.select(this.refs.bargraph).node().getBoundingClientRect();
     var x = d3.scaleLinear()
       .domain([0,1])
       .range([0, 100]);
@@ -488,7 +491,7 @@ class CaseSummary extends Component {
     //bounds.height;
     var chart = svg.append("g")//append a group to hold the chart
         .selectAll("g")//for each bar, append a new group
-        .data(formatted_data.fields)
+        .data(labels)
         .enter()
         .append("g")
         .attr("class", d=>d+" bar")
@@ -509,7 +512,7 @@ class CaseSummary extends Component {
     var total_reports = reports.length;
     //console.log(x);
     chart.selectAll("rect")
-        .data((d,i)=>{console.log(formatted_data.counts); return counts[i];})
+        .data((d,i)=>{return counts[i];})
         .enter()
         .append("rect")
         .attr("x", d=> x(d.start/total_reports))
@@ -575,7 +578,7 @@ class CaseSummary extends Component {
           <Typography type='body1'>{this.state.caseDescription || 'No Description' }</Typography>
           <Typography type='button'>Total Count of Reports: {this.state.reportsInCase.length} </Typography>
           <Typography type='button'>Case Breakdown:
-            <select value={this.state.graphdata} onChange={this.handleDataChange} className={this.props.classes.dataSelector}>
+            <select ref='values' value={this.state.graphdata} onChange={this.handleDataChange} className={this.props.classes.dataSelector}>
               <option value='dataone'>Primary v. Supportive</option>
               <option value='datatwo'>Outcome</option>
               <option value='datathree'>Medication Error</option>
@@ -584,7 +587,7 @@ class CaseSummary extends Component {
             </select>
           </Typography>
         </div>
-        <div id='bargraph'></div>
+        <div id='bargraph' ref='bargraph'></div>
         <Typography type='button' style={{padding:10}}>Keyword Summary</Typography>
         <div>
           {this.state.highlightedWordsData.map((word) => {

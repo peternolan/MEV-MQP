@@ -135,6 +135,7 @@ class CaseSummary extends Component {
     }, []);
 
     /********  To get the highlighed words */
+
     Object.keys(this.state.tags).map((keyName) => {
       var x = this.state.tags[keyName];
       Object.keys(x).map((values) => {
@@ -579,6 +580,7 @@ class CaseSummary extends Component {
           <Typography type='button'>Total Count of Reports: {this.state.reportsInCase.length} </Typography>
           <Typography type='button'>Case Breakdown:
             <select ref='values' value={this.state.graphdata} onChange={this.handleDataChange} className={this.props.classes.dataSelector}>
+            <select value={this.state.graphdata} onChange={this.handleDataChange}>
               <option value='dataone'>Primary v. Supportive</option>
               <option value='datatwo'>Outcome</option>
               <option value='datathree'>Medication Error</option>
@@ -596,6 +598,8 @@ class CaseSummary extends Component {
             )
           })}
         </div>
+        <div id="bargraph"></div>
+        <div id="keywords"style={{padding: 10}}><Typography type='button'>Keyword Summary</Typography></div>
       </div>
     );
   }

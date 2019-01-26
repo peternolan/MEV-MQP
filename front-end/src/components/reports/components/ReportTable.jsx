@@ -653,7 +653,6 @@ class ReportTable extends React.PureComponent {
             popper: this.props.classes.tooltipStyle,
           }}
         >
-
           <FormControlLabel
             control={
               <Switch

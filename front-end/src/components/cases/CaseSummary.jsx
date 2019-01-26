@@ -132,14 +132,15 @@ class CaseSummary extends Component {
     }, []);
 
     /********  To get the highlighed words */
-
     Object.keys(this.state.tags).map((keyName) => {
       var x = this.state.tags[keyName];
       Object.keys(x).map((values) => {
         // console.log(x[values]);
         highlightedRawWords.push(x[values].toLowerCase().split(' '));
       })
+      console.log("RAW WORDS", highlightedRawWords);
     })
+
       
     /*********** Smooth the 2D array into 1D */
    
@@ -564,14 +565,15 @@ class CaseSummary extends Component {
 
   render() { {this.getReports();
               this.updateReports();
+              console.log("HERE ARE KEYWORDS", this.state.highlightedWordsData);
             }
     return (
       <div style={{ width: '100%' }} >
         <div style={{padding: 10}}>
-          <Typography type="button">{this.state.caseDescription || 'No Description' }</Typography>
-          <Typography type="body1">Total Count of Reports: {this.state.reportsInCase.length} </Typography>
+          <Typography type='body1'>{this.state.caseDescription || 'No Description' }</Typography>
+          <Typography type='button'>Total Count of Reports: {this.state.reportsInCase.length} </Typography>
           <Typography type='button'>Case Breakdown:
-            <select value={this.state.graphdata} onChange={this.handleDataChange}>
+            <select value={this.state.graphdata} onChange={this.handleDataChange} className={this.props.classes.dataSelector}>
               <option value='dataone'>Primary v. Supportive</option>
               <option value='datatwo'>Outcome</option>
               <option value='datathree'>Medication Error</option>
@@ -580,8 +582,15 @@ class CaseSummary extends Component {
             </select>
           </Typography>
         </div>
-        <div id="bargraph"></div>
-        <div id="keywords"style={{padding: 10}}><Typography type='button'>Keyword Summary</Typography></div>
+        <div id='bargraph'></div>
+        <Typography type='button' style={{padding:10}}>Keyword Summary</Typography>
+        <div>
+          {this.state.highlightedWordsData.map((word) => {
+            return(
+              <Typography type='body1'>{word.name} ({word.count})</Typography>
+            )
+          })}
+        </div>
       </div>
     );
   }

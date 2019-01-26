@@ -653,17 +653,6 @@ class ReportTable extends React.PureComponent {
             popper: this.props.classes.tooltipStyle,
           }}
         >
-
-          <FormControlLabel
-            control={
-              <Switch
-                checked={this.state.evidenceType[row.row.primaryid] === 'primary'}
-                onChange={this.handleToggleChange(row.row.primaryid)}
-                color="primary"
-              />
-            }
-            label={(this.state.evidenceType[row.row.primaryid] === 'primary') ? 'Primary Evidence' : 'Supportive Evidence'}
-          />
         </MaterialTooltip>
       );
   };
@@ -865,10 +854,6 @@ class ReportTable extends React.PureComponent {
                 <TableHeaderRow showSortingControls className="tableHeader"/>
                 <TableColumnReordering defaultOrder={this.columns.map(column => column.name)} />
                 {/*cellComponent={(props) => <TableRowDetail.Cell className={this.props.classes.tableDetailCell} {...props} /> }*/}
-                <TableRowDetail
-
-                  contentComponent={this.renderDetailRowContent}
-                />
               </Grid>
             )
             : null

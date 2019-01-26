@@ -46,7 +46,7 @@ export default {
   tableContainer: {
       float: 'left',
       display: 'inline-block',
-      width: '35vw', /* This element is constantly on the screen, so we want it's width to be pretty much static. */
+      width: 500, /* This element is constantly on the screen, so we want it's width to be pretty much static. */
       maxHeight: 'calc(100vh - 122px)',
       padding: '0px',
       margin: '0px',
@@ -59,14 +59,14 @@ export default {
       float: 'left',
       display: 'inline-block',
       width: '20vw',
-      height: '82vh',
+      height: 'calc(100vh - 122px)',
       transition: 'width 200ms ease-in-out',
   },
   closedSummaryContainer: {
     float: 'left',
     display: 'inline-block',
     width: '0vw',
-    height: '82vh',
+    height: 'calc(100vh - 122px)',
     transition: 'width 200ms ease-in-out',
     overflow: 'hidden',
   },
@@ -74,7 +74,7 @@ export default {
   reportContainer: {
       float: 'right',
       display: 'inline-block',
-      width: '65vw',
+      maxWidth: 'calc(100vw - 500px)',
       maxHeight: 'calc(100vh - 122px)',
       height: 'calc(100vh - 122px)',
       padding: '0px',
@@ -84,7 +84,7 @@ export default {
   smallreportContainer: {
         float: 'right',
         display: 'inline-block',
-        width: '45vw',
+        width: 'calc(80vw - 500px)',
         maxHeight: 'calc(100vh - 122px)',
         height: 'calc(100vh - 122px)',
         padding: '0px',

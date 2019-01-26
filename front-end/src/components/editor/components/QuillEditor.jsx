@@ -71,7 +71,6 @@ class QuillEditor extends Component {
     };
 
     constructor(props){
-
         super(props);
         this.commentDelete = this.commentDelete.bind(this);
         this.state = {
@@ -606,26 +605,6 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
 
 
     };
-
-    searchTextBox = (event) => {
-        this.setState({valueAttr: event.target.value});
-
-
-        if (event.target.value==='') {
-            this.setState({searching:false})
-        }
-        else
-            this.setState({searching:true});
-
-
-        this.setState({textHighlight:{searchText: event.target.value},
-
-        })
-
-
-    };
-
-
     showComments = () => {
 
         if (this.state.commentsOn) {
@@ -688,7 +667,7 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
 
     customToolbar = () => (
 
-        <div id={`react-quill-${this.state.primaryId}`} style={{height: '60px', width: '1090px', display: 'none'}}>
+        <div id={`react-quill-${this.state.primaryId}`} style={{height: '20px', width: '100%', display: 'none'}}>
 
             <select defaultValue="false" className="ql-header" style={{ width: '175px', height: '36px', margin: '4px' }}>
                 <option value="1" />
@@ -799,26 +778,19 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
         const searchWords= searchText.split(/\s/).filter(word => word)
 
         return (
-            <div className={`${this.props.classes.pdfView} container`} style = {{position: 'relative', left: '4px'}}>
+            <div className={`${this.props.classes.pdfView} container`}>
 
                 <div className = {`${this.props.classes.quillArea}`} style = {{height: ((this.state.commentsOn) ? '290px' : '500px') }}>
                     <fieldset>
-                        <legend>
-                            Legend
-                        </legend>
-
-                        <span style = {{position: 'relative', bottom: '9px' }}>Drug </span><div className = {this.props.classes.squareReuse}></div><span style = {{position: 'relative', bottom: '9px' }}></span>
-                        <span style = {{position: 'relative', bottom: '9px' }}>Adverse Reaction </span><div className = {this.props.classes.squareCadetBlue}></div><span style = {{position: 'relative', bottom: '9px' }}></span>
-                        <span style = {{position: 'relative', bottom: '9px' }}>Dosage </span><div className = {this.props.classes.squareOrange}></div><span style = {{position: 'relative', bottom: '9px' }}></span>
-                        <span style = {{position: 'relative', bottom: '9px' }}>Age </span><div className = {this.props.classes.squareGold}></div><span style = {{position: 'relative', bottom: '9px' }}></span>
-                        <span style = {{position: 'relative', bottom: '9px' }}>Sex </span><div className = {this.props.classes.squarePink}></div><span style = {{position: 'relative', bottom: '9px' }}></span>
-                        <span style = {{position: 'relative', bottom: '9px' }}>Weight </span><div className = {this.props.classes.squareOrchid}></div><span style = {{position: 'relative', bottom: '9px' }}></span>
-                        <span style = {{position: 'relative', bottom: '9px' }}>Indication </span><div className = {this.props.classes.squareSilver}></div><span style = {{position: 'relative', bottom: '9px' }}></span>
-                        <span style = {{position: 'relative', bottom: '9px' }}>Interesting </span><div className = {this.props.classes.squareCyan}></div><span style = {{position: 'relative', bottom: '9px' }}></span>
-
+                        <div className = {this.props.classes.squareCadetBlue}></div><span>Drug </span>
+                        <div className = {this.props.classes.squareReuse}></div><span>Adverse Reaction </span>
+                        <div className = {this.props.classes.squareOrange}></div><span>Dosage </span>
+                        <div className = {this.props.classes.squareGold}></div><span>Age </span>
+                        <div className = {this.props.classes.squarePink}></div><span>Sex </span>
+                        <div className = {this.props.classes.squareOrchid}></div><span>Weight </span>
+                        <div className = {this.props.classes.squareSilver}></div><span>Indication </span>
+                        <div className = {this.props.classes.squareCyan}></div><span>Interesting </span>
                     </fieldset>
-
-
                     <Button
                         id = "saveButton1"
                         raised

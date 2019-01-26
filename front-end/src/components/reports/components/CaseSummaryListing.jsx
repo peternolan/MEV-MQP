@@ -82,7 +82,6 @@ class CaseSummaryListing extends React.PureComponent {
           Case Summaries
         </Typography>
         <Divider light />
-
         {this.props.bins.map(bin => (
           this.renderListItem(bin)
           ))}

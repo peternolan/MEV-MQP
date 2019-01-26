@@ -210,7 +210,8 @@ class TopNavigation extends Component {
                       popper: this.props.classes.tooltipStyle,
                   }}
               >
-                <Paper className={`${this.props.classes.filterPaper} pull-right`} onClick={this.handleClearFilters} style = {{ display: 'inline-block', position: 'relative' , height : '37px'}} elevation={4}>
+                <Paper className={`${this.props.classes.filterPaper} pull-right`} onClick={this.handleClearFilters} style = {{
+                    cursor: 'pointer', display: 'inline-block', position: 'relative' , height : '37px'}} elevation={4}>
 
                     <div style={{transform: `translateX(${97 - 13}px)`, color: 'red', position: 'relative', top: '7px',  display: 'inline-block', fontSize: '20px'}}>
                         X

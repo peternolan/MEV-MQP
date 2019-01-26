@@ -493,7 +493,7 @@ class ReportTable extends React.PureComponent {
         <Table.Row
             {...props}
             style={{
-                backgroundColor: (props.tableRow.rowId === this.state.selected) ? '#dbf0ff' : 'white'
+                backgroundColor: (props.tableRow.rowId === this.state.selected) ? '#dbf0ff' : backgroundColor
               ,height:'',
               cursor:'pointer'
 

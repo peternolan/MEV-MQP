@@ -107,6 +107,7 @@ class ReportTable extends React.PureComponent {
       pageSize: 50,
       searchTarget: 'All Reports',
       currentPage: 0,
+      selected: -1,
         returnedResults: [1, 2, 3],
         returnedIds: [],
 
@@ -426,11 +427,28 @@ class ReportTable extends React.PureComponent {
     primary: 'rgba(12, 232, 142, 0.25)',
   };
 
+
+  reportToPanel = ( id ) => {
+
+
+
+    this.setState({selected: id}, function() {
+      console.log("Report to Panel " + id);
+
+      this.props.handleViewReport(id);
+    });
+
+
+  }
+
+
+
   /**
    * This returns the table Row component with the added background color
    * if the report is in any case for the current user
    */
   TableRow = ({ row, ...props }) => {
+
 
     if (!this.state.firstFound) {
 
@@ -467,15 +485,20 @@ class ReportTable extends React.PureComponent {
             : ((this.props.supportiveChosen === true) ? 'rgba(255, 0, 255, 0.25)' : this.COLORS.supportive );
 
     }
+    {console.log(props.tableRow.rowId.toString())}
+    {console.log(this.state.selected)}
+    {console.log((props.tableRow.rowId.toString() === this.state.selected) ? 'blue' : 'none')}
     return (
 
         <Table.Row
             {...props}
             style={{
-                backgroundColor,height:'',
+                backgroundColor: (props.tableRow.rowId === this.state.selected) ? '#dbf0ff' : 'white'
+              ,height:'',
               cursor:'pointer'
+
             }}
-            onClick = {() => this.props.handleViewReport(props.tableRow.rowId)}
+            onClick = {() => this.reportToPanel(props.tableRow.rowId)}
         />
 
     );

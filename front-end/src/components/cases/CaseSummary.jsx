@@ -135,6 +135,7 @@ class CaseSummary extends Component {
     }, []);
 
     /********  To get the highlighed words */
+
     Object.keys(this.state.tags).map((keyName) => {
       var x = this.state.tags[keyName];
       Object.keys(x).map((values) => {
@@ -590,6 +591,8 @@ class CaseSummary extends Component {
             )
           })}
         </div>
+        <div id="bargraph"></div>
+        <div id="keywords"style={{padding: 10}}><Typography type='button'>Keyword Summary</Typography></div>
       </div>
     );
   }

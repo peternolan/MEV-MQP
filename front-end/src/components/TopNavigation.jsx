@@ -190,7 +190,7 @@ class TopNavigation extends Component {
             </a>
           </div>
           {this.props.showFilters ? 
-          <div className={this.props.classes.SelectedFilters} >
+          <div className={this.props.classes.SelectedFilters} style = {{position: 'relative', bottom: '0px'}} >
             <Paper className={this.props.classes.TotalCountBox} elevation={4} >
               <Typography type="body1" align="center" style={{ lineHeight: '1.4rem' }} >
                 Report Count
@@ -210,9 +210,14 @@ class TopNavigation extends Component {
                       popper: this.props.classes.tooltipStyle,
                   }}
               >
-                <Paper className={`${this.props.classes.filterPaper} pull-right`} onClick={this.handleClearFilters} style = {{  backgroundColor: '#f46b6b', position: 'relative' , height : '37px'}} elevation={4}>
-                    <Typography type="subheading" align="center" style={{ top: '4px',  position: 'relative' , lineHeight: '2.3rem' }} >
-                        Clear All Filters
+                <Paper className={`${this.props.classes.filterPaper} pull-right`} onClick={this.handleClearFilters} style = {{
+                    cursor: 'pointer', display: 'inline-block', position: 'relative' , height : '37px'}} elevation={4}>
+
+                    <div style={{transform: `translateX(${97 - 13}px)`, color: 'red', position: 'relative', top: '7px',  display: 'inline-block', fontSize: '20px'}}>
+                        X
+                    </div>
+                    <Typography type="subheading" align="center" style={{ top: '4px', position: 'relative' ,  display: 'inline-block', lineHeight: '2.3rem' }} >
+                        Clear Filters
                     </Typography>
                 </Paper>
               </MaterialTooltip>

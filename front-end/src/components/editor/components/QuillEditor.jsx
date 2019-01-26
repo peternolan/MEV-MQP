@@ -71,6 +71,7 @@ class QuillEditor extends Component {
     };
 
     constructor(props){
+
         super(props);
         this.commentDelete = this.commentDelete.bind(this);
         this.state = {
@@ -605,6 +606,26 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
 
 
     };
+
+    searchTextBox = (event) => {
+        this.setState({valueAttr: event.target.value});
+
+
+        if (event.target.value==='') {
+            this.setState({searching:false})
+        }
+        else
+            this.setState({searching:true});
+
+
+        this.setState({textHighlight:{searchText: event.target.value},
+
+        })
+
+
+    };
+
+
     showComments = () => {
 
         if (this.state.commentsOn) {
@@ -667,7 +688,7 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
 
     customToolbar = () => (
 
-        <div id={`react-quill-${this.state.primaryId}`} style={{height: '20px', width: '100%', display: 'none'}}>
+        <div id={`react-quill-${this.state.primaryId}`} style={{height: '60px', width: '1090px', display: 'none'}}>
 
             <select defaultValue="false" className="ql-header" style={{ width: '175px', height: '36px', margin: '4px' }}>
                 <option value="1" />
@@ -778,7 +799,7 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
         const searchWords= searchText.split(/\s/).filter(word => word)
 
         return (
-            <div className={`${this.props.classes.pdfView} container`}>
+            <div className={`${this.props.classes.pdfView} container`} style = {{position: 'relative', left: '4px'}}>
 
                 <div className = {`${this.props.classes.quillArea}`} style = {{height: ((this.state.commentsOn) ? '290px' : '500px') }}>
                     <fieldset>
@@ -791,6 +812,8 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
                         <div className = {this.props.classes.squareSilver}></div><span>Indication </span>
                         <div className = {this.props.classes.squareCyan}></div><span>Interesting </span>
                     </fieldset>
+
+
                     <Button
                         id = "saveButton1"
                         raised
@@ -894,8 +917,8 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
 
                         <div style={{padding: '4px', display: 'inline-block'}}>
                             <form id="radio-form" style={{display: 'inline-block'}}>
-                                <input type="radio" name="viewable" value="private" checked="yes" style={{padding: '4px'}}/>Private
-                                <input type="radio" name="viewable" value="public" style={{padding: '4px'}}/>Public
+                                <input type="radio" name="viewable" value="private" checked="yes" style={{padding: '5px'}} defaultChecked/>Private
+                                <input type="radio" name="viewable" value="public" style={{padding: '5px'}}/>Public
                             </form>
 
                             <Button id="MakeNote" style={{border: '2px solid #1d00ff', left: '30px'}}

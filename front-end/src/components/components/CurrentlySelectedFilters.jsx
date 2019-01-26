@@ -12,12 +12,19 @@ import ClearFilterIcon from '../../resources/clearFilterIcon.svg';
 const styles = {
   filterPaper: {
     padding: '0px',
-    display: 'inline-block',
     width: '100px',
-    height: '37px',
+    height: '40px',
     margin: '4px',
 
+    borderRadius: '20px',
+    transition: '.05s',
+
+    cursor: 'pointer'
+
   },
+
+
+
   clearFilterChip: {
     'font-size': '9pt',
     height: '14pt',
@@ -214,24 +221,23 @@ class CurrentlySelectedFilters extends Component {
                   (key !== 'init_fda_dt') ?
 
                       (
-                          <Paper className={this.props.classes.filterPaper} style = {{position: 'relative' , bottom: '19px'}} elevation={4} key={key} name={key} >
-                            <Chip
-                                avatar={<Avatar src={ClearFilterIcon} alt="Clear Filters"   className={this.props.classes.chipAvatar}/>}
-                                onClick={this.handleFilterClickToggle(key)}
-                                className={this.props.classes.clearFilterChip}
-                                style={{transform: `translateY(-5px) translateX(${100 - 13}px)`}}
-                                classes={{label: this.props.classes.chipLabel}}
-                            />
+                          <Paper className={this.props.classes.filterPaper} style = {{top: '9px', position: 'relative',  display: 'inline-block' }}
+                                 elevation={4} key={key} name={key} onClick={this.handleFilterClickToggle(key)}>
 
-                              <Typography align={'center'} style={{position: 'relative', top: '10px', lineHeight: '1.4rem'}}>
+                            <div style={{transform: `translateX(${93 - 13}px)`, color: 'red', position: 'relative', top: '7px',fontSize: '20px'}}>
+                              X
+                            </div>
+
+                              <Typography align={'center'} style={{bottom: '17px', position: 'relative'}}>
                                 {this.filterTitles[key]}
                               </Typography>
+
 
                           </Paper>
                       )
                       :
                       (
-                          <Paper className={this.props.classes.filterPaper} elevation={4} key={key} name={key}>
+                          <Paper className={this.props.classes.filterPaper} elevation={4} key={key} name={key} style = {{position: 'relative',  display: 'inline-block' }}>
                             <div>
                               <Typography type="subheading" align="center" style={{lineHeight: '1.4rem'}}>
                                 {this.formatDate(this.props.filters[key].start)}
@@ -248,7 +254,7 @@ class CurrentlySelectedFilters extends Component {
 
   render() {
     return (
-        <div id="selected-filters-box" style={{ display: 'inline-block' }}>
+        <div id="selected-filters-box" style={{ height: '37px', display: 'inline-block' }}>
           {this.renderFilterBox()}
           {this.renderTooltip()}
         </div>

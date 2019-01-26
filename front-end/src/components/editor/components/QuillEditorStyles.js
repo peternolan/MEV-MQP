@@ -4,22 +4,22 @@ import grey from 'material-ui/colors/grey';
 export default {
   pdfView: {
     width: '100%',
-    height: '75%',
+    height: '560px',
     margin: 'auto',
     padding: '10px',
   },
     commentSec: {
-        border: '2px solid black',
         position: 'absolute',
         width: '98.5%',
         elevation: '4',
-        transition: '0.4s'
+        transition: '0.4s',
+        bottom: '0',
     },
 
     commentButton: {
 
         background: 'none',
-        color: 'black',
+        color: '#1317f2',
         cursor: 'pointer',
         padding: '5px',
         width: '98.5%',
@@ -29,7 +29,7 @@ export default {
     },
 
     commentContent: {
-      padding: '0 10px',
+      padding: '0 0px',
         display: 'none',
         overflow: 'hidden',
 

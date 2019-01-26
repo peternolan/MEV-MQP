@@ -9,7 +9,6 @@ import styles from "./ReportPanelStyles";
 import Highlighter from "react-highlight-words";
 import Typography from "material-ui/Typography/Typography";
 import QuillEditor from "../../editor/components/QuillEditor";
-import CommentPanel from "./CommentPanel";
 import AnimateHeight from 'react-animate-height';
 //import CaseIcon from '../../../resources/CaseIcon';
 

@@ -1,7 +1,7 @@
 export default {
     summaryContainer: {
         overflow: 'scroll',
-        height: '100%',
+        height: '660px',
         borderRadius: 0,
         borderLeftWidth: '1px',
         borderTopWidth: 0,

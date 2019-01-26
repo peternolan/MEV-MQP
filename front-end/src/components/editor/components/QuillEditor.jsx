@@ -917,8 +917,8 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
 
                         <div style={{padding: '4px', display: 'inline-block'}}>
                             <form id="radio-form" style={{display: 'inline-block'}}>
-                                <input type="radio" name="viewable" value="private" checked="yes" style={{padding: '4px'}} defaultChecked/>Private
-                                <input type="radio" name="viewable" value="public" style={{padding: '4px'}}/>Public
+                                <input type="radio" name="viewable" value="private" checked="yes" style={{padding: '5px'}} defaultChecked/>Private
+                                <input type="radio" name="viewable" value="public" style={{padding: '5px'}}/>Public
                             </form>
 
                             <Button id="MakeNote" style={{border: '2px solid #1d00ff', left: '30px'}}

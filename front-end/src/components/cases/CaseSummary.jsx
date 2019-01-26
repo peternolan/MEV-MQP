@@ -187,7 +187,9 @@ class CaseSummary extends Component {
   updateSummary = () => {
     this.props.getTagsinCase(this.props.caseID)
       .then((tags) => {
-        const combinedTags = tags.reduce((acc, row) => {
+        const combinedTags = tags
+                              .filter((d)=>{return d.tags!="{}" && d.tags != "undefined";})
+                              .reduce((acc, row) => {
           Object.keys(JSON.parse(row.tags)).forEach((key) => {
             acc[key] = (acc[key])
               ? acc[key].concat(JSON.parse(row.tags)[key])

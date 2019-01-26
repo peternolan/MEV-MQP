@@ -898,7 +898,7 @@ app.post('/executeSearch', (req, res) => {
     });
     pythonProcess.stdout.on("end", function(){
         console.log("stdout end ");
-      res.status(200).send(JSON.stringify(results));
+        res.status(200).send(JSON.stringify(results));
     });
     pythonProcess.stderr.on('data', function (data) {
       console.log('stderr: ' + data);

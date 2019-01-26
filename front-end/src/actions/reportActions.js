@@ -303,9 +303,7 @@ export const executeSearch = (str) => () => {
         return String(this).replace(/^\s+|\s+$/g, '');
     };
   }
-
-  console.log("executeSearch Action");
-    const fetchData = {
+  const fetchData = {
         method: 'POST',
         mode: 'cors',
         headers: {

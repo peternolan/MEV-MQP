@@ -1,4 +1,3 @@
-from datetime import datetime
 from elasticsearch_dsl import Index, Document, Text, \
     analyzer, Search, Q, Boolean, InnerDoc
 import os
@@ -84,11 +83,10 @@ if not reportsIndex.exists():
     IndexFromDirectory(reportdir)
     reportsIndex.refresh()
 else:
-    IndexFromDirectory(reportdir)
     reportsIndex.refresh()
 
 
-def genSearch(string, start=0, size=3):
+def genSearch(string, start=0, size=3, fields=["body", "drugs", "advs"]):
     positives = ' '.join(
         filter(lambda x: not x.startswith("!"), string.split(" ")))
     negatives = ' '.join(

@@ -472,8 +472,10 @@ class ReportTable extends React.PureComponent {
         <Table.Row
             {...props}
             style={{
-                backgroundColor,height:''
+                backgroundColor,height:'',
+              cursor:'pointer'
             }}
+            onClick = {() => this.props.handleViewReport(props.tableRow.rowId)}
         />
 
     );

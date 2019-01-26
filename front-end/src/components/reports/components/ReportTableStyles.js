@@ -1,6 +1,6 @@
 export default {
   tableWrapper: {
-    width: '35vw',
+    width: '100%',
     margin: '0',
     maxHeight: 'calc(100vh - 122px)',
     backgroundColor: '#fff',
@@ -9,9 +9,9 @@ export default {
   tableContainer: {
     margin: '0px',
     padding: '0px',
-    width: 'calc(100%-2px)',
-    overflow: 'scroll',
-    maxHeight: 'calc(100vh - 160px)',
+    width: 500,
+    overflowY: 'scroll',
+    maxHeight: 'calc(100vh - 172px)',
     display: 'inline-block'
   },
   moveToCaseDetailsContainer: {
@@ -45,7 +45,7 @@ export default {
     margin: '5px',
     marginRight: 0,
     display: 'inline-block',
-    height: '35px',
+    height: 35,
     padding: '10px',
     float: 'left'
   },

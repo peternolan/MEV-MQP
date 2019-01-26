@@ -200,28 +200,22 @@ class TopNavigation extends Component {
               </Typography>
             </Paper>
             <CurrentlySelectedFilters />
-            <Paper className={`${this.props.classes.filterPaper} pull-right`} elevation={4}>
+
               <MaterialTooltip
-                title="Note: This does not clear the date range, it only sets it back to the most recent week of data."
-                placement="top"
-                enterDelay={50}
-                classes={{
-                  tooltip: this.props.classes.tooltipStyle,
-                  popper: this.props.classes.tooltipStyle,
+                  title="Note: This does not clear the date range, it only sets it back to the most recent week of data."
+                  placement="top"
+                  enterDelay={50}
+                  classes={{
+                      tooltip: this.props.classes.tooltipStyle,
+                      popper: this.props.classes.tooltipStyle,
                   }}
               >
-                <Chip
-                  avatar={<Avatar src={ClearFilterIcon} alt="Clear Filters" className={this.props.classes.chipAvatar} />}
-                  onClick={this.handleClearFilters}
-                  className={this.props.classes.clearFilterChip}
-                  style={{ transform: `translateY(-5px) translateX(${100 - 13}px)` }}
-                  classes={{ label: this.props.classes.chipLabel }}
-                />
+                <Paper className={`${this.props.classes.filterPaper} pull-right`} onClick={this.handleClearFilters} style = {{  backgroundColor: '#f46b6b', position: 'relative' , height : '37px'}} elevation={4}>
+                    <Typography type="subheading" align="center" style={{ top: '4px',  position: 'relative' , lineHeight: '2.3rem' }} >
+                        Clear All Filters
+                    </Typography>
+                </Paper>
               </MaterialTooltip>
-              <Typography type="subheading" align="center" style={{ lineHeight: '2.3rem' }} >
-                Clear Filters
-              </Typography>
-            </Paper>
           </div>
           : null}
         </div>

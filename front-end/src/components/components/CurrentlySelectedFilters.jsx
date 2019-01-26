@@ -9,25 +9,26 @@ import Avatar from 'material-ui/Avatar';
 import { toggleSexFilter, toggleAgeFilter, toggleLocationFilter, toggleOccupationFilter } from '../../actions/demographicActions';
 import { toggleMETypeFilter, toggleProductFilter, toggleStageFilter, toggleCauseFilter } from '../../actions/visualizationActions';
 import ClearFilterIcon from '../../resources/clearFilterIcon.svg';
-
 const styles = {
   filterPaper: {
     padding: '0px',
     display: 'inline-block',
     width: '100px',
-    height: '100%',
+    height: '37px',
     margin: '4px',
-    transform: 'translateY(-8px)',
+
   },
   clearFilterChip: {
     'font-size': '9pt',
     height: '14pt',
-    position: 'absolute',
+    position: 'absolute'
+
+
   },
   chipAvatar: {
     height: '13pt',
     width: '13pt',
-    transform: 'translateX(1px)',
+
     'box-shadow': '0px 1px 2px 1px rgba(0,0,0,0.3)',
   },
   chipLabel: {
@@ -54,7 +55,6 @@ const styles = {
     color: '#FFF',
   },
 };
-
 /**
  * This is the container component for the Currently Selected Filters
  */
@@ -91,7 +91,6 @@ class CurrentlySelectedFilters extends Component {
 
   constructor(props) {
     super(props);
-
     this.state = {
       mouseOverKey: '',
       mouseX: 0,
@@ -113,7 +112,6 @@ class CurrentlySelectedFilters extends Component {
         });
       }
     }, true);
-
     document.getElementById('selected-filters-box').addEventListener('mouseleave', (e) => {
       this.setState({
         mouseOverKey: '',
@@ -133,7 +131,6 @@ class CurrentlySelectedFilters extends Component {
     const day = dateString.substring(6, 8);
     return `${month}/${day}/${year}`;
   }
-
   filterTitles = {
     init_fda_dt: 'Date',
     sex: 'Sex',
@@ -145,7 +142,6 @@ class CurrentlySelectedFilters extends Component {
     stage: 'Stage',
     cause: 'Cause',
   }
-
   /**
    * Toggles the filter in Redux State for the bar clicked on in the chart
    */
@@ -181,74 +177,84 @@ class CurrentlySelectedFilters extends Component {
       default:
     }
   }
-
   renderTooltip = () => {
     return (this.state.mouseOverKey !== '')
-      ? (
-        <div id="SelectedFilter-Tooltip" className={this.props.classes.toolTipStyle} style={{ left: `${this.state.mouseX - 105}px`, top: `${this.state.mouseY}px` }} >
-          {(this.state.mouseOverKey !== 'init_fda_dt')
-            ? (
-              <div>
-                <p className={this.props.classes.toolTipParagraph}>
-                  <b>{this.filterTitles[this.state.mouseOverKey]}</b>
-                </p>
-                <p className={this.props.classes.toolTipParagraph} >
-                  {this.props.filters[this.state.mouseOverKey].sort().join(', ')}
-                </p>
-              </div>
-            )
-            : (
-              <div>
-                <Typography type="subheading" className={this.props.classes.toolTipParagraph}>
-                  <b>{this.filterTitles[this.state.mouseOverKey]}</b>
-                </Typography>
-                <Typography type="subheading" className={this.props.classes.toolTipParagraph} >
-                  Start Date: {this.formatDate(this.props.filters[this.state.mouseOverKey].start)}
-                </Typography>
-                <Typography type="subheading" className={this.props.classes.toolTipParagraph} >
-                  End Date: {this.formatDate(this.props.filters[this.state.mouseOverKey].end)}
-                </Typography>
-              </div>
-            )
-          }
-        </div>
-      )
-      : null;
+        ? (
+            <div id="SelectedFilter-Tooltip" className={this.props.classes.toolTipStyle}
+                 style={{left: `${this.state.mouseX - 105}px`, top: `${this.state.mouseY}px`}}>
+              {(this.state.mouseOverKey !== 'init_fda_dt')
+                  ? (
+                      <div>
+                        <p className={this.props.classes.toolTipParagraph}>
+                          <b>{this.filterTitles[this.state.mouseOverKey]}</b>
+                        </p>
+                        <p className={this.props.classes.toolTipParagraph}>
+
+                          {this.props.filters[this.state.mouseOverKey].sort().join(', ')}
+                        </p>
+                      </div>
+                  )
+                  : (
+                      <div>
+                        <Typography type="subheading" className={this.props.classes.toolTipParagraph}>
+                          <b>Start Date / End Date</b>
+                        </Typography>
+                      </div>
+                  )
+              }
+            </div>
+        )
+        : null;
   }
 
   renderFilterBox = () => Object.keys(this.props.filters).map(key =>
-    ((this.props.filters[key].length !== 0)
-      ? (
-        <Paper className={this.props.classes.filterPaper} elevation={4} key={key} name={key} >
-          {(key !== 'init_fda_dt')
-            ? (
-              <Chip
-                avatar={<Avatar src={ClearFilterIcon} alt="Clear Filters" className={this.props.classes.chipAvatar} />}
-                onClick={this.handleFilterClickToggle(key)}
-                className={this.props.classes.clearFilterChip}
-                style={{ transform: `translateY(-5px) translateX(${100 - 13}px)` }}
-                classes={{ label: this.props.classes.chipLabel }}
-              />
-            )
-            : null
-          }
-          <Typography type="subheading" align="center" style={{ lineHeight: '2.3rem' }} >
-            {this.filterTitles[key]}
-          </Typography>
-        </Paper>
-      )
-      : null));
+      ((this.props.filters[key].length !== 0)
+              ? (
+
+                  (key !== 'init_fda_dt') ?
+
+                      (
+                          <Paper className={this.props.classes.filterPaper} style = {{position: 'relative' , bottom: '19px'}} elevation={4} key={key} name={key} >
+                            <Chip
+                                avatar={<Avatar src={ClearFilterIcon} alt="Clear Filters"   className={this.props.classes.chipAvatar}/>}
+                                onClick={this.handleFilterClickToggle(key)}
+                                className={this.props.classes.clearFilterChip}
+                                style={{transform: `translateY(-5px) translateX(${100 - 13}px)`}}
+                                classes={{label: this.props.classes.chipLabel}}
+                            />
+
+                              <Typography align={'center'} style={{position: 'relative', top: '10px', lineHeight: '1.4rem'}}>
+                                {this.filterTitles[key]}
+                              </Typography>
+
+                          </Paper>
+                      )
+                      :
+                      (
+                          <Paper className={this.props.classes.filterPaper} elevation={4} key={key} name={key}>
+                            <div>
+                              <Typography type="subheading" align="center" style={{lineHeight: '1.4rem'}}>
+                                {this.formatDate(this.props.filters[key].start)}
+                              </Typography>
+                              <Typography type="subheading" align="center" style={{lineHeight: '1.4rem'}}>
+                                {this.formatDate(this.props.filters[key].end)}
+                              </Typography>
+                            </div>
+                          </Paper>
+
+                      )
+
+              ) : null));
 
   render() {
     return (
-      <div id="selected-filters-box" style={{ display: 'inline-block' }}>
-        {this.renderFilterBox()}
-        {this.renderTooltip()}
-      </div>
+        <div id="selected-filters-box" style={{ display: 'inline-block' }}>
+          {this.renderFilterBox()}
+          {this.renderTooltip()}
+        </div>
     );
   }
 }
-
 const mapStateToProps = state => ({
   filters: {
     init_fda_dt: state.filters.init_fda_dt,
@@ -262,7 +268,6 @@ const mapStateToProps = state => ({
     cause: state.filters.cause,
   },
 });
-
 /**
  * Conect this component to the Redux global State.
  * Maps Redux state to this comonent's props.
@@ -270,15 +275,15 @@ const mapStateToProps = state => ({
  * Exports this component with the proper JSS styles.
  */
 export default connect(
-  mapStateToProps,
-  {
-    toggleSexFilter,
-    toggleAgeFilter,
-    toggleLocationFilter,
-    toggleOccupationFilter,
-    toggleMETypeFilter,
-    toggleProductFilter,
-    toggleStageFilter,
-    toggleCauseFilter,
-  },
+    mapStateToProps,
+    {
+      toggleSexFilter,
+      toggleAgeFilter,
+      toggleLocationFilter,
+      toggleOccupationFilter,
+      toggleMETypeFilter,
+      toggleProductFilter,
+      toggleStageFilter,
+      toggleCauseFilter,
+    },
 )(withStyles(styles)(CurrentlySelectedFilters));

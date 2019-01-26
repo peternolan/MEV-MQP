@@ -13,6 +13,7 @@ import styles from './QuillEditorStyles';
 import annotationColors from './AnnotationColors';
 import Highlighter from 'react-highlight-words';
 import MaterialTooltip from 'material-ui/Tooltip';
+import Divider from 'material-ui/Divider';
 // import styles from 'react-highlight-words.example.css'
 // import latinize from 'latinize';
 import './NarrativeAnnotator.css';
@@ -47,8 +48,11 @@ class QuillEditor extends Component {
             squareOrchid: PropTypes.string,
             squareSilver: PropTypes.string,
             squareCyan: PropTypes.string,
-            tooltipStyle: PropTypes.string,
+            toolTipStyle: PropTypes.string,
             newCaseModal: PropTypes.string,
+            commentSec: PropTypes.string,
+            commentButton: PropTypes.string,
+            commentContent: PropTypes.string,
         }).isRequired,
         primaryid: PropTypes.number,
         userID: PropTypes.number.isRequired,
@@ -67,7 +71,6 @@ class QuillEditor extends Component {
     };
 
     constructor(props){
-
         super(props);
         this.commentDelete = this.commentDelete.bind(this);
         this.state = {
@@ -77,6 +80,7 @@ class QuillEditor extends Component {
             addingComment: false,
             loading: true,
             editModeOn: false,
+            commentsOn: false,
             primaryId: this.props.primaryid,
             userID: this.props.userID,
             userEmail: this.props.userEmail,
@@ -341,7 +345,7 @@ class QuillEditor extends Component {
                         value = {this.state.report}
                         onChange={this.handleChange}
                         modules={this.modules}
-                        style ={{textAlign: 'justify', height: '210px', boxShadow: 'none'}}
+                        style ={{textAlign: 'justify', height: (this.state.commentsOn) ?  '140px' : '300px', boxShadow: 'none'}}
                         theme="snow"
                         readOnly
                     />
@@ -601,24 +605,18 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
 
 
     };
+    showComments = () => {
 
-    searchTextBox = (event) => {
-        this.setState({valueAttr: event.target.value});
-
-
-        if (event.target.value==='') {
-            this.setState({searching:false})
+        if (this.state.commentsOn) {
+            this.setState({commentsOn: false});
+            document.getElementById('MakeNote').focus()
         }
-        else
-            this.setState({searching:true});
-
-
-        this.setState({textHighlight:{searchText: event.target.value},
-
-        })
-
-
+        else {
+            this.setState({commentsOn: true});
+            document.getElementById('MakeNote').focus()
+        }
     };
+
 
 
     editMode = () => {
@@ -628,23 +626,11 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
             var x = document.getElementById(`react-quill-${this.props.primaryid}`);
             x.style.display = "none";
 
-            var xx = document.getElementById(`radio-form`);
-            xx.style.display = "none";
-
-            var yy = document.getElementById(`comment`);
-            yy.style.display = "none";
-
             var yyy = document.getElementById(`saveButton1`);
             yyy.style.display = "none";
 
-            var zzz = document.getElementById(`saveButton2`);
-            zzz.style.display = "none";
-
-            var xxx = document.getElementById(`MakeNote`);
-            xxx.style.display = "none";
-
-            var xy = document.getElementById(`delete`);
-            xy.style.display = "none";
+            var yx = document.getElementById(`saveButton1b`);
+            yx.style.display = "none";
 
             var y = document.getElementById(`react-quill-${this.props.primaryid}-2`);
             y.style.display = "block";
@@ -659,24 +645,11 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
             var a = document.getElementById(`react-quill-${this.props.primaryid}-2`);
             a.style.display = "none";
 
-            var aa = document.getElementById(`radio-form`);
-            aa.style.display = "inline-block";
-
-            var bb = document.getElementById(`comment`);
-            console.log("comment " + document.getElementById(`comment`));
-            bb.style.display = "block";
-
             var cc = document.getElementById(`saveButton1`);
-            cc.style.display = "block";
+            cc.style.display = "inline-block";
 
-            var bbb = document.getElementById(`saveButton2`);
-            bbb.style.display = "block";
-
-            var aaa = document.getElementById(`MakeNote`);
-            aaa.style.display = "inline-block";
-
-            var ab = document.getElementById(`delete`);
-            ab.style.display = "inline-block";
+            var ca = document.getElementById(`saveButton1b`);
+            ca.style.display = "inline-block";
 
             var b = document.getElementById(`react-quill-${this.props.primaryid}`);
             b.style.display = "block";
@@ -694,7 +667,7 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
 
     customToolbar = () => (
 
-        <div id={`react-quill-${this.state.primaryId}`} style={{height: '60px', width: '1090px', display: 'none'}}>
+        <div id={`react-quill-${this.state.primaryId}`} style={{height: '20px', width: '100%', display: 'none'}}>
 
             <select defaultValue="false" className="ql-header" style={{ width: '175px', height: '36px', margin: '4px' }}>
                 <option value="1" />
@@ -739,9 +712,10 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
                     placement="top"
                     enterDelay={50}
                     classes={{
-                        tooltip: this.props.classes.tooltipStyle,
+                        tooltip: this.props.classes.toolTipStyle,
                         popper: this.props.classes.tooltipStyle,
                     }}
+                    style ={{ fontSize: '20pt',}}
                 >
                     <Button style={{ padding: '0px', margin: '2px', minHeight: '2px', minWidth:'2px', border: '1px solid black',
                         borderRadius: '15px',  background: annotationColors.clear, left: '10px', bottom: '0px'}}>
@@ -806,39 +780,49 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
         return (
             <div className={`${this.props.classes.pdfView} container`}>
 
-                <fieldset>
-                <legend>
-                    Legend
-                </legend>
+                <div className = {`${this.props.classes.quillArea}`} style = {{height: ((this.state.commentsOn) ? '290px' : '500px') }}>
+                    <fieldset>
+                        <div className = {this.props.classes.squareCadetBlue}></div><span>Drug </span>
+                        <div className = {this.props.classes.squareReuse}></div><span>Adverse Reaction </span>
+                        <div className = {this.props.classes.squareOrange}></div><span>Dosage </span>
+                        <div className = {this.props.classes.squareGold}></div><span>Age </span>
+                        <div className = {this.props.classes.squarePink}></div><span>Sex </span>
+                        <div className = {this.props.classes.squareOrchid}></div><span>Weight </span>
+                        <div className = {this.props.classes.squareSilver}></div><span>Indication </span>
+                        <div className = {this.props.classes.squareCyan}></div><span>Interesting </span>
+                    </fieldset>
+                    <Button
+                        id = "saveButton1"
+                        raised
+                        color="primary"
+                        className={(this.state.success) ? this.props.classes.buttonSuccess : ''}
+                        disabled={this.state.saving}
+                        onClick={this.saveWork}
+                        style = {{display: 'none', margin: '6px'}}>
+                        Save
+                    </Button>
+                    <div className={this.props.classes.wrapper} style={{display: 'inline-block'}}>
+                        {(this.state.editModeOn) ?
+                            (<Button style={{color: 'white', background: annotationColors.edit}} onClick = {() => this.editMode()} >
+                                    Stop Editing
+                                </Button>
 
-                    <span style = {{position: 'relative', bottom: '9px' }}>Drug </span><div className = {this.props.classes.squareReuse}></div><span style = {{position: 'relative', bottom: '9px' }}></span>
-                    <span style = {{position: 'relative', bottom: '9px' }}>Adverse Reaction </span><div className = {this.props.classes.squareCadetBlue}></div><span style = {{position: 'relative', bottom: '9px' }}></span>
-                    <span style = {{position: 'relative', bottom: '9px' }}>Dosage </span><div className = {this.props.classes.squareOrange}></div><span style = {{position: 'relative', bottom: '9px' }}></span>
-                    <span style = {{position: 'relative', bottom: '9px' }}>Age </span><div className = {this.props.classes.squareGold}></div><span style = {{position: 'relative', bottom: '9px' }}></span>
-                    <span style = {{position: 'relative', bottom: '9px' }}>Sex </span><div className = {this.props.classes.squarePink}></div><span style = {{position: 'relative', bottom: '9px' }}></span>
-                    <span style = {{position: 'relative', bottom: '9px' }}>Weight </span><div className = {this.props.classes.squareOrchid}></div><span style = {{position: 'relative', bottom: '9px' }}></span>
-                    <span style = {{position: 'relative', bottom: '9px' }}>Indication </span><div className = {this.props.classes.squareSilver}></div><span style = {{position: 'relative', bottom: '9px' }}></span>
-                    <span style = {{position: 'relative', bottom: '9px' }}>Interesting </span><div className = {this.props.classes.squareCyan}></div><span style = {{position: 'relative', bottom: '9px' }}></span>
+                            ) : null
+                        }
+                        {this.state.saving &&
+                        <CircularProgress
+                            size={24}
+                            className={this.props.classes.buttonProgress}
+                        />}
 
-                </fieldset>
+                    </div>
 
-
-                <Button
-                    id = "saveButton1"
-                    raised
-                    color="primary"
-                    className={(this.state.success) ? this.props.classes.buttonSuccess : ''}
-                    disabled={this.state.saving}
-                    onClick={this.saveWork}
-                    style = {{display: 'none', margin: '6px'}}>
-                    Save
-                </Button>
                 {/* ====== Quill editor for Annotating the Report Text ====== */}
 
                 {/* <!--<Paper elevation={4} className={this.props.classes.paperWindow}>--> */}
 
-                    {this.customToolbar()}
-                    {this.customToolbar2()}
+                {this.customToolbar()}
+                {this.customToolbar2()}
 
                     {(!this.state.searching)
                         ? this.display()
@@ -856,53 +840,20 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
                         )
                     }
 
+                    <Button
+                        id="saveButton1b"
+                        raised
+                        color="primary"
+                        className={(this.state.success) ? this.props.classes.buttonSuccess : ''}
+                        disabled={this.state.saving}
+                        onClick={this.saveWork}
+                        style={{display: 'none'}}>
+                        Save
+                    </Button>
+
                 {/* <!--</Paper>--> */}
 
-                {/* ====== Save Button Area ====== */}
-                <div className={this.props.classes.wrapper}>
-
-
-                    <div id = "commentArea" >
-                        {/*<div>
-                            <textarea id = "commentBox" cols = "120" rows = "5" readOnly>  </textarea>
-                        </div> */}
-                        <h1>Comments</h1>
-                        <div id ="commentList">
-
-                        </div>
-                        <div style={{padding: '4px'}}>
-                           <textarea id = "comment" cols = "120" rows = "5" style={{display: 'none'}}>  </textarea>
-                         </div>
-
-                         <div style={{padding: '4px'} }>
-                             <form id = "radio-form" style={{display: 'none'}}>
-
-                                 <input type ="radio" name = "viewable" value = "private" checked ="yes" style={{padding: '4px'}}/>Private
-                                 <input type="radio" name = "viewable" value = "public" style={{padding: '4px'}}/>Public
-
-
-                             </form>
-                             <Button id = "MakeNote" style={{display: 'none', border: '2px solid #1d00ff', left : '30px'}} onClick={() => this.commentMade()}> Make Note </Button>
-
-                             <Button id = "delete" style={{display: 'none', left : '690px', border: '2px solid #ff0000'}} onClick={() => this.commentDelete()}>
-                                 <img src={DeleteIcon} style={{ width: '40px' , height: '45px'}} />
-                             </Button>
-
-                             <Button
-                                 id = "saveButton2"
-                                 raised
-                                 color="primary"
-                                 className={(this.state.success) ? this.props.classes.buttonSuccess : ''}
-                                 disabled={this.state.saving}
-                                 onClick={this.saveWork}
-                                 style = {{display: 'none'}}>
-                                 Save
-                             </Button>
-
-
-
-                         </div>
-                    </div>
+                <div className={this.props.classes.wrapper} style={{display: 'inline-block'}}>
                     {(this.state.editModeOn) ?
                         (<Button style={{color: 'white', background: annotationColors.edit}} onClick = {() => this.editMode()} >
                             Stop Editing
@@ -916,6 +867,72 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
                         className={this.props.classes.buttonProgress}
                     />}
 
+
+                </div>
+
+            </div>
+
+
+                <div id="commentArea" className={this.props.classes.commentSec}>
+                    <Divider/>
+                    {/*data-toggle = 'collapse' target = 'commentContent'*/}
+                    <button className = {this.props.classes.commentButton} onClick={() => this.showComments()}>
+                        {(this.state.commentsOn) ? <h5> Hide Comments </h5> : <h5> View Comments </h5>}
+
+                    </button>
+
+                    <div id  = 'commentContent' style={{display: (this.state.commentsOn) ? 'block' : 'none'}}>
+                        <div id="commentsView">
+                            <h3>Comments</h3>
+                            <div id="commentList">
+
+                            </div>
+                        </div>
+                        <div style={{padding: '4px'}}>
+                            <textarea id="comment" cols="120" rows="4">  </textarea>
+                        </div>
+
+                        <div style={{padding: '4px', display: 'inline-block'}}>
+                            <form id="radio-form" style={{display: 'inline-block'}}>
+                                <input type="radio" name="viewable" value="private" checked="yes" style={{padding: '4px'}}/>Private
+                                <input type="radio" name="viewable" value="public" style={{padding: '4px'}}/>Public
+                            </form>
+
+                            <Button id="MakeNote" style={{border: '2px solid #1d00ff', left: '30px'}}
+                                    onClick={() => this.commentMade()}> Make Note </Button>
+                            <Button
+                                id="saveButton2"
+                                raised
+                                color="primary"
+                                className={(this.state.success) ? this.props.classes.buttonSuccess : ''}
+                                disabled={this.state.saving}
+                                onClick={this.saveWork}
+                                style={{ left: '40px'}}>
+
+                                Save
+                            </Button>
+                            <MaterialTooltip
+                                title="Delete Comment"
+                                placement="top"
+                                enterDelay={50}
+                                classes={{
+                                    tooltip: this.props.classes.toolTipStyle,
+                                    popper: this.props.classes.tooltipStyle,
+                                }}
+                                style={{fontSize: '20pt',}}
+                            >
+                                <button id="delete" style={{
+                                    borderRadius: '20px',
+                                    position: 'relative',
+                                    left: '650px',
+                                    border: '2px solid #ff0000'
+                                }} onClick={() => this.commentDelete()}>
+                                    <img src={DeleteIcon} style={{width: '15px', height: '20px'}}/>
+                                </button>
+                            </MaterialTooltip>
+
+                        </div>
+                    </div>
                 </div>
 
             </div>

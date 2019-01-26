@@ -431,7 +431,7 @@ class ReportList extends Component {
           </Modal>
 
           {/* ====== Floating Action Button for Going back to Main Visualization ====== */}
-          <div style={{ position: 'absolute', right: '0px', bottom: '0px', padding: '20px' }} >
+          <div style={{ position: 'absolute', right: '0px', bottom: '0px', padding: '20px', zIndex: 4 }} >
             <MaterialTooltip
               title="Go Back To Visualization"
               placement="top"

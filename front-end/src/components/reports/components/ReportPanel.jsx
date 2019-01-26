@@ -138,8 +138,6 @@ class ReportPanel extends React.PureComponent {
     };
 
     renderInside = (primaryID) => {
-        console.log("Render Panel");
-        console.log("renderInside " + primaryID);
         return (
             <div key={primaryID}>
                 <AnimateHeight 
@@ -154,12 +152,15 @@ class ReportPanel extends React.PureComponent {
                 <Typography onClick={this.handleHideSummary} className={this.props.classes.hideBtn}>Hide Summary</Typography>
                 <div>
                     {(!this.state.searching)
-                        ? (<QuillEditor
+                        ? (<div>
+                            <QuillEditor
                             primaryid={Number(primaryID)}
                             incrementSummary={this.props.incrementSummary}
                             userEmail={this.props.userEmail}
                             match={this.props.match}
-                        />)
+                            />
+
+                        </div>)
                         : (
                             <Highlighter
                                 activeClassName={styles.Active}

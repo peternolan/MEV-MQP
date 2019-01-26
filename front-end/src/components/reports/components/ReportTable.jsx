@@ -274,6 +274,27 @@ class ReportTable extends React.PureComponent {
       title: 'ID',
       name: 'id',
     },
+
+    {
+      title: 'Age',
+      name: 'age_year',
+    },
+    {
+      title: 'Sex',
+      name: 'sex',
+    },
+    {
+      title: 'Drugs',
+      name: 'drugname',
+    },
+    {
+      title: 'Medication Error',
+      name: 'me_type',
+    },
+    {
+      title: 'Outcome',
+      name: 'outc_cod',
+    },
   ];
 
   /**
@@ -501,6 +522,7 @@ class ReportTable extends React.PureComponent {
               resultsArr[j] = results.results[j];
               resultIds[j] = results.results[j].id;
 
+
               console.log( "resultsArr at j" + resultsArr[j]);
 
               j++;
@@ -631,17 +653,6 @@ class ReportTable extends React.PureComponent {
             popper: this.props.classes.tooltipStyle,
           }}
         >
-
-          <FormControlLabel
-            control={
-              <Switch
-                checked={this.state.evidenceType[row.row.primaryid] === 'primary'}
-                onChange={this.handleToggleChange(row.row.primaryid)}
-                color="primary"
-              />
-            }
-            label={(this.state.evidenceType[row.row.primaryid] === 'primary') ? 'Primary Evidence' : 'Supportive Evidence'}
-          />
         </MaterialTooltip>
       );
   };
@@ -843,10 +854,6 @@ class ReportTable extends React.PureComponent {
                 <TableHeaderRow showSortingControls className="tableHeader"/>
                 <TableColumnReordering defaultOrder={this.columns.map(column => column.name)} />
                 {/*cellComponent={(props) => <TableRowDetail.Cell className={this.props.classes.tableDetailCell} {...props} /> }*/}
-                <TableRowDetail
-
-                  contentComponent={this.renderDetailRowContent}
-                />
               </Grid>
             )
             : null

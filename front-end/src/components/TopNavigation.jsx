@@ -64,7 +64,7 @@ class TopNavigation extends Component {
     });
   }
 
-  render = () => (
+  render = () =>(
     <div className={this.props.classes.topNavigationContainer}>
       <nav className={`${this.props.classes.topNavigationContainer} navbar navbar-default`}>
         <div className="container-fluid">
@@ -189,9 +189,11 @@ class TopNavigation extends Component {
               ARRAT
             </a>
           </div>
+            {console.log("total Count " + this.props.totalCount.toString())}
           {this.props.showFilters ? 
           <div className={this.props.classes.SelectedFilters} style = {{position: 'relative', bottom: '0px'}} >
             <Paper className={this.props.classes.TotalCountBox} elevation={4} >
+
               <Typography type="body1" align="center" style={{ lineHeight: '1.4rem' }} >
                 Report Count
               </Typography>

@@ -65,6 +65,7 @@ ReactDOM.render(
             }}
           />
           <Route path="/visualization" component={(props) => {
+
               return (
                 <div>
                   <TopNavigation showFilters={true}/>
@@ -74,6 +75,7 @@ ReactDOM.render(
             }}
           />
           <Route path="/report" component={(props) => {
+
               return (
                 <div>
                   <TopNavigation showFilters={true}/>

@@ -2,6 +2,7 @@ export default {
   tableWrapper: {
     width: '100%',
     margin: '0',
+    maxHeight: 'calc(100vh - 122px)',
     backgroundColor: '#fff',
     display: 'inline-block'
   },
@@ -10,7 +11,7 @@ export default {
     padding: '0px',
     width: 500,
     overflowY: 'scroll',
-    maxHeight: 'calc(100vh - 165px)',
+    maxHeight: 'calc(100vh - 172px)',
     display: 'inline-block'
   },
   moveToCaseDetailsContainer: {
@@ -40,25 +41,22 @@ export default {
   },
   searchBar: {
     fontSize: '1em',
-    width: 'calc(80% - 5px)',
+    width: '75%',
     margin: 5,
-    marginRight: 0,
     display: 'inline-block',
-    height: 25,
+    height: 24,
     padding: 10,
     float: 'left',
     borderWidth: 1,
-    borderRadius: 0,
+    borderRadius: 6,
     boxShadow: 'none',
     borderColor: 'rgba(0, 0, 0, 0.25)',
   },
   searchDD: {
     height: 25,
-    width: 'calc(20% - 5px)',
+    width: '20%',
     float: 'left',
+    marginLeft: 'calc(5% - 15px)',
     margin: 5,
-    marginLeft: 0,
-    borderRadius: 0,
-    borderWidth: 1,
   }
 };

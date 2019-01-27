@@ -32,7 +32,7 @@ export default {
         paddingTop: 0,
         paddingLeft: 25,
         width: '100%',
-        height: '8vh',
+        height: 'auto',
         overflow: 'scroll',
     },
     legend: {

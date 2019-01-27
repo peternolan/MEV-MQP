@@ -32,8 +32,8 @@ export default {
         paddingTop: 0,
         paddingLeft: 25,
         width: '100%',
-        maxHeight: 'auto',
-        transition: ' height 200ms ease-in-out',
+        height: '8vh',
+        overflow: 'scroll',
     },
     legend: {
         width: '20%',

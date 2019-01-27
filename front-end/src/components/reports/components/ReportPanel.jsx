@@ -150,7 +150,6 @@ class ReportPanel extends React.PureComponent {
                     </div>
                 </Collapse>
                 <Divider />
-                <div onClick={this.handleHideSummary} style ={{fontFamily: 'Helvetica, Arial, sans-serif'}} className={this.props.classes.hideBtn}><Typography type='button'>{this.state.summaryToggleText} Summary</Typography></div>
                 <div>
                     {(!this.state.searching)
                         ? (<div>
@@ -180,7 +179,7 @@ class ReportPanel extends React.PureComponent {
     render = () => {
         return (
             <Paper id="summary-container" className={this.props.classes.summaryContainer} padding = '0px' elevation={4}>
-                <Paper id='summarytitle' className={this.props.classes.summaryTitle}><Typography type="title">Report {this.props.primaryid}</Typography></Paper>
+                <Paper id='summarytitle' className={this.props.classes.summaryTitle}><Typography type="title">Report {this.props.primaryid}<div onClick={this.handleHideSummary} className={this.props.classes.hideBtn}><Typography type='button'>{this.state.summaryToggleText} Summary</Typography></div></Typography></Paper>
                 {this.renderInside(this.props.primaryid)}
             </Paper>
         );

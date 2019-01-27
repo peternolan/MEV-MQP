@@ -688,9 +688,9 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
 
     customToolbar = () => (
 
-        <div id={`react-quill-${this.state.primaryId}`} style={{height: '60px', width: '1090px', display: 'none'}}>
+        <div id={`react-quill-${this.state.primaryId}`} style={{display: 'none'}}>
 
-            <select defaultValue="false" className="ql-header" style={{ width: '175px', height: '36px', margin: '4px' }}>
+            <select defaultValue="false" className="ql-header" style={{ width: '100px', height: '36px', margin: '4px' }}>
                 <option value="1" />
                 <option value="2" />
                 <option value="false" />
@@ -801,7 +801,7 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
         return (
             <div className={`${this.props.classes.pdfView} container`} style = {{position: 'relative', left: '4px'}}>
 
-                <div className = {`${this.props.classes.quillArea}`} style = {{height: ((this.state.commentsOn) ? '290px' : '500px') }}>
+                <div className = {`${this.props.classes.quillArea}`} style = {{height: ((this.state.commentsOn) ? '220px' : '500px') }}>
                     <fieldset>
                         <div className = {this.props.classes.squareCadetBlue}></div><span>Drug </span>
                         <div className = {this.props.classes.squareReuse}></div><span>Adverse Reaction </span>

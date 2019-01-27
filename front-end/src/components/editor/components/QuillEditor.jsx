@@ -14,6 +14,7 @@ import annotationColors from './AnnotationColors';
 import Highlighter from 'react-highlight-words';
 import MaterialTooltip from 'material-ui/Tooltip';
 import Divider from 'material-ui/Divider';
+import Typography from 'material-ui/Typography';
 // import styles from 'react-highlight-words.example.css'
 // import latinize from 'latinize';
 import './NarrativeAnnotator.css';
@@ -802,15 +803,25 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
             <div className={`${this.props.classes.pdfView} container`} style = {{position: 'relative', left: '4px'}}>
 
                 <div className = {`${this.props.classes.quillArea}`} style = {{display:'inline-block' , height: ((this.state.commentsOn) ? '220px' : '500px') }}>
+                    <ul className={this.props.classes.legend}>
+                        <li><Typography type='button'>Drug</Typography></li>
+                        <li><Typography type='button'>Adverse Reaction</Typography></li>
+                        <li><Typography type='button'>Dosage</Typography></li>
+                        <li><Typography type='button'>Age</Typography></li>
+                        <li><Typography type='button'>Sex</Typography></li>
+                        <li><Typography type='button'>Weight</Typography></li>
+                        <li><Typography type='button'>Indication</Typography></li>
+                        <li><Typography type='button'>Interesting</Typography></li>
+                    </ul>
                     <fieldset>
-                        <div className = {this.props.classes.squareCadetBlue} style ={{fontFamily: 'Helvetica, Arial, sans-serif'}}></div><span>Drug </span>
-                        <div className = {this.props.classes.squareReuse} style ={{fontFamily: 'Helvetica, Arial, sans-serif'}}></div><span>Adverse Reaction </span>
-                        <div className = {this.props.classes.squareOrange} style ={{fontFamily: 'Helvetica, Arial, sans-serif'}}></div><span>Dosage </span>
-                        <div className = {this.props.classes.squareGold} style ={{fontFamily: 'Helvetica, Arial, sans-serif'}}></div><span>Age </span>
-                        <div className = {this.props.classes.squarePink} style ={{fontFamily: 'Helvetica, Arial, sans-serif'}}></div><span>Sex </span>
-                        <div className = {this.props.classes.squareOrchid} style ={{fontFamily: 'Helvetica, Arial, sans-serif'}}></div><span>Weight </span>
-                        <div className = {this.props.classes.squareSilver} style ={{fontFamily: 'Helvetica, Arial, sans-serif'}}></div><span>Indication </span>
-                        <div className = {this.props.classes.squareCyan} style ={{fontFamily: 'Helvetica, Arial, sans-serif'}}></div><span>Interesting </span>
+                        <div className = {this.props.classes.squareCadetBlue}></div>
+                        <div className = {this.props.classes.squareReuse}></div>
+                        <div className = {this.props.classes.squareOrange}></div>
+                        <div className = {this.props.classes.squareGold}></div>
+                        <div className = {this.props.classes.squarePink}></div>
+                        <div className = {this.props.classes.squareOrchid}></div>
+                        <div className = {this.props.classes.squareSilver}></div>
+                        <div className = {this.props.classes.squareCyan}></div>
                     </fieldset>
 
 

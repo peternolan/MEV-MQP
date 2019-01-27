@@ -29,7 +29,7 @@ export default {
     float: 'right',
   },
   ReportList: {
-    maxheight: '82vh',
+    maxheight: 'calc(100% - 122px)',
     width: '100vw',
     display: 'inline-block',
     boxShadow: 'none'

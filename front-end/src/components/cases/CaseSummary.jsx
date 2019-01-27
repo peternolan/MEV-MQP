@@ -503,8 +503,8 @@ class CaseSummary extends Component {
               console.log("HERE ARE KEYWORDS", this.state.highlightedWordsData);
             }
     return (
-      <div style={{ width: '100%' }} >
-        <div style={{padding: 10}}>
+      <div style={{ width:'100%'}} >
+        <div style={{paddingLeft: 10}}>
           <Typography type='body1'>{this.state.caseDescription || 'No Description' }</Typography>
           <Typography type='button'>Total Count of Reports: {this.state.reportsInCase.length} </Typography>
           <Typography type='button'>Case Breakdown:

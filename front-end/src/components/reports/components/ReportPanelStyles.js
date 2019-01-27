@@ -1,7 +1,7 @@
 export default {
     summaryContainer: {
         overflow: 'scroll',
-        height: '660px',
+        height: 'calc(100vh - 122px)',
         borderRadius: 0,
         borderLeftWidth: '1px',
         borderTopWidth: 0,
@@ -9,7 +9,8 @@ export default {
         borderRightWidth: 0,
         borderColor: 'rgba(0, 0, 0, 0.08)',
         borderStyle: 'solid',
-        fontFamily: 'Roboto'
+        fontFamily: 'Roboto',
+        width: '100%',
     },
     expansionPanelSummary: {
         justifyContent: 'center',
@@ -18,10 +19,12 @@ export default {
         padding: '5px',
         fontSize: '12px',
         position: 'relative',
-        left: '5px'
+        borderRadius: 0,
     },
     hideBtn: {
-        marginLeft: '85%',
+        float: 'right',
+        padding: 0,
+        marginRight: 10,
         color: '#1D1F83',
     },
     summarySummary: {
@@ -32,11 +35,12 @@ export default {
         maxHeight: 'auto',
         transition: ' height 200ms ease-in-out',
     },
-    hiddenSummary: {
-        overflow: 'hidden',
-        height: 0,
-        transition: 'all 500ms ease-in-out',
-    },
+    legend: {
+        width: '20%',
+        height: 'auto',
+        backgroundColor: '#F5F5F5',
+        
+    }
 /*
     export default {
         drug: 'chartreuse',

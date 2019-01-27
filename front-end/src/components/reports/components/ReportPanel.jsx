@@ -9,7 +9,7 @@ import styles from "./ReportPanelStyles";
 import Highlighter from "react-highlight-words";
 import Typography from "material-ui/Typography/Typography";
 import QuillEditor from "../../editor/components/QuillEditor";
-import AnimateHeight from 'react-animate-height';
+import {Collapse} from 'react-collapse';
 //import CaseIcon from '../../../resources/CaseIcon';
 
 class ReportPanel extends React.PureComponent {
@@ -55,6 +55,7 @@ class ReportPanel extends React.PureComponent {
             editModeOn: false,
             primaryId: this.props.primaryid,
             userID: this.props.userID,
+            summaryToggleText: 'Hide',
             current: {
                 reportText: '',
                 tags: [],
@@ -132,24 +133,24 @@ class ReportPanel extends React.PureComponent {
     };
 
     handleHideSummary = () => {
-        this.setState({ 
-            summaryShown: !this.state.summaryShown,
-        });
+        var temp = ''
+        if(this.state.summaryToggleText === 'Hide'){
+                return this.setState({summaryShown: !this.state.summaryShown, summaryToggleText: 'Show'})
+        } else {
+            this.setState({summaryShown: !this.state.summaryShown,  summaryToggleText: 'Hide'})
+        }
     };
 
     renderInside = (primaryID) => {
         return (
             <div key={primaryID}>
-                <AnimateHeight 
-                    duration={500}
-                    height={'auto'}
-                >
-                    <div className={(this.state.summaryShown) ? this.props.classes.summarySummary : this.props.classes.hiddenSummary}>
-                        <p style ={{fontFamily: 'Helvetica, Arial, sans-serif'}}>Lorem ipsum dolor sit amet, eam soleat aliquando te, rebum possim mandamus at vix. Debet errem impedit cu vis, vix cu case principes scriptorem. In probo timeam sea. Est similique appellantur cu, ius ut pertinax ocurreret, liber docendi deterruisset ei quo. Ius ea ocurreret reformidans.</p>
+                <Collapse isOpened={this.state.summaryShown}>
+                    <div className={this.props.classes.summarySummary}>
+                        <p style ={{fontFamily: 'Helvetica, Arial, sans-serif', margin: 0}}>Cupcake ipsum dolor sit amet gingerbread marzipan cookie topping. Chocolate bar toffee carrot cake ice cream lollipop carrot cake tootsie roll. Sesame snaps marzipan carrot cake gummies cake croissant topping tart. Lollipop bear claw brownie halvah liquorice tiramisu. Oat cake muffin jelly caramels biscuit sugar plum cookie tart oat cake. Candy canes powder cheesecake sweet roll fruitcake jujubes lollipop bear claw.</p>
                     </div>
-                </AnimateHeight>
+                </Collapse>
                 <Divider />
-                <div onClick={this.handleHideSummary} style ={{fontFamily: 'Helvetica, Arial, sans-serif'}} className={this.props.classes.hideBtn}>Hide Summary</div>
+                <div onClick={this.handleHideSummary} style ={{fontFamily: 'Helvetica, Arial, sans-serif'}} className={this.props.classes.hideBtn}><Typography type='button'>{this.state.summaryToggleText} Summary</Typography></div>
                 <div>
                     {(!this.state.searching)
                         ? (<div>
@@ -182,7 +183,6 @@ class ReportPanel extends React.PureComponent {
                 <Paper id='summarytitle' className={this.props.classes.summaryTitle}><Typography type="title">Report {this.props.primaryid}</Typography></Paper>
                 {this.renderInside(this.props.primaryid)}
             </Paper>
-
         );
     }
 

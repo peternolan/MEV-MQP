@@ -107,6 +107,7 @@ class ReportTable extends React.PureComponent {
       pageSize: 50,
       searchTarget: 'All Reports',
       currentPage: 0,
+      summaryToggleText: 'Hide',
       selected: -1,
         returnedResults: [1, 2, 3],
         returnedIds: [],
@@ -275,7 +276,6 @@ class ReportTable extends React.PureComponent {
       title: 'ID',
       name: 'id',
     },
-
     {
       title: 'Age',
       name: 'age_year',

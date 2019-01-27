@@ -1,13 +1,14 @@
 import green from 'material-ui/colors/green';
 import grey from 'material-ui/colors/grey';
+
 export default {
-    pdfView: {
-        width: '100%',
-        height: '550px',
-        margin: 'auto',
-        padding: '10px',
-        overflow : 'auto'
-    },
+  pdfView: {
+    width: '100%',
+    height: '550px',
+    margin: 'auto',
+    padding: '10px',
+      overflow : 'auto'
+  },
     commentSec: {
         position: 'absolute',
         width: '98.5%',
@@ -17,7 +18,9 @@ export default {
         background: 'white',
         zIndex: '3',
         overflow : 'auto'
+
     },
+
     quillArea: {
         width: '100%',
         margin: 'auto',
@@ -25,7 +28,9 @@ export default {
         overflow: 'auto',
         zIndex: '-1'
     },
+
     commentButton: {
+
         background: 'white',
         color: '#1317f2',
         cursor: 'pointer',
@@ -33,58 +38,57 @@ export default {
         width: '98.5%',
         border: 'white',
         textAlign: 'left'
+
+
     },
+
     commentContent: {
       padding: '0 0px',
-      display: 'none',
-      overflow: 'auto',
+        display: 'none',
+        overflow: 'auto',
+
+
     },
-    dialog: {
-        width: '100%',
-        padding: '0px 20px 0px 20px',
+
+
+  dialog: {
+    width: '100%',
+    padding: '0px 20px 0px 20px',
+  },
+  editorWindow: {
+    height: '60vh',
+  },
+  paperWindow: {
+    height: 'calc(77% + 44px)',
+  },
+  legend: {
+    width: '20vw',
+    height: '66vh',
+    padding: '1px',
+  },
+  root: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  wrapper: {
+    margin: 10,
+    position: 'relative',
+  },
+  buttonSuccess: {
+    backgroundColor: grey[400],
+    '&:hover': {
+      backgroundColor: grey[500],
     },
-    editorWindow: {
-        height: '60vh',
-    },
-    paperWindow: {
-        height: 'calc(77% + 44px)',
-    },
-    legend: {
-        bottom: 0,
-        width: 100,
-        height: 'auto',
-        listStyleType: 'none',
-        float: 'right',
-        margin: 0,
-        padding: 0,
-    },
-    root: {
-        display: 'flex',
-        alignItems: 'center',
-    },
-    wrapper: {
-        margin: 10,
-        position: 'relative',
-    },
-    buttonSuccess: {
-        backgroundColor: grey[400],
-        '&:hover': {
-          backgroundColor: grey[500],
-      },
-    },
-    buttonProgress: {
-        color: green[500],
-        position: 'absolute',
-        top: '50%',
-        marginTop: -12,
-        marginLeft: 5,
-    },
-    legendSquare: {
-        width: 10,
-        height: 10,
-        display: 'inline-block',
-        position: 'relative',
-    },
+  },
+
+  buttonProgress: {
+    color: green[500],
+    position: 'absolute',
+    top: '50%',
+    marginTop: -12,
+    marginLeft: 5,
+  },
+
     squareCadetBlue: {
         display: 'inline-block',
         width: '20px',
@@ -93,8 +97,10 @@ export default {
         top: '4px',
         position: 'relative',
         backgroundColor: 'chartreuse',
+
     },
     squareReuse: {
+
         display: 'inline-block',
         width: '20px',
         height: '20px',
@@ -102,6 +108,8 @@ export default {
         top: '4px',
         position: 'relative',
         backgroundColor: 'cadetblue',
+
+
     },
     squareOrange: {
         display: 'inline-block',
@@ -112,6 +120,7 @@ export default {
         position: 'relative',
         backgroundColor: 'darkorange',
         textAlign: 'right',
+
     },
     squareGold: {
         display: 'inline-block',
@@ -122,6 +131,7 @@ export default {
         position: 'relative',
         backgroundColor: 'gold',
         textAlign: 'right',
+
     },
     squarePink: {
         display: 'inline-block',
@@ -132,6 +142,7 @@ export default {
         position: 'relative',
         backgroundColor: 'lightpink',
         textAlign: 'right',
+
     },
     squareOrchid: {
         display: 'inline-block',
@@ -142,6 +153,7 @@ export default {
         position: 'relative',
         backgroundColor: 'orchid',
         textAlign: 'right',
+
     },
     squareSilver: {
         display: 'inline-block',
@@ -152,6 +164,7 @@ export default {
         position: 'relative',
         backgroundColor: 'silver',
         textAlign: 'right',
+
     },
     squareCyan: {
         display: 'inline-block',
@@ -162,7 +175,9 @@ export default {
         position: 'relative',
         backgroundColor: 'cyan',
         textAlign: 'right',
+
     },
+
     toolTipStyle: {
         position: 'relative',
         display: 'inline-block',
@@ -170,41 +185,42 @@ export default {
         fontSize: '12px',
     },
 
-    /*
-        toolTip: {
-          position: 'relative',
-          display: 'inline-block',
-            borderBottom: '1px dotted black',
-        },
+/*
+    toolTip: {
+      position: 'relative',
+      display: 'inline-block',
+        borderBottom: '1px dotted black',
+    },
 
-        toolTipText: {
+    toolTipText: {
 
-          visibility: 'hidden',
-            width: '120px',
-            backgroundColor: '#555',
-            color: '#fff',
-            textAlign: 'center',
-            borderRadius: '6px',
-            padding: '5px 0',
-            position: 'absolute',
-            zIndex: '1',
-            bottom: '125%',
-            left: '50%',
-            marginLeft: '-60px',
-            opacity: '0',
-            transition: 'opacity 0.3s'
-        },
+      visibility: 'hidden',
+        width: '120px',
+        backgroundColor: '#555',
+        color: '#fff',
+        textAlign: 'center',
+        borderRadius: '6px',
+        padding: '5px 0',
+        position: 'absolute',
+        zIndex: '1',
+        bottom: '125%',
+        left: '50%',
+        marginLeft: '-60px',
+        opacity: '0',
+        transition: 'opacity 0.3s'
+    },
 
-        toolTipAfter: {
-          content: '',
-            position: 'absolute',
-            top: '100%',
-            left: '50%',
-            marginLeft: '-5px',
-            borderWidth: '5px',
-            borderStyle: 'solid',
-            borderColor: '#555 transparent transparent transparent',
+    toolTipAfter: {
+      content: '',
+        position: 'absolute',
+        top: '100%',
+        left: '50%',
+        marginLeft: '-5px',
+        borderWidth: '5px',
+        borderStyle: 'solid',
+        borderColor: '#555 transparent transparent transparent',
 
-        }
-        */
+    }
+*/
+
 };

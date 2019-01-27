@@ -834,7 +834,7 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
                             className={(this.state.success) ? this.props.classes.buttonSuccess : ''}
                             disabled={this.state.saving}
                             onClick={this.saveWork}
-                            style = {{display: 'none', margin: 0, padding: 0,}}>
+                            style = {{display: 'none', marginLeft: 2, padding: 0,}}>
                             Save
                         </Button>
                     </div>
@@ -898,7 +898,7 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
                 <div id="commentArea" className={this.props.classes.commentSec}>
                     <Divider/>
                     {/*data-toggle = 'collapse' target = 'commentContent'*/}
-                    <button className = {this.props.classes.commentButton} onClick={() => this.showComments()}>
+                    <button className = {this.props.classes.commentButton} style = {{padding: '0px' }}onClick={() => this.showComments()}>
                         {(this.state.commentsOn) ? <h5> Hide Comments </h5> : <h5> View Comments </h5>}
 
                     </button>

@@ -146,7 +146,7 @@ class ReportPanel extends React.PureComponent {
             <div key={primaryID}>
                 <Collapse isOpened={this.state.summaryShown}>
                     <div className={this.props.classes.summarySummary}>
-                        <p style ={{fontFamily: 'Helvetica, Arial, sans-serif', margin: 0}}>Cupcake ipsum dolor sit amet gingerbread marzipan cookie topping. Chocolate bar toffee carrot cake ice cream lollipop carrot cake tootsie roll. Sesame snaps marzipan carrot cake gummies cake croissant topping tart. Lollipop bear claw brownie halvah liquorice tiramisu. Oat cake muffin jelly caramels biscuit sugar plum cookie tart oat cake. Candy canes powder cheesecake sweet roll fruitcake jujubes lollipop bear claw.</p>
+                        <Typography>Cupcake ipsum dolor sit amet gingerbread marzipan cookie topping. Chocolate bar toffee carrot cake ice cream lollipop carrot cake tootsie roll. Sesame snaps marzipan carrot cake gummies cake croissant topping tart. Lollipop bear claw brownie halvah liquorice tiramisu. Oat cake muffin jelly caramels biscuit sugar plum cookie tart oat cake. Candy canes powder cheesecake sweet roll fruitcake jujubes lollipop bear claw.</Typography>
                     </div>
                 </Collapse>
                 <Divider />

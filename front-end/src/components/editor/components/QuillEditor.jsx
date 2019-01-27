@@ -804,37 +804,16 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
 
                 <div className = {`${this.props.classes.quillArea}`} style = {{display:'inline-block' , height: ((this.state.commentsOn) ? '220px' : '500px') }}>
                     <ul className={this.props.classes.legend}>
-                        <li><Typography type='button'>Drug</Typography></li>
-                        <li><Typography type='button'>Adverse Reaction</Typography></li>
-                        <li><Typography type='button'>Dosage</Typography></li>
-                        <li><Typography type='button'>Age</Typography></li>
-                        <li><Typography type='button'>Sex</Typography></li>
-                        <li><Typography type='button'>Weight</Typography></li>
-                        <li><Typography type='button'>Indication</Typography></li>
-                        <li><Typography type='button'>Interesting</Typography></li>
+                        <li><div className={this.props.classes.legendPair}><div className={this.props.classes.legendSquare} style={{backgroundColor: 'chartreuse'}} /><Typography>Drug</Typography></div></li>
+                        <li><div className={this.props.classes.legendPair}><div className={this.props.classes.legendSquare} style={{backgroundColor: 'cadetblue'}} /><Typography>Reaction</Typography></div></li>
+                        <li><div className={this.props.classes.legendPair}><div className={this.props.classes.legendSquare} style={{backgroundColor: 'darkorange'}} /><Typography>Dosage</Typography></div></li>
+                        <li><div className={this.props.classes.legendPair}><div className={this.props.classes.legendSquare} style={{backgroundColor: 'gold'}} /><Typography>Age</Typography></div></li>
+                        <li><div className={this.props.classes.legendPair}><div className={this.props.classes.legendSquare} style={{backgroundColor: 'lightpink'}} /><Typography>Sex</Typography></div></li>
+                        <li><div className={this.props.classes.legendPair}><div className={this.props.classes.legendSquare} style={{backgroundColor: 'orchid'}} /><Typography>Weight</Typography></div></li>
+                        <li><div className={this.props.classes.legendPair}><div className={this.props.classes.legendSquare} style={{backgroundColor: 'silver'}} /><Typography>Indication</Typography></div></li>
+                        <li><div className={this.props.classes.legendPair}><div className={this.props.classes.legendSquare} style={{backgroundColor: 'cyan'}} /><Typography>Interesting</Typography></div></li>
+                        <li><div className={this.props.classes.editButton}></div></li>
                     </ul>
-                    <fieldset>
-                        <div className = {this.props.classes.squareCadetBlue}></div>
-                        <div className = {this.props.classes.squareReuse}></div>
-                        <div className = {this.props.classes.squareOrange}></div>
-                        <div className = {this.props.classes.squareGold}></div>
-                        <div className = {this.props.classes.squarePink}></div>
-                        <div className = {this.props.classes.squareOrchid}></div>
-                        <div className = {this.props.classes.squareSilver}></div>
-                        <div className = {this.props.classes.squareCyan}></div>
-                    </fieldset>
-
-
-                    <Button
-                        id = "saveButton1"
-                        raised
-                        color="primary"
-                        className={(this.state.success) ? this.props.classes.buttonSuccess : ''}
-                        disabled={this.state.saving}
-                        onClick={this.saveWork}
-                        style = {{display: 'none', margin: '6px'}}>
-                        Save
-                    </Button>
                     <div className={this.props.classes.wrapper} style={{display: 'inline-block'}}>
                         {(this.state.editModeOn) ?
                             (<Button style={{color: 'white', background: annotationColors.edit}} onClick = {() => this.editMode()} >
@@ -848,7 +827,16 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
                             size={24}
                             className={this.props.classes.buttonProgress}
                         />}
-
+                        <Button
+                            id = "saveButton1"
+                            raised
+                            color="primary"
+                            className={(this.state.success) ? this.props.classes.buttonSuccess : ''}
+                            disabled={this.state.saving}
+                            onClick={this.saveWork}
+                            style = {{display: 'none', margin: 0, padding: 0,}}>
+                            Save
+                        </Button>
                     </div>
 
                 {/* ====== Quill editor for Annotating the Report Text ====== */}

@@ -887,7 +887,9 @@ class ReportTable extends React.PureComponent {
                 <TableHeaderRow showSortingControls className="tableHeader"/>
                 <TableColumnReordering defaultOrder={this.columns.map(column => column.name)} />
                 {/*cellComponent={(props) => <TableRowDetail.Cell className={this.props.classes.tableDetailCell} {...props} /> }*/}
-
+                <TableRowDetail
+                  contentComponent={this.renderDetailRowContent}
+                />
               </Grid>
             )
             : null

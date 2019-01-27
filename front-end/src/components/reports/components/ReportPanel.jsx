@@ -145,11 +145,11 @@ class ReportPanel extends React.PureComponent {
                     height={'auto'}
                 >
                     <div className={(this.state.summaryShown) ? this.props.classes.summarySummary : this.props.classes.hiddenSummary}>
-                        <Typography>Lorem ipsum dolor sit amet, eam soleat aliquando te, rebum possim mandamus at vix. Debet errem impedit cu vis, vix cu case principes scriptorem. In probo timeam sea. Est similique appellantur cu, ius ut pertinax ocurreret, liber docendi deterruisset ei quo. Ius ea ocurreret reformidans.</Typography>
+                        <p style ={{fontFamily: 'Helvetica, Arial, sans-serif'}}>Lorem ipsum dolor sit amet, eam soleat aliquando te, rebum possim mandamus at vix. Debet errem impedit cu vis, vix cu case principes scriptorem. In probo timeam sea. Est similique appellantur cu, ius ut pertinax ocurreret, liber docendi deterruisset ei quo. Ius ea ocurreret reformidans.</p>
                     </div>
                 </AnimateHeight>
                 <Divider />
-                <Typography onClick={this.handleHideSummary} className={this.props.classes.hideBtn}>Hide Summary</Typography>
+                <div onClick={this.handleHideSummary} style ={{fontFamily: 'Helvetica, Arial, sans-serif'}} className={this.props.classes.hideBtn}>Hide Summary</div>
                 <div>
                     {(!this.state.searching)
                         ? (<div>

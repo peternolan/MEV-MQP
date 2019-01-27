@@ -93,7 +93,9 @@ export default {
         display: 'inline-block',
         width: '20px',
         height: '20px',
-        margin: '3px',
+        marginRight: '3px',
+        top: '4px',
+        position: 'relative',
         backgroundColor: 'chartreuse',
 
     },
@@ -102,7 +104,9 @@ export default {
         display: 'inline-block',
         width: '20px',
         height: '20px',
-        margin: '3px',
+        marginRight: '3px',
+        top: '4px',
+        position: 'relative',
         backgroundColor: 'cadetblue',
 
 
@@ -111,7 +115,9 @@ export default {
         display: 'inline-block',
         width: '20px',
         height: '20px',
-        margin: '3px',
+        marginRight: '3px',
+        top: '4px',
+        position: 'relative',
         backgroundColor: 'darkorange',
         textAlign: 'right',
 
@@ -120,7 +126,9 @@ export default {
         display: 'inline-block',
         width: '20px',
         height: '20px',
-        margin: '3px',
+        marginRight: '3px',
+        top: '4px',
+        position: 'relative',
         backgroundColor: 'gold',
         textAlign: 'right',
 
@@ -129,7 +137,9 @@ export default {
         display: 'inline-block',
         width: '20px',
         height: '20px',
-        margin: '3px',
+        marginRight: '3px',
+        top: '4px',
+        position: 'relative',
         backgroundColor: 'lightpink',
         textAlign: 'right',
 
@@ -138,7 +148,9 @@ export default {
         display: 'inline-block',
         width: '20px',
         height: '20px',
-        margin: '3px',
+        marginRight: '3px',
+        top: '4px',
+        position: 'relative',
         backgroundColor: 'orchid',
         textAlign: 'right',
 
@@ -147,7 +159,9 @@ export default {
         display: 'inline-block',
         width: '20px',
         height: '20px',
-        margin: '3px',
+        marginRight: '3px',
+        top: '4px',
+        position: 'relative',
         backgroundColor: 'silver',
         textAlign: 'right',
 
@@ -156,7 +170,9 @@ export default {
         display: 'inline-block',
         width: '20px',
         height: '20px',
-        margin: '3px',
+        marginRight: '3px',
+        top: '4px',
+        position: 'relative',
         backgroundColor: 'cyan',
         textAlign: 'right',
 

@@ -801,16 +801,16 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
         return (
             <div className={`${this.props.classes.pdfView} container`} style = {{position: 'relative', left: '4px'}}>
 
-                <div className = {`${this.props.classes.quillArea}`} style = {{height: ((this.state.commentsOn) ? '220px' : '500px') }}>
+                <div className = {`${this.props.classes.quillArea}`} style = {{display:'inline-block' , height: ((this.state.commentsOn) ? '220px' : '500px') }}>
                     <fieldset>
-                        <div className = {this.props.classes.squareCadetBlue}></div><span>Drug </span>
-                        <div className = {this.props.classes.squareReuse}></div><span>Adverse Reaction </span>
-                        <div className = {this.props.classes.squareOrange}></div><span>Dosage </span>
-                        <div className = {this.props.classes.squareGold}></div><span>Age </span>
-                        <div className = {this.props.classes.squarePink}></div><span>Sex </span>
-                        <div className = {this.props.classes.squareOrchid}></div><span>Weight </span>
-                        <div className = {this.props.classes.squareSilver}></div><span>Indication </span>
-                        <div className = {this.props.classes.squareCyan}></div><span>Interesting </span>
+                        <div className = {this.props.classes.squareCadetBlue} style ={{fontFamily: 'Helvetica, Arial, sans-serif'}}></div><span>Drug </span>
+                        <div className = {this.props.classes.squareReuse} style ={{fontFamily: 'Helvetica, Arial, sans-serif'}}></div><span>Adverse Reaction </span>
+                        <div className = {this.props.classes.squareOrange} style ={{fontFamily: 'Helvetica, Arial, sans-serif'}}></div><span>Dosage </span>
+                        <div className = {this.props.classes.squareGold} style ={{fontFamily: 'Helvetica, Arial, sans-serif'}}></div><span>Age </span>
+                        <div className = {this.props.classes.squarePink} style ={{fontFamily: 'Helvetica, Arial, sans-serif'}}></div><span>Sex </span>
+                        <div className = {this.props.classes.squareOrchid} style ={{fontFamily: 'Helvetica, Arial, sans-serif'}}></div><span>Weight </span>
+                        <div className = {this.props.classes.squareSilver} style ={{fontFamily: 'Helvetica, Arial, sans-serif'}}></div><span>Indication </span>
+                        <div className = {this.props.classes.squareCyan} style ={{fontFamily: 'Helvetica, Arial, sans-serif'}}></div><span>Interesting </span>
                     </fieldset>
 
 

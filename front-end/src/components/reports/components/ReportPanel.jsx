@@ -4,15 +4,12 @@ import { connect } from 'react-redux';
 import { withStyles } from 'material-ui/styles';
 import Paper from 'material-ui/Paper';
 import Divider from 'material-ui/Divider';
-import { getReportNarrativeFromID, htmlEncode, htmlUnescape, getComment } from '../../../actions/reportActions';
+import { getReportNarrativeFromID, htmlEncode, htmlUnescape } from '../../../actions/reportActions';
 import styles from "./ReportPanelStyles";
 import Highlighter from "react-highlight-words";
 import Typography from "material-ui/Typography/Typography";
 import QuillEditor from "../../editor/components/QuillEditor";
 import {Collapse} from 'react-collapse';
-import DeleteIcon from "../../../resources/Delete.svg";
-import MaterialTooltip from 'material-ui/Tooltip';
-import Button from 'material-ui/Button';
 //import CaseIcon from '../../../resources/CaseIcon';
 
 class ReportPanel extends React.PureComponent {
@@ -58,7 +55,6 @@ class ReportPanel extends React.PureComponent {
             editModeOn: false,
             primaryId: this.props.primaryid,
             userID: this.props.userID,
-            summaryToggleText: 'Hide',
             current: {
                 reportText: '',
                 tags: [],
@@ -136,12 +132,7 @@ class ReportPanel extends React.PureComponent {
     };
 
     handleHideSummary = () => {
-        var temp = ''
-        if(this.state.summaryToggleText === 'Hide'){
-                return this.setState({summaryShown: !this.state.summaryShown, summaryToggleText: 'Show'})
-        } else {
-            this.setState({summaryShown: !this.state.summaryShown,  summaryToggleText: 'Hide'})
-        }
+        this.setState({summaryShown: !this.state.summaryShown})
     };
 
     renderInside = (primaryID) => {
@@ -162,8 +153,8 @@ class ReportPanel extends React.PureComponent {
                             userEmail={this.props.userEmail}
                             match={this.props.match}
                             />
-                        </div>
-                        )
+
+                        </div>)
                         : (
                             <Highlighter
                                 activeClassName={styles.Active}
@@ -182,7 +173,7 @@ class ReportPanel extends React.PureComponent {
     render = () => {
         return (
             <Paper id="summary-container" className={this.props.classes.summaryContainer} elevation={4}>
-                <Paper id='summarytitle' className={this.props.classes.summaryTitle}><Typography type="title">Report {this.props.primaryid}<div onClick={this.handleHideSummary} className={this.props.classes.hideBtn}><Typography type='button'>{this.state.summaryToggleText} Summary</Typography></div></Typography></Paper>
+                <Paper id='summarytitle' className={this.props.classes.summaryTitle}><Typography type="title">Report {this.props.primaryid}<div onClick={this.handleHideSummary} className={this.props.classes.hideBtn}><Typography type='button'>{this.state.summaryShown ? 'Hide' : 'Show'} Summary</Typography></div></Typography></Paper>
                 {this.renderInside(this.props.primaryid)}
                 <Paper id='commentsection' className={this.props.classes.commentSection}></Paper>
             </Paper>
@@ -200,5 +191,5 @@ export default connect(
     { getReportNarrativeFromID,
         htmlEncode,
         htmlUnescape,
-        getComment,},
+        },
 )(withStyles(styles)(ReportPanel));

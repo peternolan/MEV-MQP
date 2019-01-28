@@ -353,25 +353,12 @@ export function htmlEncode (str) {
 };
 
 // I needed the opposite function today, so adding here too:
-export function htmlUnescape(str){
+export function htmlUnescape (str){
     return str
         .replace(/&quot;/g, '"')
         .replace(/&#39;/g, "'")
         .replace(/&lt;/g, '<')
-        .replace(/&gt;/g, '>')
-        .replace(/&amp;/g, '&');
-}
-
-
-export function getComment (userID, comments) {
-
-    //var reportHtml = `${comments}`;
-
-    var x = [... comments.children].filter(function(e){return e.getAttribute("id") == userID;})[0];
-    //var x = comments.getAttribute('id') == userID;
-
-   // console.log("Comment Child " + x);
-    //return x
+        .replace(/&gt;/g, '>');
 };
 
 export const setAllReports = reports =>

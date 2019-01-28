@@ -542,7 +542,6 @@ class CaseSummary extends Component {
 
   render() { {this.getReports();
               this.updateReports();
-              console.log("HERE ARE KEYWORDS", this.state.highlightedWordsData);
             }
     return (
       <div key={this.state.caseName} style={{ width:'100%'}} >

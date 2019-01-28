@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { withStyles } from 'material-ui/styles';
 import Paper from 'material-ui/Paper';
 import Divider from 'material-ui/Divider';
-import { getReportNarrativeFromID, htmlEncode, htmlUnescape, getComment } from '../../../actions/reportActions';
+import { getReportNarrativeFromID, htmlEncode, htmlUnescape } from '../../../actions/reportActions';
 import styles from "./ReportPanelStyles";
 import Highlighter from "react-highlight-words";
 import Typography from "material-ui/Typography/Typography";
@@ -196,5 +196,5 @@ export default connect(
     { getReportNarrativeFromID,
         htmlEncode,
         htmlUnescape,
-        getComment,},
+        },
 )(withStyles(styles)(ReportPanel));

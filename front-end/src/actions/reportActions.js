@@ -321,7 +321,7 @@ export const executeSearch = (str) => () => {
         body: JSON.stringify({'search_string':str.trim()}),
     };
     return fetch(`${process.env.REACT_APP_NODE_SERVER}/executeSearch`, fetchData)
-            .then(function(response){return response.json();});
+            .then(function(response){console.log(response);return response.json();});
             //.then(function(json){console.log(json)});
 };
 
@@ -358,21 +358,7 @@ export function htmlUnescape(str){
         .replace(/&quot;/g, '"')
         .replace(/&#39;/g, "'")
         .replace(/&lt;/g, '<')
-        .replace(/&gt;/g, '>')
-        .replace(/&amp;/g, '&');
-}
-
-
-export function getComment (userID, comments) {
-
-    //var reportHtml = `${comments}`;
-
-    var x = [... comments.children].filter(function(e){return e.getAttribute("id") == userID;})[0];
-    //var x = comments.getAttribute('id') == userID;
-
-   // console.log("Comment Child " + x);
-    //return x
-};
+        .replace(/&gt;
 
 export const setAllReports = reports =>
   dispatch => dispatch({ type: 'SET_ALL_REPORTS', all_reports: reports });

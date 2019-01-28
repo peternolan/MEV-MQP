@@ -8,7 +8,7 @@ import 'react-quill/dist/quill.snow.css';
 import Paper from 'material-ui/Paper';
 import _ from 'lodash';
 import Button from 'material-ui/Button';
-import { getReportNarrativeFromID, htmlEncode, htmlUnescape, getComment } from '../../../actions/reportActions';
+import { getReportNarrativeFromID, htmlEncode, htmlUnescape} from '../../../actions/reportActions';
 import styles from './QuillEditorStyles';
 import annotationColors from './AnnotationColors';
 import Highlighter from 'react-highlight-words';
@@ -971,8 +971,7 @@ export default connect(
     mapStateToProps,
     { getReportNarrativeFromID,
         htmlEncode,
-        htmlUnescape,
-        getComment,},
+        htmlUnescape,},
 )(withStyles(styles)(QuillEditor));
 
 

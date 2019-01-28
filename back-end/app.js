@@ -466,7 +466,6 @@ app.post('/getreportsfromcasename', (req, res) => {
     db.query(query, (err, data) => {
       console.log("/getreportsfromcaseid")
       console.log("query    "+query);
-      console.log(data);
       res.status(200).send(data);
     });
   } else {
@@ -881,15 +880,15 @@ app.post('/executeSearch', (req, res) => {
     console.log(req.body);
     console.log('got a request for Search');
     console.log(typeof(req.body))
-    json_search = req.body;
+    let json_search = req.body;
 
     //Object.assign({},a,b) is equivalent to a left join on a of b, into a new dictionary.
     //This preserves our default settings, unless the front end has passed in an overwrite to the default.
-    search = JSON.stringify(Object.assign({}, default_search, json_search));
+    let search = JSON.stringify(Object.assign({}, default_search, json_search));
     console.log("SEARCH: " + search);
     const spawn = require("child_process").spawn;
     const pythonProcess = spawn('python3',["../searchElastic.py"]);
-    results = "";
+    var results = "";
     pythonProcess.stdout.on('data', function(data) {
         console.log("stdout data ");
         // combine the data returned from the python script
@@ -903,7 +902,10 @@ app.post('/executeSearch', (req, res) => {
     pythonProcess.stderr.on('data', function (data) {
       console.log('stderr: ' + data);
     });
-    pythonProcess.stdin.write(JSON.stringify(search));
+    pythonProcess.stderr.on('end', function (data) {
+      console.log('stderr: ' + data);
+    });
+    pythonProcess.stdin.write(search);
     pythonProcess.stdin.end();
 });
 

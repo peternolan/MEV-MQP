@@ -347,7 +347,7 @@ class QuillEditor extends Component {
                         value = {this.state.report}
                         onChange={this.handleChange}
                         modules={this.modules}
-                        style ={{textAlign: 'justify', height: (this.state.commentsOn) ?  '140px' : '300px', boxShadow: 'none'}}
+                        style ={{textAlign: 'justify', height: (this.state.commentsOn) ?  '20%' : '30%', boxShadow: 'none'}}
                         theme="snow"
                         readOnly
                     />
@@ -802,7 +802,7 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
         return (
             <div className={`${this.props.classes.pdfView} container`} style = {{position: 'relative', left: '4px'}}>
 
-                <div className = {`${this.props.classes.quillArea}`} style = {{display:'inline-block' , height: ((this.state.commentsOn) ? '220px' : '500px') }}>
+                <div className = {`${this.props.classes.quillArea}`} style = {{display:'inline-block' , height: ((this.state.commentsOn) ? '47%' : '90%') }}>
                     <ul className={this.props.classes.legend}>
                         <li><div className={this.props.classes.legendPair}><div className={this.props.classes.legendSquare} style={{backgroundColor: 'chartreuse'}} /><Typography>Drug</Typography></div></li>
                         <li><div className={this.props.classes.legendPair}><div className={this.props.classes.legendSquare} style={{backgroundColor: 'cadetblue'}} /><Typography>Reaction</Typography></div></li>
@@ -862,16 +862,6 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
                         )
                     }
 
-                    <Button
-                        id="saveButton1b"
-                        raised
-                        color="primary"
-                        className={(this.state.success) ? this.props.classes.buttonSuccess : ''}
-                        disabled={this.state.saving}
-                        onClick={this.saveWork}
-                        style={{display: 'none'}}>
-                        Save
-                    </Button>
 
                 {/* <!--</Paper>--> */}
 
@@ -888,6 +878,17 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
                         size={24}
                         className={this.props.classes.buttonProgress}
                     />}
+
+                    <Button
+                        id="saveButton1b"
+                        raised
+                        color="primary"
+                        className={(this.state.success) ? this.props.classes.buttonSuccess : ''}
+                        disabled={this.state.saving}
+                        onClick={this.saveWork}
+                        style={{display: 'none', marginLeft: '2px'}}>
+                        Save
+                    </Button>
 
 
                 </div>

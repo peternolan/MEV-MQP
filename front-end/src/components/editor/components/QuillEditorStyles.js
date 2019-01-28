@@ -3,7 +3,7 @@ import grey from 'material-ui/colors/grey';
 export default {
     pdfView: {
         width: '100%',
-        height: '550px',
+        height: 'calc(98vh - 220px)',
         margin: 0,
         overflow : 'auto'
     },
@@ -23,20 +23,7 @@ export default {
         overflow: 'auto',
         zIndex: '-1'
     },
-    commentButton: {
-        background: 'white',
-        color: '#1317f2',
-        cursor: 'pointer',
-        padding: '5px',
-        width: '98.5%',
-        border: 'white',
-        textAlign: 'left'
-    },
-    commentContent: {
-      padding: '0 0px',
-      display: 'none',
-      overflow: 'auto',
-    },
+
     dialog: {
         width: '100%',
         padding: '0px 20px 0px 20px',
@@ -100,7 +87,20 @@ export default {
         borderBottom: '1px dotted black',
         fontSize: '12px',
     },
-
+    commentButton: {
+        background: 'white',
+        color: '#1317f2',
+        cursor: 'pointer',
+        padding: '5px',
+        width: '98.5%',
+        border: 'white',
+        textAlign: 'left'
+    },
+    commentContent: {
+        padding: '0 0px',
+        display: 'none',
+        overflow: 'auto',
+    },
     /*
         toolTip: {
           position: 'relative',

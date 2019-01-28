@@ -19,6 +19,7 @@ import ReadCaseIcon from "../../resources/ReadCaseIcon";
 import CaseIcon from "../../resources/CaseIcon";
 import * as d3 from "d3";
 import styles from "./CaseSummaryStyles.js";
+import MEVColors from '../../theme'
 class CaseSummary extends Component {
 
   static propTypes = {
@@ -97,6 +98,50 @@ class CaseSummary extends Component {
   componentDidUpdate() {
     //console.log(this.refs);
   }
+
+  getFillColor = (UNK, size) => {
+    const percent = Math.min(1 - (UNK / Math.max(size, 1)), 1);
+    return this.getColorAtPercent(percent);
+  }
+
+  getColorAtPercent = (percent) => {
+    const severe = MEVColors.severeLight.slice(1);
+    const mid = MEVColors.middleOfGradient.slice(1);
+    const notSevere = MEVColors.notSevereLight.slice(1);
+    let color1;
+    let color2;
+
+    if (mid !== '') {
+      if (percent <= 0.5) {
+        color1 = severe;
+        color2 = mid;
+        percent = (1 - (percent * 2));
+      } else {
+        color1 = mid;
+        color2 = notSevere;
+        percent = (1 - (percent - 0.5)) * 2;
+      }
+    } else {
+      color1 = severe;
+      color2 = notSevere;
+    }
+
+    const r = Math.ceil(parseInt(color1.substring(0, 2), 16) * percent + parseInt(color2.substring(0, 2), 16) * (1-percent));
+    const g = Math.ceil(parseInt(color1.substring(2, 4), 16) * percent + parseInt(color2.substring(2, 4), 16) * (1-percent));
+    const b = Math.ceil(parseInt(color1.substring(4, 6), 16) * percent + parseInt(color2.substring(4, 6), 16) * (1-percent));
+
+    const rDark = Math.ceil((parseInt(color1.substring(0, 2), 16) * percent + parseInt(color2.substring(0, 2), 16) * (1-percent)) * 0.93);
+    const gDark = Math.ceil((parseInt(color1.substring(2, 4), 16) * percent + parseInt(color2.substring(2, 4), 16) * (1-percent)) * 0.93);
+    const bDark = Math.ceil((parseInt(color1.substring(4, 6), 16) * percent + parseInt(color2.substring(4, 6), 16) * (1-percent)) * 0.93);
+
+    return this.fixHex(r) + this.fixHex(g) + this.fixHex(b);
+  }
+
+  fixHex = (x) => {
+    x = x.toString(16);
+    return (x.length === 1) ? `0${x}` : x;
+  }
+
   getReportTypeData = () => {
     // console.log(getReportsInCases);
 
@@ -426,6 +471,7 @@ class CaseSummary extends Component {
           vals[vals.length-1].push({"label":key,"start":cumsum, "end":datum[key] + cumsum});
           cumsum += datum[key];
         }
+        if(cumsum < reports.length){vals[vals.length-1].push({"label":"Unknown","start":cumsum, "end":reports.length});}//if any of the data is not undefined, we must show this.
       }
       return {"fields":keys, "counts":vals};
     };
@@ -482,13 +528,15 @@ class CaseSummary extends Component {
         .data(counts)
         .enter()
         .append("rect")
-        .attr("x", d=>{console.log(d); return x(d.start/total_reports)})
+        .attr("x", d=>x(d.start/total_reports))
         .attr("y", text_height)
         .attr("width", d=> x((d.end-d.start)/total_reports))
         .attr("height", text_height*1.5)
-        .attr("fill", (d,i)=> i%2?"red":"green")
+        .attr("fill", (d,i)=>"#"+this.getFillColor(i,counts.length))
+        .attr("stroke-width", 1)
+        .attr("stroke", "#FFF")
         .attr("opacity", .5);
-    
+    console.log(this)
     //rects.exit().remove();
   }
 
@@ -497,26 +545,26 @@ class CaseSummary extends Component {
               console.log("HERE ARE KEYWORDS", this.state.highlightedWordsData);
             }
     return (
-      <div style={{ width:'100%'}} >
-        <div style={{paddingLeft: 10}}>
+      <div key={this.state.caseName} style={{ width:'100%'}} >
+        <div key="upper_part" style={{paddingLeft: 10}}>
           <Typography type='body1'>{this.state.caseDescription || 'No Description' }</Typography>
           <Typography type='button'>Total Count of Reports: {this.state.reportsInCase.length} </Typography>
           <Typography type='button'>Case Breakdown:
             <select ref='options' value={this.state.graphdata} onChange={this.handleDataChange} className={this.props.classes.dataSelector}>
-              <option value='TODO'>Primary v. Supportive</option>
-              <option value='outc_cod'>Outcome Code</option>
-              <option value='me_type'>Medication Error</option>
-              <option value='sex'>Patient Sex</option>
-              <option value='age_year'>Subject Age</option>
+              <option key='pvs' value='TODO'>Primary v. Supportive</option>
+              <option key='outc_cod' value='outc_cod'>Outcome Code</option>
+              <option key='me_type' value='me_type'>Medication Error</option>
+              <option key='sex' value='sex'>Patient Sex</option>
+              <option key='age_year' value='age_year'>Subject Age</option>
             </select>
           </Typography>
         </div>
-        <div id='bargraph' ref='bargraph'><svg ref="svg" viewBox="0 0 100 100" width="100%"></svg></div>
+        <div key="bargraph" id='bargraph' ref='bargraph'><svg ref="svg" viewBox="0 0 100 100" width="100%"></svg> </div>
         <Typography type='button' style={{padding:10}}>Keyword Summary</Typography>
-        <div>
+        <div key="highlighted_words">
           {this.state.highlightedWordsData.map((word) => {
             return(
-              <Typography type='body1'>{word.name} ({word.count})</Typography>
+              <Typography key='body1' type='body1'>{word.name} ({word.count})</Typography>
             )
           })}
         </div>

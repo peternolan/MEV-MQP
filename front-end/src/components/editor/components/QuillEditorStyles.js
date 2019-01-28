@@ -34,7 +34,7 @@ export default {
     paperWindow: {
         height: 'calc(77% + 44px)',
     },
-    editButton:{
+    textButton:{
         color: '#1D1F83',
     },
     legend: {

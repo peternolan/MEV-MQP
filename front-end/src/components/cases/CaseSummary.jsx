@@ -432,70 +432,64 @@ class CaseSummary extends Component {
     var data = this.props.getInstances(reports);
     var formatted_data = fmt(data);
     //console.log(formatted_data);
-    var labels = formatted_data["fields"];
-    var counts = formatted_data["counts"];
-    if(counts[0].length == 0){return;}
 
-    var svg = d3.select(this.refs.bargraph)
-      .selectAll("svg")
-      .data([1])//a little trick to create a new svg IFF one does not exist, else we use the existing one
-      .enter()
-      .append('svg')
-      .attr('class', this.props.classes.bargraph)
-      .attr("viewBox","0 0 100 100")
-      .attr("width","100%");
+    var label = d3.select(this.refs.options).node().value
+    if (label == "TODO"){
+      return;
+    }
+    var counts = formatted_data["counts"][formatted_data["fields"].indexOf(label)];
+    if(counts.length == 0){return;}
+    console.log(counts);
+
+    var svg = d3.select(this.refs.svg);
 
     var bounds = d3.select(this.refs.bargraph).node().getBoundingClientRect();
     var x = d3.scaleLinear()
       .domain([0,1])
       .range([0, 100]);
-    //  let x = (a)=>a;
-    //bounds.height;
-    var chart = svg.append("g")//append a group to hold the chart
-        .selectAll("g")//for each bar, append a new group
-        .data(labels)
-        .enter()
+
+    var chart = svg
+        .selectAll("g.bar")//for each bar, append a new group
+        .data([label], d=>d);
+
+    chart.exit().remove()
+
+    chart.enter()
         .append("g")
-        .attr("class", d=>d+" bar")
+        .attr("class", d=>d+ " bar")
         .attr("transform", (d,i)=>{return "translate("+ 0+","+(20*i)+")"});
 
-    chart.append("text")
-        .text(d=>d)
+    let text = svg.select(".bar").selectAll("text")
+        .data(this.refs.options.selectedOptions)
+        .enter()
+        .append("text")
+        .text(d=>{console.log(d);return d.text})
         .attr("x",0)
         .attr("y",2)
         .style("text-anchor", "mid")
         .style("alignment-baseline", "hanging");
 
-    let textelmt = chart.select("text").node();
+      console.log(this.refs.options)
+
+    let textelmt = text.node();
     //console.log(textelmt);
     if(textelmt != null){
       var text_height = textelmt.getBBox().height;
     }
     var total_reports = reports.length;
     //console.log(x);
-    chart.selectAll("rect")
-        .data((d,i)=>{return counts[i];})
+    let rects = svg.selectAll(".bar").selectAll("rect")
+        .data(counts)
         .enter()
         .append("rect")
-        .attr("x", d=> x(d.start/total_reports))
-        .attr("y", 0)
+        .attr("x", d=>{console.log(d); return x(d.start/total_reports)})
+        .attr("y", text_height)
         .attr("width", d=> x((d.end-d.start)/total_reports))
-        .attr("height",text_height)
+        .attr("height", text_height*1.5)
         .attr("fill", (d,i)=> i%2?"red":"green")
         .attr("opacity", .5);
-        /*.each((datum, index) =>{
-          console.log(this)
-          d3.select(this)
-            .selectAll("text")
-            .data([datum])
-            .enter()
-            .append("text")
-            .text(d=>d)
-            .attr("x", function(d, i){return index * i * 20})
-        })*/
-    //console.log(cdata)
-    //console.log(this.getReports());
-    //console.log(this.getInstances())
+    
+    //rects.exit().remove();
   }
 
   render() { {this.getReports();
@@ -508,16 +502,16 @@ class CaseSummary extends Component {
           <Typography type='body1'>{this.state.caseDescription || 'No Description' }</Typography>
           <Typography type='button'>Total Count of Reports: {this.state.reportsInCase.length} </Typography>
           <Typography type='button'>Case Breakdown:
-            <select ref='values' value={this.state.graphdata} onChange={this.handleDataChange} className={this.props.classes.dataSelector}>
-              <option value='dataone'>Primary v. Supportive</option>
-              <option value='datatwo'>Outcome</option>
-              <option value='datathree'>Medication Error</option>
-              <option value='datafour'>Patient Sex</option>
-              <option value='datafive'>Subject Age</option>
+            <select ref='options' value={this.state.graphdata} onChange={this.handleDataChange} className={this.props.classes.dataSelector}>
+              <option value='TODO'>Primary v. Supportive</option>
+              <option value='outc_cod'>Outcome Code</option>
+              <option value='me_type'>Medication Error</option>
+              <option value='sex'>Patient Sex</option>
+              <option value='age_year'>Subject Age</option>
             </select>
           </Typography>
         </div>
-        <div id='bargraph' ref='bargraph'></div>
+        <div id='bargraph' ref='bargraph'><svg ref="svg" viewBox="0 0 100 100" width="100%"></svg></div>
         <Typography type='button' style={{padding:10}}>Keyword Summary</Typography>
         <div>
           {this.state.highlightedWordsData.map((word) => {

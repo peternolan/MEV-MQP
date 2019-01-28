@@ -23,6 +23,7 @@ import {Link} from "react-router-dom";
 import GoToVisualizationIcon from "../../../resources/goToVisualizationIcon.svg";
 import ViewCaseSummary from "../../../resources/caseSummary.svg";
 import DeleteIcon from '../../../resources/Delete.svg';
+import {Collapse} from 'react-collapse';
 
 //const ToolTip = Quill.import('ui/tooltip');
 
@@ -88,6 +89,7 @@ class QuillEditor extends Component {
             userEmail: this.props.userEmail,
             comment: ``,
             report: '',
+            legendShown: true,
             current: {
                 reportText: '',
                 tags: [],
@@ -765,7 +767,9 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
         </div>
     );
 
-
+    handleHideLegend = () => {
+        this.setState({legendShown: !this.state.legendShown})
+    };
 
     modules = {
         toolbar: {
@@ -804,15 +808,18 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
 
                 <div className = {`${this.props.classes.quillArea}`} style = {{display:'inline-block' , height: ((this.state.commentsOn) ? '220px' : '500px') }}>
                     <ul className={this.props.classes.legend}>
-                        <li><div className={this.props.classes.legendPair}><div className={this.props.classes.legendSquare} style={{backgroundColor: 'chartreuse'}} /><Typography>Drug</Typography></div></li>
-                        <li><div className={this.props.classes.legendPair}><div className={this.props.classes.legendSquare} style={{backgroundColor: 'cadetblue'}} /><Typography>Reaction</Typography></div></li>
-                        <li><div className={this.props.classes.legendPair}><div className={this.props.classes.legendSquare} style={{backgroundColor: 'darkorange'}} /><Typography>Dosage</Typography></div></li>
-                        <li><div className={this.props.classes.legendPair}><div className={this.props.classes.legendSquare} style={{backgroundColor: 'gold'}} /><Typography>Age</Typography></div></li>
-                        <li><div className={this.props.classes.legendPair}><div className={this.props.classes.legendSquare} style={{backgroundColor: 'lightpink'}} /><Typography>Sex</Typography></div></li>
-                        <li><div className={this.props.classes.legendPair}><div className={this.props.classes.legendSquare} style={{backgroundColor: 'orchid'}} /><Typography>Weight</Typography></div></li>
-                        <li><div className={this.props.classes.legendPair}><div className={this.props.classes.legendSquare} style={{backgroundColor: 'silver'}} /><Typography>Indication</Typography></div></li>
-                        <li><div className={this.props.classes.legendPair}><div className={this.props.classes.legendSquare} style={{backgroundColor: 'cyan'}} /><Typography>Interesting</Typography></div></li>
-                        <li><div className={this.props.classes.editButton}></div></li>
+                        <Typography type='button' className={this.props.classes.textButton} onClick={this.handleHideLegend}>Legend</Typography>
+                        <Collapse isOpened={this.state.legendShown}>
+                            <li><div className={this.props.classes.legendPair}><div className={this.props.classes.legendSquare} style={{backgroundColor: 'chartreuse'}} /><Typography>Drug</Typography></div></li>
+                            <li><div className={this.props.classes.legendPair}><div className={this.props.classes.legendSquare} style={{backgroundColor: 'cadetblue'}} /><Typography>Reaction</Typography></div></li>
+                            <li><div className={this.props.classes.legendPair}><div className={this.props.classes.legendSquare} style={{backgroundColor: 'darkorange'}} /><Typography>Dosage</Typography></div></li>
+                            <li><div className={this.props.classes.legendPair}><div className={this.props.classes.legendSquare} style={{backgroundColor: 'gold'}} /><Typography>Age</Typography></div></li>
+                            <li><div className={this.props.classes.legendPair}><div className={this.props.classes.legendSquare} style={{backgroundColor: 'lightpink'}} /><Typography>Sex</Typography></div></li>
+                            <li><div className={this.props.classes.legendPair}><div className={this.props.classes.legendSquare} style={{backgroundColor: 'orchid'}} /><Typography>Weight</Typography></div></li>
+                            <li><div className={this.props.classes.legendPair}><div className={this.props.classes.legendSquare} style={{backgroundColor: 'silver'}} /><Typography>Indication</Typography></div></li>
+                            <li><div className={this.props.classes.legendPair}><div className={this.props.classes.legendSquare} style={{backgroundColor: 'cyan'}} /><Typography>Interesting</Typography></div></li>
+                            <li><div className={this.props.classes.editButton}></div></li>
+                        </Collapse>
                     </ul>
                     <div className={this.props.classes.wrapper} style={{display: 'inline-block'}}>
                         {(this.state.editModeOn) ?
@@ -834,7 +841,7 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
                             className={(this.state.success) ? this.props.classes.buttonSuccess : ''}
                             disabled={this.state.saving}
                             onClick={this.saveWork}
-                            style = {{display: 'none', marginLeft: 2, padding: 0,}}>
+                            style = {{display: 'none', margin: 0, padding: 0,}}>
                             Save
                         </Button>
                     </div>
@@ -898,7 +905,7 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
                 <div id="commentArea" className={this.props.classes.commentSec}>
                     <Divider/>
                     {/*data-toggle = 'collapse' target = 'commentContent'*/}
-                    <button className = {this.props.classes.commentButton} style = {{padding: '0px' }}onClick={() => this.showComments()}>
+                    <button className = {this.props.classes.commentButton} onClick={() => this.showComments()}>
                         {(this.state.commentsOn) ? <h5> Hide Comments </h5> : <h5> View Comments </h5>}
 
                     </button>

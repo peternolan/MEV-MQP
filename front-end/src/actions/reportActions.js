@@ -1,3 +1,5 @@
+import {filterData} from "./filterActions";
+
 /**
  * Queries the Database with the current userID to retrieve that user's bin names
  */
@@ -19,6 +21,12 @@ export const getUserCases = userID => () => {
       console.error.bind(err);
     });
 };
+
+
+export const getCountData = report =>  (dispatch) => {
+  dispatch(filterData());
+};
+
 
 /**
  * Queries the Database with the current userID and a bin name to create

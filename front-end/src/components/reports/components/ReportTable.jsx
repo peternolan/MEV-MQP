@@ -107,6 +107,8 @@ class ReportTable extends React.PureComponent {
       pageSize: 50,
       searchTarget: 'All Reports',
       currentPage: 0,
+      summaryToggleText: 'Hide',
+      selected: -1,
         returnedResults: [1, 2, 3],
         returnedIds: [],
 
@@ -274,7 +276,6 @@ class ReportTable extends React.PureComponent {
       title: 'ID',
       name: 'id',
     },
-
     {
       title: 'Age',
       name: 'age_year',
@@ -426,11 +427,28 @@ class ReportTable extends React.PureComponent {
     primary: 'rgba(12, 232, 142, 0.25)',
   };
 
+
+  reportToPanel = ( id ) => {
+
+
+
+    this.setState({selected: id}, function() {
+      console.log("Report to Panel " + id);
+
+      this.props.handleViewReport(id);
+    });
+
+
+  }
+
+
+
   /**
    * This returns the table Row component with the added background color
    * if the report is in any case for the current user
    */
   TableRow = ({ row, ...props }) => {
+
 
     if (!this.state.firstFound) {
 
@@ -467,13 +485,20 @@ class ReportTable extends React.PureComponent {
             : ((this.props.supportiveChosen === true) ? 'rgba(255, 0, 255, 0.25)' : this.COLORS.supportive );
 
     }
+    {console.log(props.tableRow.rowId.toString())}
+    {console.log(this.state.selected)}
+    {console.log((props.tableRow.rowId.toString() === this.state.selected) ? 'blue' : 'none')}
     return (
 
         <Table.Row
             {...props}
             style={{
-                backgroundColor,height:''
+                backgroundColor: (props.tableRow.rowId === this.state.selected) ? '#dbf0ff' : backgroundColor
+              ,height:'',
+              cursor:'pointer'
+
             }}
+            onClick = {() => this.reportToPanel(props.tableRow.rowId)}
         />
 
     );
@@ -832,10 +857,8 @@ class ReportTable extends React.PureComponent {
                 columns={(Number(this.props.currentTab) === 1) ? this.columns2 : this.columns}
                 getRowId={(Number(this.props.currentTab) === 1) ? row => row.id : row => row.primaryid }
               >
-                {console.log("expanded " + this.state.expandedRows)}
                 <RowDetailState
                   expandedRows={(Number(this.props.currentTab) === 1) ? this.state.returnedIds : this.state.expandedRows}
-                  onExpandedRowsChange={this.changeExpandedDetails}
                 />
                 <DragDropProvider />
                 <SortingState

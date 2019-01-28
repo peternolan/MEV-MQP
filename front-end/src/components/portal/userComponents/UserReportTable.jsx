@@ -77,6 +77,8 @@ class UserReportTable extends React.PureComponent {
 
     this.props.getCaseReports(this.props.bin, this.props.userID, {})
       .then(bins => {
+
+
         this.props.setReportCount(bins.length);
         this.setState({ data: bins });
 

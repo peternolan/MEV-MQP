@@ -4,14 +4,11 @@ import { connect } from 'react-redux';
 import { withStyles } from 'material-ui/styles';
 import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
-import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer, BarChart, XAxis, YAxis, CartesianGrid, Bar } from 'recharts';
 // import Select from 'react-select';
 import {Combobox} from 'react-widgets';
 import { getTagsinCase, getReportsInCases, getReportsFromCase, getCaseNameByID, getCaseReports, setSearchedReports , getInstances } from '../../actions/reportActions';
-import annotationColors from '../editor/components/AnnotationColors';
 import * as JsSearch from 'js-search';
 import "react-widgets/dist/css/react-widgets.css";
-import lunr from 'lunr';
 
 // import natural from 'natural';
 import  natural from './natural.js';
@@ -408,47 +405,11 @@ class CaseSummary extends Component {
             for(var j=counter; j<counter+keywords_count && j< data_length;j++){   
               data.push(data_all[j])
             }
-            // console.log("data", data, this.renderBarChart(data))
-            all_barCharts.push(this.renderBarChart(data, max_value,i));
-            // console.log(all_barCharts)
-            counter=counter+data.length;
-            data=[];
       } 
     
     } 
-    return all_barCharts; 
+    return data;
   };
-
-  renderBarChart = (barData, d_all,i) => ((barData.length > 0)
-  ?(
-      <div key={i} style={{ width: '120px', height:'300px', display:'inline-block'}}> 
-      <ResponsiveContainer>
-          <BarChart
-            data={barData}
-            layout="vertical"
-            // width= {150}
-          >
-            <XAxis hide={true} dataKey="count" type="number" domain={[0,d_all]} ticks={['']}/>
-            <YAxis dataKey="name"  type="category" width={100} interval={0} domain={[0,100]}/>
-
-            <Tooltip
-              offset={15}
-              cursor={{ stroke: '#424242', strokeWidth: 1 }}
-              wrapperStyle={{ padding: '4px', zIndex: 1000 }}
-              isAnimationActive={false}
-            />
-            <Bar dataKey="count" stroke="#444" height={15} barSize= {15} barGap = {0}> 
-              {
-                barData.map((entry) => 
-                  <Cell key= {entry} fill='orange' />
-                )
-              }
-            </Bar>          
-          </BarChart>
-        </ResponsiveContainer>
-    </div>    
-    )
-    :null);
 
   drawChart = (reports) => {
     function fmt(data){
@@ -531,45 +492,13 @@ class CaseSummary extends Component {
     //rects.exit().remove();
   }
 
-  renderPieChart = () => ((this.state.pieChartData.length > 0)
-    ? (
-      <div style={{height:"250px"}}>
-        <ResponsiveContainer width="100%" height={200} >
-          <PieChart width={200} height={200}>
-            <Legend />
-            <Pie
-              data={this.state.pieChartData}
-              dataKey="value"
-              nameKey="name"
-              cx="50%"
-              cy="50%"
-              innerRadius={30}
-              outerRadius={60}
-              fill="#82ca9d"
-              paddingAngle={1}
-              label
-              legendType="circle"
-              >
-              {
-                  //onClick={this.handleColorChange(this.COLORS[entry.name.toLowerCase()])}
-                this.state.pieChartData.map((entry, index) =>
-                  <Cell key={entry} fill={this.COLORS[entry.name.toLowerCase()]}
-                        onClick ={ () => this.props.handleClick(this.COLORS[entry.name.toLowerCase()], this.state.caseName)} />)
-              }
-            </Pie>
-          </PieChart>
-        </ResponsiveContainer>
-      </div>
-    )
-    : null);
-
   render() { {this.getReports();
               this.updateReports();
               console.log("HERE ARE KEYWORDS", this.state.highlightedWordsData);
             }
     return (
-      <div style={{ width: '100%' }} >
-        <div style={{padding: 10}}>
+      <div style={{ width:'100%'}} >
+        <div style={{paddingLeft: 10}}>
           <Typography type='body1'>{this.state.caseDescription || 'No Description' }</Typography>
           <Typography type='button'>Total Count of Reports: {this.state.reportsInCase.length} </Typography>
           <Typography type='button'>Case Breakdown:
@@ -591,8 +520,6 @@ class CaseSummary extends Component {
             )
           })}
         </div>
-        <div id="bargraph"></div>
-        <div id="keywords"style={{padding: 10}}><Typography type='button'>Keyword Summary</Typography></div>
       </div>
     );
   }

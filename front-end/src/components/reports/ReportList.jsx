@@ -18,7 +18,7 @@ import ReportTable from './components/ReportTable';
 import CaseSummaryListing from './components/CaseSummaryListing';
 import ReportPanel from './components/ReportPanel';
 import MEVColors from '../../theme';
-import { getUserCases, createUserBin } from '../../actions/reportActions';
+import { getUserCases, createUserBin, getCountData } from '../../actions/reportActions';
 import CaseIcon from '../../resources/CaseIcon';
 import ReadCaseIcon from '../../resources/ReadCaseIcon';
 import NewCaseIcon from '../../resources/NewCaseIcon';
@@ -27,6 +27,8 @@ import AllReportsIcon from '../../resources/AllReportsIcon';
 import GoToVisualizationIcon from '../../resources/goToVisualizationIcon.svg';
 import ViewCaseSummary from '../../resources/caseSummary.svg';
 import styles from './ReportListStyles';
+//import {getEntireTimeline, setSelectedDate} from '../../actions/timelineActions';
+
 
 
 const defaultTheme = createMuiTheme({
@@ -56,6 +58,7 @@ class ReportList extends Component {
     userID: PropTypes.number.isRequired,
     userEmail: PropTypes.string,
     isLoggedIn: PropTypes.bool.isRequired,
+      getCountData: PropTypes.func.isRequired,
     classes: PropTypes.shape({
       newCaseArea: PropTypes.string,
       goToVisualizationSVG: PropTypes.string,
@@ -79,6 +82,7 @@ class ReportList extends Component {
       newCaseModalOpen: false,
       snackbarOpen: false,
       primaryIDReport: 0,
+        currentlyFilteredDateRange: '03/24/2017 - 03/31/2017',
       snackbarMessage: '',
       currentTab: 0,
       summaryOpen: false,
@@ -93,11 +97,20 @@ class ReportList extends Component {
     //handleCaseChangePrimary = handleCaseChangePrimary.bind(this);
   }
 
+  getCount = () => {
+
+      this.props.getCountData();
+
+  };
+
+
   componentWillMount() {
     if (!this.props.isLoggedIn) {
       window.location = '/';
+
     }
     this.getBins();
+    this.getCount()
   }
 
   /**
@@ -186,10 +199,11 @@ class ReportList extends Component {
     } else if (currentTab === 1) {  // This is the searched tab
       //***************  Searched reports can be accessed */
         console.log("Current Tab is 1");
-        console.log("Here " + this.props.searchedReports);
-        if(this.props.searchedReports.length > 0)
-            console.log("Here");
+        console.log("Here " + this.props.searchedReports.length);
+        if(this.props.searchedReports.length > 0){
+          console.log("Here")
           this.setState({ currentTab, searchedReports : this.props.searchedReports , bin: 'searched reports', })
+        }
 
     } else {
       this.setState({
@@ -502,5 +516,5 @@ const mapStateToProps = state => ({
  */
 export default connect(
   mapStateToProps,
-  { getUserCases, createUserBin },
+  { getUserCases, createUserBin, getCountData },
 )(withStyles(styles)(ReportList));

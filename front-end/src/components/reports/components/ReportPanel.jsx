@@ -10,9 +10,6 @@ import Highlighter from "react-highlight-words";
 import Typography from "material-ui/Typography/Typography";
 import QuillEditor from "../../editor/components/QuillEditor";
 import {Collapse} from 'react-collapse';
-import DeleteIcon from "../../../resources/Delete.svg";
-import MaterialTooltip from 'material-ui/Tooltip';
-import Button from 'material-ui/Button';
 //import CaseIcon from '../../../resources/CaseIcon';
 
 class ReportPanel extends React.PureComponent {
@@ -136,7 +133,6 @@ class ReportPanel extends React.PureComponent {
     };
 
     handleHideSummary = () => {
-        var temp = ''
         if(this.state.summaryToggleText === 'Hide'){
                 return this.setState({summaryShown: !this.state.summaryShown, summaryToggleText: 'Show'})
         } else {
@@ -162,8 +158,8 @@ class ReportPanel extends React.PureComponent {
                             userEmail={this.props.userEmail}
                             match={this.props.match}
                             />
-                        </div>
-                        )
+
+                        </div>)
                         : (
                             <Highlighter
                                 activeClassName={styles.Active}

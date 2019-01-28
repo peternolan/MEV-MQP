@@ -14,6 +14,7 @@ import CaseSummary from '../../cases/CaseSummary';
 import { moveReport, getCaseReports, getInstances, getReportsInCases } from '../../../actions/reportActions';
 import CaseIcon from '../../../resources/CaseIcon';
 import styles from './CaseSummaryListingStyles';
+import {Collapse} from 'react-collapse';
 
 /**
  * This is the component for the Case Summary Listing Planel
@@ -29,6 +30,21 @@ class CaseSummaryListing extends React.PureComponent {
       expansionPanelSummary: PropTypes.string,
       styledEPSummary: PropTypes.string,
     }).isRequired,
+  }
+
+  constructor(props){
+    super(props);
+    this.state = {
+        expandedPanelName: 'none',
+    }
+  };
+
+  handleCaseExpand = (event) => {
+    if(this.state.expandedPanelName === event.target.id){
+      return this.setState({expandedPanelName: 'none'})
+    } else {
+      this.setState({expandedPanelName: event.target.id})
+    }
   };
 
   renderListItem = (bin) => {
@@ -40,35 +56,16 @@ class CaseSummaryListing extends React.PureComponent {
       default:
         return (
           <div key={bin.case_id} >
-            <ExpansionPanel>
-              <ExpansionPanelSummary
-                className={this.props.classes.styledEPSummary}
-                expandIcon={<ExpandMoreIcon />}
-              >
-                <CaseIcon
-                  width={30}
-                  height={30}
-                  style={{
-                    position: 'absolute',
-                    left: '10px',
-                    top: '50%',
-                    transform: 'translateY(-50%)',
-                    }}
-                />
-                <Typography type="button" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                  {bin.name}
-                </Typography>
-              </ExpansionPanelSummary>
-              <ExpansionPanelDetails>
-                <CaseSummary
-                  caseID={bin.case_id}
-                  userID={this.props.userID}
-                  summaryCounter={this.props.summaryCounter}
-                  updateTab={this.props.updateTab}
-                  handleClick={this.props.handleClickPieChart}
-                />
-              </ExpansionPanelDetails>
-            </ExpansionPanel>
+            <div id='yes' className={this.props.classes.expansionTitle} onClick={(e) => this.handleCaseExpand(e)}><Typography id={bin.name} type='button'>{bin.name}</Typography></div>
+            <Collapse isOpened={(this.state.expandedPanelName === bin.name) ? true : false}>
+              <CaseSummary
+                caseID={bin.case_id}
+                userID={this.props.userID}
+                summaryCounter={this.props.summaryCounter}
+                updateTab={this.props.updateTab}
+                handleClick={this.props.handleClickPieChart}
+              />
+            </Collapse>
           </div>
         );
     }

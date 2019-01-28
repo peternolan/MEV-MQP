@@ -36,6 +36,7 @@ export default {
     },
     textButton:{
         color: '#1D1F83',
+        cursor: 'pointer'
     },
     legend: {
         display: 'inline-block',

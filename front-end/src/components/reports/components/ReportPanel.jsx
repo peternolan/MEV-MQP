@@ -55,7 +55,6 @@ class ReportPanel extends React.PureComponent {
             editModeOn: false,
             primaryId: this.props.primaryid,
             userID: this.props.userID,
-            summaryToggleText: 'Hide',
             current: {
                 reportText: '',
                 tags: [],
@@ -133,11 +132,7 @@ class ReportPanel extends React.PureComponent {
     };
 
     handleHideSummary = () => {
-        if(this.state.summaryToggleText === 'Hide'){
-                return this.setState({summaryShown: !this.state.summaryShown, summaryToggleText: 'Show'})
-        } else {
-            this.setState({summaryShown: !this.state.summaryShown,  summaryToggleText: 'Hide'})
-        }
+        this.setState({summaryShown: !this.state.summaryShown})
     };
 
     renderInside = (primaryID) => {
@@ -178,7 +173,7 @@ class ReportPanel extends React.PureComponent {
     render = () => {
         return (
             <Paper id="summary-container" className={this.props.classes.summaryContainer} elevation={4}>
-                <Paper id='summarytitle' className={this.props.classes.summaryTitle}><Typography type="title">Report {this.props.primaryid}<div onClick={this.handleHideSummary} className={this.props.classes.hideBtn}><Typography type='button'>{this.state.summaryToggleText} Summary</Typography></div></Typography></Paper>
+                <Paper id='summarytitle' className={this.props.classes.summaryTitle}><Typography type="title">Report {this.props.primaryid}<div onClick={this.handleHideSummary} className={this.props.classes.hideBtn}><Typography type='button'>{this.state.summaryShown ? 'Hide' : 'Show'} Summary</Typography></div></Typography></Paper>
                 {this.renderInside(this.props.primaryid)}
                 <Paper id='commentsection' className={this.props.classes.commentSection}></Paper>
             </Paper>

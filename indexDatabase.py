@@ -7,6 +7,8 @@ from elasticsearch_dsl.connections import connections
 import datetime as dt
 timenow = dt.datetime.now
 
+print("USAGE    :    python3 ./indexDatabase.py <faers database username> [faers database password]")
+
 lasttime = timenow()
 
 # THIS IS ONLY FOR DEV/DEBUGGING
@@ -57,9 +59,12 @@ lasttime = timenow()
 #here we connect to the faers database
 #CHANGE THE PARAMETERS TO CONNECT EXTERNALLY/TO A DIFFERENT DATABASE
 try:
-    connection = psy.connect(host="localhost", database="faers", user=sys.argv[1])
-except IndexError as e:#assign e to a variable, as this is only doable in python 3+ (a haphazard version check)
-    print("INCORRECT USAGE :  python3 ./databaseindexer.py <faers database username>")
+    connection = psy.connect(host="localhost", database="faers", user=sys.argv[1], password=sys.argv[2])
+except IndexError:
+    try:
+        connection = psy.connect(host="localhost", database="faers", user=sys.argv[1])
+    except IndexError as e:#assign e to a variable, as this is only doable in python 3+ (a haphazard version check)
+        print("INCORRECT USAGE :  python3 ./databaseindexer.py <faers database username> [faers database password]")
     
 
 cursor = connection.cursor()

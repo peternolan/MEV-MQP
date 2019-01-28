@@ -6,7 +6,7 @@ import DeleteIcon from '../../../resources/Delete.svg';
 import {connect} from "react-redux";
 import {withStyles} from "material-ui";
 import styles from "../../editor/components/QuillEditorStyles";
-import {getComment, getReportNarrativeFromID, htmlEncode, htmlUnescape} from "../../../actions/reportActions";
+import { getReportNarrativeFromID, htmlEncode, htmlUnescape} from "../../../actions/reportActions";
 import PropTypes from "prop-types";
 import Paper from "./ReportPanel";
 
@@ -140,6 +140,6 @@ export default connect(
     { getReportNarrativeFromID,
         htmlEncode,
         htmlUnescape,
-        getComment,},
+        },
 
 )(withStyles(styles)(CommentPanel));

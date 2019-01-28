@@ -15,16 +15,13 @@ import Highlighter from 'react-highlight-words';
 import MaterialTooltip from 'material-ui/Tooltip';
 import Divider from 'material-ui/Divider';
 import Typography from 'material-ui/Typography';
-// import styles from 'react-highlight-words.example.css'
-// import latinize from 'latinize';
 import './NarrativeAnnotator.css';
 import CustomTooltip from "../../visualization/components/demographics/components/ReportedBy";
 import {Link} from "react-router-dom";
 import GoToVisualizationIcon from "../../../resources/goToVisualizationIcon.svg";
 import ViewCaseSummary from "../../../resources/caseSummary.svg";
 import DeleteIcon from '../../../resources/Delete.svg';
-
-//const ToolTip = Quill.import('ui/tooltip');
+import {Collapse} from 'react-collapse';
 
 class QuillEditor extends Component {
 
@@ -88,6 +85,7 @@ class QuillEditor extends Component {
             userEmail: this.props.userEmail,
             comment: ``,
             report: '',
+            legendShown: true,
             current: {
                 reportText: '',
                 tags: [],
@@ -765,7 +763,9 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
         </div>
     );
 
-
+    handleHideLegend = () => {
+        this.setState({legendShown: !this.state.legendShown})
+    };
 
     modules = {
         toolbar: {
@@ -804,15 +804,18 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
 
                 <div className = {`${this.props.classes.quillArea}`} style = {{display:'inline-block' , height: ((this.state.commentsOn) ? '47%' : '90%') }}>
                     <ul className={this.props.classes.legend}>
-                        <li><div className={this.props.classes.legendPair}><div className={this.props.classes.legendSquare} style={{backgroundColor: 'chartreuse'}} /><Typography>Drug</Typography></div></li>
-                        <li><div className={this.props.classes.legendPair}><div className={this.props.classes.legendSquare} style={{backgroundColor: 'cadetblue'}} /><Typography>Reaction</Typography></div></li>
-                        <li><div className={this.props.classes.legendPair}><div className={this.props.classes.legendSquare} style={{backgroundColor: 'darkorange'}} /><Typography>Dosage</Typography></div></li>
-                        <li><div className={this.props.classes.legendPair}><div className={this.props.classes.legendSquare} style={{backgroundColor: 'gold'}} /><Typography>Age</Typography></div></li>
-                        <li><div className={this.props.classes.legendPair}><div className={this.props.classes.legendSquare} style={{backgroundColor: 'lightpink'}} /><Typography>Sex</Typography></div></li>
-                        <li><div className={this.props.classes.legendPair}><div className={this.props.classes.legendSquare} style={{backgroundColor: 'orchid'}} /><Typography>Weight</Typography></div></li>
-                        <li><div className={this.props.classes.legendPair}><div className={this.props.classes.legendSquare} style={{backgroundColor: 'silver'}} /><Typography>Indication</Typography></div></li>
-                        <li><div className={this.props.classes.legendPair}><div className={this.props.classes.legendSquare} style={{backgroundColor: 'cyan'}} /><Typography>Interesting</Typography></div></li>
-                        <li><div className={this.props.classes.editButton}></div></li>
+                        <Typography type='button' className={this.props.classes.textButton} onClick={this.handleHideLegend}>{(this.state.legendShown) ? 'Hide' : 'Show'} Legend</Typography>
+                        <Collapse isOpened={this.state.legendShown}>
+                            <li><div className={this.props.classes.legendPair}><div className={this.props.classes.legendSquare} style={{backgroundColor: 'chartreuse'}} /><Typography>Drug</Typography></div></li>
+                            <li><div className={this.props.classes.legendPair}><div className={this.props.classes.legendSquare} style={{backgroundColor: 'cadetblue'}} /><Typography>Reaction</Typography></div></li>
+                            <li><div className={this.props.classes.legendPair}><div className={this.props.classes.legendSquare} style={{backgroundColor: 'darkorange'}} /><Typography>Dosage</Typography></div></li>
+                            <li><div className={this.props.classes.legendPair}><div className={this.props.classes.legendSquare} style={{backgroundColor: 'gold'}} /><Typography>Age</Typography></div></li>
+                            <li><div className={this.props.classes.legendPair}><div className={this.props.classes.legendSquare} style={{backgroundColor: 'lightpink'}} /><Typography>Sex</Typography></div></li>
+                            <li><div className={this.props.classes.legendPair}><div className={this.props.classes.legendSquare} style={{backgroundColor: 'orchid'}} /><Typography>Weight</Typography></div></li>
+                            <li><div className={this.props.classes.legendPair}><div className={this.props.classes.legendSquare} style={{backgroundColor: 'silver'}} /><Typography>Indication</Typography></div></li>
+                            <li><div className={this.props.classes.legendPair}><div className={this.props.classes.legendSquare} style={{backgroundColor: 'cyan'}} /><Typography>Interesting</Typography></div></li>
+                            <li><div className={this.props.classes.editButton}></div></li>
+                        </Collapse>
                     </ul>
                     <div className={this.props.classes.wrapper} style={{display: 'inline-block'}}>
                         {(this.state.editModeOn) ?

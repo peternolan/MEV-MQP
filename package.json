@@ -15,6 +15,7 @@
   },
   "homepage": "https://github.com/CTapply/MEV-MQP#readme",
   "dependencies": {
+    "@ionic/app-scripts": "^3.2.2",
     "ajv": "^6.7.0",
     "ajv-keywords": "^3.2.0",
     "concurrently": "^3.5.0",
@@ -38,5 +39,6 @@
       "linux": "concurrently -n \"cache,back-end,front-end\" \"./back-end/redis/src/redis-server --loadmodule back-end/redis/rejson.so\" \"npm start --prefix ./back-end\" \"npm run startLocal --prefix ./front-end\""
     },
     "test": "echo \"Error: no test specified\" && exit 1"
-  }
+  },
+  "devDependencies": {}
 }

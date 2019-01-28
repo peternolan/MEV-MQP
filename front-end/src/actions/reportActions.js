@@ -321,7 +321,7 @@ export const executeSearch = (str) => () => {
         body: JSON.stringify({'search_string':str.trim()}),
     };
     return fetch(`${process.env.REACT_APP_NODE_SERVER}/executeSearch`, fetchData)
-            .then(function(response){return response.json();});
+            .then(function(response){console.log(response);return response.json();});
             //.then(function(json){console.log(json)});
 };
 

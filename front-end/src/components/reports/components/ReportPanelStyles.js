@@ -1,7 +1,7 @@
 export default {
     summaryContainer: {
         overflow: 'scroll',
-        height: 'calc(100vh - 122px)',
+        height: 'calc(100vh - 130px)',
         borderRadius: 0,
         borderLeftWidth: '1px',
         borderTopWidth: 0,
@@ -40,7 +40,9 @@ export default {
         height: 'auto',
         backgroundColor: '#F5F5F5',
         
-    }
+    },
+
+
 /*
     export default {
         drug: 'chartreuse',

@@ -563,7 +563,7 @@ class CaseSummary extends Component {
         <div key="highlighted_words">
           {this.state.highlightedWordsData.map((word) => {
             return(
-              <Typography key='body1' type='body1'>{word.name} ({word.count})</Typography>
+              <Typography key='body2' type='body1'>{word.name} ({word.count})</Typography>
             )
           })}
         </div>

@@ -105,16 +105,16 @@ const countInstance = (array) => {
     for (var i in array) {
 
         if (!duplicates.find(function(item) {
-            console.log("Here " + item.word);
+
             return item.word === array[i]
         })) {
 
-            console.log("Not Present");
+
 
             duplicates.push({word: array[i], count: 1});
         }
         else {
-            console.log("Present");
+
             ind = duplicates.findIndex(function(item) {return item.word === array[i]});
             duplicates[ind].count++;
         }
@@ -172,7 +172,7 @@ export const getInstances = (reports) => {
  * that user's reports contained in specified bin that fit in filters
  */
 export const getCaseReports = (bin, userID, filters) => (dispatch, getState) => {
-  console.log("getCaseReports");
+
   const defaultFilters = {
     init_fda_dt: {
       start: '1',

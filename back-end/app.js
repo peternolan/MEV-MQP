@@ -464,8 +464,7 @@ app.post('/getreportsfromcasename', (req, res) => {
     + `AND name='${req.body.caseName}' );`;
 
     db.query(query, (err, data) => {
-      console.log("/getreportsfromcaseid")
-      console.log("query    "+query);
+      console.log(query);
       res.status(200).send(data);
     });
   } else {

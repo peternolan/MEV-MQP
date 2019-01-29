@@ -1,7 +1,7 @@
-{"search_string": "domperidone", "start": 0, "size": 3}
+{"search_string": "Domperidone", "start": 0, "size": 3}
 
 
 ----------------------------------------
 
 
-{"searchtime": 128, "fields_searched": ["primaryid", "drugname", "me_type", "age_year", "sex", "wt_lb", "report_text"], "results": {"0": {"id": "9AUcgmgBwizF-OD673iu", "score": 16.049044}, "1": {"id": "hgQZgmgBwizF-OD6ku1b", "score": 12.56633}, "2": {"id": "EQUdgmgBwizF-OD6XIhi", "score": 10.622198}}, "report_text_highlights": ["The reporter stated that the patient was treated with <em>domperidone</em> (route and formulation unspecified,", "Action taken with <em>domperidone</em> and erythromycin was not reported.", "</p><p>Action taken with suspect drugs: ERYTHROMYCIN - Unknown; <em>DOMPERIDONE</em> - Unknown.", "</p><p>Therapy start date of <em>Domperidone</em> was provided as: --2010.", "</p><p>Duration of suspect drug \"<em>Domperidone</em>\" was reported as 5 years."], "drugname_highlights": ["<em>DOMPERIDONE</em>"]}
+{"searchtime": 1233, "fields_searched": ["primaryid", "drugname", "me_type", "age_year", "sex", "wt_lb", "report_text"], "results": {"0": {"id": "GhaHlmgBNoNfyCWzM9iT", "score": 17.066706}, "1": {"id": "rBaElmgBNoNfyCWzr0xa", "score": 13.03707}, "2": {"id": "NxaHlmgBNoNfyCWzeud4", "score": 10.507384}}, "report_text_highlights": ["The reporter stated that the patient was treated with <em>domperidone</em> (route and formulation unspecified,", "Action taken with <em>domperidone</em> and erythromycin was not reported.", "</p><p>Action taken with suspect drugs: ERYTHROMYCIN - Unknown; <em>DOMPERIDONE</em> - Unknown.", "</p><p>Therapy start date of <em>Domperidone</em> was provided as: --2010.", "</p><p>Duration of suspect drug \"<em>Domperidone</em>\" was reported as 5 years."], "drugname_highlights": ["<em>DOMPERIDONE</em>"]}

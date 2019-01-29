@@ -2,26 +2,25 @@ import green from 'material-ui/colors/green';
 import grey from 'material-ui/colors/grey';
 export default {
     pdfView: {
-        width: '100%',
-        height: 'calc(98vh - 220px)',
+        maxWidth: '100%',
+        height: 'auto',
         margin: 0,
-        overflow : 'auto'
+        overflow : 'hidden',
+        padding: 0,
     },
     commentSec: {
+        width: '100%',
+        margin: 0,
+        padding: 0,
+        bottom: 0,
+        height: 'auto',
         position: 'absolute',
-        width: '98.5%',
-        elevation: '4',
-        transition: '0.4s',
-        bottom: '0',
-        background: 'white',
-        zIndex: '3',
-        overflow : 'auto'
-
+        backgroundColor: '#fff',
     },
     quillArea: {
         width: '100%',
         margin: 0,
-        overflow: 'auto',
+        overflow: 'hidden',
         zIndex: '-1'
     },
 
@@ -35,28 +34,38 @@ export default {
     paperWindow: {
         height: 'calc(77% + 44px)',
     },
+    /* Generic Text Button Style */
     textButton:{
         color: '#1D1F83',
         cursor: 'pointer'
     },
+    /* Container for the edit and save buttons */
+    editFacet: {
+        marginBottom: 5,
+    },
+    /* Container for the legend */
     legend: {
         display: 'inline-block',
         backgroundColor: '#fff' ,
         bottom: 0,
-        width: 100,
+        width: 'auto',
         height: 'auto',
         listStyleType: 'none',
         float: 'right',
         margin: 0,
+        marginRight: 5,
         padding: 2,
-    },
-    root: {
-        display: 'flex',
-        alignItems: 'center',
     },
     wrapper: {
         margin: 10,
         position: 'relative',
+        overflow: 'scroll',
+    },
+    /* Not aprticularly useful */
+    quillText: {
+        overflow: 'scroll',
+        height: 'auto',
+        maxHeight: '70vh',
     },
     buttonSuccess: {
         backgroundColor: grey[400],
@@ -71,73 +80,43 @@ export default {
         marginTop: -12,
         marginLeft: 5,
     },
-    legendSquare: {
+    /* Legend Styles */
+    legendSquare: { /* Colored square templates, colors are defiend inline. */
         width: 10,
         height: 10,
         display: 'inline-block',
         position: 'relative',
         marginRight: 5,
     },
-    legendPair: {
+    legendPair: { /* The container for the text and squares. */
         display: 'flex',
-        //justifyContent: 'center',
         alignItems: 'center',
     },
+
     toolTipStyle: {
         position: 'relative',
         display: 'inline-block',
         borderBottom: '1px dotted black',
         fontSize: '12px',
     },
-    commentButton: {
-        background: 'white',
-        color: '#1317f2',
-        cursor: 'pointer',
-        padding: '5px',
-        width: '98.5%',
-        border: 'white',
-        textAlign: 'left'
-    },
+    /*  Inside of the comment collapse */
     commentContent: {
+        margin: 0,
         padding: '0 0px',
-        display: 'none',
+        display: 'flex',
         overflow: 'auto',
+        backgroundColor: '#fff',
     },
-    /*
-        toolTip: {
-          position: 'relative',
-          display: 'inline-block',
-            borderBottom: '1px dotted black',
-        },
-
-        toolTipText: {
-
-          visibility: 'hidden',
-            width: '120px',
-            backgroundColor: '#555',
-            color: '#fff',
-            textAlign: 'center',
-            borderRadius: '6px',
-            padding: '5px 0',
-            position: 'absolute',
-            zIndex: '1',
-            bottom: '125%',
-            left: '50%',
-            marginLeft: '-60px',
-            opacity: '0',
-            transition: 'opacity 0.3s'
-        },
-
-        toolTipAfter: {
-          content: '',
-            position: 'absolute',
-            top: '100%',
-            left: '50%',
-            marginLeft: '-5px',
-            borderWidth: '5px',
-            borderStyle: 'solid',
-            borderColor: '#555 transparent transparent transparent',
-
-        }
-        */
+    /* Comment button styles */
+    commentBtn: {
+        margin: 0,
+        padding: 10,
+        display: 'flex',
+        backgroundColor: '#dbf0ff',
+        alignItems: 'center',
+        cursor: 'pointer',
+        '&:hover':{
+            backgroundColor: '#dbf0ff'
+        }        
+    }
 };

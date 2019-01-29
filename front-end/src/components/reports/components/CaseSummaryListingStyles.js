@@ -13,9 +13,11 @@ export default {
   },
   expansionTitle: {
     display: 'flex',
-    justifyContent: 'center',
+    justifyContent: 'left',
     alignItems: 'center',
+    paddingLeft: 13,
     height: 56,
+    backgroundColor: '#fff',
     '&:hover':{
       backgroundColor: '#dbf0ff',
       cursor: 'pointer'

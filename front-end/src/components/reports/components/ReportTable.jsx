@@ -870,24 +870,7 @@ class ReportTable extends React.PureComponent {
             )
             : null
         }
-
         {/* ====== Snackbar for Notificaitons to the User ====== */}
-        <Snackbar
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'center',
-          }}
-          open={this.state.snackbarOpen}
-          onClose={this.handleCloseSnackbar}
-          transitionDuration={300}
-          autoHideDuration={3000}
-          SnackbarContentProps={{
-            'aria-describedby': 'message-id',
-          }}
-          message={
-            <span id="message-id" style={{ color: 'LightGreen' }} >{this.state.snackbarMessage}</span>
-          }
-        />
       </Paper>
       </div>
     );

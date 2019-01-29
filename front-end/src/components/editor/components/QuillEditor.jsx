@@ -334,12 +334,8 @@ class QuillEditor extends Component {
 
     display =() =>{
 
-        return <div>
-            {/* {this.customToolbar()} */}
-
-            {
-
-                (!this.state.loading)
+        return <div className={this.props.classes.quillText}>
+            { (!this.state.loading)
                     ? <ReactQuill
                         id={`${this.props.primaryid}` || 'react-quill'}
                         value = {this.state.report}
@@ -351,7 +347,6 @@ class QuillEditor extends Component {
                     />
                     : null
             }
-
         </div>
 
 
@@ -800,10 +795,15 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
         const searchWords= searchText.split(/\s/).filter(word => word)
 
         return (
-            <div className={`${this.props.classes.pdfView} container`} style = {{position: 'relative', left: '4px'}}>
-
+            <div className={this.props.classes.pdfView}>
                 <div className = {`${this.props.classes.quillArea}`} style = {{display:'inline-block' , height: ((this.state.commentsOn) ? '47%' : '90%') }}>
                     <ul className={this.props.classes.legend}>
+                        <div className={this.props.classes.editFacet}>
+                            <Typography type='button' className={this.props.classes.textButton} onClick={() => this.editMode()}>{(this.state.editModeOn) ? 'Stop Editing' : 'Edit Highlights'}</Typography>
+                            <Collapse isOpened={this.state.editModeOn}>
+                                <Typography type='button' className={this.props.classes.textButton} onClick={this.saveWork}>Save Highlights</Typography>
+                            </Collapse>
+                        </div>
                         <Typography type='button' className={this.props.classes.textButton} onClick={this.handleHideLegend}>{(this.state.legendShown) ? 'Hide' : 'Show'} Legend</Typography>
                         <Collapse isOpened={this.state.legendShown}>
                             <li><div className={this.props.classes.legendPair}><div className={this.props.classes.legendSquare} style={{backgroundColor: 'chartreuse'}} /><Typography>Drug</Typography></div></li>
@@ -900,65 +900,63 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
 
 
                 <div id="commentArea" className={this.props.classes.commentSec}>
-                    <Divider/>
-                    {/*data-toggle = 'collapse' target = 'commentContent'*/}
-                    <button className = {this.props.classes.commentButton} style = {{padding: '0px' }}onClick={() => this.showComments()}>
-                        {(this.state.commentsOn) ? <h5> Hide Comments </h5> : <h5> View Comments </h5>}
+                    <div className={this.props.classes.commentBtn} onClick={() => this.showComments()}>
+                        <Typography type='button' className={this.props.classes.textButton}>{(this.state.commentsOn) ? 'Hide' : 'Show'} Comments</Typography>
+                    </div>
+                    <Collapse isOpened={this.state.commentsOn}>
+                        <div className='commentContent'>
+                            <div id="commentsView">
+                                <h3>Comments</h3>
+                                <div id="commentList">
 
-                    </button>
+                                </div>
+                            </div>
+                            <div style={{padding: '4px'}}>
+                                <textarea id="comment" cols="120" rows="4">  </textarea>
+                            </div>
 
-                    <div id  = 'commentContent' style={{display: (this.state.commentsOn) ? 'block' : 'none'}}>
-                        <div id="commentsView">
-                            <h3>Comments</h3>
-                            <div id="commentList">
+                            <div style={{padding: '4px', display: 'inline-block'}}>
+                                <form id="radio-form" style={{display: 'inline-block'}}>
+                                    <input type="radio" name="viewable" value="private" checked="yes" style={{padding: '5px'}} defaultChecked/>Private
+                                    <input type="radio" name="viewable" value="public" style={{padding: '5px'}}/>Public
+                                </form>
+
+                                <Button id="MakeNote" style={{border: '2px solid #1d00ff', left: '30px'}}
+                                        onClick={() => this.commentMade()}> Make Note </Button>
+                                <Button
+                                    id="saveButton2"
+                                    raised
+                                    color="primary"
+                                    className={(this.state.success) ? this.props.classes.buttonSuccess : ''}
+                                    disabled={this.state.saving}
+                                    onClick={this.saveWork}
+                                    style={{ left: '40px'}}>
+
+                                    Save
+                                </Button>
+                                <MaterialTooltip
+                                    title="Delete Comment"
+                                    placement="top"
+                                    enterDelay={50}
+                                    classes={{
+                                        tooltip: this.props.classes.toolTipStyle,
+                                        popper: this.props.classes.tooltipStyle,
+                                    }}
+                                    style={{fontSize: '20pt',}}
+                                >
+                                    <button id="delete" style={{
+                                        borderRadius: '20px',
+                                        position: 'relative',
+                                        left: '650px',
+                                        border: '2px solid #ff0000'
+                                    }} onClick={() => this.commentDelete()}>
+                                        <img src={DeleteIcon} style={{width: '15px', height: '20px'}}/>
+                                    </button>
+                                </MaterialTooltip>
 
                             </div>
                         </div>
-                        <div style={{padding: '4px'}}>
-                            <textarea id="comment" cols="120" rows="4">  </textarea>
-                        </div>
-
-                        <div style={{padding: '4px', display: 'inline-block'}}>
-                            <form id="radio-form" style={{display: 'inline-block'}}>
-                                <input type="radio" name="viewable" value="private" checked="yes" style={{padding: '5px'}} defaultChecked/>Private
-                                <input type="radio" name="viewable" value="public" style={{padding: '5px'}}/>Public
-                            </form>
-
-                            <Button id="MakeNote" style={{border: '2px solid #1d00ff', left: '30px'}}
-                                    onClick={() => this.commentMade()}> Make Note </Button>
-                            <Button
-                                id="saveButton2"
-                                raised
-                                color="primary"
-                                className={(this.state.success) ? this.props.classes.buttonSuccess : ''}
-                                disabled={this.state.saving}
-                                onClick={this.saveWork}
-                                style={{ left: '40px'}}>
-
-                                Save
-                            </Button>
-                            <MaterialTooltip
-                                title="Delete Comment"
-                                placement="top"
-                                enterDelay={50}
-                                classes={{
-                                    tooltip: this.props.classes.toolTipStyle,
-                                    popper: this.props.classes.tooltipStyle,
-                                }}
-                                style={{fontSize: '20pt',}}
-                            >
-                                <button id="delete" style={{
-                                    borderRadius: '20px',
-                                    position: 'relative',
-                                    left: '650px',
-                                    border: '2px solid #ff0000'
-                                }} onClick={() => this.commentDelete()}>
-                                    <img src={DeleteIcon} style={{width: '15px', height: '20px'}}/>
-                                </button>
-                            </MaterialTooltip>
-
-                        </div>
-                    </div>
+                    </Collapse>
                 </div>
 
             </div>

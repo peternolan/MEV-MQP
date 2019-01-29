@@ -8,7 +8,23 @@
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "5.1.1",
     "eslint-plugin-promise": "^3.4.1",
-    "eslint-plugin-react": "^7.3.0"
+    "eslint-plugin-react": "^7.3.0",
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.3.1",
+    "@types/enzyme": "^3.1.15",
+    "@types/jest": "^23.3.13",
+    "babel-core": "^6.4.5",
+    "babel-jest": "^24.0.0",
+    "babel-loader": "^8.0.5",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.3.13",
+    "css-loader": "^2.1.0",
+    "enzyme": "^3.8.0",
+    "enzyme-adapter-react-16": "^1.8.0",
+    "jest": "^24.0.0",
+    "react-test-renderer": "^16.7.0",
+    "style-loader": "^0.23.1",
+    "webpack-cli": "^3.2.1"
   },
   "dependencies": {
     "@devexpress/dx-react-core": "1.0.0-beta.3",
@@ -48,7 +64,9 @@
     "redux-persist": "5.3.5",
     "redux-thunk": "2.2.0",
     "save": "^2.3.2",
-    "webpack": "3.7.1"
+    "source-map-loader": "^0.2.4",
+    "typescript": "^3.2.4",
+    "webpack": "^4.29.0"
   },
   "scripts": {
     "startLocal": "npm run env:devLocal && react-scripts start",
@@ -59,6 +77,30 @@
     "lint": "eslint --ext .js --ext .jsx src test",
     "env:devLocal": "cp environments/devLocal.env .env",
     "env:devRemote": "cp environments/devRemote.env .env",
-    "env:deploy": "cp environments/deploy.env .env"
+    "env:deploy": "cp environments/deploy.env .env",
+    "webpack": "webpack",
+    "coverage": "jest --coverage --coverageDirectory=output/coverage/jest"
+  },
+  "jest": {
+    "coverageReporters": [
+      "text",
+      "cobertura"
+    ],
+    "moduleFileExtensions": [
+      "js",
+      "jsx"
+    ],
+    "moduleDirectories": [
+      "./front-end/node_modules",
+      "node_modules",
+      "bower_components",
+      "shared"
+    ],
+    "moduleNameMapper": {
+      "\\.(css|less)$": "<rootDir>/__mocks__/styleMock.js",
+      "\\.(gif|ttf|eot|svg)$": "<rootDir>/__mocks__/fileMock.js",
+      
+      "^config$": "<rootDir>/configs/app-config.js"
+    }
   }
 }

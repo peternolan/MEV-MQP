@@ -16,8 +16,11 @@
   "homepage": "https://github.com/CTapply/MEV-MQP#readme",
   "dependencies": {
     "@ionic/app-scripts": "^3.2.2",
+    "@types/react": "^16.7.22",
+    "@types/react-dom": "^16.0.11",
     "ajv": "^6.7.0",
     "ajv-keywords": "^3.2.0",
+    "awesome-typescript-loader": "^5.2.1",
     "concurrently": "^3.5.0",
     "cross-os": "^1.2.2",
     "d3": "^5.7.0",
@@ -29,7 +32,10 @@
     "react-motion": "^0.5.2",
     "react-scripts": "^2.1.3",
     "react-transition-group": "^2.5.3",
-    "redis": "^2.8.0"
+    "redis": "^2.8.0",
+    "source-map-loader": "^0.2.4",
+    "typescript": "^3.2.4",
+    "webpack": "^4.29.0"
   },
   "scripts": {
     "start": "cross-os setup",
@@ -38,7 +44,47 @@
       "darwin": "concurrently -n \"cache,back-end,front-end\" \"./back-end/redis/src/redis-server --loadmodule back-end/redis/rejson.so\" \"npm start --prefix ./back-end\" \"npm run startLocal --prefix ./front-end\"",
       "linux": "concurrently -n \"cache,back-end,front-end\" \"./back-end/redis/src/redis-server --loadmodule back-end/redis/rejson.so\" \"npm start --prefix ./back-end\" \"npm run startLocal --prefix ./front-end\""
     },
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "webpack": "webpack",
+    "coverage": "jest --coverage --coverageDirectory=output/coverage/jest"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.3.1",
+    "@types/enzyme": "^3.1.15",
+    "@types/jest": "^23.3.13",
+    "babel-core": "^6.4.5",
+    "babel-jest": "^24.0.0",
+    "babel-loader": "^8.0.5",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.3.13",
+    "css-loader": "^2.1.0",
+    "enzyme": "^3.8.0",
+    "enzyme-adapter-react-16": "^1.8.0",
+    "jest": "^24.0.0",
+    "react-test-renderer": "^16.7.0",
+    "style-loader": "^0.23.1",
+    "webpack-cli": "^3.2.1"
+  },
+  "jest": {
+    "coverageReporters": [
+      "text",
+      "cobertura"
+    ],
+    "moduleFileExtensions": [
+      "js",
+      "jsx"
+    ],
+    "moduleDirectories": [
+      "./front-end/node_modules",
+      "node_modules",
+      "bower_components",
+      "shared"
+    ],
+    "moduleNameMapper": {
+      "\\.(css|less)$": "<rootDir>/__mocks__/styleMock.js",
+      "\\.(gif|ttf|eot|svg)$": "<rootDir>/__mocks__/fileMock.js",
+      "^react(.*)$": "<rootDir>/vendor/react-master$1",
+      "^config$": "<rootDir>/configs/app-config.js"
+    }
+  }
 }

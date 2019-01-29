@@ -16,6 +16,7 @@ export default {
         background: 'white',
         zIndex: '3',
         overflow : 'auto'
+
     },
     quillArea: {
         width: '100%',

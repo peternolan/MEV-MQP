@@ -345,8 +345,8 @@ class QuillEditor extends Component {
                         value = {this.state.report}
                         onChange={this.handleChange}
                         modules={this.modules}
-                        style ={{textAlign: 'justify', height: (this.state.commentsOn) ?  '20%' : '30%', boxShadow: 'none'}}
-                        theme="snow"
+                        style ={{textAlign: 'justify', border: 'none', height: (this.state.commentsOn) ?  '20%' : '30%', boxShadow: 'none'}}
+
                         readOnly
                     />
                     : null

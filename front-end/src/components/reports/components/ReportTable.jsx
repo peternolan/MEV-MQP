@@ -520,6 +520,9 @@ class ReportTable extends React.PureComponent {
 
         results = JSON.parse(data);
 
+        console.log(results);
+        console.log(results.results[0]);
+
         var printOut = '';
         var j = 0;
 
@@ -555,7 +558,9 @@ class ReportTable extends React.PureComponent {
 
   handleSearchResults = (array1, array2) => {
 
+    console.log(array1)
     this.props.printSearchResults(array1);
+
 
     this.setState({returnedResults : array1, returnedIds: array2});
 
@@ -709,7 +714,7 @@ class ReportTable extends React.PureComponent {
 
     (this.props.currentTab === 1) ?
         text = this.state.returnedResults.find(function (element) {
-
+          console.log(Object.getOwnPropertyNames(row.row));
           return element.id === row.row.id;
         })
 
@@ -718,6 +723,8 @@ class ReportTable extends React.PureComponent {
 
     var dummyNode = document.createElement('div');
 
+
+    //(this.props.currentTab === 1) ? dummyNode.innerHTML
 
 
       return (

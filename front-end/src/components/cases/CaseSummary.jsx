@@ -72,19 +72,12 @@ class CaseSummary extends Component {
   }
 
   componentWillMount() {
-    this.props.getCaseNameByID(this.props.caseID)
-      .then(rows => this.setState({
-        caseName: (rows[0] ? rows[0].name : ''),
-        caseDescription: (rows[0] ? rows[0].description : ''),
-      }, () => {
-        this.updateSummary();
-      }));
   }
 
   componentWillReceiveProps(incomingProps) {
     if (this.state.summaryCounter !== incomingProps.summaryCounter) {
       this.updateSummary();
-
+      console.log("COMPONENT WILL RECEIVE")
       this.setState({
         summaryCounter: incomingProps.summaryCounter,
       });
@@ -93,6 +86,14 @@ class CaseSummary extends Component {
 
   componentDidMount() {
     //d3.select(this.refs.wavePath)
+    this.props.getCaseNameByID(this.props.caseID)
+      .then(rows => this.setState({
+        caseName: (rows[0] ? rows[0].name : ''),
+        caseDescription: (rows[0] ? rows[0].description : ''),
+      }, () => {
+        console.log("COMPONENT DID MOUNT")
+        this.updateSummary();
+      }));
   }
 
   componentDidUpdate() {
@@ -451,7 +452,6 @@ class CaseSummary extends Component {
               data.push(data_all[j])
             }
       } 
-    
     } 
     return data;
   };
@@ -477,7 +477,6 @@ class CaseSummary extends Component {
     };
     var data = this.props.getInstances(reports);
     var formatted_data = fmt(data);
-    //console.log(formatted_data);
 
     var label = d3.select(this.refs.options).node().value
     if (label == "TODO"){
@@ -540,8 +539,9 @@ class CaseSummary extends Component {
     //rects.exit().remove();
   }
 
-  render() { {this.getReports();
-              this.updateReports();
+  render() { {
+            this.getReports();
+            this.updateReports();
             }
     return (
       <div key={this.state.caseName} style={{ width:'100%'}} >
@@ -563,7 +563,7 @@ class CaseSummary extends Component {
         <div key="highlighted_words">
           {this.state.highlightedWordsData.map((word) => {
             return(
-              <Typography key='body1' type='body1'>{word.name} ({word.count})</Typography>
+              <Typography type='body1'>{word.name} ({word.count})</Typography>
             )
           })}
         </div>

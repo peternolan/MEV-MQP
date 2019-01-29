@@ -1,7 +1,7 @@
 #!/bin/groovy
 pipeline {
   tools {
-    nodejs "v8.11.4"
+    nodejs 'default-nodejs'
   }
   agent any
   stages {

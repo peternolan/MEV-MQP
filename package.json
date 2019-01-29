@@ -44,6 +44,11 @@
     "react-select": "^1.2.1",
     "react-widgets": "^4.2.2",
     "redis": "^2.8.0",
+    "recharts": "^1.4.2",
+    "redux": "3.7.2",
+    "redux-persist": "5.3.5",
+    "redux-thunk": "2.2.0",
+    "save": "^2.3.2",
     "source-map-loader": "^0.2.4",
     "typescript": "^3.2.4",
     "webpack": "^4.29.0"

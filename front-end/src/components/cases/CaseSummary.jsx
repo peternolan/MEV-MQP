@@ -19,7 +19,8 @@ import ReadCaseIcon from "../../resources/ReadCaseIcon";
 import CaseIcon from "../../resources/CaseIcon";
 import * as d3 from "d3";
 import styles from "./CaseSummaryStyles.js";
-import MEVColors from '../../theme'
+import MEVColors from '../../theme';
+import {Collapse} from 'react-collapse';
 class CaseSummary extends Component {
 
   static propTypes = {
@@ -68,6 +69,7 @@ class CaseSummary extends Component {
       searchedReports:[],
       searchOption: '',
       graphdata: 'dataone',
+      keywordsExposed: false,
     };
   }
 
@@ -456,6 +458,12 @@ class CaseSummary extends Component {
     return data;
   };
 
+  handleKeywordToggle = () => {
+    this.setState({
+      keywordsExposed: !this.state.keywordsExposed
+    });
+  }
+
   drawChart = (reports) => {
     function fmt(data){
       var data2 = [],keys = [];
@@ -528,9 +536,9 @@ class CaseSummary extends Component {
         .enter()
         .append("rect")
         .attr("x", d=>x(d.start/total_reports))
-        .attr("y", text_height)
+        .attr("y", 0)
         .attr("width", d=> x((d.end-d.start)/total_reports))
-        .attr("height", text_height*1.5)
+        .attr("height", '50px')
         .attr("fill", (d,i)=>"#"+this.getFillColor(i,counts.length))
         .attr("stroke-width", 1)
         .attr("stroke", "#FFF")
@@ -544,7 +552,7 @@ class CaseSummary extends Component {
             this.updateReports();
             }
     return (
-      <div key={this.state.caseName} style={{ width:'100%'}} >
+      <div key={this.state.caseName} className={this.props.classes.summaryContent} >
         <div key="upper_part" style={{paddingLeft: 10}}>
           <Typography type='body1'>{this.state.caseDescription || 'No Description' }</Typography>
           <Typography type='button'>Total Count of Reports: {this.state.reportsInCase.length} </Typography>
@@ -558,15 +566,19 @@ class CaseSummary extends Component {
             </select>
           </Typography>
         </div>
-        <div key="bargraph" id='bargraph' ref='bargraph'><svg ref="svg" viewBox="0 0 100 100" width="100%"></svg> </div>
-        <Typography type='button' style={{padding:10}}>Keyword Summary</Typography>
-        <div key="highlighted_words">
-          {this.state.highlightedWordsData.map((word) => {
-            return(
-              <Typography type='body1'>{word.name} ({word.count})</Typography>
-            )
-          })}
-        </div>
+        <div key="bargraph" id='bargraph' ref='bargraph'><svg ref="svg" viewBox="0 0 100 100" width="100%" height='75'></svg> </div>
+        <Typography type='button' className={this.props.classes.textButton} onClick={this.handleKeywordToggle}>Keyword Summary</Typography>
+        <Collapse isOpened={this.state.keywordsExposed}>
+          <div key="highlighted_words">
+            {(this.state.highlightedWordsData.length === 0) ? 
+             <Typography type='body1' style={{padding: 5, paddingLeft: 15}}>There are no annotated reports in this case for us to build keywords from; try annotating one of the reports.</Typography>
+            : this.state.highlightedWordsData.map((word) => {
+              return(
+                <Typography type='body1'>{word.name} ({word.count})</Typography>
+              )
+            })}
+          </div>
+        </Collapse>
       </div>
     );
   }

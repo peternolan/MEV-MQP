@@ -56,7 +56,15 @@ class CaseSummaryListing extends React.PureComponent {
       default:
         return (
           <div key={bin.case_id} >
-            <div id={bin.name} className={this.props.classes.expansionTitle} onClick={(e) => this.handleCaseExpand(e)}><Typography id={bin.name} type='button'>{bin.name}</Typography></div>
+            <div id={bin.name} className={this.props.classes.expansionTitle} onClick={(e) => this.handleCaseExpand(e)}
+              style={{backgroundColor:(this.state.expandedPanelName === bin.name) ? '#dbf0ff' : '#fff'}}>
+              <CaseIcon
+                  width={30}
+                  height={30}
+                  style={{marginRight:10}}
+              />
+              <Typography id={bin.name} type='button'>{bin.name}</Typography>
+            </div>
             <Collapse isOpened={(this.state.expandedPanelName === bin.name) ? true : false}>
               <CaseSummary
                 caseID={bin.case_id}

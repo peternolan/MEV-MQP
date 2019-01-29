@@ -30,7 +30,7 @@ export default {
   },
   ReportList: {
     maxheight: 'calc(100% - 122px)',
-    width: '100vw',
+    maxWidth: '100vw',
     display: 'inline-block',
     boxShadow: 'none'
   },

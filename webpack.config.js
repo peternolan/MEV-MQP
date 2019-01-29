@@ -10,8 +10,7 @@ module.exports = {
         test: /\.(js|jsx)$/
       },
       {use: ['style-loader','css-loader'], test: /\.css$/},
-      //{use: 'url-loader', test: /\.gif$/},
-      {use: ['url-loader'], test: /\.(png|svg|jpg|gif|woff|woff2|eot|ttf|otf)$/},
+      {use: 'url-loader', test: /\.(png|svg|jpg|gif|woff|woff2|eot|ttf|otf)$/},
     ],
   },
   mode:"development",

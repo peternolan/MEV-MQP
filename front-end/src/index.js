@@ -8,7 +8,7 @@ import createHistory from 'history/createBrowserHistory';
 import { Route } from 'react-router';
 import { ConnectedRouter, routerReducer, routerMiddleware } from 'react-router-redux';
 import { persistStore, persistCombineReducers } from 'redux-persist';
-import { PersistGate } from 'redux-persist/es/integration/react';
+import { PersistGate } from 'redux-persist/lib/integration/react';
 import thunk from 'redux-thunk';
 import storage from 'redux-persist/lib/storage/session';
 

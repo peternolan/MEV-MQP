@@ -1,6 +1,6 @@
 export default {
     summaryContainer: {
-        overflow: 'scroll',
+        overflow: 'hidden',
         height: 'calc(100vh - 122px)',
         borderRadius: 0,
         borderLeftWidth: '1px',
@@ -29,10 +29,10 @@ export default {
         cursor: 'pointer',
     },
     summarySummary: {
-        fontSize: '12px',
         paddingTop: 0,
         paddingLeft: 25,
         width: '100%',
+        maxHeight: '10vh',
         height: 'auto',
         overflow: 'scroll',
     },

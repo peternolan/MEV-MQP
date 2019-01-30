@@ -19,7 +19,8 @@ import ReadCaseIcon from "../../resources/ReadCaseIcon";
 import CaseIcon from "../../resources/CaseIcon";
 import * as d3 from "d3";
 import styles from "./CaseSummaryStyles.js";
-import MEVColors from '../../theme'
+import MEVColors from '../../theme';
+import {Collapse} from 'react-collapse';
 class CaseSummary extends Component {
 
   static propTypes = {
@@ -68,23 +69,17 @@ class CaseSummary extends Component {
       searchedReports:[],
       searchOption: '',
       graphdata: 'dataone',
+      keywordsExposed: false,
     };
   }
 
   componentWillMount() {
-    this.props.getCaseNameByID(this.props.caseID)
-      .then(rows => this.setState({
-        caseName: (rows[0] ? rows[0].name : ''),
-        caseDescription: (rows[0] ? rows[0].description : ''),
-      }, () => {
-        this.updateSummary();
-      }));
   }
 
   componentWillReceiveProps(incomingProps) {
     if (this.state.summaryCounter !== incomingProps.summaryCounter) {
       this.updateSummary();
-
+      console.log("COMPONENT WILL RECEIVE")
       this.setState({
         summaryCounter: incomingProps.summaryCounter,
       });
@@ -93,6 +88,14 @@ class CaseSummary extends Component {
 
   componentDidMount() {
     //d3.select(this.refs.wavePath)
+    this.props.getCaseNameByID(this.props.caseID)
+      .then(rows => this.setState({
+        caseName: (rows[0] ? rows[0].name : ''),
+        caseDescription: (rows[0] ? rows[0].description : ''),
+      }, () => {
+        console.log("COMPONENT DID MOUNT")
+        this.updateSummary();
+      }));
   }
 
   componentDidUpdate() {
@@ -449,10 +452,15 @@ class CaseSummary extends Component {
               data.push(data_all[j])
             }
       } 
-    
     } 
     return data;
   };
+
+  handleKeywordToggle = () => {
+    this.setState({
+      keywordsExposed: !this.state.keywordsExposed
+    });
+  }
 
   drawChart = (reports) => {
     function fmt(data){
@@ -475,7 +483,6 @@ class CaseSummary extends Component {
     };
     var data = this.props.getInstances(reports);
     var formatted_data = fmt(data);
-    //console.log(formatted_data);
 
     var label = d3.select(this.refs.options).node().value
     if (label == "TODO"){
@@ -539,11 +546,12 @@ class CaseSummary extends Component {
     //rects.exit().remove();
   }
 
-  render() { {this.getReports();
-              this.updateReports();
+  render() { {
+            this.getReports();
+            this.updateReports();
             }
     return (
-      <div key={this.state.caseName} style={{ width:'100%'}} >
+      <div key={this.state.caseName} className={this.props.classes.summaryContent} >
         <div key="upper_part" style={{paddingLeft: 10}}>
           <Typography type='body1'>{this.state.caseDescription || 'No Description' }</Typography>
           <Typography type='button'>Total Count of Reports: {this.state.reportsInCase.length} </Typography>
@@ -557,15 +565,19 @@ class CaseSummary extends Component {
             </select>
           </Typography>
         </div>
-        <div key="bargraph" id='bargraph' ref='bargraph'><svg ref="svg" viewBox="0 0 100 100" width="100%"></svg> </div>
-        <Typography type='button' style={{padding:10}}>Keyword Summary</Typography>
-        <div key="highlighted_words">
-          {this.state.highlightedWordsData.map((word) => {
-            return(
-              <Typography key='body1' type='body1'>{word.name} ({word.count})</Typography>
-            )
-          })}
-        </div>
+        <div key="bargraph" id='bargraph' ref='bargraph'><svg ref="svg" viewBox="0 0 100 100" width="100%" height='75'></svg> </div>
+        <Typography type='button' className={this.props.classes.textButton} onClick={this.handleKeywordToggle}>Keyword Summary</Typography>
+        <Collapse isOpened={this.state.keywordsExposed}>
+          <div key="highlighted_words">
+            {(this.state.highlightedWordsData.length === 0) ? 
+             <Typography type='body1' style={{padding: 5, paddingLeft: 15}}>There are no annotated reports in this case for us to build keywords from; try annotating one of the reports.</Typography>
+            : this.state.highlightedWordsData.map((word) => {
+              return(
+                <Typography type='body1'>{word.name} ({word.count})</Typography>
+              )
+            })}
+          </div>
+        </Collapse>
       </div>
     );
   }

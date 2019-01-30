@@ -11,13 +11,16 @@ export default {
     borderColor: 'rgba(0, 0, 0, 0.08)',
     borderStyle: 'solid'
   },
-  expansionPanelSummary: {
-    //justifyContent: 'center',
-  },
-  styledEPSummary: {
-    maxHeight: 56,
+  expansionTitle: {
+    display: 'flex',
+    justifyContent: 'left',
+    alignItems: 'center',
+    paddingLeft: 13,
+    height: 56,
+    backgroundColor: '#fff',
     '&:hover':{
-      backgroundColor:'#dbf0ff',
+      backgroundColor: '#dbf0ff',
+      cursor: 'pointer'
     },
   },
 };

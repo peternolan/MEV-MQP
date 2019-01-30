@@ -138,12 +138,7 @@ class ReportPanel extends React.PureComponent {
     renderInside = (primaryID) => {
         return (
             <div key={primaryID}>
-                <Collapse isOpened={this.state.summaryShown}>
-                    <div className={this.props.classes.summarySummary}>
-                        <Typography>Cupcake ipsum dolor sit amet gingerbread marzipan cookie topping. Chocolate bar toffee carrot cake ice cream lollipop carrot cake tootsie roll. Sesame snaps marzipan carrot cake gummies cake croissant topping tart. Lollipop bear claw brownie halvah liquorice tiramisu. Oat cake muffin jelly caramels biscuit sugar plum cookie tart oat cake. Candy canes powder cheesecake sweet roll fruitcake jujubes lollipop bear claw.</Typography>
-                    </div>
-                </Collapse>
-                <Divider />
+                
                 <div>
                     {(!this.state.searching)
                         ? (<div>
@@ -172,8 +167,14 @@ class ReportPanel extends React.PureComponent {
 
     render = () => {
         return (
-            <Paper id="summary-container" className={this.props.classes.summaryContainer} elevation={4}>
+            <Paper id='summary-container' className={this.props.classes.summaryContainer} elevation={4}>
                 <Paper id='summarytitle' className={this.props.classes.summaryTitle}><Typography type="title">Report {this.props.primaryid}<div onClick={this.handleHideSummary} className={this.props.classes.hideBtn}><Typography type='button'>{this.state.summaryShown ? 'Hide' : 'Show'} Summary</Typography></div></Typography></Paper>
+                <Collapse isOpened={this.state.summaryShown}>
+                    <div className={this.props.classes.summarySummary}>
+                        <Typography>Cupcake ipsum dolor sit amet gingerbread marzipan cookie topping. Chocolate bar toffee carrot cake ice cream lollipop carrot cake tootsie roll. Sesame snaps marzipan carrot cake gummies cake croissant topping tart. Lollipop bear claw brownie halvah liquorice tiramisu. Oat cake muffin jelly caramels biscuit sugar plum cookie tart oat cake. Candy canes powder cheesecake sweet roll fruitcake jujubes lollipop bear claw.</Typography>
+                    </div>
+                </Collapse>
+                <Divider />
                 {this.renderInside(this.props.primaryid)}
                 <Paper id='commentsection' className={this.props.classes.commentSection}></Paper>
             </Paper>

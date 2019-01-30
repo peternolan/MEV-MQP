@@ -152,7 +152,7 @@ class ReportTable extends React.PureComponent {
       this.props.getCaseReports(this.props.bin, this.props.userID)
       .then(reports => {
         this.props.setAllReports(reports);
-          console.log("setAllReports " + Object.getOwnPropertyNames(reports[0]));
+
 
         this.setState({
         data: reports,
@@ -174,9 +174,9 @@ class ReportTable extends React.PureComponent {
   }
 
   componentWillReceiveProps(nextProps){
-    // console.log(this.state.allData)
+
     if (nextProps.searchedReports.length!==0){
-      console.log(nextProps);
+
       this.setState({ data:nextProps.searchedReports});
     }
   }
@@ -433,7 +433,7 @@ class ReportTable extends React.PureComponent {
 
 
     this.setState({selected: id}, function() {
-      console.log("Report to Panel " + id);
+
 
       this.props.handleViewReport(id);
     });
@@ -467,7 +467,7 @@ class ReportTable extends React.PureComponent {
     switch (this.props.bin) {
       case 'all reports':
         incase = this.state.currentlyInCase[props.tableRow.rowId];
-        console.log("incase " + incase);
+
         if (!incase) {
           backgroundColor = '';
         } else {
@@ -485,9 +485,7 @@ class ReportTable extends React.PureComponent {
             : ((this.props.supportiveChosen === true) ? 'rgba(255, 0, 255, 0.25)' : this.COLORS.supportive );
 
     }
-    {console.log(props.tableRow.rowId.toString())}
-    {console.log(this.state.selected)}
-    {console.log((props.tableRow.rowId.toString() === this.state.selected) ? 'blue' : 'none')}
+
     return (
 
         <Table.Row
@@ -519,18 +517,10 @@ class ReportTable extends React.PureComponent {
 
     this.props.executeSearch(contents)
       .then((data)=> {
-        console.log("data " + data);
+
         results = JSON.parse(data);
-        console.log(results);
-        console.log(results.results[0].id);
-
-
-        //console.log("this.state.returnedResults " +  this.state.returnedResults);
 
         var printOut = '';
-
-        console.log("length " + results.results.length);
-
         var j = 0;
 
         var allGood = true;
@@ -538,17 +528,9 @@ class ReportTable extends React.PureComponent {
           while (results.results[j] && allGood) {
           if (Number.isInteger(Number(j))) {
 
-            console.log(results.results[j].id);
-
-            //printOut = printOut.concat(results.results[j].id + '\n' + results.results[j].body_highlights[0] + '\n');
-
-              console.log("resultsArr j " + j );
 
               resultsArr[j] = results.results[j];
               resultIds[j] = results.results[j].id;
-
-
-              console.log( "resultsArr at j" + resultsArr[j]);
 
               j++;
 
@@ -556,15 +538,11 @@ class ReportTable extends React.PureComponent {
           }
           else {
               allGood = false;
-              console.log("NaN")
+
           }
         }
 
-        console.log("Outside While");
-          console.log("resultsArr " +  resultsArr);
 
-          //console.log("returnedResults" + this.state.returnedResults);
-          //document.getElementById("searchResults").value = printOut;
           this.handleSearchResults(resultsArr, resultIds);
 
 
@@ -585,7 +563,7 @@ class ReportTable extends React.PureComponent {
   };
 
   handleToggleChange = primaryid => (event, checked) => {
-      console.log("handleToggleChange");
+
     if (!(this.props.bin === 'all reports' || this.props.bin === 'read' || this.props.bin === 'trash')) {
       this.handleMoveReport(
         primaryid,
@@ -700,7 +678,7 @@ class ReportTable extends React.PureComponent {
    */
   renderDetailRowContent = row => {
       var text = '';
-      console.log("returned results " + this.state.returnedResults);
+
 
     console.log(this.props.currentTab === 1);
     let incase;
@@ -710,7 +688,7 @@ class ReportTable extends React.PureComponent {
     switch (this.props.bin) {
       case 'all reports':
         incase = this.state.currentlyInCase[row.row.id];
-        console.log("incase " + incase);
+
         if (!incase) {
           backgroundColor = '';
         } else {
@@ -731,8 +709,7 @@ class ReportTable extends React.PureComponent {
 
     (this.props.currentTab === 1) ?
         text = this.state.returnedResults.find(function (element) {
-          console.log("row " + row.row.id);
-          console.log("element " + element.id);
+
           return element.id === row.row.id;
         })
 
@@ -740,15 +717,7 @@ class ReportTable extends React.PureComponent {
         null;
 
     var dummyNode = document.createElement('div');
-    /*
-    console.log("test " + text.body_highlights[0]);
 
-    dummyNode.innerHTML = text.body_highlights[0];
-
-    console.log("test " + dummyNode.innerText);
-    */
-
-    (this.props.currentTab === 1) ? dummyNode.innerHTML = text.body_highlights[0] : null;
 
 
       return (
@@ -894,24 +863,7 @@ class ReportTable extends React.PureComponent {
             )
             : null
         }
-
         {/* ====== Snackbar for Notificaitons to the User ====== */}
-        <Snackbar
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'center',
-          }}
-          open={this.state.snackbarOpen}
-          onClose={this.handleCloseSnackbar}
-          transitionDuration={300}
-          autoHideDuration={3000}
-          SnackbarContentProps={{
-            'aria-describedby': 'message-id',
-          }}
-          message={
-            <span id="message-id" style={{ color: 'LightGreen' }} >{this.state.snackbarMessage}</span>
-          }
-        />
       </Paper>
       </div>
     );

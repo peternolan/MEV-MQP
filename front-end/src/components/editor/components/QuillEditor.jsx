@@ -638,17 +638,20 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
 
         if (this.state.editModeOn) {
             //this.setContainer(`react-quill-${this.state.primaryId}-2`);
+
             var x = document.getElementById(`react-quill-${this.props.primaryid}`);
             x.style.display = "none";
 
+            /*
             var yyy = document.getElementById(`saveButton1`);
             yyy.style.display = "none";
 
             var yx = document.getElementById(`saveButton1b`);
             yx.style.display = "none";
-
+            */
             var y = document.getElementById(`react-quill-${this.props.primaryid}-2`);
             y.style.display = "block";
+
 
             this.setState({editModeOn: false});
             this.saveWork();
@@ -656,18 +659,22 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
             //this.render();
         }
         else {
+
             //this.setContainer(`react-quill-${this.state.primaryId}`);
             var a = document.getElementById(`react-quill-${this.props.primaryid}-2`);
             a.style.display = "none";
 
+            /*
             var cc = document.getElementById(`saveButton1`);
             cc.style.display = "inline-block";
 
             var ca = document.getElementById(`saveButton1b`);
             ca.style.display = "inline-block";
 
+            */
             var b = document.getElementById(`react-quill-${this.props.primaryid}`);
             b.style.display = "block";
+
 
             this.setState({editModeOn: true});
             //this.render();
@@ -682,43 +689,43 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
 
     customToolbar = () => (
 
-        <div id={`react-quill-${this.state.primaryId}`} style={{display: 'none'}}>
+        <div id={`react-quill-${this.state.primaryId}`} style={{height: 'calc(7vh)', display: 'none'}}>
 
             <select defaultValue="false" className="ql-header" style={{ width: '100px', height: '36px', margin: '4px' }}>
                 <option value="1" />
                 <option value="2" />
                 <option value="false" />
             </select>
-            <select defaultValue="justify" className="ql-align" style={{ width: '50px', height: '36px', margin: '4px' }}>
+            <select defaultValue="justify" className="ql-align" style={{ width: '30px', height: '20px', margin: '4px' }}>
                 <option value="center" />
                 <option value="right" />
                 <option value="justify" />
             </select>
-            <Button className="ql-colorBackground" value={annotationColors.drug} style={{ padding: '0px', margin: '2px', background: annotationColors.drug}}>
+            <Button className="ql-colorBackground" value={annotationColors.drug} style={{ minWidth: '72px', padding: '0px', margin: '2px', background: annotationColors.drug}}>
                 Drug
             </Button>
-            <Button className="ql-colorBackground" value={annotationColors.reaction} style={{ padding: '0px', margin: '2px', background: annotationColors.reaction }}>
+            <Button className="ql-colorBackground" value={annotationColors.reaction} style={{ minWidth: '72px', padding: '0px', margin: '2px', background: annotationColors.reaction }}>
                 Adverse Reaction
             </Button>
-            <Button className="ql-colorBackground" value={annotationColors.dosage} style={{ padding: '0px', margin: '2px', background: annotationColors.dosage }}>
+            <Button className="ql-colorBackground" value={annotationColors.dosage} style={{ minWidth: '72px', padding: '0px', margin: '2px', background: annotationColors.dosage }}>
                 Dosage
             </Button>
-            <Button className="ql-colorBackground" value={annotationColors.age} style={{ padding: '0px', margin: '2px', background: annotationColors.age }}>
+            <Button className="ql-colorBackground" value={annotationColors.age} style={{ minWidth: '72px', padding: '0px', margin: '2px', background: annotationColors.age }}>
                 Age
             </Button>
-            <Button className="ql-colorBackground" value={annotationColors.sex} style={{ padding: '0px', margin: '2px', background: annotationColors.sex }}>
+            <Button className="ql-colorBackground" value={annotationColors.sex} style={{ minWidth: '72px', padding: '0px', margin: '2px', background: annotationColors.sex }}>
                 Gender
             </Button>
-            <Button className="ql-colorBackground" value={annotationColors.weight} style={{ padding: '0px', margin: '2px', background: annotationColors.weight }}>
+            <Button className="ql-colorBackground" value={annotationColors.weight} style={{ minWidth: '72px', padding: '0px', margin: '2px', background: annotationColors.weight }}>
                 Weight
             </Button>
-            <Button className="ql-colorBackground" value={annotationColors.indication} style={{ padding: '0px', margin: '2px', background: annotationColors.indication }}>
+            <Button className="ql-colorBackground" value={annotationColors.indication} style={{minWidth: '72px',  padding: '0px', margin: '2px', background: annotationColors.indication }}>
                 Indication
             </Button>
-            <Button className="ql-colorBackground" value={annotationColors.interesting} style={{ padding: '0px', margin: '2px', background: annotationColors.interesting }}>
+            <Button className="ql-colorBackground" value={annotationColors.interesting} style={{ minWidth: '72px', padding: '0px', margin: '2px', background: annotationColors.interesting }}>
                 Interesting
             </Button>
-            <Button className="ql-colorBackground" value="" style={{ padding: '0px', margin: '2px', minWidth:'50px', border: '1px solid black',  background: annotationColors.clear }}>
+            <Button className="ql-colorBackground" value="" style={{ padding: '0px', margin: '2px', minWidth:'72px', border: '1px solid black',  background: annotationColors.clear }}>
                 Clear
             </Button>
 
@@ -732,8 +739,8 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
                     }}
                     style ={{ fontSize: '20pt',}}
                 >
-                    <Button style={{ padding: '0px', margin: '2px', minHeight: '2px', minWidth:'2px', border: '1px solid black',
-                        borderRadius: '15px',  background: annotationColors.clear, left: '10px', bottom: '0px'}}>
+                    <Button style={{ padding: '0px', margin: '1 px', minHeight: '2px', minWidth:'2px', border: '1px solid black',
+                        borderRadius: '15px',  background: annotationColors.clear, bottom: '0px'}}>
                         ? </Button>
                 </MaterialTooltip>
 
@@ -752,9 +759,7 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
     customToolbar2 = () => (
 
         <div id={`react-quill-${this.props.primaryid}-2`} style={{ padding: '6px' }} ref = 'toolbar'>
-            <Button id={`edit-${this.props.primaryid}`} style={{color: 'white', background: annotationColors.edit}} onClick = {() => this.editMode()} >
-                Annotate
-            </Button>
+
         </div>
     );
 
@@ -817,30 +822,6 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
                             <li><div className={this.props.classes.editButton}></div></li>
                         </Collapse>
                     </ul>
-                    <div className={this.props.classes.wrapper} style={{display: 'inline-block'}}>
-                        {(this.state.editModeOn) ?
-                            (<Button style={{color: 'white', background: annotationColors.edit}} onClick = {() => this.editMode()} >
-                                    Stop Editing
-                                </Button>
-
-                            ) : null
-                        }
-                        {this.state.saving &&
-                        <CircularProgress
-                            size={24}
-                            className={this.props.classes.buttonProgress}
-                        />}
-                        <Button
-                            id = "saveButton1"
-                            raised
-                            color="primary"
-                            className={(this.state.success) ? this.props.classes.buttonSuccess : ''}
-                            disabled={this.state.saving}
-                            onClick={this.saveWork}
-                            style = {{display: 'none', marginLeft: 2, padding: 0,}}>
-                            Save
-                        </Button>
-                    </div>
 
                 {/* ====== Quill editor for Annotating the Report Text ====== */}
 
@@ -866,35 +847,6 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
                     }
 
 
-                {/* <!--</Paper>--> */}
-
-                <div className={this.props.classes.wrapper} style={{display: 'inline-block'}}>
-                    {(this.state.editModeOn) ?
-                        (<Button style={{color: 'white', background: annotationColors.edit}} onClick = {() => this.editMode()} >
-                            Stop Editing
-                        </Button>
-
-                        ) : null
-                    }
-                    {this.state.saving &&
-                    <CircularProgress
-                        size={24}
-                        className={this.props.classes.buttonProgress}
-                    />}
-
-                    <Button
-                        id="saveButton1b"
-                        raised
-                        color="primary"
-                        className={(this.state.success) ? this.props.classes.buttonSuccess : ''}
-                        disabled={this.state.saving}
-                        onClick={this.saveWork}
-                        style={{display: 'none', marginLeft: '2px'}}>
-                        Save
-                    </Button>
-
-
-                </div>
 
             </div>
 

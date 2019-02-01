@@ -213,13 +213,10 @@ class TopNavigation extends Component {
                   }}
               >
                 <Paper className={`${this.props.classes.filterPaper} pull-right`} onClick={this.handleClearFilters} style = {{
-                    cursor: 'pointer', display: 'inline-block', position: 'relative' , height : '37px'}} elevation={4}>
+                    textAlign: 'center', cursor: 'pointer', display: 'inline-block', position: 'relative' , height : '37px'}} elevation={4}>
 
-                    <div style={{transform: `translateX(${97 - 13}px)`, color: 'red', position: 'relative', top: '7px',  display: 'inline-block', fontSize: '20px'}}>
-                        X
-                    </div>
-                    <Typography type="subheading" align="center" style={{ top: '4px', position: 'relative' ,  display: 'inline-block', lineHeight: '2.3rem' }} >
-                        Clear Filters
+                    <Typography type="subheading" align="center" style={{   display: 'inline-block', lineHeight: '2.3rem' }} >
+                        Clear Filters <span style = {{position: 'relative' , top: '3px', fontSize: '20px'}}> X </span>
                     </Typography>
                 </Paper>
               </MaterialTooltip>

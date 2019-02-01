@@ -13,10 +13,9 @@ const styles = {
   filterPaper: {
     padding: '0px',
     width: '100px',
-    height: '40px',
+    height: '37px',
     margin: '4px',
 
-    borderRadius: '20px',
     transition: '.05s',
 
     cursor: 'pointer'
@@ -221,14 +220,11 @@ class CurrentlySelectedFilters extends Component {
                   (key !== 'init_fda_dt') ?
 
                       (
-                          <Paper className={this.props.classes.filterPaper} style = {{top: '9px', position: 'relative',  display: 'inline-block' }}
+                          <Paper className={this.props.classes.filterPaper} style = {{bottom: '19px', position: 'relative' ,display: 'inline-block' }}
                                  elevation={4} key={key} name={key} onClick={this.handleFilterClickToggle(key)}>
 
-                            <div style={{transform: `translateX(${93 - 13}px)`, color: 'red', position: 'relative', top: '7px',fontSize: '20px'}}>
-                              X
-                            </div>
 
-                              <Typography align={'center'} style={{bottom: '17px', position: 'relative'}}>
+                              <Typography align={'center'} style={{fontSize: '12px', top: '9px', position: 'relative'}}>
                                 {this.filterTitles[key]}
                               </Typography>
 

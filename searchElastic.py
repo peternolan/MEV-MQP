@@ -84,7 +84,7 @@ for result in results:
     
     for key in dir(result.meta.highlight):
         highlight = list(eval("result.meta.highlight."+key))
-        resObj[key+"_highlights"] = (highlight if highlight  else [])
+        resObj["results"]["index"][key+"_highlights"] = (highlight if highlight  else [])
 
         
 if LOGGING:

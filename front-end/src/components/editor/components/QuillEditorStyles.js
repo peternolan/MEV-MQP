@@ -21,7 +21,8 @@ export default {
         width: '100%',
         margin: 0,
         overflow: 'hidden',
-        zIndex: '-1'
+        zIndex: '-1',
+        borderColor:'white'
     },
 
     dialog: {

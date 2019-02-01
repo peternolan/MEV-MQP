@@ -178,7 +178,7 @@ class ReportList extends Component {
   };
 
   printSearchResults = (array) => {
-        this.setState({returnedResults: array}, () => {console.log("this.state.returnedResults " +  this.state.returnedResults)});
+        this.setState({returnedResults: array}, () => {console.log(this.state.returnedResults)});
 
 
     };

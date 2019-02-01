@@ -4,5 +4,6 @@ export default {
     height: '75%',
     margin: 'auto',
     padding: '10px',
+    borderColor: 'white',
   },
 };

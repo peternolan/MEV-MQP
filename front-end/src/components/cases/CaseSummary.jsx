@@ -174,13 +174,13 @@ class CaseSummary extends Component {
     var highlightedWords=[];
     const barChartData = Object.keys(this.state.tags).reduce((acc, key) => {
       return acc.concat({
-        name: (key.toUpperCase() === 'SEX') ? 'GENDER' : key.toUpperCase(),
+        name: (key.toUpperCase() === 'SEX') ? 'GENDER' : key.toUpperCase(),//why are they replacing SEX with GENDER?
         count: this.state.tags[key].length,
       });
     }, []);
 
     /********  To get the highlighed words */
-
+    console.log(this.state.tags)
     Object.keys(this.state.tags).map((keyName) => {
       var x = this.state.tags[keyName];
       Object.keys(x).map((values) => {
@@ -268,7 +268,7 @@ class CaseSummary extends Component {
       });
   };
 
-
+  //this function is called once for each report in all cases
   updateGraphs = () => {
     /********* reports assigned to the variable */
     this.props.getReportsInCases(this.props.userID, this.state.caseName)
@@ -346,7 +346,7 @@ class CaseSummary extends Component {
   COLORS = {
     supportive: '#0CC8E8',
     primary: '#0CE88E',
-      selected: '#ffff00'
+    selected: '#ffff00'
   };
 
   /************ when case changes, update the reports */
@@ -362,8 +362,6 @@ class CaseSummary extends Component {
   handleSearchCaseChange = () =>{
     this.props.updateTab('searched reports');
     // this.props.updateSearchedTab(this.state.searchedReports);
-
-
   };
 
   handleDataChange = (event) => {
@@ -511,7 +509,7 @@ class CaseSummary extends Component {
         .append("g")
         .attr("class", d=>d+ " bar")
         .attr("transform", (d,i)=>{return "translate("+ 0+","+(20*i)+")"});
-
+/*
     let text = svg.select(".bar").selectAll("text")
         .data(this.refs.options.selectedOptions)
         .enter()
@@ -522,23 +520,24 @@ class CaseSummary extends Component {
         .style("text-anchor", "mid")
         .style("alignment-baseline", "hanging");
 
-      console.log(this.refs.options)
+    console.log(this.refs.options)
 
     let textelmt = text.node();
     //console.log(textelmt);
     if(textelmt != null){
       var text_height = textelmt.getBBox().height;
     }
+*/
     var total_reports = reports.length;
     //console.log(x);
     let rects = svg.selectAll(".bar").selectAll("rect")
         .data(counts)
         .enter()
         .append("rect")
-        .attr("x", d=>x(d.start/total_reports))
+        .attr("x", d=>x(d.start/total_reports)+"%")
         .attr("y", 0)
-        .attr("width", d=> x((d.end-d.start)/total_reports))
-        .attr("height", '50px')
+        .attr("width", d=> x((d.end-d.start)/total_reports)+"%")
+        .attr("height", "100%")
         .attr("fill", (d,i)=>"#"+this.getFillColor(i,counts.length))
         .attr("stroke-width", 1)
         .attr("stroke", "#FFF")

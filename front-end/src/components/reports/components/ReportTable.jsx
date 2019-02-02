@@ -521,9 +521,9 @@ class ReportTable extends React.PureComponent {
         results = JSON.parse(data);
 
         console.log(results);
-        console.log(results.results[0]);
+        console.log(results.results);
         console.log(Object.getOwnPropertyNames(results));
-        console.log(results.report_text_highlights);
+        console.log(results.results[0].report_text_highlights[0]);
 
 
         var j = 0;
@@ -531,10 +531,12 @@ class ReportTable extends React.PureComponent {
         var allGood = true;
         var item;
           while (results.results[j] && allGood) {
+            console.log('j ' + j)
           if (Number.isInteger(Number(j))) {
 
+            console.log(results.results[j].report_text_highlights);
 
-              resultsArr[j] = {id : results.results[j].id, excerpt: results.report_text_highlights};;
+              resultsArr[j] = {id : results.results[j].id, excerpt: results.results[j].report_text_highlights};
               resultIds[j] = results.results[j].id;
 
               j++;
@@ -559,6 +561,8 @@ class ReportTable extends React.PureComponent {
   };
 
   handleSearchResults = (array1, array2) => {
+
+    console.log("handle Search")
 
     this.props.printSearchResults(array1);
 
@@ -726,7 +730,7 @@ class ReportTable extends React.PureComponent {
     var dummyNode = document.createElement('div');
 
 
-    (this.props.currentTab === 1) ? dummyNode.innerText = row.row.excerpt[0] : null;
+    (this.props.currentTab === 1) ? dummyNode.innerHTML = row.row.excerpt[0] : null;
 
 
       return (

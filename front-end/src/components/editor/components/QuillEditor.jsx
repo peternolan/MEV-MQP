@@ -295,6 +295,7 @@ class QuillEditor extends Component {
 
     saveWork = () => {
         if (!this.state.saving && !_.isEqual(this.state.current, this.state.saved)) {
+            document.getElementById('saveButton').style.backgroundColor = '#D3D3D3';
             this.setState({
                 success: false,
                 saving: true,
@@ -320,6 +321,7 @@ class QuillEditor extends Component {
             fetch(`${process.env.REACT_APP_NODE_SERVER}/savereporttext`, fetchData)
                 .then(() => {
                     this.props.incrementSummary();
+                    document.getElementById('saveButton').style.backgroundColor = "#D3D3D3";
                     this.setState({
                         saved: this.state.current,
                         success: true,
@@ -357,6 +359,8 @@ class QuillEditor extends Component {
     //Need to Set State in order to make sure it doesn't change when we add comments.
     handleChange = (value) => {
         console.log("HandleChange");
+
+        document.getElementById('saveButton').style.backgroundColor = '#dbf0ff';
 
         console.log("addingComment " + this.state.addingComment);
 
@@ -689,7 +693,7 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
 
     customToolbar = () => (
 
-        <div id={`react-quill-${this.state.primaryId}`} style={{height: 'calc(7vh)', display: 'none'}}>
+        <div id={`react-quill-${this.state.primaryId}`} style={{width: 'calc(65.5vw)', height: 'calc(9vh)', display: 'none'}}>
 
             <select defaultValue="false" className="ql-header" style={{ width: '100px', height: '36px', margin: '4px' }}>
                 <option value="1" />
@@ -806,7 +810,8 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
                         <div className={this.props.classes.editFacet}>
                             <Typography type='button' className={this.props.classes.textButton} onClick={() => this.editMode()}>{(this.state.editModeOn) ? 'Stop Editing' : 'Edit Highlights'}</Typography>
                             <Collapse isOpened={this.state.editModeOn}>
-                                <Typography type='button' className={this.props.classes.textButton} onClick={this.saveWork}>Save Highlights</Typography>
+                                <Typography id = 'saveButton' type='button' style = {{backgroundColor: '#D3D3D3'}}
+                                            className={this.props.classes.textButton} onClick={this.saveWork}>Save Highlights</Typography>
                             </Collapse>
                         </div>
                         <Typography type='button' className={this.props.classes.textButton} onClick={this.handleHideLegend}>{(this.state.legendShown) ? 'Hide' : 'Show'} Legend</Typography>

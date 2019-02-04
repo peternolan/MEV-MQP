@@ -38,8 +38,13 @@ export default {
     /* Generic Text Button Style */
     textButton:{
         color: '#1D1F83',
-        cursor: 'pointer'
+        cursor: 'pointer',
+        backgroundColor: '#dbf0ff',
+        margin: '2px'
+
     },
+
+
     /* Container for the edit and save buttons */
     editFacet: {
         marginBottom: 5,

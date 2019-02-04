@@ -24,9 +24,10 @@ export default {
     hideBtn: {
         float: 'right',
         padding: 0,
-        marginRight: 10,
         color: '#1D1F83',
         cursor: 'pointer',
+        width: 'calc(5.5vw)',
+        backgroundColor: '#dbf0ff',
     },
     summarySummary: {
         paddingTop: 0,

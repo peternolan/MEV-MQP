@@ -84,15 +84,15 @@ for result in results:
         "id":result.primaryid,
         "drugname": result.drugname,
         "sex": result.sex,
+        "weight": result.wt_lb,
+        "age": result.age_year
         "error": result.me_type,
         "score":result.meta.score,
-
-
     }
     
     for key in dir(result.meta.highlight):
         highlight = list(eval("result.meta.highlight."+key))
-        resObj["results"][index][key+"_highlights"] = (highlight if highlight  else [])
+        resObj["results"][index][key+"_highlights"] = (highlight if highlight else [])
 
         
 if LOGGING:

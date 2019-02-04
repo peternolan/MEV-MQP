@@ -75,11 +75,19 @@ resObj["searchtime"] = results.took
 resObj["fields_searched"] = fields
 resObj["results"] = {}
 index = -1
+
+
 for result in results:
     index += 1
+
     resObj["results"][index] = {
-        "id":result.meta.id,
+        "id":result.primaryid,
+        "drugname": result.drugname,
+        "sex": result.sex,
+        "error": result.me_type,
         "score":result.meta.score,
+
+
     }
     
     for key in dir(result.meta.highlight):

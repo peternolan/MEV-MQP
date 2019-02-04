@@ -523,7 +523,7 @@ class ReportTable extends React.PureComponent {
         console.log(results);
         console.log(results.results);
         console.log(Object.getOwnPropertyNames(results));
-        console.log(results.results[0].report_text_highlights[0]);
+        console.log(results.results[0].drugname);
 
 
         var j = 0;
@@ -536,7 +536,8 @@ class ReportTable extends React.PureComponent {
 
             console.log(results.results[j].report_text_highlights);
 
-              resultsArr[j] = {id : results.results[j].id, excerpt: results.results[j].report_text_highlights};
+              resultsArr[j] = {id : results.results[j].id, drugname: results.results[j].drugname,
+                sex: results.results[j].sex, me_type: results.results[j].error, excerpt: results.results[j].report_text_highlights};
               resultIds[j] = results.results[j].id;
 
               j++;

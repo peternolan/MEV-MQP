@@ -123,6 +123,8 @@ class ReportTable extends React.PureComponent {
         drugname: 150,
         me_type: 100,
         outc_cod: 50,
+        id: 100,
+          body_highlights: 300,
       },
 
 

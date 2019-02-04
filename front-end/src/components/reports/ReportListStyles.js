@@ -2,12 +2,6 @@ import ReportPanel from "./components/ReportPanel";
 import React from "react";
 
 export default {
-  borderBottom: {
-    borderWidth: 0,
-    borderBottomWidth: 1,
-    borderStyle: 'solid',
-    borderColor: 'rgba(0, 0, 0, 0.25)',
-  },
   newCaseArea: {
     width: 'calc(100%)',
     margin: '20px',

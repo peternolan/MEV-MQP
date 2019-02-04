@@ -117,12 +117,14 @@ class ReportTable extends React.PureComponent {
        */
       widths: {
         //init_fda_dt: 85,
-        primaryid: 80,
-        age_year: 30,
-        sex: 30,
-        drugname: 150,
+        primaryid: 75,
+        age_year: 35,
+        sex: 35,
+        drugname: 130,
         me_type: 100,
-        outc_cod: 50,
+        outc_cod: 55,
+        id: 100,
+          body_highlights: 300,
       },
 
 
@@ -521,7 +523,7 @@ class ReportTable extends React.PureComponent {
         console.log(results);
         console.log(results.results);
         console.log(Object.getOwnPropertyNames(results));
-        console.log(results.results[0].drugname);
+        console.log(results.results[0].report_text_highlights[0]);
 
 
         var j = 0;
@@ -534,8 +536,7 @@ class ReportTable extends React.PureComponent {
 
             console.log(results.results[j].report_text_highlights);
 
-              resultsArr[j] = {id : results.results[j].id, drugname: results.results[j].drugname,
-                sex: results.results[j].sex, me_type: results.results[j].error, excerpt: results.results[j].report_text_highlights};
+              resultsArr[j] = {id : results.results[j].id, excerpt: results.results[j].report_text_highlights};
               resultIds[j] = results.results[j].id;
 
               j++;

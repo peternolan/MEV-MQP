@@ -10,7 +10,7 @@ import json
 # THIS IS ONLY FOR DEV/DEBUGGING
 connections.create_connection(hosts=['localhost'])
 
-DEBUG = True
+DEBUG = False
 LOGGING = True #writes some log info to ./searchlog.log
 
 #if(len(sys.argv) > 1):
@@ -85,6 +85,7 @@ for result in results:
         "drugname": result.drugname,
         "sex": result.sex,
         "weight": result.wt_lb,
+        "age": result.age_year,
         "error": result.me_type,
         "score":result.meta.score,
     }

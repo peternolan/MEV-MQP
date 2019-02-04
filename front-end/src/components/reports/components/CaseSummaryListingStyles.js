@@ -23,4 +23,10 @@ export default {
       cursor: 'pointer'
     },
   },
+  caseEntry: {
+    borderStyle: 'solid',
+    borderWidth: 0,
+    borderBottomWidth: 1,
+    borderColor: 'rgba(0, 0, 0, 0.08)',
+  }
 };

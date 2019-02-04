@@ -178,8 +178,7 @@ class ReportList extends Component {
   };
 
   printSearchResults = (array) => {
-      console.log('print');
-        this.setState({returnedResults: array}, () => {console.log(this.state.returnedResults)});
+        this.setState({returnedResults: array}, () => {console.log("this.state.returnedResults " +  this.state.returnedResults)});
 
 
     };
@@ -336,7 +335,7 @@ class ReportList extends Component {
       <MuiThemeProvider theme={defaultTheme} >
         <div className={this.props.classes.ReportList} >
           {/* ====== Top Bar with Tabs for each Case ====== */}
-          <AppBar position="static" color='default' className={this.props.classes.borderBottom}>
+          <AppBar position="static" color="default" style={{backgroundColor: '#eaecf2'}}>
             <Tabs
               style={{height: '72px'}}
               value={this.state.currentTab}
@@ -371,6 +370,7 @@ class ReportList extends Component {
           
           {/* ====== SideBar for Viewing the Case Summary ====== */}
           <div id="summary-sidebar" className={(this.state.summaryOpen) ? this.props.classes.openSummaryContainer : this.props.classes.closedSummaryContainer} >
+
             <CaseSummaryListing
               updateTab={this.updateTab}
               bins={this.state.userBins}

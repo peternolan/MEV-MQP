@@ -47,7 +47,9 @@ export default {
 
     /* Container for the edit and save buttons */
     editFacet: {
-        marginBottom: 5,
+        marginBottom: 0,
+        width: 'auto',
+        height: 'auto',
     },
     /* Container for the legend */
     legend: {
@@ -56,10 +58,8 @@ export default {
         bottom: 0,
         width: 'auto',
         height: 'auto',
-        listStyleType: 'none',
         float: 'right',
         margin: 0,
-        marginRight: 5,
         padding: 2,
     },
     wrapper: {

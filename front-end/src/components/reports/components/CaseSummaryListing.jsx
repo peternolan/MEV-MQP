@@ -57,7 +57,7 @@ class CaseSummaryListing extends React.PureComponent {
         return (
           <div key={bin.case_id} >
             <div id={bin.name} className={this.props.classes.expansionTitle} onClick={(e) => this.handleCaseExpand(e)}
-              style={{backgroundColor:(this.state.expandedPanelName === bin.name) ? '#dbf0ff' : '#fff'}}>
+              style={{backgroundColor:(this.state.expandedPanelName === bin.name) ? '#dbf0ff' : '#ffffff'}}>
               <CaseIcon
                   width={30}
                   height={30}
@@ -74,7 +74,7 @@ class CaseSummaryListing extends React.PureComponent {
                 handleClick={this.props.handleClickPieChart}
               />
             </Collapse>
-            <Divider />
+            <Divider color='rgba(0, 0, 0, .25)'/>
           </div>
         );
     }
@@ -84,10 +84,6 @@ class CaseSummaryListing extends React.PureComponent {
   render() {
     return (
       <Paper className={this.props.classes.summaryContainer} elevation={4}>
-        <Typography type="title" style={{ padding: '10px' }}>
-          Case Summaries
-        </Typography>
-        <Divider light />
         {this.props.bins.map(bin => (
           this.renderListItem(bin)
           ))}

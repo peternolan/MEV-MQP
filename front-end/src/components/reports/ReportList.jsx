@@ -336,7 +336,7 @@ class ReportList extends Component {
       <MuiThemeProvider theme={defaultTheme} >
         <div className={this.props.classes.ReportList} >
           {/* ====== Top Bar with Tabs for each Case ====== */}
-          <AppBar position="static" color="default">
+          <AppBar position="static" color="default" className={this.props.classes.borderBottom}>
             <Tabs
               style={{height: '72px'}}
               value={this.state.currentTab}
@@ -444,26 +444,6 @@ class ReportList extends Component {
               <Button raised onClick={this.handleNewCaseClick} style={{ margin: 12 }} color="primary">Create Case</Button>
             </Paper>
           </Modal>
-
-          {/* ====== Floating Action Button for Going back to Main Visualization ====== */}
-          <div style={{ position: 'absolute', right: '0px', bottom: '0px', zIndex: 4 }} >
-            <MaterialTooltip
-              title="Go Back To Visualization"
-              placement="top"
-              enterDelay={50}
-              classes={{
-                tooltip: this.props.classes.tooltipStyle,
-                popper: this.props.classes.tooltipStyle,
-                }}
-            >
-              <Link href="/visualization" to="/visualization" >
-                <Button fab style={{ margin: 12 }} color="primary">
-                  <img src={GoToVisualizationIcon} className={this.props.classes.goToVisualizationSVG} alt="Go Back To Visualization" />
-                </Button>
-              </Link>
-            </MaterialTooltip>
-          </div>
-
           {/* ====== Floating Action Button for Opening Case Summary ====== */}
           <div style={{ position: 'absolute', left: '0px', bottom: '0px'}} >
             <MaterialTooltip
@@ -480,7 +460,6 @@ class ReportList extends Component {
               </Button>
             </MaterialTooltip>
           </div>
-
           {/* ====== Snackbar for Notificaitons to the User ====== */}
           <Snackbar
             anchorOrigin={{

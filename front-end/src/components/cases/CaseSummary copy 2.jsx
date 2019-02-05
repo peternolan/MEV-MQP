@@ -70,7 +70,6 @@ class CaseSummary extends Component {
       searchOption: '',
       graphdata: 'dataone',
       keywordsExposed: false,
-      recommendationString: [],
     };
   }
 
@@ -97,9 +96,6 @@ class CaseSummary extends Component {
         console.log("COMPONENT DID MOUNT")
         this.updateSummary();
       }));
-      this.state.highlightedWordsData.map((word) => {
-        console.log('WORD', word.name)
-      })
   }
 
   componentDidUpdate() {
@@ -228,13 +224,7 @@ class CaseSummary extends Component {
       });
     }, []);
 
-    console.log('HIGHLIGHTED', highlightedWordsData)
-    console.log('preop rec', this.state.recommendationString)
-    highlightedWordsData.map((word) => {
-      console.log(word.name)
-      this.addWordToRec(word.name);
-    })
-    console.log('postop rec', this.state.recommendationString)
+    
 
     // console.log(highlightedWords)
 
@@ -464,24 +454,12 @@ class CaseSummary extends Component {
       } 
     } 
     return data;
-  }
+  };
 
-  handleKeywordHide = () => {
+  handleKeywordToggle = () => {
     this.setState({
       keywordsExposed: !this.state.keywordsExposed
     });
-  }
-
-  toggleWord = (event) => {
-    if (event.target.value === 'on'){
-      this.setState({
-        [event.target.value]: 'off'
-      });
-    } else {
-      this.setState({
-        [event.target.value]: 'on'
-      });
-    }
   }
 
   drawChart = (reports) => {
@@ -521,6 +499,7 @@ class CaseSummary extends Component {
       .domain([0,1])
       .range([0, 100]);
 
+/*
     var chart = svg
         .selectAll("g.bar")//for each bar, append a new group
         .data([label], d=>d);
@@ -531,7 +510,6 @@ class CaseSummary extends Component {
         .append("g")
         .attr("class", d=>d+ " bar")
         .attr("transform", (d,i)=>{return "translate("+ 0+","+(20*i)+")"});
-/*
     let text = svg.select(".bar").selectAll("text")
         .data(this.refs.options.selectedOptions)
         .enter()
@@ -609,12 +587,6 @@ class CaseSummary extends Component {
     }
 
     console.log(this)
-  addWordToRec = (word) => {
-    var newrec = this.state.recommendationString.slice();
-    newrec.push(word);
-    this.setState({
-      recommendationString:newrec
-    });
   }
 
   render() { {
@@ -623,30 +595,28 @@ class CaseSummary extends Component {
             }
     return (
       <div key={this.state.caseName} className={this.props.classes.summaryContent} >
-          <div key="upper_part" style={{paddingLeft: 10}}>
-            <Typography type='button'>Total Count of Reports: {this.state.reportsInCase.length} </Typography>
-            <Typography type='button'>Case Breakdown:
-              <select disabled={(this.state.reportsInCase.length > 0) ? false : true} ref='options' value={this.state.graphdata} onChange={this.handleDataChange} className={this.props.classes.dataSelector}>
-                <option key='pvs' value='TODO'>Primary v. Supportive</option>
-                <option key='outc_cod' value='outc_cod'>Outcome Code</option>
-                <option key='me_type' value='me_type'>Medication Error</option>
-                <option key='sex' value='sex'>Patient Sex</option>
-                <option key='age_year' value='age_year'>Subject Age</option>
-              </select>
-            </Typography>
-            {this.renderBargraph()}
-          </div>
-        {this.updateReports()}
-        <Typography type='button' className={this.props.classes.textButton} onClick={this.handleKeywordHide}>Keyword Summary</Typography>
+        <div key="upper_part" style={{paddingLeft: 10}}>
+          <Typography type='body1'>{this.state.caseDescription || 'No Description' }</Typography>
+          <Typography type='button'>Total Count of Reports: {this.state.reportsInCase.length} </Typography>
+          <Typography type='button'>Case Breakdown:
+            <select ref='options' value={this.state.graphdata} onChange={this.handleDataChange} className={this.props.classes.dataSelector}>
+              <option key='pvs' value='TODO'>Primary v. Supportive</option>
+              <option key='outc_cod' value='outc_cod'>Outcome Code</option>
+              <option key='me_type' value='me_type'>Medication Error</option>
+              <option key='sex' value='sex'>Patient Sex</option>
+              <option key='age_year' value='age_year'>Subject Age</option>
+            </select>
+          </Typography>
+        </div>
+        <div key="bargraph" id='bargraph' ref='bargraph'><svg ref="svg" preserveAspectRatio="none" viewBox="0 0 100 100" width="100%" height='75'></svg> </div>
+        <Typography type='button' className={this.props.classes.textButton} onClick={this.handleKeywordToggle}>Keyword Summary</Typography>
         <Collapse isOpened={this.state.keywordsExposed}>
           <div key="highlighted_words">
             {(this.state.highlightedWordsData.length === 0) ? 
              <Typography type='body1' style={{padding: 5, paddingLeft: 15}}>There are no annotated reports in this case for us to build keywords from; try annotating one of the reports.</Typography>
             : this.state.highlightedWordsData.map((word) => {
               return(
-                <div id={word.name} key={word.name} className={this.props.classes.keywordCapsule} onClick={this.toggleWord}>
-                  <Typography value={word.name} type='body1'>{word.name} ({word.count})</Typography>
-                </div>
+                <Typography type='body1'>{word.name} ({word.count})</Typography>
               )
             })}
           </div>

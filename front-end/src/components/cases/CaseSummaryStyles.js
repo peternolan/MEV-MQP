@@ -15,12 +15,28 @@ export default {
 	textButton: {
 		color: '#1D1F83',
         cursor: 'pointer',
-        marginLeft: 10,
+        margin: 0,
+        display: 'flex',
+        justifyContent: 'center',
+        width: '100%',
+        backgroundColor: '#dbf0ff',
 	},
 	keywordContainer: {
 		display: 'flex',
 		height: 'auto',
 		width: 'auto',
 		backgroundColor: '#dbf0ff',
-	}
+	},
+	keywordCapsule: {
+		display: 'inline-block',
+		height: 'auto',
+		width: 'auto',
+		backgroundColor: '#dbf0ff',
+		margin: 5,
+		padding: 2,
+		borderRadius: 3,
+		'&:hover':{
+			cursor: 'pointer',
+		},
+	},
 }

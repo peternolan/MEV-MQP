@@ -84,7 +84,6 @@ for result in results:
         "id":result.primaryid,
         "drugname": result.drugname,
         "sex": result.sex,
-        "weight": result.wt_lb,
         "error": result.me_type,
         "score":result.meta.score,
     }

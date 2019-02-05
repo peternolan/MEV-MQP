@@ -499,6 +499,7 @@ class CaseSummary extends Component {
       .domain([0,1])
       .range([0, 100]);
 
+/*
     var chart = svg
         .selectAll("g.bar")//for each bar, append a new group
         .data([label], d=>d);
@@ -509,7 +510,6 @@ class CaseSummary extends Component {
         .append("g")
         .attr("class", d=>d+ " bar")
         .attr("transform", (d,i)=>{return "translate("+ 0+","+(20*i)+")"});
-/*
     let text = svg.select(".bar").selectAll("text")
         .data(this.refs.options.selectedOptions)
         .enter()
@@ -530,20 +530,26 @@ class CaseSummary extends Component {
 */
     var total_reports = reports.length;
     //console.log(x);
-    let rects = svg.selectAll(".bar").selectAll("rect")
-        .data(counts)
-        .enter()
-        .append("rect")
-        .attr("x", d=>x(d.start/total_reports)+"%")
-        .attr("y", 0)
-        .attr("width", d=> x((d.end-d.start)/total_reports)+"%")
+    let rects = svg.selectAll("rect")
+        .data(counts);//create our initial rect selection
+
+    rects.enter()
+        .append("rect")//add new rects for all new data elements
+        .attr("x", d=>{return x(d.start/total_reports) > 50 ? 100 : 0;})//preset the x position of new elements to "push" them against the edges for a smoother animation
+        .merge(rects)//update both old and new rects at this point
         .attr("height", "100%")
-        .attr("fill", (d,i)=>"#"+this.getFillColor(i,counts.length))
+        .attr("y", 0)
         .attr("stroke-width", 1)
         .attr("stroke", "#FFF")
-        .attr("opacity", .5);
+        .attr("opacity", .5)
+        .transition()
+        .attr("x", d=>x(d.start/total_reports))
+        .attr("width", d=> x((d.end-d.start)/total_reports))
+        .attr("fill", (d,i)=>"#"+this.getFillColor(i,counts.length))
+
+    rects.exit().remove();//remove all old rects which we haven't updated
+
     console.log(this)
-    //rects.exit().remove();
   }
 
   render() { {
@@ -565,7 +571,7 @@ class CaseSummary extends Component {
             </select>
           </Typography>
         </div>
-        <div key="bargraph" id='bargraph' ref='bargraph'><svg ref="svg" viewBox="0 0 100 100" width="100%" height='75'></svg> </div>
+        <div key="bargraph" id='bargraph' ref='bargraph'><svg ref="svg" preserveAspectRatio="none" viewBox="0 0 100 100" width="100%" height='75'></svg> </div>
         <Typography type='button' className={this.props.classes.textButton} onClick={this.handleKeywordToggle}>Keyword Summary</Typography>
         <Collapse isOpened={this.state.keywordsExposed}>
           <div key="highlighted_words">

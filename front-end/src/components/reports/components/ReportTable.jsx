@@ -31,7 +31,7 @@ import { CircularProgress } from 'material-ui/Progress';
 import Typography from 'material-ui/Typography';
 import { FormControlLabel } from 'material-ui/Form';
 import _ from 'lodash';
-import { moveReport, getCaseReports, getReportNarrativeFromID, getReportsInCases , setAllReports, executeSearch, getInstances} from '../../../actions/reportActions';
+import { moveReport, getCaseReports, getReportNarrativeFromID, getReportsInCases , setAllReports, executeSearch, getInstances, getAge} from '../../../actions/reportActions';
 import QuillEditor from '../../editor/components/QuillEditor';
 import ReadCaseIcon from '../../../resources/ReadCaseIcon';
 import ClearFilterIcon from '../../../resources/RemoveFromCaseIcon';
@@ -50,6 +50,7 @@ class ReportTable extends React.PureComponent {
     getCaseReports: PropTypes.func.isRequired,
     setAllReports: PropTypes.func.isRequired,
       executeSearch: PropTypes.func.isRequired,
+    getAge: PropTypes.func.isRequired,
       getInstances: PropTypes.func,
     moveReport: PropTypes.func.isRequired,
     getReportNarrativeFromID: PropTypes.func.isRequired,
@@ -535,9 +536,11 @@ class ReportTable extends React.PureComponent {
           if (Number.isInteger(Number(j))) {
 
             console.log(results.results[j].report_text_highlights);
+            console.log(this.props.getAge(results.results[j].id));
 
               resultsArr[j] = {id : results.results[j].id, drugname: results.results[j].drugname,
-                sex: results.results[j].sex, me_type: results.results[j].error, excerpt: results.results[j].report_text_highlights};
+                sex: results.results[j].sex, me_type: results.results[j].error,
+                excerpt: results.results[j].report_text_highlights};
               resultIds[j] = results.results[j].id;
 
               j++;
@@ -905,6 +908,7 @@ export default connect(
     setAllReports,
     getReportNarrativeFromID,
     getReportsInCases,
-      getInstances
+      getInstances,
+    getAge
   },
 )(withStyles(styles)(ReportTable));

@@ -78,6 +78,29 @@ export const moveReport = (primaryid, fromBin, toBin, userID, type) => () => {
 };
 
 /**
+ * Queries the Database with a primaryid, two bins, and the current userID to
+ * move a report from one bin to another
+ */
+export const getAge = (primaryid) => () => {
+  console.log('getAge: ' + primaryid);
+  const fetchData = {
+    method: 'POST',
+    mode: 'cors',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ primaryid }),
+  };
+
+  return fetch(`${process.env.REACT_APP_NODE_SERVER}/getAge`, fetchData)
+      .then(response => response.json())
+      .then(report => report.rows)
+      .catch(err => console.log('Failed to retrieve report text', err));
+
+}
+
+
+/**
  * Queries the Database with a caseID to get the case name
  * that user's reports contained in specified bin that fit in filters
  */

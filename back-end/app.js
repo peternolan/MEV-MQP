@@ -536,6 +536,24 @@ app.post('/getactivecases', (req, res) => {
   } 
 });
 
+app.post('/getAge', (req, res) => {
+  console.log("getAge called");
+  console.log(req);
+  if (req.body.userID) {
+    let query = 'SELECT age_year '
+        + 'FROM reports '
+        + `WHERE primary_id='${req.body.primaryID}'`;
+
+    query += ageBuilder(req.body.age);
+
+    console.log(query);
+    db.query(query, (err, data) => {
+      res.status(200).send(data);
+    });
+  }
+
+});
+
 app.post('/binreport', (req, res) => {
   console.log('got a bin request to move report with body:\n', req.body);
   caseIDQuery = `SELECT DISTINCT case_id FROM cases WHERE name = '${req.body.toBin}' AND user_id = ${req.body.userID}`;

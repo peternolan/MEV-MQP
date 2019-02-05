@@ -16,18 +16,24 @@ export default {
         justifyContent: 'center',
     },
     summaryTitle: {
-        padding: '5px',
         fontSize: '12px',
         position: 'relative',
         borderRadius: 0,
+        display: 'flex',
     },
     hideBtn: {
         float: 'right',
-        padding: 0,
+        padding: 3,
         color: '#1D1F83',
         cursor: 'pointer',
-        width: 'calc(5.5vw)',
-        backgroundColor: '#dbf0ff',
+        width: 'auto',
+        display: 'flex',
+        alignItems: 'center',
+        lineHeight: 'default',
+        '&:hover':{
+            textDecorationLine: 'underline',
+            cursor: 'pointer'
+        },
     },
     summarySummary: {
         paddingTop: 0,

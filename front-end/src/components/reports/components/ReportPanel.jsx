@@ -69,7 +69,7 @@ class ReportPanel extends React.PureComponent {
                 activeIndex: -1,
                 caseSensitive: false
             },
-            summaryShown: true,
+            summaryShown: false,
         };
     };
 
@@ -168,7 +168,7 @@ class ReportPanel extends React.PureComponent {
     render = () => {
         return (
             <Paper id='summary-container' className={this.props.classes.summaryContainer} elevation={4}>
-                <Paper id='summarytitle' className={this.props.classes.summaryTitle}><Typography type="title">Report {this.props.primaryid}<div onClick={this.handleHideSummary} className={this.props.classes.hideBtn}><Typography type='button'>{this.state.summaryShown ? 'Hide' : 'Show'} Summary</Typography></div></Typography></Paper>
+                <Paper id='summarytitle' className={this.props.classes.summaryTitle}><Typography type="title" style={{padding: 5}}>Report {this.props.primaryid}</Typography><div onClick={this.handleHideSummary} className={this.props.classes.hideBtn}><Typography type='button'>{this.state.summaryShown ? 'Hide' : 'Show'} Summary</Typography></div></Paper>
                 <Collapse isOpened={this.state.summaryShown}>
                     <div className={this.props.classes.summarySummary}>
                         <Typography>Cupcake ipsum dolor sit amet gingerbread marzipan cookie topping. Chocolate bar toffee carrot cake ice cream lollipop carrot cake tootsie roll. Sesame snaps marzipan carrot cake gummies cake croissant topping tart. Lollipop bear claw brownie halvah liquorice tiramisu. Oat cake muffin jelly caramels biscuit sugar plum cookie tart oat cake. Candy canes powder cheesecake sweet roll fruitcake jujubes lollipop bear claw.</Typography>

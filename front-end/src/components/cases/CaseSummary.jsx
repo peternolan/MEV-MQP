@@ -70,6 +70,7 @@ class CaseSummary extends Component {
       searchOption: '',
       graphdata: 'dataone',
       keywordsExposed: false,
+      recommendationString: [],
     };
   }
 
@@ -79,7 +80,7 @@ class CaseSummary extends Component {
   componentWillReceiveProps(incomingProps) {
     if (this.state.summaryCounter !== incomingProps.summaryCounter) {
       this.updateSummary();
-      console.log("COMPONENT WILL RECEIVE")
+      console.log("COMPONENT WILL RECEIVE");
       this.setState({
         summaryCounter: incomingProps.summaryCounter,
       });
@@ -187,7 +188,6 @@ class CaseSummary extends Component {
         // console.log(x[values]);
         highlightedRawWords.push(x[values].toLowerCase().split(' '));
       })
-      console.log("RAW WORDS", highlightedRawWords);
     })
 
       
@@ -223,12 +223,9 @@ class CaseSummary extends Component {
         count: counts[key],
       });
     }, []);
-
-    
-
-    // console.log(highlightedWords)
-
+    console.log('HLWORDS', highlightedWords)
     this.setState({
+      recommendationString: highlightedWords,
       barChartData,
       highlightedWordsData,
       highlightedWords,
@@ -454,12 +451,30 @@ class CaseSummary extends Component {
       } 
     } 
     return data;
-  };
+    console.log('DATA', data)
+  }
 
-  handleKeywordToggle = () => {
+  handleKeywordHide = () => {
     this.setState({
       keywordsExposed: !this.state.keywordsExposed
     });
+  }
+
+  toggleWord = (event) => {
+    var strchk = event.target.getAttribute('value');
+    var index = this.state.recommendationString.indexOf(strchk);
+    if (index > -1){
+      var rmdrec = this.state.recommendationString;
+      rmdrec.splice(index,1);
+      this.setState({
+        recommendationString: rmdrec
+      });
+    } else {
+      this.setState({
+        recommendationString: [...this.state.recommendationString, strchk]
+      });
+    }
+    console.log('rec string', this.state.recommendationString)
   }
 
   drawChart = (reports) => {
@@ -499,7 +514,6 @@ class CaseSummary extends Component {
       .domain([0,1])
       .range([0, 100]);
 
-/*
     var chart = svg
         .selectAll("g.bar")//for each bar, append a new group
         .data([label], d=>d);
@@ -510,6 +524,7 @@ class CaseSummary extends Component {
         .append("g")
         .attr("class", d=>d+ " bar")
         .attr("transform", (d,i)=>{return "translate("+ 0+","+(20*i)+")"});
+/*
     let text = svg.select(".bar").selectAll("text")
         .data(this.refs.options.selectedOptions)
         .enter()
@@ -552,12 +567,13 @@ class CaseSummary extends Component {
 
     if(newrects.nodes().length > 10){ //conditionally either animate or just set the new rects, based on how many there are (to avoid unnecessary lag)
       newrects
+        .attr("height", 100)
         .attr("x", d=>x(d.start/total_reports))
         .attr("width", d=> x((d.end-d.start)/total_reports))
         .attr("fill", (d,i)=>"#"+this.getFillColor(i,counts.length))
     }
     else {
-      if(firsttime){ // if this is the first time (AND there are less than 10 nodes) then "grow" the bars from the top
+      if(false && firsttime){ // if this is the first time (AND there are less than 10 nodes) then "grow" the bars from the top
         newrects.attr("height",0)
           .attr("x", d=>x(d.start/total_reports))
           .attr("width", d=> x((d.end-d.start)/total_reports))
@@ -566,7 +582,8 @@ class CaseSummary extends Component {
           .attr("height", 100)
       }
       else{
-          newrects.transition("update")
+          newrects.attr("height", 100)
+            .transition("update")
             .attr("x", d=>x(d.start/total_reports))
             .attr("width", d=> x((d.end-d.start)/total_reports))
             .attr("fill", (d,i)=>"#"+this.getFillColor(i,counts.length))
@@ -586,39 +603,51 @@ class CaseSummary extends Component {
               .remove();//remove all old rects which we haven't updated
     }
 
-    console.log(this)
-  }
+    console.log(this);
+  };
 
-  render() { {
+  addWordToRec = (word) => {
+    var newrec = this.state.recommendationString.slice();
+    newrec.push(word);
+    this.setState({
+      recommendationString:newrec
+    });
+  };
+
+  render(){{
             this.getReports();
             this.updateReports();
             }
     return (
-      <div key={this.state.caseName} className={this.props.classes.summaryContent} >
-        <div key="upper_part" style={{paddingLeft: 10}}>
-          <Typography type='body1'>{this.state.caseDescription || 'No Description' }</Typography>
-          <Typography type='button'>Total Count of Reports: {this.state.reportsInCase.length} </Typography>
-          <Typography type='button'>Case Breakdown:
-            <select ref='options' value={this.state.graphdata} onChange={this.handleDataChange} className={this.props.classes.dataSelector}>
-              <option key='pvs' value='TODO'>Primary v. Supportive</option>
-              <option key='outc_cod' value='outc_cod'>Outcome Code</option>
-              <option key='me_type' value='me_type'>Medication Error</option>
-              <option key='sex' value='sex'>Patient Sex</option>
-              <option key='age_year' value='age_year'>Subject Age</option>
-            </select>
-          </Typography>
-        </div>
-        <div key="bargraph" id='bargraph' ref='bargraph'><svg ref="svg" preserveAspectRatio="none" viewBox="0 0 100 100" width="100%" height='75'></svg> </div>
-        <Typography type='button' className={this.props.classes.textButton} onClick={this.handleKeywordToggle}>Keyword Summary</Typography>
+      <div key={this.state.caseName} className={this.props.classes.summaryContent}>
+          <div key="upper_part" style={{paddingLeft: 10}}>
+            <Typography type='button'>Total Count of Reports: {this.state.reportsInCase.length} </Typography>
+            <Typography type='button'>Case Breakdown:
+              <select disabled={(this.state.reportsInCase.length > 0) ? false : true} ref='options' value={this.state.graphdata} onChange={this.handleDataChange} className={this.props.classes.dataSelector}>
+                <option key='pvs' value='TODO'>Primary v. Supportive</option>
+                <option key='outc_cod' value='outc_cod'>Outcome Code</option>
+                <option key='me_type' value='me_type'>Medication Error</option>
+                <option key='sex' value='sex'>Patient Sex</option>
+                <option key='age_year' value='age_year'>Subject Age</option>
+              </select>
+            </Typography>
+          </div>
+          <div className={this.props.classes.bargraph} key="bargraph" id='bargraph' ref='bargraph'><svg ref="svg" preserveAspectRatio="none" viewBox="0 0 100 100" width="100%" height='100%'></svg> </div>
+        {this.updateReports()}
+        <Typography type='button' className={this.props.classes.textButton} onClick={this.handleKeywordHide}>Keyword Summary</Typography>
         <Collapse isOpened={this.state.keywordsExposed}>
+        <div className={this.props.classes.keywordContainer}>
           <div key="highlighted_words">
             {(this.state.highlightedWordsData.length === 0) ? 
              <Typography type='body1' style={{padding: 5, paddingLeft: 15}}>There are no annotated reports in this case for us to build keywords from; try annotating one of the reports.</Typography>
             : this.state.highlightedWordsData.map((word) => {
               return(
-                <Typography type='body1'>{word.name} ({word.count})</Typography>
+                <div id={word.name} key={word.name} className={this.props.classes.keywordCapsule} style={{backgroundColor: (this.state.recommendationString.indexOf(word.name) > -1) ? '#7bd389' : '#ee7674'}} onClick={this.toggleWord}>
+                  <Typography value={word.name} type='body1'>{word.name} ({word.count})</Typography>
+                </div>
               )
             })}
+          </div>
           </div>
         </Collapse>
       </div>

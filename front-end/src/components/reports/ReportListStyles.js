@@ -58,7 +58,8 @@ export default {
   openSummaryContainer: {
       float: 'left',
       display: 'inline-block',
-      width: '20vw',
+      width: '25vw',
+      maxHeight: 'calc(100vh - 122px)',
       height: 'calc(100vh - 122px)',
       transition: 'width 200ms ease-in-out',
   },
@@ -66,6 +67,7 @@ export default {
     float: 'left',
     display: 'inline-block',
     width: '0vw',
+    maxHeight: 'calc(100vh - 122px)',
     height: 'calc(100vh - 122px)',
     transition: 'width 200ms ease-in-out',
     overflow: 'hidden',
@@ -74,9 +76,10 @@ export default {
   reportContainer: {
       float: 'right',
       display: 'inline-block',
+      width: 'auto',
       maxWidth: 'calc(100vw - 500px)',
       maxHeight: 'calc(100vh - 122px)',
-      height: 'calc(100vh - 122px)',
+      height: '100%',
       padding: '0px',
       transition: 'width 200ms ease-in-out',
       overflow: 'scroll',
@@ -84,13 +87,17 @@ export default {
   smallreportContainer: {
         float: 'right',
         display: 'inline-block',
-        width: 'calc(80vw - 500px)',
+        maxWidth: 'calc(75vw - 500px)',
         maxHeight: 'calc(100vh - 122px)',
-        height: 'calc(100vh - 122px)',
+        height: '100%',
         padding: '0px',
         transition: 'width 200ms ease-in-out',
         boxShadow: 'none'
   },
-
-
+  borderBottom: {
+    borderWidth: 0,
+    borderBottomWidth: 1,
+    borderStyle: 'solid',
+    borderColor: 'rgba(0, 0, 0, 0.25)',
+  }
 };

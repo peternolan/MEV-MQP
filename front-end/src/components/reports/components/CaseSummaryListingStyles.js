@@ -8,7 +8,7 @@ export default {
     borderTopWidth: 0,
     borderBottomWidth: 0,
     borderRightWidth: '1px',
-    borderColor: 'rgba(0, 0, 0, 0.08)',
+    borderColor: 'rgba(0, 0, 0, 0.25)',
     borderStyle: 'solid'
   },
   expansionTitle: {
@@ -23,4 +23,11 @@ export default {
       cursor: 'pointer'
     },
   },
+  borderBottom: {
+    width: '100%',
+    borderWidth: 0,
+    borderBottomWidth: 1,
+    borderStyle: 'solid',
+    borderColor: 'rgba(0, 0, 0, 0.25)',
+  }, 
 };

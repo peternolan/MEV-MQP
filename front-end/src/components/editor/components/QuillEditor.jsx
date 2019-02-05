@@ -245,7 +245,7 @@ class QuillEditor extends Component {
                             reportHTML = dummyNode.innerHTML;
 
                             reportText = reportHTML + commentFinal;
-                            console.log("reportText " + reportText);
+                            //console.log("reportText " + reportText);
 
                         }
                         else {
@@ -806,27 +806,24 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
         return (
             <div className={this.props.classes.pdfView}>
                 <div className = {`${this.props.classes.quillArea}`} style = {{display:'inline-block' , height: ((this.state.commentsOn) ? '47%' : '90%') }}>
-                    <ul className={this.props.classes.legend}>
-                        <div className={this.props.classes.editFacet}>
-                            <Typography type='button' className={this.props.classes.textButton} onClick={() => this.editMode()}>{(this.state.editModeOn) ? 'Stop Editing' : 'Edit Highlights'}</Typography>
-                            <Collapse isOpened={this.state.editModeOn}>
-                                <Typography id = 'saveButton' type='button' style = {{backgroundColor: '#D3D3D3'}}
-                                            className={this.props.classes.textButton} onClick={this.saveWork}>Save Highlights</Typography>
-                            </Collapse>
-                        </div>
                         <Typography type='button' className={this.props.classes.textButton} onClick={this.handleHideLegend}>{(this.state.legendShown) ? 'Hide' : 'Show'} Legend</Typography>
                         <Collapse isOpened={this.state.legendShown}>
-                            <li><div className={this.props.classes.legendPair}><div className={this.props.classes.legendSquare} style={{backgroundColor: 'chartreuse'}} /><Typography>Drug</Typography></div></li>
-                            <li><div className={this.props.classes.legendPair}><div className={this.props.classes.legendSquare} style={{backgroundColor: 'cadetblue'}} /><Typography>Reaction</Typography></div></li>
-                            <li><div className={this.props.classes.legendPair}><div className={this.props.classes.legendSquare} style={{backgroundColor: 'darkorange'}} /><Typography>Dosage</Typography></div></li>
-                            <li><div className={this.props.classes.legendPair}><div className={this.props.classes.legendSquare} style={{backgroundColor: 'gold'}} /><Typography>Age</Typography></div></li>
-                            <li><div className={this.props.classes.legendPair}><div className={this.props.classes.legendSquare} style={{backgroundColor: 'lightpink'}} /><Typography>Sex</Typography></div></li>
-                            <li><div className={this.props.classes.legendPair}><div className={this.props.classes.legendSquare} style={{backgroundColor: 'orchid'}} /><Typography>Weight</Typography></div></li>
-                            <li><div className={this.props.classes.legendPair}><div className={this.props.classes.legendSquare} style={{backgroundColor: 'silver'}} /><Typography>Indication</Typography></div></li>
-                            <li><div className={this.props.classes.legendPair}><div className={this.props.classes.legendSquare} style={{backgroundColor: 'cyan'}} /><Typography>Interesting</Typography></div></li>
-                            <li><div className={this.props.classes.editButton}></div></li>
+                            <div className={this.props.classes.legendPair}><div className={this.props.classes.legendSquare} style={{backgroundColor: 'chartreuse'}} /><Typography>Drug</Typography></div>
+                            <div className={this.props.classes.legendPair}><div className={this.props.classes.legendSquare} style={{backgroundColor: 'cadetblue'}} /><Typography>Reaction</Typography></div>
+                            <div className={this.props.classes.legendPair}><div className={this.props.classes.legendSquare} style={{backgroundColor: 'darkorange'}} /><Typography>Dosage</Typography></div>
+                            <div className={this.props.classes.legendPair}><div className={this.props.classes.legendSquare} style={{backgroundColor: 'gold'}} /><Typography>Age</Typography></div>
+                            <div className={this.props.classes.legendPair}><div className={this.props.classes.legendSquare} style={{backgroundColor: 'lightpink'}} /><Typography>Sex</Typography></div>
+                            <div className={this.props.classes.legendPair}><div className={this.props.classes.legendSquare} style={{backgroundColor: 'orchid'}} /><Typography>Weight</Typography></div>
+                            <div className={this.props.classes.legendPair}><div className={this.props.classes.legendSquare} style={{backgroundColor: 'silver'}} /><Typography>Indication</Typography></div>
+                            <div className={this.props.classes.legendPair}><div className={this.props.classes.legendSquare} style={{backgroundColor: 'cyan'}} /><Typography>Interesting</Typography></div>
                         </Collapse>
-                    </ul>
+                    <div className={this.props.classes.editFacet}>
+                        <Typography type='button' className={this.props.classes.textButton} onClick={() => this.editMode()}>{(this.state.editModeOn) ? 'Stop Editing' : 'Edit Highlights'}</Typography>
+                        <Collapse isOpened={this.state.editModeOn}>
+                            <Typography id = 'saveButton' type='button' style = {{backgroundColor: '#D3D3D3'}}
+                                        className={this.props.classes.textButton} onClick={this.saveWork}>Save Highlights</Typography>
+                        </Collapse>
+                    </div>
 
                 {/* ====== Quill editor for Annotating the Report Text ====== */}
 

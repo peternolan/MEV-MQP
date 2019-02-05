@@ -17,21 +17,10 @@ export default {
         cursor: 'pointer',
         marginLeft: 10,
 	},
-	keywordCapsule: {
-		display: 'inline-block',
+	keywordContainer: {
+		display: 'flex',
 		height: 'auto',
 		width: 'auto',
 		backgroundColor: '#dbf0ff',
-		marginRight: 3,
-		padding: 2,
-		borderRadius: 3,
-		'&:hover':{
-			cursor: 'pointer'
-		}
-	},
-	keywordContainer: {
-		paddingLeft: 10,
-		marginBottom: 5,
-		overflow: 'wrap',
 	}
 }

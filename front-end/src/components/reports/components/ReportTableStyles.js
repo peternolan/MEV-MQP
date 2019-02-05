@@ -38,10 +38,6 @@ export default {
     fontSize: '10pt',
     'pointer-events': 'none',
   },
-  searchwrapper: {
-    width: 500,
-    height: 35,
-  },
   searchBar: {
     fontSize: '1em',
     width: 'calc(80% - 5px)',

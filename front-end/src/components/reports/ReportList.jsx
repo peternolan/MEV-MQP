@@ -336,7 +336,7 @@ class ReportList extends Component {
       <MuiThemeProvider theme={defaultTheme} >
         <div className={this.props.classes.ReportList} >
           {/* ====== Top Bar with Tabs for each Case ====== */}
-          <AppBar position="static" color='default' className={this.props.classes.borderBottom}>
+          <AppBar position="static" color="default">
             <Tabs
               style={{height: '72px'}}
               value={this.state.currentTab}
@@ -371,6 +371,7 @@ class ReportList extends Component {
           
           {/* ====== SideBar for Viewing the Case Summary ====== */}
           <div id="summary-sidebar" className={(this.state.summaryOpen) ? this.props.classes.openSummaryContainer : this.props.classes.closedSummaryContainer} >
+
             <CaseSummaryListing
               updateTab={this.updateTab}
               bins={this.state.userBins}

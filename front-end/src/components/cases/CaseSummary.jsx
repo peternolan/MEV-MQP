@@ -530,12 +530,15 @@ class CaseSummary extends Component {
 */
     var total_reports = reports.length;
     //console.log(x);
-    let rects = svg.selectAll("rect")
+    let rects = svg.selectAll("rect.new")//select all rects not marked for deletion (they may be marked from the previous step)
         .data(counts);//create our initial rect selection
+
+    console.log(rects.transition("update"))
 
     console.log(rects);
     let newrects = rects.enter()
         .append("rect")//add new rects for all new data elements
+        .attr("class", "new")
         .attr("y", 0)
         .attr("stroke-width", 1)
         .attr("stroke", "#FFF")
@@ -545,7 +548,6 @@ class CaseSummary extends Component {
     
     let firsttime = (rects.nodes().length == 0) && (newrects.nodes().length < 10)
     
-
     newrects = newrects.merge(rects)//update both old and new rects at this point
 
     if(newrects.nodes().length > 10){ //conditionally either animate or just set the new rects, based on how many there are (to avoid unnecessary lag)
@@ -560,11 +562,11 @@ class CaseSummary extends Component {
           .attr("x", d=>x(d.start/total_reports))
           .attr("width", d=> x((d.end-d.start)/total_reports))
           .attr("fill", (d,i)=>"#"+this.getFillColor(i,counts.length))
-          .transition()
+          .transition("update")
           .attr("height", 100)
       }
       else{
-          newrects.transition()
+          newrects.transition("update")
             .attr("x", d=>x(d.start/total_reports))
             .attr("width", d=> x((d.end-d.start)/total_reports))
             .attr("fill", (d,i)=>"#"+this.getFillColor(i,counts.length))
@@ -573,12 +575,13 @@ class CaseSummary extends Component {
     }
 
     let oldrects = rects.exit();
-    
+
     if(oldrects.nodes().length > 10){ //conditionally either animate or just set the new rects, based on how many there are (to avoid unnecessary lag)
       oldrects.remove()
     } else {
+      oldrects.attr("class", "old") //mark these as "old", so they don't accidentally end up in the next transition if one begins within 0.25 seconds
       oldrects.attr("stroke", null)
-              .transition()
+              .transition("end")
               .attr("opacity", 0)
               .remove();//remove all old rects which we haven't updated
     }

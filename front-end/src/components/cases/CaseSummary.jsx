@@ -80,7 +80,7 @@ class CaseSummary extends Component {
   componentWillReceiveProps(incomingProps) {
     if (this.state.summaryCounter !== incomingProps.summaryCounter) {
       this.updateSummary();
-      console.log("COMPONENT WILL RECEIVE")
+      console.log("COMPONENT WILL RECEIVE");
       this.setState({
         summaryCounter: incomingProps.summaryCounter,
       });
@@ -97,9 +97,6 @@ class CaseSummary extends Component {
         console.log("COMPONENT DID MOUNT")
         this.updateSummary();
       }));
-      this.state.highlightedWordsData.map((word) => {
-        console.log('WORD', word.name)
-      })
   }
 
   componentDidUpdate() {
@@ -191,7 +188,6 @@ class CaseSummary extends Component {
         // console.log(x[values]);
         highlightedRawWords.push(x[values].toLowerCase().split(' '));
       })
-      console.log("RAW WORDS", highlightedRawWords);
     })
 
       
@@ -227,8 +223,9 @@ class CaseSummary extends Component {
         count: counts[key],
       });
     }, []);
-    // console.log(highlightedWords)
+    console.log('HLWORDS', highlightedWords)
     this.setState({
+      recommendationString: highlightedWords,
       barChartData,
       highlightedWordsData,
       highlightedWords,
@@ -464,17 +461,17 @@ class CaseSummary extends Component {
   }
 
   toggleWord = (event) => {
-    var index = this.state.recommendationString.indexOf(event.target.value);
-    console.log('value', event.target.value)
+    var strchk = event.target.getAttribute('value');
+    var index = this.state.recommendationString.indexOf(strchk);
     if (index > -1){
-      var rmdrec = this.state.recommendationString.slice(0);
-      rmdrec.splice(index);
+      var rmdrec = this.state.recommendationString;
+      rmdrec.splice(index,1);
       this.setState({
         recommendationString: rmdrec
       });
     } else {
       this.setState({
-        recommendationString: [...this.state.recommendationString, event.target.value]
+        recommendationString: [...this.state.recommendationString, strchk]
       });
     }
     console.log('rec string', this.state.recommendationString)
@@ -570,12 +567,13 @@ class CaseSummary extends Component {
 
     if(newrects.nodes().length > 10){ //conditionally either animate or just set the new rects, based on how many there are (to avoid unnecessary lag)
       newrects
+        .attr("height", 100)
         .attr("x", d=>x(d.start/total_reports))
         .attr("width", d=> x((d.end-d.start)/total_reports))
         .attr("fill", (d,i)=>"#"+this.getFillColor(i,counts.length))
     }
     else {
-      if(firsttime){ // if this is the first time (AND there are less than 10 nodes) then "grow" the bars from the top
+      if(false && firsttime){ // if this is the first time (AND there are less than 10 nodes) then "grow" the bars from the top
         newrects.attr("height",0)
           .attr("x", d=>x(d.start/total_reports))
           .attr("width", d=> x((d.end-d.start)/total_reports))
@@ -584,7 +582,8 @@ class CaseSummary extends Component {
           .attr("height", 100)
       }
       else{
-          newrects.transition("update")
+          newrects.attr("height", 100)
+            .transition("update")
             .attr("x", d=>x(d.start/total_reports))
             .attr("width", d=> x((d.end-d.start)/total_reports))
             .attr("fill", (d,i)=>"#"+this.getFillColor(i,counts.length))
@@ -632,21 +631,23 @@ class CaseSummary extends Component {
                 <option key='age_year' value='age_year'>Subject Age</option>
               </select>
             </Typography>
-            <div key="bargraph" id='bargraph' ref='bargraph'><svg ref="svg" preserveAspectRatio="none" viewBox="0 0 100 100" width="100%" height='75'></svg> </div>
           </div>
+          <div className={this.props.classes.bargraph} key="bargraph" id='bargraph' ref='bargraph'><svg ref="svg" preserveAspectRatio="none" viewBox="0 0 100 100" width="100%" height='100%'></svg> </div>
         {this.updateReports()}
         <Typography type='button' className={this.props.classes.textButton} onClick={this.handleKeywordHide}>Keyword Summary</Typography>
         <Collapse isOpened={this.state.keywordsExposed}>
+        <div className={this.props.classes.keywordContainer}>
           <div key="highlighted_words">
             {(this.state.highlightedWordsData.length === 0) ? 
              <Typography type='body1' style={{padding: 5, paddingLeft: 15}}>There are no annotated reports in this case for us to build keywords from; try annotating one of the reports.</Typography>
             : this.state.highlightedWordsData.map((word) => {
               return(
-                <div value={word.name} key={word.name} className={this.props.classes.keywordCapsule} onClick={this.toggleWord}>
-                  <Typography type='body1'>{word.name} ({word.count})</Typography>
+                <div id={word.name} key={word.name} className={this.props.classes.keywordCapsule} style={{backgroundColor: (this.state.recommendationString.indexOf(word.name) > -1) ? '#7bd389' : '#ee7674'}} onClick={this.toggleWord}>
+                  <Typography value={word.name} type='body1'>{word.name} ({word.count})</Typography>
                 </div>
               )
             })}
+          </div>
           </div>
         </Collapse>
       </div>

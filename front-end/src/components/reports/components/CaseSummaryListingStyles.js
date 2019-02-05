@@ -24,7 +24,7 @@ export default {
     },
   },
   borderBottom: {
-    display: 'inline-block',
+    width: '100%',
     borderWidth: 0,
     borderBottomWidth: 1,
     borderStyle: 'solid',

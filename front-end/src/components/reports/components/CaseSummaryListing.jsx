@@ -55,7 +55,7 @@ class CaseSummaryListing extends React.PureComponent {
         return null;
       default:
         return (
-          <div key={bin.case_id} >
+          <div key={bin.case_id} className={this.props.classes.borderBottom}>
             <div id={bin.name} className={this.props.classes.expansionTitle} onClick={(e) => this.handleCaseExpand(e)}
               style={{backgroundColor:(this.state.expandedPanelName === bin.name) ? '#dbf0ff' : '#ffffff'}}>
               <CaseIcon
@@ -74,7 +74,6 @@ class CaseSummaryListing extends React.PureComponent {
                 handleClick={this.props.handleClickPieChart}
               />
             </Collapse>
-            <Divider color='rgba(0, 0, 0, .25)'/>
           </div>
         );
     }

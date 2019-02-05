@@ -533,21 +533,55 @@ class CaseSummary extends Component {
     let rects = svg.selectAll("rect")
         .data(counts);//create our initial rect selection
 
-    rects.enter()
+    console.log(rects);
+    let newrects = rects.enter()
         .append("rect")//add new rects for all new data elements
-        .attr("x", d=>{return x(d.start/total_reports) > 50 ? 100 : 0;})//preset the x position of new elements to "push" them against the edges for a smoother animation
-        .merge(rects)//update both old and new rects at this point
-        .attr("height", "100%")
         .attr("y", 0)
         .attr("stroke-width", 1)
         .attr("stroke", "#FFF")
         .attr("opacity", .5)
-        .transition()
+        .attr("height", 100)
+        .attr("x", d=>{return x(d.start/total_reports) > 50 ? 100 : 0;})//preset the x position of new elements to "push" them against the edges for a smoother animation
+    
+    let firsttime = (rects.nodes().length == 0) && (newrects.nodes().length < 10)
+    
+
+    newrects = newrects.merge(rects)//update both old and new rects at this point
+
+    if(newrects.nodes().length > 10){ //conditionally either animate or just set the new rects, based on how many there are (to avoid unnecessary lag)
+      newrects
         .attr("x", d=>x(d.start/total_reports))
         .attr("width", d=> x((d.end-d.start)/total_reports))
         .attr("fill", (d,i)=>"#"+this.getFillColor(i,counts.length))
+    }
+    else {
+      if(firsttime){ // if this is the first time (AND there are less than 10 nodes) then "grow" the bars from the top
+        newrects.attr("height",0)
+          .attr("x", d=>x(d.start/total_reports))
+          .attr("width", d=> x((d.end-d.start)/total_reports))
+          .attr("fill", (d,i)=>"#"+this.getFillColor(i,counts.length))
+          .transition()
+          .attr("height", 100)
+      }
+      else{
+          newrects.transition()
+            .attr("x", d=>x(d.start/total_reports))
+            .attr("width", d=> x((d.end-d.start)/total_reports))
+            .attr("fill", (d,i)=>"#"+this.getFillColor(i,counts.length))
+          
+      }
+    }
 
-    rects.exit().remove();//remove all old rects which we haven't updated
+    let oldrects = rects.exit();
+    
+    if(oldrects.nodes().length > 10){ //conditionally either animate or just set the new rects, based on how many there are (to avoid unnecessary lag)
+      oldrects.remove()
+    } else {
+      oldrects.attr("stroke", null)
+              .transition()
+              .attr("opacity", 0)
+              .remove();//remove all old rects which we haven't updated
+    }
 
     console.log(this)
   }

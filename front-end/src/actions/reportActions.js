@@ -92,13 +92,12 @@ export const getAge = (primaryid) => () => {
     body: JSON.stringify({ primaryid }),
   };
 
+
   return fetch(`${process.env.REACT_APP_NODE_SERVER}/getAge`, fetchData)
       .then(response => response.json())
       .then(report => report.rows)
-      .catch(err => console.log('Failed to retrieve report text', err));
-
-}
-
+      .catch(err => console.log('Failed to retrieve Age', err));
+};
 
 /**
  * Queries the Database with a caseID to get the case name

@@ -178,6 +178,7 @@ class QuillEditor extends Component {
                 loading: false,
             });
         } else {
+            console.log(this.props.getReportNarrativeFromID(id));
             this.props.getReportNarrativeFromID(id)
                 .then((rows) => {
 

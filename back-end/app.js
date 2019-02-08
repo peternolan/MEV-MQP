@@ -537,21 +537,14 @@ app.post('/getactivecases', (req, res) => {
 });
 
 app.post('/getAge', (req, res) => {
-  console.log("getAge called");
-  console.log(req);
-  if (req.body.userID) {
-    let query = 'SELECT age_year '
-        + 'FROM reports '
-        + `WHERE primary_id='${req.body.primaryID}'`;
-
-    query += ageBuilder(req.body.age);
-
-    console.log(query);
-    db.query(query, (err, data) => {
-      res.status(200).send(data);
-    });
-  }
-
+  console.log('got a age_year request with body:\n ', req.body);
+  let query =
+      'SELECT age_year '
+      + 'FROM reports '
+      + 'WHERE primaryid = ' + req.body.primaryid;
+  db.query(query, (err, data) => {
+    res.status(200).send(data);
+  });
 });
 
 app.post('/binreport', (req, res) => {

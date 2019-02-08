@@ -93,6 +93,7 @@ class ReportTable extends React.PureComponent {
     super(props);
     this.state = {
       firstId: 0,
+      age: 0,
       firstFound: false,
       data: [],
       allData:[],
@@ -529,6 +530,9 @@ class ReportTable extends React.PureComponent {
 
         var j = 0;
 
+        var age;
+        var outcome = 'OH';
+
         var allGood = true;
         var item;
           while (results.results[j] && allGood) {
@@ -536,12 +540,19 @@ class ReportTable extends React.PureComponent {
           if (Number.isInteger(Number(j))) {
 
             console.log(results.results[j].report_text_highlights);
-            console.log(this.props.getAge(results.results[j].id));
+            this.props.getAge(results.results[j].id).then((rows) => {
+              if (rows.length > 0) {
+
+                this.setState({age: rows[0].age_year})
+
+              }
+            });
 
               resultsArr[j] = {id : results.results[j].id, drugname: results.results[j].drugname,
                 sex: results.results[j].sex, me_type: results.results[j].error,
-                excerpt: results.results[j].report_text_highlights};
+                excerpt: results.results[j].report_text_highlights, age_year: this.state.age, outc_cod: outcome};
               resultIds[j] = results.results[j].id;
+
 
               j++;
 

@@ -54,13 +54,14 @@ export default {
     /* Container for the legend */
     legend: {
         display: 'inline-block',
-        backgroundColor: '#fff' ,
-        bottom: 0,
-        width: 'auto',
+        width: '100%',
         height: 'auto',
-        float: 'right',
         margin: 0,
-        padding: 2,
+    },
+    legendHidden: {
+        display: 'none',
+        width: 0,
+        overflow: 'hidden',
     },
     wrapper: {
         margin: 10,
@@ -86,19 +87,16 @@ export default {
         marginTop: -12,
         marginLeft: 5,
     },
-    /* Legend Styles */
-    legendSquare: { /* Colored square templates, colors are defiend inline. */
-        width: 10,
-        height: 10,
-        display: 'inline-block',
-        position: 'relative',
-        marginRight: 5,
-    },
-    legendPair: { /* The container for the text and squares. */
-        display: 'flex',
+    legendEntry: { /* The container for the text and squares. */
+        display: 'inline-flex',
         alignItems: 'center',
+        justifyContent: 'center',
+        width: '10%',
+        borderStyle: 'solid',
+        borderWidth: 1,
+        borderColor: 'rgba(0, 0, 0, .25)',
+        borderRadius: 0,
     },
-
     toolTipStyle: {
         position: 'relative',
         display: 'inline-block',

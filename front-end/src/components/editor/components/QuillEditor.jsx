@@ -806,18 +806,18 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
 
         return (
             <div className={this.props.classes.pdfView}>
-                <div className = {`${this.props.classes.quillArea}`} style = {{display:'inline-block' , height: ((this.state.commentsOn) ? '47%' : '90%') }}>
+                <div className = {this.props.classes.quillArea} style = {{display:'inline-block'}}>
+                        <Paper className={(this.state.legendShown) ? this.props.classes.legend : props.classes.legendHidden}>
+                            <Paper className={this.props.classes.legendEntry} style={{backgroundColor: 'chartreuse'}}><Typography type='button'>Drug</Typography></Paper>
+                            <Paper className={this.props.classes.legendEntry} style={{backgroundColor: 'cadetblue'}}><Typography type='button'>Reaction</Typography></Paper>
+                            <Paper className={this.props.classes.legendEntry} style={{backgroundColor: 'darkorange'}}><Typography type='button'>Dosage</Typography></Paper>
+                            <Paper className={this.props.classes.legendEntry} style={{backgroundColor: 'gold'}}><Typography type='button'>Age</Typography></Paper>
+                            <Paper className={this.props.classes.legendEntry} style={{backgroundColor: 'lightpink'}}><Typography type='button'>Sex</Typography></Paper>
+                            <Paper className={this.props.classes.legendEntry} style={{backgroundColor: 'orchid'}}><Typography type='button'>Weight</Typography></Paper>
+                            <Paper className={this.props.classes.legendEntry} style={{backgroundColor: 'silver'}}><Typography type='button'>Indication</Typography></Paper>
+                            <Paper className={this.props.classes.legendEntry} style={{backgroundColor: 'cyan'}}><Typography type='button'>Interesting</Typography></Paper>
+                        </Paper>
                         <Typography type='button' className={this.props.classes.textButton} onClick={this.handleHideLegend}>{(this.state.legendShown) ? 'Hide' : 'Show'} Legend</Typography>
-                        <Collapse isOpened={this.state.legendShown}>
-                            <div className={this.props.classes.legendPair}><div className={this.props.classes.legendSquare} style={{backgroundColor: 'chartreuse'}} /><Typography>Drug</Typography></div>
-                            <div className={this.props.classes.legendPair}><div className={this.props.classes.legendSquare} style={{backgroundColor: 'cadetblue'}} /><Typography>Reaction</Typography></div>
-                            <div className={this.props.classes.legendPair}><div className={this.props.classes.legendSquare} style={{backgroundColor: 'darkorange'}} /><Typography>Dosage</Typography></div>
-                            <div className={this.props.classes.legendPair}><div className={this.props.classes.legendSquare} style={{backgroundColor: 'gold'}} /><Typography>Age</Typography></div>
-                            <div className={this.props.classes.legendPair}><div className={this.props.classes.legendSquare} style={{backgroundColor: 'lightpink'}} /><Typography>Sex</Typography></div>
-                            <div className={this.props.classes.legendPair}><div className={this.props.classes.legendSquare} style={{backgroundColor: 'orchid'}} /><Typography>Weight</Typography></div>
-                            <div className={this.props.classes.legendPair}><div className={this.props.classes.legendSquare} style={{backgroundColor: 'silver'}} /><Typography>Indication</Typography></div>
-                            <div className={this.props.classes.legendPair}><div className={this.props.classes.legendSquare} style={{backgroundColor: 'cyan'}} /><Typography>Interesting</Typography></div>
-                        </Collapse>
                     <div className={this.props.classes.editFacet}>
                         <Typography type='button' className={this.props.classes.textButton} onClick={() => this.editMode()}>{(this.state.editModeOn) ? 'Stop Editing' : 'Edit Highlights'}</Typography>
                         <Collapse isOpened={this.state.editModeOn}>

@@ -562,10 +562,10 @@ class ReportTable extends React.PureComponent {
 
 
                 if (!age) {
-                  age = 0;
+                  age = "--";
                 }
                 if (!code) {
-                  code = "UNKNOWN";
+                  code = "--";
                 }
 
                 resultsArr.push({

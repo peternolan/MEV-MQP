@@ -85,7 +85,6 @@ class QuillEditor extends Component {
             userEmail: this.props.userEmail,
             comment: ``,
             report: '',
-            legendShown: true,
             current: {
                 reportText: '',
                 tags: [],
@@ -768,10 +767,6 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
         </div>
     );
 
-    handleHideLegend = () => {
-        this.setState({legendShown: !this.state.legendShown})
-    };
-
     modules = {
         toolbar: {
 
@@ -806,8 +801,8 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
 
         return (
             <div className={this.props.classes.pdfView}>
-                <div className = {this.props.classes.quillArea} style = {{display:'inline-block'}}>
-                        <Paper className={(this.state.legendShown) ? this.props.classes.legend : props.classes.legendHidden}>
+                <div className = {this.props.classes.quillArea}>
+                        <Paper className={this.props.classes.legend}>
                             <Paper className={this.props.classes.legendEntry} style={{backgroundColor: 'chartreuse'}}><Typography type='button'>Drug</Typography></Paper>
                             <Paper className={this.props.classes.legendEntry} style={{backgroundColor: 'cadetblue'}}><Typography type='button'>Reaction</Typography></Paper>
                             <Paper className={this.props.classes.legendEntry} style={{backgroundColor: 'darkorange'}}><Typography type='button'>Dosage</Typography></Paper>
@@ -817,13 +812,18 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
                             <Paper className={this.props.classes.legendEntry} style={{backgroundColor: 'silver'}}><Typography type='button'>Indication</Typography></Paper>
                             <Paper className={this.props.classes.legendEntry} style={{backgroundColor: 'cyan'}}><Typography type='button'>Interesting</Typography></Paper>
                         </Paper>
-                        <Typography type='button' className={this.props.classes.textButton} onClick={this.handleHideLegend}>{(this.state.legendShown) ? 'Hide' : 'Show'} Legend</Typography>
+                        <Paper>
+                            <div onClick={this.editMode} className={this.props.classes.editBtn}><Typography type='button'>{(this.state.editModeOn) ? 'Stop Editing' : 'Edit Highlights'}</Typography></div>
+                            <Paper key='editSpecificButtons'>
+                                <Collapse isOpened={this.state.editModeOn}>
+                                    <Paper className={this.props.classes.editButton} onClick={this.saveWork}>
+                                        <Typography id = 'saveButton' type='button'>Save Highlights</Typography>
+                                    </Paper>
+                                </Collapse>
+                            </Paper>
+                        </Paper>
                     <div className={this.props.classes.editFacet}>
-                        <Typography type='button' className={this.props.classes.textButton} onClick={() => this.editMode()}>{(this.state.editModeOn) ? 'Stop Editing' : 'Edit Highlights'}</Typography>
-                        <Collapse isOpened={this.state.editModeOn}>
-                            <Typography id = 'saveButton' type='button' style = {{backgroundColor: '#D3D3D3'}}
-                                        className={this.props.classes.textButton} onClick={this.saveWork}>Save Highlights</Typography>
-                        </Collapse>
+                        
                     </div>
 
                 {/* ====== Quill editor for Annotating the Report Text ====== */}

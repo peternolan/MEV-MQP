@@ -35,33 +35,43 @@ export default {
     paperWindow: {
         height: 'calc(77% + 44px)',
     },
-    /* Generic Text Button Style */
-    textButton:{
+    editBtn: {
+        fontSize: 12,
+        float: 'right',
+        display: 'flex',
+        padding: 3,
         color: '#1D1F83',
         cursor: 'pointer',
-        backgroundColor: '#dbf0ff',
-        margin: '2px'
-
+        alignItems: 'center',
+        lineHeight: 'default',
+        '&:hover':{
+            textDecorationLine: 'underline',
+            cursor: 'pointer'
+        },
     },
-
-
     /* Container for the edit and save buttons */
-    editFacet: {
-        marginBottom: 0,
+    editSpecific: {
+        float: 'right',
+        //display: 'inline-block',
         width: 'auto',
-        height: 'auto',
+        height: 20,
+        transition: 'width 200ms ease-in-out',
+    },
+    editSpecOff: {
+        float: 'right',
+        height: 20,
+        //display: 'inline-block',
+        width: 0,
+        transition: 'width 200ms ease-in-out',
+        overflow: 'hidden',
     },
     /* Container for the legend */
     legend: {
-        display: 'inline-block',
+        display: 'inline-flex',
         width: '100%',
         height: 'auto',
         margin: 0,
-    },
-    legendHidden: {
-        display: 'none',
-        width: 0,
-        overflow: 'hidden',
+        overflow: 'wrap',
     },
     wrapper: {
         margin: 10,
@@ -91,7 +101,10 @@ export default {
         display: 'inline-flex',
         alignItems: 'center',
         justifyContent: 'center',
-        width: '10%',
+        width: 'calc(100% /8)',
+        height: 20,
+        paddingLeft: 10,
+        paddingRight: 10,
         borderStyle: 'solid',
         borderWidth: 1,
         borderColor: 'rgba(0, 0, 0, .25)',

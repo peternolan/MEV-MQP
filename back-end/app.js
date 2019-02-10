@@ -539,7 +539,7 @@ app.post('/getactivecases', (req, res) => {
 app.post('/getAge', (req, res) => {
   console.log('got a age_year request with body:\n ', req.body);
   let query =
-      'SELECT age_year '
+      'SELECT age_year, outc_cod '
       + 'FROM reports '
       + 'WHERE primaryid = ' + req.body.primaryid;
   db.query(query, (err, data) => {

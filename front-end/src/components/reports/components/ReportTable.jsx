@@ -94,6 +94,8 @@ class ReportTable extends React.PureComponent {
     this.state = {
       firstId: 0,
       age: 0,
+      outCode: '',
+      ready: false,
       firstFound: false,
       data: [],
       allData:[],
@@ -113,6 +115,7 @@ class ReportTable extends React.PureComponent {
       selected: -1,
         returnedResults: [1, 2, 3],
         returnedIds: [],
+      item: null,
 
       /**
        * Default widths for the columns of the table
@@ -504,6 +507,9 @@ class ReportTable extends React.PureComponent {
     );
   };
 
+
+  //setData =
+
   //EXECUTE SEARCH
   search = () => {
 
@@ -514,76 +520,99 @@ class ReportTable extends React.PureComponent {
 
 
     var results;
+
     var resultsArr = [];
     var resultIds  = [];
 
-    this.props.executeSearch(contents)
-      .then((data)=> {
+    var arr = [];
+    var done = false;
 
-        results = JSON.parse(data);
+        console.log(arr);
 
-        console.log(results);
-        console.log(results.results);
-        console.log(Object.getOwnPropertyNames(results));
-        console.log(results.results[0].drugname);
+          console.log("In Here");
 
+          console.log("In false");
 
-        var j = 0;
+          this.props.executeSearch(contents)
+              .then((data) => {
+                results = JSON.parse(data);
 
-        var age;
-        var outcome = 'OH';
+                var j = 0;
 
-        var allGood = true;
-        var item;
-          while (results.results[j] && allGood) {
-            console.log('j ' + j)
-          if (Number.isInteger(Number(j))) {
+                var allGood = true;
+                console.log(results.results);
 
-            console.log(results.results[j].report_text_highlights);
-            this.props.getAge(results.results[j].id).then((rows) => {
-              if (rows.length > 0) {
+                while (results.results[j] && allGood) {
+                  if (Number.isInteger(Number(j))) {
+                    arr.push(results.results[j]);
+                  } else {
+                    allGood = false;
+                  }
+                  j++;
+                }
+                j = 0;
+                while (arr[j]) {
 
-                this.setState({age: rows[0].age_year})
-
-              }
-            });
-
-              resultsArr[j] = {id : results.results[j].id, drugname: results.results[j].drugname,
-                sex: results.results[j].sex, me_type: results.results[j].error,
-                excerpt: results.results[j].report_text_highlights, age_year: this.state.age, outc_cod: outcome};
-              resultIds[j] = results.results[j].id;
-
-
-              j++;
+                  var item = arr;
+                  var i = 0;
+                  this.props.getAge(arr[j].id).then((rows) => {
+                    console.log("setAgeAndCode" +  item[i]);
+                    if (rows.length > 0) {
 
 
-          }
-          else {
-              allGood = false;
+                      var age;
+                      var code;
 
-          }
-        }
+                      age = rows[0].age_year;
+                      code = rows[0].outc_cod[0];
 
+                      console.log("age " + age);
+                      console.log("outCode " + code);
 
-          this.handleSearchResults(resultsArr, resultIds);
+                        if (!age) {
+                          age = 0;
+                        }
+                        if (!code) {
+                          code = "UNKNOWN";
+                        }
 
+                        resultsArr.push({
+                          id: item[i].id,
+                          drugname: item[i].drugname,
+                          sex: item[i].sex,
+                          me_type: item[i].error,
+                          excerpt: item[i].report_text_highlights,
+                          age_year: age,
+                          outc_cod: code
+                        });
+                        resultIds.push(item[i].id);
+                        console.log("i " + i);
+                        console.log(resultsArr);
+                        console.log(resultIds);
+                        console.log(arr.length);
+                        if (resultsArr.length >= 3 && resultIds.length >= 3) {
+                          this.handleSearchResults(resultsArr, resultIds);
+                        }
+                      }
 
+                    i++;
+                    });
 
+                  j++;
 
-      });
-
+                  }
+                });
 
   };
 
   handleSearchResults = (array1, array2) => {
 
-    console.log("handle Search")
+    console.log("handle Search");
 
     this.props.printSearchResults(array1);
 
 
     this.setState({returnedResults : array1, returnedIds: array2});
-
 
 
     this.props.changeTab(1);

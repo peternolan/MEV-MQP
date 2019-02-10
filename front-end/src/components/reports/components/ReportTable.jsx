@@ -527,81 +527,70 @@ class ReportTable extends React.PureComponent {
     var arr = [];
     var done = false;
 
-        console.log(arr);
+    this.props.executeSearch(contents)
+        .then((data) => {
+          results = JSON.parse(data);
 
-          console.log("In Here");
+          var j = 0;
 
-          console.log("In false");
+          var allGood = true;
+          console.log(results.results);
 
-          this.props.executeSearch(contents)
-              .then((data) => {
-                results = JSON.parse(data);
+          while (results.results[j] && allGood) {
+            if (Number.isInteger(Number(j))) {
+              arr.push(results.results[j]);
+            } else {
+              allGood = false;
+            }
+            j++;
+          }
+          j = 0;
+          while (arr[j]) {
 
-                var j = 0;
+            var item = arr;
+            var i = 0;
+            this.props.getAge(arr[j].id).then((rows) => {
 
-                var allGood = true;
-                console.log(results.results);
+              if (rows.length > 0) {
 
-                while (results.results[j] && allGood) {
-                  if (Number.isInteger(Number(j))) {
-                    arr.push(results.results[j]);
-                  } else {
-                    allGood = false;
-                  }
-                  j++;
+
+                var age;
+                var code;
+
+                age = rows[0].age_year;
+                code = rows[0].outc_cod[0];
+
+
+                if (!age) {
+                  age = 0;
                 }
-                j = 0;
-                while (arr[j]) {
+                if (!code) {
+                  code = "UNKNOWN";
+                }
 
-                  var item = arr;
-                  var i = 0;
-                  this.props.getAge(arr[j].id).then((rows) => {
-                    console.log("setAgeAndCode" +  item[i]);
-                    if (rows.length > 0) {
-
-
-                      var age;
-                      var code;
-
-                      age = rows[0].age_year;
-                      code = rows[0].outc_cod[0];
-
-                      console.log("age " + age);
-                      console.log("outCode " + code);
-
-                        if (!age) {
-                          age = 0;
-                        }
-                        if (!code) {
-                          code = "UNKNOWN";
-                        }
-
-                        resultsArr.push({
-                          id: item[i].id,
-                          drugname: item[i].drugname,
-                          sex: item[i].sex,
-                          me_type: item[i].error,
-                          excerpt: item[i].report_text_highlights,
-                          age_year: age,
-                          outc_cod: code
-                        });
-                        resultIds.push(item[i].id);
-                        console.log("i " + i);
-                        console.log(resultsArr);
-                        console.log(resultIds);
-                        console.log(arr.length);
-                        if (resultsArr.length >= 3 && resultIds.length >= 3) {
-                          this.handleSearchResults(resultsArr, resultIds);
-                        }
-                      }
-
-                    i++;
-                    });
-
-                  j++;
-
-                  }
+                resultsArr.push({
+                  id: item[i].id,
+                  drugname: item[i].drugname,
+                  sex: item[i].sex,
+                  me_type: item[i].error,
+                  excerpt: item[i].report_text_highlights,
+                  age_year: age,
+                  outc_cod: code
                 });
+                resultIds.push(item[i].id);
+
+                if (resultsArr.length >= arr.length && resultIds.length >= arr.length) {
+                  this.handleSearchResults(resultsArr, resultIds);
+                }
+              }
+
+              i++;
+            });
+
+            j++;
+
+          }
+        });
 
   };
 

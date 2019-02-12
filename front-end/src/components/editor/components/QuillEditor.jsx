@@ -51,6 +51,7 @@ class QuillEditor extends Component {
             commentSec: PropTypes.string,
             commentButton: PropTypes.string,
             commentContent: PropTypes.string,
+            highlightButtons: PropTypes.string,
         }).isRequired,
         primaryid: PropTypes.number,
         userID: PropTypes.number.isRequired,
@@ -694,43 +695,145 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
 
     customToolbar = () => (
 
-        <div id={`react-quill-${this.state.primaryId}`} style={{width: 'calc(65.5vw)', height: 'calc(9vh)', display: 'none'}}>
+        <div id={`react-quill-${this.state.primaryId}`} style={{ height: 'calc(7vh)', display: 'none'}}>
+
 
             <select defaultValue="false" className="ql-header" style={{ width: '100px', height: '36px', margin: '4px' }}>
-                <option value="1" />
-                <option value="2" />
-                <option value="false" />
+                <option value="1"/>
+                <option value="2"/>
+                <option value="false"/>
+
             </select>
+
             <select defaultValue="justify" className="ql-align" style={{ width: '30px', height: '20px', margin: '4px' }}>
                 <option value="center" />
                 <option value="right" />
                 <option value="justify" />
             </select>
-            <Button className="ql-colorBackground" value={annotationColors.drug} style={{ minWidth: '72px', padding: '0px', margin: '2px', background: annotationColors.drug}}>
+
+            <Button className="ql-colorBackground" value={annotationColors.drug} style={{ display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                minWidth: '9%',
+                borderStyle: 'solid',
+                padding: '0px',
+                borderWidth: 1,
+                borderColor: 'rgba(0, 0, 0, .25)',
+                borderRadius: 0,
+                background: annotationColors.drug,
+                top: '5px',
+                minHeight: '6px'
+            }}>
                 Drug
             </Button>
-            <Button className="ql-colorBackground" value={annotationColors.reaction} style={{ minWidth: '72px', padding: '0px', margin: '2px', background: annotationColors.reaction }}>
-                Adverse Reaction
+            <Button className="ql-colorBackground" value={annotationColors.reaction} style={{ display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                minWidth: '9%',
+                borderStyle: 'solid',
+                borderWidth: 1,
+                borderColor: 'rgba(0, 0, 0, .25)',
+                borderRadius: 0,
+                padding: '0px',
+                background: annotationColors.reaction,
+                top: '5px',
+                minHeight: '6px'}}>
+                Reaction
             </Button>
-            <Button className="ql-colorBackground" value={annotationColors.dosage} style={{ minWidth: '72px', padding: '0px', margin: '2px', background: annotationColors.dosage }}>
+            <Button className="ql-colorBackground" value={annotationColors.dosage} style={{ display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                minWidth: '9%',
+                borderStyle: 'solid',
+                borderWidth: 1,
+                borderColor: 'rgba(0, 0, 0, .25)',
+                borderRadius: 0,
+                padding: '0px',
+                background: annotationColors.dosage,
+                top: '5px',
+                minHeight: '6px'}}>
                 Dosage
             </Button>
-            <Button className="ql-colorBackground" value={annotationColors.age} style={{ minWidth: '72px', padding: '0px', margin: '2px', background: annotationColors.age }}>
+            <Button className="ql-colorBackground" value={annotationColors.age} style={{ display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                minWidth: '9%',
+                borderStyle: 'solid',
+                borderWidth: 1,
+                borderColor: 'rgba(0, 0, 0, .25)',
+                borderRadius: 0,
+                padding: '0px',
+                background: annotationColors.age,
+                top: '5px',
+                minHeight: '6px'}}>
                 Age
             </Button>
-            <Button className="ql-colorBackground" value={annotationColors.sex} style={{ minWidth: '72px', padding: '0px', margin: '2px', background: annotationColors.sex }}>
+            <Button className="ql-colorBackground" value={annotationColors.sex} style={{ display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                minWidth: '9%',
+                borderStyle: 'solid',
+                borderWidth: 1,
+                borderColor: 'rgba(0, 0, 0, .25)',
+                borderRadius: 0,
+                padding: '0px',
+                background: annotationColors.sex,
+                top: '5px',
+                minHeight: '6px'}}>
                 Gender
             </Button>
-            <Button className="ql-colorBackground" value={annotationColors.weight} style={{ minWidth: '72px', padding: '0px', margin: '2px', background: annotationColors.weight }}>
+            <Button className = "ql-colorBackground" value={annotationColors.weight} style={{display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                minWidth: '9%',
+                borderStyle: 'solid',
+                borderWidth: 1,
+                borderColor: 'rgba(0, 0, 0, .25)',
+                borderRadius: 0,
+                background: annotationColors.weight,
+                top: '5px',
+                minHeight: '6px'}}>
                 Weight
             </Button>
-            <Button className="ql-colorBackground" value={annotationColors.indication} style={{minWidth: '72px',  padding: '0px', margin: '2px', background: annotationColors.indication }}>
+            <Button className="ql-colorBackground" value={annotationColors.indication} style={{display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                minWidth: '9%',
+                borderStyle: 'solid',
+                borderWidth: 1,
+                borderColor: 'rgba(0, 0, 0, .25)',
+                borderRadius: 0,
+                padding: '0px',
+                background: annotationColors.indication,
+                top: '5px',
+                minHeight: '6px'}}>
                 Indication
             </Button>
-            <Button className="ql-colorBackground" value={annotationColors.interesting} style={{ minWidth: '72px', padding: '0px', margin: '2px', background: annotationColors.interesting }}>
+            <Button className= "ql-colorBackground" value={annotationColors.interesting} style={{ display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                minWidth: '9%',
+                borderStyle: 'solid',
+                borderWidth: 1,
+                borderColor: 'rgba(0, 0, 0, .25)',
+                borderRadius: 0,
+                padding: '0px',
+                background: annotationColors.interesting,
+                top: '5px',
+                minHeight: '6px'}}>
                 Interesting
             </Button>
-            <Button className="ql-colorBackground" value="" style={{ padding: '0px', margin: '2px', minWidth:'72px', border: '1px solid black',  background: annotationColors.clear }}>
+            <Button className="ql-colorBackground" value="" style={{ display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                minWidth: '7%',
+                borderStyle: 'solid',
+                borderWidth: 1,
+                padding: '0px',
+                borderColor: 'rgba(0, 0, 0, .25)',
+                borderRadius: 0,
+                top: '5px',
+                minHeight: '6px'}}>
                 Clear
             </Button>
 

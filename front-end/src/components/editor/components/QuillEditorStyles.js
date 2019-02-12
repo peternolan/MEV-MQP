@@ -97,6 +97,16 @@ export default {
         borderColor: 'rgba(0, 0, 0, .25)',
         borderRadius: 0,
     },
+    highlightButtons: {
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '10%',
+        borderStyle: 'solid',
+        borderWidth: 1,
+        borderColor: 'rgba(0, 0, 0, .25)',
+        borderRadius: 0,
+    },
     toolTipStyle: {
         position: 'relative',
         display: 'inline-block',

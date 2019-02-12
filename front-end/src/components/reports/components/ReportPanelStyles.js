@@ -22,7 +22,7 @@ export default {
         display: 'flex',
     },
     hideBtn: {
-        float: 'right',
+        //float: 'right',
         padding: 3,
         color: '#1D1F83',
         cursor: 'pointer',

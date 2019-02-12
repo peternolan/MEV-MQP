@@ -122,12 +122,12 @@ class ReportTable extends React.PureComponent {
        */
       widths: {
         //init_fda_dt: 85,
-        primaryid: 80,
+        primaryid: 75,
         age_year: 35,
         sex: 35,
         drugname: 125,
         me_type: 100,
-        outc_cod: 55,
+        outc_cod: 60,
         id: 100,
           body_highlights: 300,
       },
@@ -496,8 +496,8 @@ class ReportTable extends React.PureComponent {
         <Table.Row
             {...props}
             style={{
-                backgroundColor: (props.tableRow.rowId === this.state.selected) ? '#dbf0ff' : backgroundColor
-              ,height:'',
+              backgroundColor: (props.tableRow.rowId === this.state.selected) ? '#dbf0ff' : backgroundColor,
+              height:45,
               cursor:'pointer'
 
             }}

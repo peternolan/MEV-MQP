@@ -337,14 +337,23 @@ class QuillEditor extends Component {
 
     display =() =>{
 
+
+        var dummyNode = document.createElement('div');
+        dummyNode.innerHTML = `<span style = 'font-size: 6px'> ${this.state.report} </span>`;
+
+        console.log(this.state.report);
+        console.log(dummyNode.outerHTML);
+        console.log(dummyNode.outerHTML);
+
+
         return <div className={this.props.classes.quillText}>
             { (!this.state.loading)
                     ? <ReactQuill
                         id={`${this.props.primaryid}` || 'react-quill'}
-                        value = {this.state.report}
+                        value = {dummyNode.innerHTML}
                         onChange={this.handleChange}
                         modules={this.modules}
-                        style ={{textAlign: 'justify', border: 'none', height: (this.state.commentsOn) ?  '20%' : '30%', boxShadow: 'none'}}
+                        style ={{fontSize: '6px', textAlign: 'justify', border: 'none', height: (this.state.commentsOn) ?  '20%' : '30%', boxShadow: 'none'}}
 
                         readOnly
                     />

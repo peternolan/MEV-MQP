@@ -705,7 +705,7 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
 
         <div id={`react-quill-${this.state.primaryId}`} style={{ height: 'calc(7vh)', display: 'none'}}>
 
-
+            {/*
             <select defaultValue="false" className="ql-header" style={{ width: '100px', height: '36px', margin: '4px' }}>
                 <option value="1"/>
                 <option value="2"/>
@@ -718,11 +718,11 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
                 <option value="right" />
                 <option value="justify" />
             </select>
-
+            */}
             <Button className="ql-colorBackground" value={annotationColors.drug} style={{ display: 'inline-flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                minWidth: '9%',
+                minWidth: '10%',
                 borderStyle: 'solid',
                 padding: '0px',
                 borderWidth: 1,
@@ -737,7 +737,7 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
             <Button className="ql-colorBackground" value={annotationColors.reaction} style={{ display: 'inline-flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                minWidth: '9%',
+                minWidth: '10%',
                 borderStyle: 'solid',
                 borderWidth: 1,
                 borderColor: 'rgba(0, 0, 0, .25)',
@@ -751,7 +751,7 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
             <Button className="ql-colorBackground" value={annotationColors.dosage} style={{ display: 'inline-flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                minWidth: '9%',
+                minWidth: '10%',
                 borderStyle: 'solid',
                 borderWidth: 1,
                 borderColor: 'rgba(0, 0, 0, .25)',
@@ -765,7 +765,7 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
             <Button className="ql-colorBackground" value={annotationColors.age} style={{ display: 'inline-flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                minWidth: '9%',
+                minWidth: '10%',
                 borderStyle: 'solid',
                 borderWidth: 1,
                 borderColor: 'rgba(0, 0, 0, .25)',
@@ -779,7 +779,7 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
             <Button className="ql-colorBackground" value={annotationColors.sex} style={{ display: 'inline-flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                minWidth: '9%',
+                minWidth: '10%',
                 borderStyle: 'solid',
                 borderWidth: 1,
                 borderColor: 'rgba(0, 0, 0, .25)',
@@ -793,7 +793,7 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
             <Button className = "ql-colorBackground" value={annotationColors.weight} style={{display: 'inline-flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                minWidth: '9%',
+                minWidth: '10%',
                 borderStyle: 'solid',
                 borderWidth: 1,
                 borderColor: 'rgba(0, 0, 0, .25)',
@@ -806,7 +806,7 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
             <Button className="ql-colorBackground" value={annotationColors.indication} style={{display: 'inline-flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                minWidth: '9%',
+                minWidth: '10%',
                 borderStyle: 'solid',
                 borderWidth: 1,
                 borderColor: 'rgba(0, 0, 0, .25)',
@@ -820,7 +820,7 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
             <Button className= "ql-colorBackground" value={annotationColors.interesting} style={{ display: 'inline-flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                minWidth: '9%',
+                minWidth: '10%',
                 borderStyle: 'solid',
                 borderWidth: 1,
                 borderColor: 'rgba(0, 0, 0, .25)',
@@ -834,7 +834,7 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
             <Button className="ql-colorBackground" value="" style={{ display: 'inline-flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                minWidth: '7%',
+                minWidth: '8%',
                 borderStyle: 'solid',
                 borderWidth: 1,
                 padding: '0px',
@@ -852,10 +852,11 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
                     classes={{
                         tooltip: this.props.classes.toolTipStyle,
                         popper: this.props.classes.tooltipStyle,
+
                     }}
                     style ={{ fontSize: '20pt',}}
                 >
-                    <Button style={{ padding: '0px', margin: '1 px', minHeight: '2px', minWidth:'2px', border: '1px solid black',
+                    <Button style={{ padding: '0px', marginLeft: '5px', minHeight: '2px', minWidth:'2px', border: '1px solid black',
                         borderRadius: '15px',  background: annotationColors.clear, bottom: '0px'}}>
                         ? </Button>
                 </MaterialTooltip>
@@ -914,7 +915,9 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
         return (
             <div className={this.props.classes.pdfView}>
                 <div className = {this.props.classes.quillArea}>
+                    {/*
                         <Paper className={this.props.classes.legend}>
+
                             <Paper className={this.props.classes.legendEntry} style={{backgroundColor: 'chartreuse'}}><Typography type='button'>Drug</Typography></Paper>
                             <Paper className={this.props.classes.legendEntry} style={{backgroundColor: 'cadetblue'}}><Typography type='button'>Reaction</Typography></Paper>
                             <Paper className={this.props.classes.legendEntry} style={{backgroundColor: 'darkorange'}}><Typography type='button'>Dosage</Typography></Paper>
@@ -924,6 +927,7 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
                             <Paper className={this.props.classes.legendEntry} style={{backgroundColor: 'silver'}}><Typography type='button'>Indication</Typography></Paper>
                             <Paper className={this.props.classes.legendEntry} style={{backgroundColor: 'cyan'}}><Typography type='button'>Interesting</Typography></Paper>
                         </Paper>
+                        */}
                         <Paper>
                             <div onClick={this.editMode} className={this.props.classes.editBtn}><Typography type='button'>{(this.state.editModeOn) ? 'Stop Editing' : 'Edit Highlights'}</Typography></div>
                             <Paper key='editSpecificButtons'>

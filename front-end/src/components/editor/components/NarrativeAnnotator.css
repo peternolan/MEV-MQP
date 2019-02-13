@@ -4,6 +4,8 @@
   overflow: scroll;
   border-color: white;
   font-weight: 400;
+  text-align: justify;
+
 }
 
 .tooltip {

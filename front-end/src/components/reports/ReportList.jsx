@@ -86,9 +86,10 @@ class ReportList extends Component {
       snackbarMessage: '',
       currentTab: 0,
       summaryOpen: false,
+      textOpen: true,
+      reportOpen: false,
       primaryChosen: false,
       supportiveChosen: false,
-      reportOpen: false,
       summaryCounter: 0,
       searchedReports:[],
       returnedResults: [1, 2, 3],
@@ -238,11 +239,26 @@ class ReportList extends Component {
         this.setState({ primaryChosen: !this.state.primaryChosen });
     };
 
+  /* Collapse report panel */
+  handleHideReport = () => {
+    if (this.state.summaryOpen){
+      return this.setState({ textOpen: !this.state.textOpen});
+    }
+    else {
+      return this.setState({ summaryOpen: !this.state.summaryOpen});
+    }
+  };
+
   /**
    * Handler for Opening the New Case Modal
    */
   handleViewCaseSummary = () => {
-    this.setState({ summaryOpen: !this.state.summaryOpen});
+    if(this.state.textOpen){
+      return this.setState({ summaryOpen: !this.state.summaryOpen});
+    }
+    else {
+      return this.setState({ textOpen: !this.state.textOpen});
+    }
   };
     /**
      * Handler for Opening the Report Panel
@@ -301,6 +317,34 @@ class ReportList extends Component {
         }
 
     };
+
+  calculateSummarySize = () => {
+    if(this.state.summaryOpen){
+      if(this.state.textOpen){
+        return this.props.classes.smallSummaryContainer;
+      }
+      else{
+        return this.props.classes.largeSummaryContainer;
+      }
+    }
+    else {
+      return this.props.classes.closedSummaryContainer;
+    }
+  };
+
+  calculateReportSize = () => {
+    if(this.state.textOpen){
+      if(this.state.summaryOpen){
+        return this.props.classes.smallReportContainer;
+      }
+      else{
+        return this.props.classes.largeReportContainer;
+      }
+    }
+    else {
+      return this.props.classes.closedReportContainer;
+    }
+  };
 
   /**
    * Checks name validity of new bin and shows an error or sends a backend fetch request
@@ -371,8 +415,7 @@ class ReportList extends Component {
           </AppBar>
           
           {/* ====== SideBar for Viewing the Case Summary ====== */}
-          <div id="summary-sidebar" className={(this.state.summaryOpen) ? this.props.classes.openSummaryContainer : this.props.classes.closedSummaryContainer} >
-
+          <div id="summary-sidebar" className={this.calculateSummarySize()}>
             <CaseSummaryListing
               updateTab={this.updateTab}
               bins={this.state.userBins}
@@ -382,8 +425,11 @@ class ReportList extends Component {
               handleClickPieChart={this.handleCaseChangePrimary}
             />
           </div>
+          <div key='summaryCollapse' className={this.props.classes.collapseDivider} style={{float: 'left'}} onClick={this.handleViewCaseSummary}>
+            <div className={(this.state.summaryOpen) ? this.props.classes.inverseTri : this.props.classes.collapseTri}/>
+          </div>
           {/* ====== Table for Viewing the table of reports ====== */}
-          <div className={ this.props.classes.tableContainer} >
+          <div key='reporttable' className={this.props.classes.tableContainer} >
             <ReportTable
               bin={this.state.bin}
               padding = '0px'
@@ -403,9 +449,11 @@ class ReportList extends Component {
 
             />
           </div>
+          <div key='reportCollapse' className={this.props.classes.collapseDivider}  onClick={this.handleHideReport}>
+            <div className={(this.state.textOpen) ? this.props.classes.collapseTri : this.props.classes.inverseTri}/>
+          </div>
             {/* ====== SideBar for reading a report ======*/}
-            {console.log(this.state.reportOpen)}
-            <div id="report-sidebar" className={(this.state.summaryOpen) ? this.props.classes.smallreportContainer : this.props.classes.reportContainer}  >
+            <div id="report-sidebar" className={this.calculateReportSize()}  >
                 <ReportPanel
                     updateTab={this.updateTab}
                     bins={this.state.userBins}
@@ -422,7 +470,7 @@ class ReportList extends Component {
             open={this.state.newCaseModalOpen}
             onClose={this.handleNewCaseClose}
           >
-            <Paper elevation={8} className={this.props.classes.newCaseModal} >
+            <Paper elevation={8} className={this.props.classes.newCaseModal}>
               <Typography type="title" id="modal-title">
                 Create a Case
               </Typography>
@@ -445,22 +493,6 @@ class ReportList extends Component {
               <Button raised onClick={this.handleNewCaseClick} style={{ margin: 12 }} color="primary">Create Case</Button>
             </Paper>
           </Modal>
-          {/* ====== Floating Action Button for Opening Case Summary ====== */}
-          <div style={{ position: 'absolute', left: '0px', bottom: '0px'}} >
-            <MaterialTooltip
-              title={(this.state.summaryOpen) ? 'Close Case Summary' : 'Open Case Summary'}
-              placement="top"
-              enterDelay={50}
-              classes={{
-                tooltip: this.props.classes.tooltipStyle,
-                popper: this.props.classes.tooltipStyle,
-                }}
-            >
-              <Button fab style={{ margin: 12 }} color="primary" onClick={this.handleViewCaseSummary} >
-                <img src={ViewCaseSummary} className={this.props.classes.caseSummarySVG} alt="Open Case Summary" />
-              </Button>
-            </MaterialTooltip>
-          </div>
           {/* ====== Snackbar for Notificaitons to the User ====== */}
           <Snackbar
             anchorOrigin={{

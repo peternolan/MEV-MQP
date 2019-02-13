@@ -8,7 +8,7 @@ export default {
   tableContainer: {
     margin: '0px',
     padding: '0px',
-    width: 500,
+    width: 470,
     overflowY: 'scroll',
     maxHeight: 'calc(100vh - 165px)',
     display: 'inline-block'
@@ -20,6 +20,9 @@ export default {
     overflow: 'hidden',
     backgroundColor: '#fefefe',
     padding: '0px 15px',
+  },
+  tableHeader: {
+    maxHeight: 45,
   },
   caseGridList: {
     padding: '5px',

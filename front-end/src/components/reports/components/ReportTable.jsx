@@ -128,8 +128,6 @@ class ReportTable extends React.PureComponent {
         drugname: 125,
         me_type: 100,
         outc_cod: 60,
-        id: 100,
-          body_highlights: 300,
       },
 
 
@@ -251,35 +249,6 @@ class ReportTable extends React.PureComponent {
     {
       title: 'Report ID',
       name: 'primaryid',
-    },
-    {
-      title: 'Age',
-      name: 'age_year',
-    },
-    {
-      title: 'Sex',
-      name: 'sex',
-    },
-    {
-      title: 'Drugs',
-      name: 'drugname',
-    },
-    {
-      title: 'Medication Error',
-      name: 'me_type',
-    },
-    {
-      title: 'Outcome',
-      name: 'outc_cod',
-    },
-  ];
-  /**
-   * Names and values for the columns of the table
-   */
-  columns2 = [
-    {
-      title: 'ID',
-      name: 'id',
     },
     {
       title: 'Age',
@@ -869,7 +838,7 @@ class ReportTable extends React.PureComponent {
 
               <Grid
                 rows={(Number(this.props.currentTab) === 1) ? this.state.returnedResults : this.state.data}
-                columns={(Number(this.props.currentTab) === 1) ? this.columns2 : this.columns}
+                columns={this.columns}
                 getRowId={(Number(this.props.currentTab) === 1) ? row => row.id : row => row.primaryid }
               >
                 <RowDetailState
@@ -901,7 +870,6 @@ class ReportTable extends React.PureComponent {
                 />
                 <TableHeaderRow showSortingControls className="tableHeader"/>
                 <TableColumnReordering defaultOrder={this.columns.map(column => column.name)} />
-                {/*cellComponent={(props) => <TableRowDetail.Cell className={this.props.classes.tableDetailCell} {...props} /> }*/}
                 <TableRowDetail
                   contentComponent={this.renderDetailRowContent}
                 />

@@ -68,7 +68,7 @@ class CaseSummary extends Component {
       caseNarrativesData:[],
       searchedReports:[],
       searchOption: '',
-      graphdata: 'dataone',
+      graphdata: 'outc_cod',
       keywordsExposed: false,
       recommendationString: [],
     };
@@ -306,34 +306,6 @@ class CaseSummary extends Component {
 
   }
 
-  calculateTfidf = () => {
-  console.log(natural);
-    // var tfidf = new TfIdf();
-    /***************** get all reports text narratives */
-    // const allreportsNarrative = Object.keys(this.props.allReports).reduce((acc, key) => {
-    //   // console.log(this.props.allReports[key] )
-    //   return acc.concat({
-    //     name: this.props.allReports[key].primaryid ,
-    //     count: this.props.allReports[key].report_text,
-    //   });
-    // }, []);
-
-    /***************** Calculate Tf-idf */
-    // console.log(allreportsNarrative)
-
-    // Object.keys(allreportsNarrative).map((key)=>{
-    //   // tfidf.addDocument(allreportsNarrative[key]);
-    // })
-    // this.props.getCaseReports(this.state.caseName, this.props.userID, {})
-    // .then((data) => this.setState({
-    //     caseNarratives: data,
-    // },()=>{
-    //   this.getCaseNarratives();
-    // }));
-      // console.log(this.state.caseNarrativesData)
-
-  }
-
   /**
    * Changes the first letter of any word in a string to be capital
    * BEING REUSED IN ReportListing.jsx NEED TO DEAL WITH THIS LATER ! DUPLICATE METHODS
@@ -351,9 +323,6 @@ class CaseSummary extends Component {
       console.log("State caseName" + this.state.caseName);
       this.props.updateTab(this.state.caseName);
   };
-
-
-
 
   /**************** when the search button is pressed,  */
   handleSearchCaseChange = () =>{
@@ -454,12 +423,13 @@ class CaseSummary extends Component {
     console.log('DATA', data)
   }
 
+  /* Toggle the hiding of keyword section */
   handleKeywordHide = () => {
     this.setState({
       keywordsExposed: !this.state.keywordsExposed
     });
   }
-
+  /* Toggle a word's activation for recommendations */
   toggleWord = (event) => {
     var strchk = event.target.getAttribute('value');
     var index = this.state.recommendationString.indexOf(strchk);
@@ -524,25 +494,7 @@ class CaseSummary extends Component {
         .append("g")
         .attr("class", d=>d+ " bar")
         .attr("transform", (d,i)=>{return "translate("+ 0+","+(20*i)+")"});
-/*
-    let text = svg.select(".bar").selectAll("text")
-        .data(this.refs.options.selectedOptions)
-        .enter()
-        .append("text")
-        .text(d=>{console.log(d);return d.text})
-        .attr("x",0)
-        .attr("y",2)
-        .style("text-anchor", "mid")
-        .style("alignment-baseline", "hanging");
 
-    console.log(this.refs.options)
-
-    let textelmt = text.node();
-    //console.log(textelmt);
-    if(textelmt != null){
-      var text_height = textelmt.getBBox().height;
-    }
-*/
     var total_reports = reports.length;
     //console.log(x);
     let rects = svg.selectAll("rect.new")//select all rects not marked for deletion (they may be marked from the previous step)
@@ -604,14 +556,6 @@ class CaseSummary extends Component {
     }
 
     console.log(this);
-  };
-
-  addWordToRec = (word) => {
-    var newrec = this.state.recommendationString.slice();
-    newrec.push(word);
-    this.setState({
-      recommendationString:newrec
-    });
   };
 
   render(){{

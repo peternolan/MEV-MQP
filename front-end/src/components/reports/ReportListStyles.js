@@ -2,6 +2,36 @@ import ReportPanel from "./components/ReportPanel";
 import React from "react";
 
 export default {
+  collapseDivider: {
+    height: 'calc(100vh - 122px)',
+    width: 15,
+    backgroundColor: '#1D1F83',
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    '&:hover':{
+      cursor: 'pointer',
+      backgroundColor: '#7c88c1',
+    }
+  },
+  collapseTri: {
+    width: 0,
+    height: 0,
+    borderStyle: 'solid',
+    borderWidth: '8px 0 8px 8px',
+    borderColor: 'transparent transparent transparent #fff',
+    transform: 'rotate(0deg)',
+    transition: 'all 500ms ease-in-out',
+  },
+  inverseTri: {
+    width: 0,
+    height: 0,
+    borderStyle: 'solid',
+    borderWidth: '8px 0 8px 8px',
+    borderColor: 'transparent transparent transparent #fff',
+    transform: 'rotate(180deg)',
+    transition: 'all 500ms ease-in-out',
+  },
   newCaseArea: {
     width: 'calc(100%)',
     margin: '20px',
@@ -46,7 +76,7 @@ export default {
   tableContainer: {
       float: 'left',
       display: 'inline-block',
-      width: 500, /* This element is constantly on the screen, so we want it's width to be pretty much static. */
+      width: 470, /* This element is constantly on the screen, so we want it's width to be pretty much static. */
       maxHeight: 'calc(100vh - 122px)',
       padding: '0px',
       margin: '0px',
@@ -55,7 +85,14 @@ export default {
   },
   /* The only variable elements should be the report and summary panels, when the case summary expands the report should shrink to accomodate. */
   /*.Case summary panel styles */
-  openSummaryContainer: {
+largeSummaryContainer: {
+  float: 'left',
+  display: 'inline-block',
+  width: 'calc(100vw - 500px)',
+  height: 'calc(100vh - 122px)',
+  transition: 'width 200ms ease-in-out',
+},
+smallSummaryContainer: {
       float: 'left',
       display: 'inline-block',
       width: '24vw',
@@ -66,17 +103,16 @@ export default {
   closedSummaryContainer: {
     float: 'left',
     display: 'inline-block',
-    width: '0vw',
+    width: 0,
     maxHeight: 'calc(100vh - 122px)',
     height: 'calc(100vh - 122px)',
     transition: 'width 200ms ease-in-out',
     overflow: 'hidden',
   },
   /* Report panel styles */
-  reportContainer: {
+  largeReportContainer: {
       float: 'right',
       display: 'inline-block',
-      width: 'auto',
       maxWidth: 'calc(100vw - 500px)',
       maxHeight: 'calc(100vh - 122px)',
       height: '100%',
@@ -84,15 +120,24 @@ export default {
       transition: 'width 200ms ease-in-out',
       overflow: 'scroll',
   },
-  smallreportContainer: {
+  smallReportContainer: {
         float: 'right',
         display: 'inline-block',
-        maxWidth: 'calc(76vw - 500px)',
+        width: 'calc(76vw - 500px)',
         maxHeight: 'calc(100vh - 122px)',
         height: '100%',
         padding: '0px',
         transition: 'width 200ms ease-in-out',
         boxShadow: 'none'
+  },
+  closedReportContainer:{
+    float:'right',
+    display: 'inline-block',
+    width: 0,
+    maxHeight: 'calc(100vh - 122px)',
+    height: 'calc(100vh - 122px)',
+    transition: 'width 200ms ease-in-out',
+    overflow: 'hidden',
   },
   borderBottom: {
     borderWidth: 0,

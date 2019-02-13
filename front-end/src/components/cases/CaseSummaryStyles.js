@@ -11,8 +11,8 @@ export default {
 	},
 	summaryContent: {
 		width: '100%',
-		maxHeight: '40vh',
-		overflow: 'scroll',
+		height: 'auto',
+		//overflow: 'scroll',
 	},
 	textButton: {
 		color: '#1D1F83',

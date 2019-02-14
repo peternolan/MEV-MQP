@@ -31,7 +31,7 @@ import { CircularProgress } from 'material-ui/Progress';
 import Typography from 'material-ui/Typography';
 import { FormControlLabel } from 'material-ui/Form';
 import _ from 'lodash';
-import { moveReport, getCaseReports, getReportNarrativeFromID, getReportsInCases , setAllReports, executeSearch, getInstances, getAge} from '../../../actions/reportActions';
+import { moveReport, getCaseReports, getReportNarrativeFromID, getReportsInCases , setAllReports, executeSearch, getInstances, getAgeAndCode} from '../../../actions/reportActions';
 import QuillEditor from '../../editor/components/QuillEditor';
 import ReadCaseIcon from '../../../resources/ReadCaseIcon';
 import ClearFilterIcon from '../../../resources/RemoveFromCaseIcon';
@@ -50,7 +50,7 @@ class ReportTable extends React.PureComponent {
     getCaseReports: PropTypes.func.isRequired,
     setAllReports: PropTypes.func.isRequired,
       executeSearch: PropTypes.func.isRequired,
-    getAge: PropTypes.func.isRequired,
+    getAgeAndCode: PropTypes.func.isRequired,
       getInstances: PropTypes.func,
     moveReport: PropTypes.func.isRequired,
     getReportNarrativeFromID: PropTypes.func.isRequired,
@@ -518,7 +518,7 @@ class ReportTable extends React.PureComponent {
 
             var item = arr;
             var i = 0;
-            this.props.getAge(arr[j].id).then((rows) => {
+            this.props.getAgeAndCode(arr[j].id).then((rows) => {
 
               if (rows.length > 0) {
 
@@ -906,6 +906,6 @@ export default connect(
     getReportNarrativeFromID,
     getReportsInCases,
       getInstances,
-    getAge
+    getAgeAndCode
   },
 )(withStyles(styles)(ReportTable));

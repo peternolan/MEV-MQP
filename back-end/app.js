@@ -536,7 +536,7 @@ app.post('/getactivecases', (req, res) => {
   } 
 });
 
-app.post('/getAge', (req, res) => {
+app.post('/getAgeAndCode', (req, res) => {
   console.log('got a age_year request with body:\n ', req.body);
   let query =
       'SELECT age_year, outc_cod '

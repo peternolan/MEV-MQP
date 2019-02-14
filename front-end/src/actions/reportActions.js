@@ -81,8 +81,8 @@ export const moveReport = (primaryid, fromBin, toBin, userID, type) => () => {
  * Queries the Database with a primaryid, two bins, and the current userID to
  * move a report from one bin to another
  */
-export const getAge = (primaryid) => () => {
-  console.log('getAge: ' + primaryid);
+export const getAgeAndCode = (primaryid) => () => {
+
   const fetchData = {
     method: 'POST',
     mode: 'cors',
@@ -93,7 +93,7 @@ export const getAge = (primaryid) => () => {
   };
 
 
-  return fetch(`${process.env.REACT_APP_NODE_SERVER}/getAge`, fetchData)
+  return fetch(`${process.env.REACT_APP_NODE_SERVER}/getAgeAndCode`, fetchData)
       .then(response => response.json())
       .then(report => report.rows)
       .catch(err => console.log('Failed to retrieve Age', err));
@@ -179,9 +179,7 @@ export const getInstances = (reports) => {
       }
     }
   }
-  
-  //console.log(reports);
-  //console.log(results);
+
 
   return ()=>{return results};
 

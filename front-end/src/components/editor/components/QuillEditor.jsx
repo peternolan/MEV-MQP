@@ -210,7 +210,7 @@ class QuillEditor extends Component {
 
                                            if (dummyNode.getElementsByTagName("comment")[i].getAttribute('viewable').toString() === "public") {
                                                commentLines = commentLines.concat(`<div style='width: 685px; border-radius: 25px; background-color: #43e8e8; position: relative; padding: 6px ' >
-                                                                                        <div style ='left: 20px'>${dummyNode.getElementsByTagName("comment")[i].innerText.replace("n$", "</br>")}></div>
+                                                                                        <div style ='left: 20px'>${dummyNode.getElementsByTagName("comment")[i].innerText.replace("n$", "</br>")}</div>
                                                                                          </div>`);
                                            } else {
 

@@ -210,12 +210,12 @@ class QuillEditor extends Component {
                                             text = text.concat(dummyNode.getElementsByTagName("comment")[i].innerText);
 
                                            if (dummyNode.getElementsByTagName("comment")[i].getAttribute('viewable').toString() === "public") {
-                                               commentLines = commentLines.concat(`<div style='left: 3px; width: 70%; border-radius: 25px; background-color: #43e8e8; position: relative; padding: 6px ' >
+                                               commentLines = commentLines.concat(`<div style='left: 3px; width: calc(50vw - 120px); border-radius: 25px; background-color: #43e8e8; position: relative; padding: 6px ' >
                                                                                         <div style ='left: 20px'>${dummyNode.getElementsByTagName("comment")[i].innerText.replace("n$", "</br>")}</div>
                                                                                          </div>`);
                                            } else {
 
-                                               var block = `<div style='left: 3px; width: 70%; border-radius: 25px; background-color: #c5cbd6; position: relative; padding: 6px ' >
+                                               var block = `<div style='left: 3px; width: calc(50vw - 120px); border-radius: 25px; background-color: #c5cbd6; position: relative; padding: 6px ' >
                                                                  <div style ='left: 20px'>${dummyNode.getElementsByTagName("comment")[i].innerText.replace("n$", "</br>")} </div>
                                                                  </div>`;
 
@@ -468,13 +468,13 @@ class QuillEditor extends Component {
 
                                 if (dummyNode2.getElementsByTagName("comment")[i].getAttribute('viewable').toString() === "public") {
 
-                                    commentLines = commentLines.concat(`<div style='left: 3px; width: 70%; border-radius: 25px; background-color: #43e8e8; position: relative; padding: 6px ' >
+                                    commentLines = commentLines.concat(`<div style='left: 3px; width: calc(50vw - 120px); border-radius: 25px; background-color: #43e8e8; position: relative; padding: 6px ' >
                                                                         <div style ='left: 20px'>${dummyNode.getElementsByTagName("comment")[i].innerText.replace("n$", "</br>")} </div>
                                                                          </div>`);
                                 } else {
 
 
-                                    commentLines = commentLines.concat(`<div style='left: 3px; width: 70%; border-radius: 25px; background-color: #c5cbd6; position: relative; padding: 6px ' >
+                                    commentLines = commentLines.concat(`<div style='left: 3px; width: calc(50vw - 120px); border-radius: 25px; background-color: #c5cbd6; position: relative; padding: 6px ' >
                                                                         <div style ='left: 20px'>${dummyNode.getElementsByTagName("comment")[i].innerText.replace("n$", "</br>")} </div>
                                                                          </div>`);
                                 }
@@ -725,7 +725,7 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
             <Button className="ql-colorBackground" value={annotationColors.drug} style={{ display: 'inline-flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                minWidth: '9%',
+                minWidth: '8%',
                 borderStyle: 'solid',
                 padding: '0px',
                 borderWidth: 1,
@@ -768,7 +768,7 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
             <Button className="ql-colorBackground" value={annotationColors.age} style={{ display: 'inline-flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                minWidth: '9%',
+                minWidth: '8%',
                 borderStyle: 'solid',
                 borderWidth: 1,
                 borderColor: 'rgba(0, 0, 0, .25)',
@@ -917,7 +917,7 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
 
         return (
             <div className={this.props.classes.pdfView} >
-                <div className = {this.props.classes.quillArea} style = {{height: (this.state.commentsOn) ? '40%' : '60%', display: 'inline-block'}} >
+                <div className = {this.props.classes.quillArea} style = {{ display: 'inline-block'}} >
                     {/*
                         <Paper className={this.props.classes.legend}>
 
@@ -975,16 +975,16 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
                     <Collapse isOpened={this.state.commentsOn} style = {{position: 'relative', width: '65%'}}>
                         <div className='commentContent' style = {{width: '100%'}}>
                             <div id="commentsView">
-                                <h3 style = {{left: '3px'}}>Comments</h3>
+                                <h4 style = {{left: '3px'}}>Comments</h4>
                                 <div id="commentList">
 
                                 </div>
                             </div>
                             <div style={{padding: '4px'}}>
-                                <textarea id="comment" style = {{width: '70%'}} rows="4">  </textarea>
+                                <textarea id="comment" style = {{width: 'calc(50vw - 120px)'}} rows="4">  </textarea>
                             </div>
 
-                            <div style={{padding: '4px', display: 'inline-block', width: '70%'}}>
+                            <div style={{padding: '4px', display: 'inline-block', width: 'calc(55vw - 120px)'}}>
                                 <form id="radio-form" style={{display: 'inline-block'}}>
                                     <input type="radio" name="viewable" value="private" checked="yes" style={{padding: '5px'}} defaultChecked/>Private
                                     <input type="radio" name="viewable" value="public" style={{padding: '5px'}}/>Public
@@ -1016,7 +1016,7 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
                                     <button id="delete" style={{
                                         borderRadius: '20px',
                                         position: 'relative',
-                                        left: '60%',
+                                        left: 'calc(28vw - 120px)',
                                         border: '2px solid #ff0000'
                                     }} onClick={() => this.commentDelete()}>
                                         <img src={DeleteIcon} style={{width: '15px', height: '20px'}}/>

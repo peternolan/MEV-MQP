@@ -30,6 +30,7 @@ class QuillEditor extends Component {
         htmlEncode: PropTypes.func.isRequired,
         htmlUnescape: PropTypes.func.isRequired,
         incrementSummary: PropTypes.func,
+        commentsOn: PropTypes.func,
         classes: PropTypes.shape({
             pdfView: PropTypes.string,
             editorWindow: PropTypes.string,
@@ -52,6 +53,7 @@ class QuillEditor extends Component {
             commentButton: PropTypes.string,
             commentContent: PropTypes.string,
             highlightButtons: PropTypes.string,
+
         }).isRequired,
         primaryid: PropTypes.number,
         userID: PropTypes.number.isRequired,
@@ -128,7 +130,6 @@ class QuillEditor extends Component {
 
 
     commentDelete = () => {
-
 
         var dummyNode = document.createElement('div');
 
@@ -638,10 +639,12 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
 
         if (this.state.commentsOn) {
             this.setState({commentsOn: false});
+            this.props.commentsOn();
             document.getElementById('MakeNote').focus()
         }
         else {
             this.setState({commentsOn: true});
+            this.props.commentsOn();
             document.getElementById('MakeNote').focus()
         }
     };
@@ -913,8 +916,8 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
         const searchWords= searchText.split(/\s/).filter(word => word)
 
         return (
-            <div className={this.props.classes.pdfView}>
-                <div className = {this.props.classes.quillArea}>
+            <div className={this.props.classes.pdfView} >
+                <div className = {this.props.classes.quillArea} style = {{height: (this.state.commentsOn) ? '40%' : '60%', display: 'inline-block'}} >
                     {/*
                         <Paper className={this.props.classes.legend}>
 
@@ -964,12 +967,7 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
                             />
                         )
                     }
-
-
-
             </div>
-
-
                 <div id="commentArea" className={this.props.classes.commentSec} >
                     <div className={this.props.classes.commentBtn} onClick={() => this.showComments()}>
                         <Typography type='button' className={this.props.classes.textButton}>{(this.state.commentsOn) ? 'Hide' : 'Show'} Comments</Typography>

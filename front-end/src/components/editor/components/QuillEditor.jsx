@@ -857,7 +857,7 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
                         popper: this.props.classes.tooltipStyle,
 
                     }}
-                    style ={{ fontSize: '20pt',}}
+                    style ={{ width: 'calc(10vh - 120px)', fontSize: '20pt',}}
                 >
                     <Button style={{ padding: '0px', marginLeft: '5px', minHeight: '2px', minWidth:'2px', border: '1px solid black',
                         borderRadius: '15px',  background: annotationColors.clear, bottom: '0px'}}>

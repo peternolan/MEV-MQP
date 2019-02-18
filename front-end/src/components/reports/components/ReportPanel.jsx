@@ -137,15 +137,19 @@ class ReportPanel extends React.PureComponent {
     handleHideSummary = () => {
         this.setState({summaryShown: !this.state.summaryShown})
     };
-    commentOnHandler = () => {
+    commentOnHandler = (setting) => {
         console.log("CommentsOn");
-        if (this.state.commentsOn) {
-            this.setState({commentsOn: false});
+        if (setting == null) {
+            if (this.state.commentsOn) {
+                this.setState({commentsOn: false});
+            } else {
+                this.setState({commentsOn: true});
+            }
         }
         else {
-            this.setState({commentsOn: true});
+            this.setState({commentsOn: setting});
         }
-    }
+    };
     renderInside = (primaryID) => {
         return (
             <div key={primaryID}>
@@ -177,7 +181,8 @@ class ReportPanel extends React.PureComponent {
 
     render = () => {
         return (
-            <Paper id='summary-container' className={this.props.classes.summaryContainer} elevation={4} style={{height: (this.state.commentsOn) ? 'calc(63vh - 122px)': 'calc(95vh - 122px)', }}>
+            <Paper id='summary-container' className={this.props.classes.summaryContainer} elevation={4} style={{height: (this.state.commentsOn) ? 'calc(64.5vh - 122px)': 'calc(95vh - 122px)', }}>
+                {console.log("CommentsON : " + this.state.commentsOn)}
                 <Paper id='summarytitle' className={this.props.classes.summaryTitle}><Typography type="title" style={{padding: 5}}>Report {this.props.primaryid}</Typography><div onClick={this.handleHideSummary} className={this.props.classes.hideBtn}><Typography type='button'>{this.state.summaryShown ? 'Hide' : 'Show'} Summary</Typography></div></Paper>
                 <Collapse isOpened={this.state.summaryShown}>
                     <div className={this.props.classes.summarySummary}>

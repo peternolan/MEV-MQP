@@ -24,7 +24,7 @@ def read_in(string = None):
     return json.loads("".join(lines))
 
 if DEBUG:
-    params = read_in(string='{"search_string":"patient","start":0,"size":3}')
+    params = read_in(string='{"search_string":"synthroid","start":0,"size":3}')
 else:
     params = read_in()
 

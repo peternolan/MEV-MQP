@@ -171,7 +171,7 @@ class QuillEditor extends Component {
 
 
     getTextFromID = (id) => {
-
+        this.props.commentsOn(false);
         if (isNaN(id)) {
             this.setState({
                 saving: true,

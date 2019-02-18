@@ -58,7 +58,7 @@ class ReportList extends Component {
     userID: PropTypes.number.isRequired,
     userEmail: PropTypes.string,
     isLoggedIn: PropTypes.bool.isRequired,
-      getCountData: PropTypes.func.isRequired,
+    getCountData: PropTypes.func.isRequired,
     classes: PropTypes.shape({
       newCaseArea: PropTypes.string,
       goToVisualizationSVG: PropTypes.string,
@@ -431,6 +431,7 @@ class ReportList extends Component {
           {/* ====== Table for Viewing the table of reports ====== */}
           <div key='reporttable' className={this.props.classes.tableContainer} >
             <ReportTable
+              reportPanel = {this.state.reportOpen}
               bin={this.state.bin}
               padding = '0px'
               bins={this.state.userBins}

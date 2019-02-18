@@ -60,7 +60,7 @@ class ReportTable extends React.PureComponent {
       supportiveChosen:  PropTypes.bool,
       handleViewReport: PropTypes.func,
     incrementSummary: PropTypes.func.isRequired,
-    summaryOpen: PropTypes.bool.isRequired,
+    reportOpen: PropTypes.bool.isRequired,
     bins: PropTypes.arrayOf(PropTypes.object).isRequired,
     filters: PropTypes.shape({
       init_fda_dt: PropTypes.object,
@@ -403,16 +403,9 @@ class ReportTable extends React.PureComponent {
 
 
   reportToPanel = ( id ) => {
-
-
-
-    this.setState({selected: id}, function() {
-
-
+    this.setState({selected: id,}, function() {
       this.props.handleViewReport(id);
     });
-
-
   }
 
 

@@ -81,11 +81,11 @@ for result in results:
     index += 1
 
     resObj["results"][index] = {
-        "id":result.primaryid,
-        "drugname": result.drugname,
-        "sex": result.sex,
-        "error": result.me_type,
-        "score":result.meta.score,
+        "id": (result.primaryid if 'primaryid' in dir(result) else 'UNK'),
+        "drugname":  (result.drugname if 'drugname' in dir(result) else 'UNK'),
+        "sex":  (result.sex if 'sex' in dir(result) else 'UNK'),
+        "error":  (result.me_type if 'me_type' in dir(result) else 'UNK'),
+        "score": (result.score if 'score' in dir(result) else 'UNK'),
     }
     
     for key in dir(result.meta.highlight):

@@ -10,7 +10,7 @@ import json
 # THIS IS ONLY FOR DEV/DEBUGGING
 connections.create_connection(hosts=['localhost'])
 
-DEBUG = True
+DEBUG = False
 LOGGING = True #writes some log info to ./searchlog.log
 
 #if(len(sys.argv) > 1):

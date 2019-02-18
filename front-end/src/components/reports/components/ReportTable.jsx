@@ -525,7 +525,7 @@ class ReportTable extends React.PureComponent {
 
                 var age;
                 var code;
-
+                console.log('id ' + item[i].id);
                 age = rows[0].age_year;
                 code = rows[0].outc_cod[0];
 
@@ -538,7 +538,7 @@ class ReportTable extends React.PureComponent {
                 }
 
                 resultsArr.push({
-                  id: item[i].id,
+                  primaryid: item[i].id,
                   drugname: item[i].drugname,
                   sex: item[i].sex,
                   me_type: item[i].error,

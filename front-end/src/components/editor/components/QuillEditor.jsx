@@ -929,7 +929,7 @@ class QuillEditor extends Component {
 
         return (
             <div className={this.props.classes.pdfView} >
-                <div className = {this.props.classes.quillArea} style = {{ display: 'inline-block'}} >
+                <div className = {this.props.classes.quillArea} style = {{ display: 'inline-block', height: (this.state.commentsOn) ? 'calc(59vh - 122px)': 'calc(95vh - 122px)', overflow: 'scroll'}}>
                     {/*
                         <Paper className={this.props.classes.legend}>
 

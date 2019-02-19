@@ -181,7 +181,7 @@ class ReportPanel extends React.PureComponent {
 
     render = () => {
         return (
-            <Paper id='summary-container' className={this.props.classes.summaryContainer} elevation={4} style={{height: (this.state.commentsOn) ? 'calc(64.5vh - 122px)': 'calc(95vh - 122px)', }}>
+            <Paper id='summary-container' className={this.props.classes.summaryContainer} elevation={4}>
                 {console.log("CommentsON : " + this.state.commentsOn)}
                 <Paper id='summarytitle' className={this.props.classes.summaryTitle}><Typography type="title" style={{padding: 5}}>Report {this.props.primaryid}</Typography><div onClick={this.handleHideSummary} className={this.props.classes.hideBtn}><Typography type='button'>{this.state.summaryShown ? 'Hide' : 'Show'} Summary</Typography></div></Paper>
                 <Collapse isOpened={this.state.summaryShown}>
@@ -190,7 +190,9 @@ class ReportPanel extends React.PureComponent {
                     </div>
                 </Collapse>
                 <Divider />
+
                 {this.renderInside(this.props.primaryid)}
+
                 <Paper id='commentsection' className={this.props.classes.commentSection}></Paper>
             </Paper>
         );

@@ -1006,7 +1006,7 @@ class QuillEditor extends Component {
 
                                 </label>
 
-                                <Button id="MakeNote" style={{border: '2px solid #1d00ff', left: '30px'}}
+                                <Button id="MakeNote" style={{border: '2px solid #1d00ff', left: '6%',  width: 'calc(4.5vw)', height: 'calc(1.25vw)'}}
                                         onClick={() => this.commentMade()}> Make Note </Button>
                                 <Button
                                     id="saveButton2"
@@ -1015,7 +1015,7 @@ class QuillEditor extends Component {
                                     className={(this.state.success) ? this.props.classes.buttonSuccess : ''}
                                     disabled={this.state.saving}
                                     onClick={this.saveWork}
-                                    style={{ left: '40px'}}>
+                                    style={{ left: '7%', minWidth: 'calc(3vw)', minHeight: 'calc(1.25vw)'}}>
 
                                     Save
                                 </Button>
@@ -1035,7 +1035,7 @@ class QuillEditor extends Component {
                                         left: 'calc(29vw - 120px)',
                                         border: '2px solid #ff0000'
                                     }} onClick={() => this.commentDelete()}>
-                                        <img src={DeleteIcon} style={{width: '15px', height: '20px'}}/>
+                                        <img src={DeleteIcon} style={{width: 'calc(1.5vw)', height: 'calc(1.5vw)'}}/>
                                     </button>
                                 </MaterialTooltip>
 

@@ -1,0 +1,7 @@
+{"search_string": "synthroid", "start": 0, "size": 3}
+
+
+----------------------------------------
+
+
+{"searchtime": 569, "fields_searched": ["primaryid", "drugname", "me_type", "age_year", "sex", "wt_lb", "report_text"], "results": {"0": {"id": "121989712", "drugname": "Synthroid", "sex": "UNK", "error": "Deteriorated Drug", "score": "UNK", "drugname_highlights": ["<em>Synthroid</em>"]}, "1": {"id": "122489362", "drugname": "Synthroid", "sex": "M", "error": "Accidental Exposure", "score": "UNK", "drugname_highlights": ["<em>Synthroid</em>"]}, "2": {"id": "122570301", "drugname": "Synthroid", "sex": "F", "error": "Insufficient Storage", "score": "UNK", "drugname_highlights": ["<em>Synthroid</em>"]}}}

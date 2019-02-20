@@ -35,6 +35,7 @@ class QuillEditor extends Component {
             pdfView: PropTypes.string,
             editorWindow: PropTypes.string,
             paperWindow: PropTypes.string,
+            toolbar: PropTypes.string,
             root: PropTypes.string,
             wrapper: PropTypes.string,
             buttonSuccess: PropTypes.string,
@@ -718,7 +719,7 @@ class QuillEditor extends Component {
 
     customToolbar = () => (
 
-        <div id={`react-quill-${this.state.primaryId}`} style={{ height: 'calc(7vh)', display: 'none'}}>
+        <div id={`react-quill-${this.state.primaryId}`} className = {this.props.classes.toolbar} style={{ height: 'calc(7vh)', display: 'none'}}>
 
             {/*
             <select defaultValue="false" className="ql-header" style={{ width: '100px', height: '36px', margin: '4px' }}>
@@ -1033,7 +1034,6 @@ class QuillEditor extends Component {
                                         borderRadius: '20px',
                                         position: 'relative',
                                         left: 'calc(29vw - 120px)',
-                                        border: '2px solid #ff0000'
                                     }} onClick={() => this.commentDelete()}>
                                         <img src={DeleteIcon} style={{width: 'calc(1.5vw)', height: 'calc(1.5vw)'}}/>
                                     </button>

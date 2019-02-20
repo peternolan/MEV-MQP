@@ -145,5 +145,12 @@ export default {
         '&:hover':{
             backgroundColor: '#dbf0ff'
         }        
+    },
+
+    toolbar: {
+        top: 0,
+        zIndex: 4,
+        position: 'sticky',
+        backgroundColor: '#fff',
     }
 };

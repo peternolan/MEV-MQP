@@ -26,9 +26,6 @@ export default {
   },
   caseGridList: {
     padding: '5px',
-    margin: '5px',
-    width: 'auto',
-    height: 'auto',
   },
   sendToCaseContainer: {
     position: 'relative',

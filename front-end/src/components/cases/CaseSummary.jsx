@@ -3,17 +3,14 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withStyles } from 'material-ui/styles';
 import Typography from 'material-ui/Typography';
+import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
-// import Select from 'react-select';
 import {Combobox} from 'react-widgets';
 import { getTagsinCase, getReportsInCases, getReportsFromCase, getCaseNameByID, getCaseReports, setSearchedReports , getInstances } from '../../actions/reportActions';
 import * as JsSearch from 'js-search';
 import "react-widgets/dist/css/react-widgets.css";
 
-// import natural from 'natural';
 import  natural from './natural.js';
-import { Quill } from 'quill';
-import {Tab} from "material-ui";
 import TrashIcon from "../../resources/TrashIcon";
 import ReadCaseIcon from "../../resources/ReadCaseIcon";
 import CaseIcon from "../../resources/CaseIcon";
@@ -70,7 +67,8 @@ class CaseSummary extends Component {
       searchOption: '',
       graphdata: 'outc_cod',
       keywordsExposed: false,
-      recommendationString: [],
+      recommendationArray: [],
+      recommendationString: undefined,
     };
   }
 
@@ -161,7 +159,7 @@ class CaseSummary extends Component {
     this.setState({
       pieChartData,
     });
-
+    console.log(this.state.pieChartData, "PIE");
   };
 
 
@@ -225,7 +223,8 @@ class CaseSummary extends Component {
     }, []);
     console.log('HLWORDS', highlightedWords)
     this.setState({
-      recommendationString: highlightedWords,
+      recommendationArray: highlightedWords,
+      recommendationString: highlightedWords.join(' '),
       barChartData,
       highlightedWordsData,
       highlightedWords,
@@ -320,7 +319,6 @@ class CaseSummary extends Component {
 
   /************ when case changes, update the reports */
   handleCaseChange = () => {
-      console.log("State caseName" + this.state.caseName);
       this.props.updateTab(this.state.caseName);
   };
 
@@ -426,25 +424,26 @@ class CaseSummary extends Component {
   /* Toggle the hiding of keyword section */
   handleKeywordHide = () => {
     this.setState({
-      keywordsExposed: !this.state.keywordsExposed
+      keywordsExposed: !this.state.keywordsExposed,
     });
   }
   /* Toggle a word's activation for recommendations */
   toggleWord = (event) => {
     var strchk = event.target.getAttribute('value');
-    var index = this.state.recommendationString.indexOf(strchk);
+    var index = this.state.recommendationArray.indexOf(strchk);
     if (index > -1){
-      var rmdrec = this.state.recommendationString;
+      var rmdrec = this.state.recommendationArray;
       rmdrec.splice(index,1);
       this.setState({
-        recommendationString: rmdrec
+        recommendationArray: rmdrec,
+        recommendationString: this.state.recommendationArray.join(' '),
       });
     } else {
       this.setState({
-        recommendationString: [...this.state.recommendationString, strchk]
+        recommendationArray: [...this.state.recommendationArray, strchk],
+        recommendationString: this.state.recommendationArray.join(' '),
       });
     }
-    console.log('rec string', this.state.recommendationString)
   }
 
   drawChart = (reports) => {
@@ -500,9 +499,6 @@ class CaseSummary extends Component {
     let rects = svg.selectAll("rect.new")//select all rects not marked for deletion (they may be marked from the previous step)
         .data(counts);//create our initial rect selection
 
-    console.log(rects.transition("update"))
-
-    console.log(rects);
     let newrects = rects.enter()
         .append("rect")//add new rects for all new data elements
         .attr("class", "new")
@@ -565,8 +561,11 @@ class CaseSummary extends Component {
     return (
       <div key={this.state.caseName} className={this.props.classes.summaryContent}>
           <div key="upper_part" style={{paddingLeft: 10}}>
-            <Typography type='button'>Total Count of Reports: {this.state.reportsInCase.length} </Typography>
-            <Typography type='button'>Case Breakdown:
+            <div className={this.props.classes.reportBox}>
+              <Typography type='button' className={this.props.classes.countText}>Total Count of Reports: {this.state.reportsInCase.length}</Typography>
+              <Typography id={this.state.caseName + 'casebutton'} type='button' className={this.props.classes.caseButton} onClick={this.handleCaseChange}>show reports</Typography>
+            </div>
+            <Typography type='button' className={this.props.classes.caseBDText}>Case Breakdown:
               <select disabled={(this.state.reportsInCase.length > 0) ? false : true} ref='options' value={this.state.graphdata} onChange={this.handleDataChange} className={this.props.classes.dataSelector}>
                 <option key='pvs' value='TODO'>Primary v. Supportive</option>
                 <option key='outc_cod' value='outc_cod'>Outcome Code</option>
@@ -578,20 +577,23 @@ class CaseSummary extends Component {
           </div>
           <div className={this.props.classes.bargraph} key="bargraph" id='bargraph' ref='bargraph'><svg ref="svg" preserveAspectRatio="none" viewBox="0 0 100 100" width="100%" height='100%'></svg> </div>
         {this.updateReports()}
-        <Typography type='button' className={this.props.classes.textButton} onClick={this.handleKeywordHide}>Keyword Summary</Typography>
+        <div className={this.props.classes.keywordHead}>
+          <Typography type='button' className={this.props.classes.textButton} onClick={this.handleKeywordHide}>Keyword Summary</Typography>
+          <Typography type='button' onClick={this.searchRecommendations} className={this.props.classes.recButton}>get recommendations</Typography>
+        </div>
         <Collapse isOpened={this.state.keywordsExposed}>
-        <div className={this.props.classes.keywordContainer}>
-          <div key="highlighted_words">
-            {(this.state.highlightedWordsData.length === 0) ? 
-             <Typography type='body1' style={{padding: 5, paddingLeft: 15}}>There are no annotated reports in this case for us to build keywords from; try annotating one of the reports.</Typography>
-            : this.state.highlightedWordsData.map((word) => {
-              return(
-                <div id={word.name} key={word.name} className={this.props.classes.keywordCapsule} style={{backgroundColor: (this.state.recommendationString.indexOf(word.name) > -1) ? '#7bd389' : '#ee7674'}} onClick={this.toggleWord}>
-                  <Typography value={word.name} type='body1'>{word.name} ({word.count})</Typography>
-                </div>
-              )
-            })}
-          </div>
+          <div className={this.props.classes.keywordContainer}>
+            <div key="highlighted_words">
+              {(this.state.highlightedWordsData.length === 0) ? 
+              <Typography type='body1' style={{padding: 5, paddingLeft: 15}}>There are no annotated reports in this case for us to build keywords from; try annotating one of the reports.</Typography>
+              : this.state.highlightedWordsData.map((word) =>{
+                return(
+                  <div key={word.name} className={this.props.classes.keywordCapsule} style={{backgroundColor: (this.state.recommendationArray.indexOf(word.name) > -1) ? '#7bd389' : '#ee7674'}} onClick={this.toggleWord}>
+                    <Typography value={word.name} type='body1'>{word.name} ({word.count})</Typography>
+                  </div>
+                )
+              })}
+            </div>
           </div>
         </Collapse>
       </div>

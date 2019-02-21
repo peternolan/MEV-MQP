@@ -21,7 +21,7 @@ export default {
         width: '100%',
         margin: 0,
         overflow: 'hidden',
-        zIndex: '-1',
+        zIndex: 1,
         borderColor:'white'
     },
 
@@ -37,8 +37,6 @@ export default {
     },
     editBtn: {
         fontSize: 12,
-        float: 'right',
-        display: 'flex',
         padding: 3,
         color: '#1D1F83',
         cursor: 'pointer',
@@ -50,20 +48,12 @@ export default {
         },
     },
     /* Container for the edit and save buttons */
-    editSpecific: {
+    editFacet: {
         float: 'right',
-        //display: 'inline-block',
+        display: 'flex',
+        zIndex: 20,
         width: 'auto',
-        height: 20,
         transition: 'width 200ms ease-in-out',
-    },
-    editSpecOff: {
-        float: 'right',
-        height: 20,
-        //display: 'inline-block',
-        width: 0,
-        transition: 'width 200ms ease-in-out',
-        overflow: 'hidden',
     },
     /* Container for the legend */
     legend: {

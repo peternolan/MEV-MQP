@@ -63,7 +63,7 @@ class CaseSummaryListing extends React.PureComponent {
                   height={30}
                   style={{marginRight:10}}
               />
-              <Typography id={bin.name} type='button'>{bin.name}</Typography>
+              <Typography id={bin.name} type='button' className={this.props.classes.titleText}>{bin.name}</Typography>
             </div>
             <Collapse isOpened={(this.state.expandedPanelName === bin.name) ? true : false}>
               <CaseSummary

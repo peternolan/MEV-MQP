@@ -38,7 +38,7 @@ import ClearFilterIcon from '../../../resources/RemoveFromCaseIcon';
 import CaseIcon from '../../../resources/CaseIcon';
 import TrashIcon from '../../../resources/TrashIcon';
 import styles from './ReportTableStyles';
-
+import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
 
 /**
  * This is the component for the Report Table
@@ -428,7 +428,7 @@ class ReportTable extends React.PureComponent {
 
     let incase;
     //NEED TO PUT IT IN HERE
-      let evidenceType;
+    let evidenceType;
     let backgroundColor;
 
     switch (this.props.bin) {
@@ -454,7 +454,8 @@ class ReportTable extends React.PureComponent {
     }
 
     return (
-
+      <div>
+      <ContextMenuTrigger id={row}>
         <Table.Row
             {...props}
             style={{
@@ -465,7 +466,15 @@ class ReportTable extends React.PureComponent {
             }}
             onClick = {() => this.reportToPanel(props.tableRow.rowId)}
         />
-
+      </ContextMenuTrigger>
+      <ContextMenu id={row} style={{borderRadius:5, zIndex:'999 !improtant'}}>
+        {this.props.bins.map((bin, index) => (
+            (this.props.bin.toLowerCase() !== bin.name.toLowerCase())
+              ? <MenuItem key={bin.case_id} onClick={() => {
+                this.handleMoveReport(row,this.props.bin,this.props.bins[index].name.toLowerCase())
+              }}><div className={this.props.classes.menuitem}><Typography type='button'>Add report to {bin.name}</Typography></div></MenuItem> : undefined))}
+      </ContextMenu>
+      </div>
     );
   };
 
@@ -747,41 +756,7 @@ class ReportTable extends React.PureComponent {
                               </Typography>
                           </div>
                           <div className={this.props.classes.moveToCaseDetailsContainer}>
-                              {this.props.bins.map((bin, index) => (
-                                  (this.props.bin.toLowerCase() !== bin.name.toLowerCase())
-                                      ? (
-                                          <MaterialTooltip
-                                              key={bin.name}
-                                              title={(bin.name.toLowerCase() === 'trash') ? 'HERE IT IS Warning: Adding this report to the Trash also removes the report from any other cases it is in' : 'Adds this report to this case'}
-                                              placement="top"
-                                              enterDelay={50}
-                                              classes={{
-                                                  tooltip: this.props.classes.tooltipStyle,
-                                                  popper: this.props.classes.tooltipStyle,
-                                              }}
-                                          >
-                                              <Button
-                                                  flat="true"
-                                                  key={bin.case_id}
-                                                  className={this.props.classes.caseGridList}
-                                                  onClick={() => {
-                                                      this.handleMoveReport(
-                                                          row.row.primaryid,
-                                                          this.props.bin,
-                                                          this.props.bins[index].name.toLowerCase(),
-                                                          this.state[row.row.primaryid],
-                                                      );
-                                                  }}
-                                              >
-                                                  {(this.state.currentlyInCase[row.row.primaryid]
-                                                      && this.state.currentlyInCase[row.row.primaryid].includes(bin.name.toLowerCase()))
-                                                      ? this.renderMoveToIcon(bin.name, true)
-                                                      : this.renderMoveToIcon(bin.name)}
-                                              </Button>
-                                          </MaterialTooltip>
-                                      )
-                                      : null
-                              ))}
+                              
                           </div>
                       </Paper>
                   </div>
@@ -836,6 +811,7 @@ class ReportTable extends React.PureComponent {
               >
                 <RowDetailState
                   expandedRows={(Number(this.props.currentTab) === 1) ? this.state.returnedIds : this.state.expandedRows}
+                  onExpandedRowsChange={this.changeExpandedDetails}
                 />
                 <DragDropProvider />
                 <SortingState
@@ -863,9 +839,6 @@ class ReportTable extends React.PureComponent {
                 />
                 <TableHeaderRow showSortingControls className="tableHeader"/>
                 <TableColumnReordering defaultOrder={this.columns.map(column => column.name)} />
-                <TableRowDetail
-                  contentComponent={this.renderDetailRowContent}
-                />
               </Grid>
             )
             : null

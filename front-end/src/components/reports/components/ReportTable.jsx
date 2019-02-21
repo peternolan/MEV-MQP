@@ -38,7 +38,9 @@ import ClearFilterIcon from '../../../resources/RemoveFromCaseIcon';
 import CaseIcon from '../../../resources/CaseIcon';
 import TrashIcon from '../../../resources/TrashIcon';
 import styles from './ReportTableStyles';
-import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
+import EllipsisIcon from '../../../resources/ellipsis.svg';
+import { Menu, Item, Separator, Submenu, MenuProvider } from 'react-contexify';
+import 'react-contexify/dist/ReactContexify.min.css';
 
 /**
  * This is the component for the Report Table
@@ -675,15 +677,19 @@ class ReportTable extends React.PureComponent {
       );
   };
 
+  blockParent = e => {
+    e.stopPropagation();
+  }
+
   toggleCell = row => {
     return (
-      <div>
-        <ContextMenuTrigger id={row.id}>
-          <div>yes</div>
-        </ContextMenuTrigger>
-        <ContextMenu id={row.id}>
-          <MenuItem>yes</MenuItem>
-        </ContextMenu>
+      <div onClick={this.blockParent} style={{padding:10}}>
+        <MenuProvider id={row.row.primaryid} event='onClick'>
+          <img src={EllipsisIcon} alt='More Options'/>
+        </MenuProvider>
+        <Menu id={row.row.primaryid}>
+          <Item>{row.row.primaryid}</Item>
+        </Menu>
       </div>
     );
   }
@@ -841,7 +847,6 @@ class ReportTable extends React.PureComponent {
                 <TableColumnReordering defaultOrder={this.columns.map(column => column.name)} />
 
                 <TableRowDetail
-                  toggleColumnWidth = {20}
                   toggleCellComponent = {this.toggleCell}
                 />
               </Grid>

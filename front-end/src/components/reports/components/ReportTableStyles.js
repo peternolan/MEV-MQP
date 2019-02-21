@@ -37,18 +37,16 @@ export default {
     background: 'repeating-linear-gradient( -55deg, #fafafa 0px, #fafafa 30px, #f1f1f1 30px, #f1f1f1 50px)',
     padding: '12px 24px',
   },
-  menuitem: {
-    padding: 5,
-    width: 'auto',
-    backgroundColor: '#fff',
-    borderWidth: 1,
+  ellipsisFrame: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
     borderStyle: 'solid',
-    borderColor: 'rgba(0,0,0,.10)',
-    zIndex: 20,
-    '&:hover':{
-      backgroundColor: '#dbf0ff',
-      cursor: 'pointer',
-    }
+    borderWidth: 0,
+    borderBottomWidth: 1,
+    borderColor: 'rgba(0,0,0,.25)',
+    height: '100%',
+    width: '100%',
   },
   tooltipStyle: {
     fontSize: '10pt',

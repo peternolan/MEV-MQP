@@ -48,6 +48,7 @@
     "react-animate-height": "^2.0.7",
     "react-bootstrap": "0.32.0",
     "react-collapse": "^4.0.3",
+    "react-contexify": "^4.0.1",
     "react-contextmenu": "^2.10.0",
     "react-dom": "16.2.0",
     "react-highlight-words": "^0.11.0",

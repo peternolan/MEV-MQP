@@ -35,6 +35,7 @@ class QuillEditor extends Component {
             pdfView: PropTypes.string,
             editorWindow: PropTypes.string,
             paperWindow: PropTypes.string,
+            toolbar: PropTypes.string,
             root: PropTypes.string,
             wrapper: PropTypes.string,
             buttonSuccess: PropTypes.string,
@@ -718,7 +719,7 @@ class QuillEditor extends Component {
 
     customToolbar = () => (
 
-        <div id={`react-quill-${this.state.primaryId}`} style={{ height: 'calc(7vh)', display: 'none'}}>
+        <div id={`react-quill-${this.state.primaryId}`} className = {this.props.classes.toolbar} style={{ height: 'calc(7vh)', display: 'none'}}>
 
             {/*
             <select defaultValue="false" className="ql-header" style={{ width: '100px', height: '36px', margin: '4px' }}>
@@ -974,7 +975,7 @@ class QuillEditor extends Component {
                                 </div>
                             </div>
                             <div style={{padding: '4px'}}>
-                                <textarea id="comment" style = {{width: 'calc(50vw - 120px)'}} rows="4">  </textarea>
+                                <textarea id="comment" style = {{resize: 'none', width: 'calc(50vw - 120px)'}} rows="4">  </textarea>
                             </div>
 
                             <div style={{padding: '4px', display: 'inline-block', width: 'calc(55vw - 120px)'}}>
@@ -987,8 +988,8 @@ class QuillEditor extends Component {
 
                                 </label>
 
-                                <Button id="MakeNote" style={{border: '2px solid #1d00ff', left: '30px'}}
-                                        onClick={() => this.commentMade()}> Make Note </Button>
+                                <button id="MakeNote" style={{position: 'relative', border: '2px solid #1d00ff', left: '6.25%',  width: 'calc(6vw)', minHeight:'calc(5vh)'}}
+                                        onClick={() => this.commentMade()}> Make Note </button>
                                 <Button
                                     id="saveButton2"
                                     raised
@@ -996,7 +997,7 @@ class QuillEditor extends Component {
                                     className={(this.state.success) ? this.props.classes.buttonSuccess : ''}
                                     disabled={this.state.saving}
                                     onClick={this.saveWork}
-                                    style={{ left: '40px'}}>
+                                    style={{ left: '7%', minWidth: 'calc(3vw)', minHeight: 'calc(1.25vw)'}}>
 
                                     Save
                                 </Button>
@@ -1010,14 +1011,16 @@ class QuillEditor extends Component {
                                     }}
                                     style={{fontSize: '20pt',}}
                                 >
-                                    <button id="delete" style={{
+                                    <Button id="delete" style={{
                                         borderRadius: '20px',
                                         position: 'relative',
-                                        left: 'calc(29vw - 120px)',
-                                        border: '2px solid #ff0000'
+                                        left: 'calc(28vw - 120px)',
+                                        border: '1px solid red',
+                                        width: 'calc(4.5vw)',
+                                        height: 'calc(1.25vw)'
                                     }} onClick={() => this.commentDelete()}>
-                                        <img src={DeleteIcon} style={{width: '15px', height: '20px'}}/>
-                                    </button>
+                                        Delete X
+                                    </Button>
                                 </MaterialTooltip>
 
                             </div>

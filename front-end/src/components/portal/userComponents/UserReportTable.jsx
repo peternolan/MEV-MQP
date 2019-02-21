@@ -196,9 +196,9 @@ class UserReportTable extends React.PureComponent {
             </ExpansionPanelSummary>
             <Divider light />
             <ExpansionPanelDetails style={{ display: 'block' }}>
-              <Link href="/" to={`/pdf/${row.row.primaryid}`} target="_blank">
+              {/*<Link href="/" to={`/pdf/${row.row.primaryid}`} target="_blank">
                 <Button raised color="primary">Go to Report Text</Button>
-              </Link>
+              </Link>*/}
               <br />
               <div style={{ marginTop: '10px', fontSize: '14px', overflowWrap: 'break-word' }} dangerouslySetInnerHTML={{ __html: row.row.report_text }} />
             </ExpansionPanelDetails>
@@ -215,6 +215,7 @@ class UserReportTable extends React.PureComponent {
         rows={this.state.data}
         columns={this.columns}
         getRowId={row => row.primaryid}
+
       >
         <RowDetailState
           expandedRows={this.state.expandedRows}

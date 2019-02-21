@@ -62,7 +62,7 @@ export default {
     borderWidth: 1,
     borderRadius: 0,
     boxShadow: 'none',
-    borderColor: 'rgba(0, 0, 0, 0.25)',
+    borderColor: 'rgba(0, 0, 0, 0.7)',
   },
   searchDD: {
     height: 25,

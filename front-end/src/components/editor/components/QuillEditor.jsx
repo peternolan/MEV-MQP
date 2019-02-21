@@ -338,15 +338,8 @@ class QuillEditor extends Component {
 
 
     display =() =>{
-
-
         var dummyNode = document.createElement('div');
         dummyNode.innerHTML = `<span style = 'font-size: 6px'> ${this.state.report} </span>`;
-
-        console.log(this.state.report);
-        console.log(dummyNode.outerHTML);
-        console.log(dummyNode.outerHTML);
-
 
         return <div className={this.props.classes.quillText}>
             { (!this.state.loading)
@@ -370,11 +363,7 @@ class QuillEditor extends Component {
 
     //Need to Set State in order to make sure it doesn't change when we add comments.
     handleChange = (value) => {
-        console.log("HandleChange");
-
         document.getElementById('saveButton').style.backgroundColor = '#dbf0ff';
-
-        console.log("addingComment " + this.state.addingComment);
 
         const drugRE = `background-color: ${annotationColors.drug};`;
         const reactionRE = `background-color: ${annotationColors.reaction};`;

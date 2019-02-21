@@ -78,7 +78,6 @@ class CaseSummary extends Component {
   componentWillReceiveProps(incomingProps) {
     if (this.state.summaryCounter !== incomingProps.summaryCounter) {
       this.updateSummary();
-      console.log("COMPONENT WILL RECEIVE");
       this.setState({
         summaryCounter: incomingProps.summaryCounter,
       });
@@ -92,7 +91,6 @@ class CaseSummary extends Component {
         caseName: (rows[0] ? rows[0].name : ''),
         caseDescription: (rows[0] ? rows[0].description : ''),
       }, () => {
-        console.log("COMPONENT DID MOUNT")
         this.updateSummary();
       }));
   }
@@ -159,7 +157,6 @@ class CaseSummary extends Component {
     this.setState({
       pieChartData,
     });
-    console.log(this.state.pieChartData, "PIE");
   };
 
 
@@ -179,11 +176,9 @@ class CaseSummary extends Component {
     }, []);
 
     /********  To get the highlighed words */
-    console.log(this.state.tags)
     Object.keys(this.state.tags).map((keyName) => {
       var x = this.state.tags[keyName];
       Object.keys(x).map((values) => {
-        // console.log(x[values]);
         highlightedRawWords.push(x[values].toLowerCase().split(' '));
       })
     })
@@ -200,7 +195,6 @@ class CaseSummary extends Component {
       highlightedWords[i]= highlightedWords[i].replace(/(^,)|(,$)/g, "");
       highlightedWords[i]= highlightedWords[i].replace(/[""().:;|/^%\'5]/g, "");
     }
-    // console.log(highlightedWords)
 
       /********** remove stop words */
     highlightedWords = highlightedWords.filter( function( el ) {
@@ -221,7 +215,6 @@ class CaseSummary extends Component {
         count: counts[key],
       });
     }, []);
-    console.log('HLWORDS', highlightedWords)
     this.setState({
       recommendationArray: highlightedWords,
       recommendationString: highlightedWords.join(' '),
@@ -254,12 +247,8 @@ class CaseSummary extends Component {
 
   getReports = () => {
       /********* reports assigned to the variable */
-      console.log("case name " + this.state.caseName);
-      console.log("userID " + this.props.userID);
       this.props.getCaseReports(this.state.caseName, this.props.userID)
           .then((reports)=>{
-          //console.log(reports)
-          //if(reports.length > 0){console.log(this.props.getInstances(reports));}
           return ()=>{return (reports.length > 0) ? this.props.getInstances(reports) : null;}
       });
   };
@@ -347,7 +336,7 @@ class CaseSummary extends Component {
   /************** Search and build index to find documents related to highlighted words */
   searchDocs= () => {
     var searchedReports =[];
-    var newArr=[]
+    var newArr=[];
 
     if(this.props.allReports){
         var search = new JsSearch.Search('primaryid');
@@ -377,8 +366,6 @@ class CaseSummary extends Component {
             t.primaryid === searchedReports.primaryid
           ))
         );
-
-        console.log(searchedReports);
         this.props.setSearchedReports (searchedReports);
 
     } 
@@ -418,7 +405,6 @@ class CaseSummary extends Component {
       } 
     } 
     return data;
-    console.log('DATA', data)
   }
 
   /* Toggle the hiding of keyword section */
@@ -474,7 +460,6 @@ class CaseSummary extends Component {
     }
     var counts = formatted_data["counts"][formatted_data["fields"].indexOf(label)];
     if(counts.length == 0){return;}
-    console.log(counts);
 
     var svg = d3.select(this.refs.svg);
 
@@ -495,7 +480,6 @@ class CaseSummary extends Component {
         .attr("transform", (d,i)=>{return "translate("+ 0+","+(20*i)+")"});
 
     var total_reports = reports.length;
-    //console.log(x);
     let rects = svg.selectAll("rect.new")//select all rects not marked for deletion (they may be marked from the previous step)
         .data(counts);//create our initial rect selection
 
@@ -551,7 +535,6 @@ class CaseSummary extends Component {
               .remove();//remove all old rects which we haven't updated
     }
 
-    console.log(this);
   };
 
   render(){{

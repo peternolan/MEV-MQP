@@ -454,8 +454,6 @@ class ReportTable extends React.PureComponent {
     }
 
     return (
-      <div>
-      <ContextMenuTrigger id={row}>
         <Table.Row
             {...props}
             style={{
@@ -466,15 +464,6 @@ class ReportTable extends React.PureComponent {
             }}
             onClick = {() => this.reportToPanel(props.tableRow.rowId)}
         />
-      </ContextMenuTrigger>
-      <ContextMenu id={row} style={{borderRadius:5, zIndex:'999 !improtant'}}>
-        {this.props.bins.map((bin, index) => (
-            (this.props.bin.toLowerCase() !== bin.name.toLowerCase())
-              ? <MenuItem key={bin.case_id} onClick={() => {
-                this.handleMoveReport(row,this.props.bin,this.props.bins[index].name.toLowerCase())
-              }}><div className={this.props.classes.menuitem}><Typography type='button'>Add report to {bin.name}</Typography></div></MenuItem> : undefined))}
-      </ContextMenu>
-      </div>
     );
   };
 
@@ -686,6 +675,18 @@ class ReportTable extends React.PureComponent {
       );
   };
 
+  toggleCell = row => {
+    return (
+      <div>
+        <ContextMenuTrigger id={row.id}>
+          <div>yes</div>
+        </ContextMenuTrigger>
+        <ContextMenu id={row.id}>
+          <MenuItem>yes</MenuItem>
+        </ContextMenu>
+      </div>
+    );
+  }
 
 
     /**
@@ -803,7 +804,6 @@ class ReportTable extends React.PureComponent {
           : null}
           {(this.state.tableHeight !== 0 && this.state.stillResizingTimer === '' && (!this.state.loadingData || this.state.keepTableWhileLoading))
             ? (
-
               <Grid
                 rows={(Number(this.props.currentTab) === 1) ? this.state.returnedResults : this.state.data}
                 columns={this.columns}
@@ -839,6 +839,11 @@ class ReportTable extends React.PureComponent {
                 />
                 <TableHeaderRow showSortingControls className="tableHeader"/>
                 <TableColumnReordering defaultOrder={this.columns.map(column => column.name)} />
+
+                <TableRowDetail
+                  toggleColumnWidth = {20}
+                  toggleCellComponent = {this.toggleCell}
+                />
               </Grid>
             )
             : null

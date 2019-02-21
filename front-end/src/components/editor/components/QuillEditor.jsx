@@ -964,10 +964,10 @@ class QuillEditor extends Component {
                                 </div>
                             </div>
                             <div style={{padding: '4px'}}>
-                                <textarea id="comment" style = {{resize: 'none', width: 'calc(50vw - 120px)'}} rows="4">  </textarea>
+                                <textarea id="comment" style = {{resize: 'none', width: '65%'}} rows="4">  </textarea>
                             </div>
 
-                            <div style={{padding: '4px', display: 'inline-block', width: 'calc(55vw - 120px)'}}>
+                            <div style={{padding: '4px', display: 'inline-block', width: '65%'}}>
 
                                 <span style = {{position: 'relative', left: '5px', bottom: '4px', marginRight: '2px'}}>Public:</span>
                                 <label class = "switch">
@@ -977,7 +977,7 @@ class QuillEditor extends Component {
 
                                 </label>
 
-                                <button id="MakeNote" style={{position: 'relative', border: '2px solid #1d00ff', left: '6.25%',  width: 'calc(6vw)', minHeight:'calc(5vh)'}}
+                                <button id="MakeNote" style={{position: 'relative', border: '2px solid #1d00ff', left: '6.25%',  width: '15%', minHeight: 'calc(5.15vh)'}}
                                         onClick={() => this.commentMade()}> Make Note </button>
                                 <Button
                                     id="saveButton2"
@@ -986,7 +986,7 @@ class QuillEditor extends Component {
                                     className={(this.state.success) ? this.props.classes.buttonSuccess : ''}
                                     disabled={this.state.saving}
                                     onClick={this.saveWork}
-                                    style={{ left: '7%', minWidth: 'calc(3vw)', minHeight: 'calc(1.25vw)'}}>
+                                    style={{ left: '7%', minWidth: '5%', minHeight: 'calc(1.25vw)'}}>
 
                                     Save
                                 </Button>
@@ -1003,9 +1003,9 @@ class QuillEditor extends Component {
                                     <Button id="delete" style={{
                                         borderRadius: '20px',
                                         position: 'relative',
-                                        left: 'calc(28vw - 120px)',
+                                        left: '47.5%',
                                         border: '1px solid red',
-                                        width: 'calc(4.5vw)',
+                                        width: '8%',
                                         height: 'calc(1.25vw)'
                                     }} onClick={() => this.commentDelete()}>
                                         Delete X

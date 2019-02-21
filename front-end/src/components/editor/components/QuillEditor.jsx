@@ -994,7 +994,7 @@ class QuillEditor extends Component {
                                 </div>
                             </div>
                             <div style={{padding: '4px'}}>
-                                <textarea id="comment" style = {{width: 'calc(50vw - 120px)'}} rows="4">  </textarea>
+                                <textarea id="comment" style = {{resize: 'none', width: 'calc(50vw - 120px)'}} rows="4">  </textarea>
                             </div>
 
                             <div style={{padding: '4px', display: 'inline-block', width: 'calc(55vw - 120px)'}}>
@@ -1007,8 +1007,8 @@ class QuillEditor extends Component {
 
                                 </label>
 
-                                <Button id="MakeNote" style={{border: '2px solid #1d00ff', left: '6%',  width: 'calc(4.5vw)', height: 'calc(1.25vw)'}}
-                                        onClick={() => this.commentMade()}> Make Note </Button>
+                                <button id="MakeNote" style={{position: 'relative', border: '2px solid #1d00ff', left: '6.25%',  width: 'calc(6vw)', minHeight:'calc(5vh)'}}
+                                        onClick={() => this.commentMade()}> Make Note </button>
                                 <Button
                                     id="saveButton2"
                                     raised
@@ -1030,13 +1030,16 @@ class QuillEditor extends Component {
                                     }}
                                     style={{fontSize: '20pt',}}
                                 >
-                                    <button id="delete" style={{
+                                    <Button id="delete" style={{
                                         borderRadius: '20px',
                                         position: 'relative',
-                                        left: 'calc(29vw - 120px)',
+                                        left: 'calc(28vw - 120px)',
+                                        border: '1px solid red',
+                                        width: 'calc(4.5vw)',
+                                        height: 'calc(1.25vw)'
                                     }} onClick={() => this.commentDelete()}>
-                                        <img src={DeleteIcon} style={{width: 'calc(1.5vw)', height: 'calc(1.5vw)'}}/>
-                                    </button>
+                                        Delete X
+                                    </Button>
                                 </MaterialTooltip>
 
                             </div>

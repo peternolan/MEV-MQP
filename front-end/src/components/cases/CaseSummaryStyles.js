@@ -6,27 +6,76 @@ export default {
 		marginBottom: 20,
 	},
 	dataSelector: {
-		float: 'right',
-		marginRight: 0,
+		marginLeft: '7%',
 	},
 	summaryContent: {
 		width: '100%',
 		height: 'auto',
 		//overflow: 'scroll',
 	},
-	textButton: {
-		color: '#1D1F83',
-        cursor: 'pointer',
-        margin: 0,
+	reportBox: {
+		padding: 5,
+		position: 'relative',
+        borderRadius: 0,
         display: 'flex',
-        justifyContent: 'center',
+        flexDirection: 'row',
+        alignItems: 'center',
+	},
+	countText: {
+		fontSize: 14,
+	},
+	caseBDText: {
+		marginLeft: 10,
+		color: 'rgba(0,0,0,.7)',
+	},
+	recString: {
+		borderWidth: 0,
+		borderBottomWidth: 1,
+		width: 'calc(100% - 8px)',
+		fontSize: 12,
+	},
+	keywordHead: {
+		position: 'relative',
+		display: 'flex',
+		flexDirection: 'row',
+        alignItems: 'center',
         width: '100%',
+        margin: 0,
+        height: 30,
         backgroundColor: '#dbf0ff',
         borderWidth: 0,
         borderBottomWidth: 1,
         borderTopWidth: 1,
         borderStyle: 'solid',
         borderColor: 'rgba(0,0,0,.25)',
+	},
+	textButton: {
+		color: '#1D1F83',
+		margin: 5,
+        '&:hover': {
+        	cursor: 'pointer',
+        }
+	},
+	recButton: {
+		display: 'flex',
+		alignItems: 'center',
+		fontSize: 12,
+		color: '#1D1F83',
+		margin: 0,
+		height: 30,
+		marginLeft: '15%',
+		'&:hover': {
+        	cursor: 'pointer',
+        	color: '#fff',
+        }
+	},
+	caseButton: {
+		marginLeft: '5%',
+		color: '#1D1F83',
+        '&:hover':{
+        	cursor: 'pointer',
+        	textDecoration: 'underline',
+        },
 	},
 	keywordContainer: {
 		height: 'auto',

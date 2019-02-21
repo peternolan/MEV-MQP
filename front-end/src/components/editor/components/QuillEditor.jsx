@@ -931,33 +931,14 @@ class QuillEditor extends Component {
         return (
             <div className={this.props.classes.pdfView} >
                 <div className = {this.props.classes.quillArea} style = {{ display: 'inline-block', height: (this.state.commentsOn) ? 'calc(59vh - 122px)': 'calc(95vh - 122px)', overflow: 'scroll'}}>
-                    {/*
-                        <Paper className={this.props.classes.legend}>
-
-                            <Paper className={this.props.classes.legendEntry} style={{backgroundColor: 'chartreuse'}}><Typography type='button'>Drug</Typography></Paper>
-                            <Paper className={this.props.classes.legendEntry} style={{backgroundColor: 'cadetblue'}}><Typography type='button'>Reaction</Typography></Paper>
-                            <Paper className={this.props.classes.legendEntry} style={{backgroundColor: 'darkorange'}}><Typography type='button'>Dosage</Typography></Paper>
-                            <Paper className={this.props.classes.legendEntry} style={{backgroundColor: 'gold'}}><Typography type='button'>Age</Typography></Paper>
-                            <Paper className={this.props.classes.legendEntry} style={{backgroundColor: 'lightpink'}}><Typography type='button'>Sex</Typography></Paper>
-                            <Paper className={this.props.classes.legendEntry} style={{backgroundColor: 'orchid'}}><Typography type='button'>Weight</Typography></Paper>
-                            <Paper className={this.props.classes.legendEntry} style={{backgroundColor: 'silver'}}><Typography type='button'>Indication</Typography></Paper>
-                            <Paper className={this.props.classes.legendEntry} style={{backgroundColor: 'cyan'}}><Typography type='button'>Interesting</Typography></Paper>
-                        </Paper>
-                        */}
-                        <Paper>
-                            <div onClick={this.editMode} className={this.props.classes.editBtn}><Typography type='button'>{(this.state.editModeOn) ? 'Stop Editing' : 'Edit Highlights'}</Typography></div>
-                            <Paper key='editSpecificButtons'>
+                        <div className={this.props.classes.editFacet}>
+                            <ul style={{listStyleType:'none'}}>
+                                <li><div onClick={this.editMode} className={this.props.classes.editBtn}><Typography type='button'>{(this.state.editModeOn) ? 'Stop Editing' : 'Edit Highlights'}</Typography></div></li>
                                 <Collapse isOpened={this.state.editModeOn}>
-                                    <Paper className={this.props.classes.editButton} onClick={this.saveWork}>
-                                        <Typography id = 'saveButton' type='button'>Save Highlights</Typography>
-                                    </Paper>
+                                    <li><div className={this.props.classes.editButton} onClick={this.saveWork}><Typography id = 'saveButton' type='button'>Save Highlights</Typography></div></li>
                                 </Collapse>
-                            </Paper>
-                        </Paper>
-                    <div className={this.props.classes.editFacet}>
-                        
-                    </div>
-
+                            </ul>
+                        </div>
                 {/* ====== Quill editor for Annotating the Report Text ====== */}
 
                 {/* <!--<Paper elevation={4} className={this.props.classes.paperWindow}>--> */}

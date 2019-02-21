@@ -23,6 +23,9 @@ export default {
       cursor: 'pointer'
     },
   },
+  titleText:{
+    fontSize: 16,
+  },
   borderBottom: {
     width: '100%',
     borderWidth: 0,

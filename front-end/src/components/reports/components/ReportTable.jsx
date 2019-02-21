@@ -26,7 +26,7 @@ import Snackbar from 'material-ui/Snackbar';
 import { withStyles } from 'material-ui/styles';
 import Paper from 'material-ui/Paper';
 import Button from 'material-ui/Button';
-import Switch from 'material-ui/Switch';
+import CheckBox from 'material-ui/Checkbox';
 import { CircularProgress } from 'material-ui/Progress';
 import Typography from 'material-ui/Typography';
 import { FormControlLabel } from 'material-ui/Form';
@@ -462,7 +462,6 @@ class ReportTable extends React.PureComponent {
               backgroundColor: (props.tableRow.rowId === this.state.selected) ? '#dbf0ff' : backgroundColor,
               height:45,
               cursor:'pointer'
-
             }}
             onClick = {() => this.reportToPanel(props.tableRow.rowId)}
         />
@@ -570,7 +569,6 @@ class ReportTable extends React.PureComponent {
   };
 
   handleToggleChange = primaryid => (event, checked) => {
-
     if (!(this.props.bin === 'all reports' || this.props.bin === 'read' || this.props.bin === 'trash')) {
       this.handleMoveReport(
         primaryid,
@@ -584,43 +582,44 @@ class ReportTable extends React.PureComponent {
   };
 
   renderMoveToIcon = (binName, greyOutCaseIcon) => {
+    var sideL = 30;
     switch (binName) {
       case 'Trash':
         return (
-          <div>
-            <TrashIcon />
-            <Typography style={{ display: 'block' }} type="subheading">
+          <div className={this.props.classes.moveToPair}>
+            <TrashIcon  width={sideL} height={sideL}/>
+            <Typography type="subheading" style={{ marginLeft: 15 }}>
               {binName}
             </Typography>
           </div>
         );
       case 'Read':
         return (
-          <div>
+          <div className={this.props.classes.moveToPair}>
             {(greyOutCaseIcon)
-              ? <ReadCaseIcon width={45} height={45} style={{ filter: 'hue-rotate(270deg)' }} />
-              : <ReadCaseIcon width={45} height={45} />}
-            <Typography style={{ display: 'block' }} type="subheading">
+              ? <ReadCaseIcon width={sideL} height={sideL} style={{ filter: 'hue-rotate(270deg)' }} />
+              : <ReadCaseIcon width={sideL} height={sideL} />}
+            <Typography type="subheading" style={{ marginLeft: 15 }}>
               {binName}
             </Typography>
           </div>
         );
       case 'All Reports':
         return (
-          <div>
-            <ClearFilterIcon />
-            <Typography style={{ display: 'block' }} type="subheading">
+          <div className={this.props.classes.moveToPair}>
+            <ClearFilterIcon width={sideL} height={sideL} />
+            <Typography style={{ marginLeft: 15 }} type="subheading">
               Remove From Case
             </Typography>
           </div>
         );
       default:
         return (
-          <div>
+          <div className={this.props.classes.moveToPair}>
             {(greyOutCaseIcon)
-              ? <CaseIcon width={45} height={45} style={{ filter: 'hue-rotate(270deg)' }} />
-              : <CaseIcon width={45} height={45} />}
-            <Typography style={{ display: 'block' }} type="subheading">
+              ? <CaseIcon width={sideL} height={sideL} style={{ filter: 'hue-rotate(270deg)' }} />
+              : <CaseIcon width={sideL} height={sideL} />}
+            <Typography type="subheading" style={{ marginLeft: 15 }}>
               {binName}
             </Typography>
           </div>
@@ -629,31 +628,7 @@ class ReportTable extends React.PureComponent {
   };
 
   renderTypeToggle = (row) => {
-
-    return (this.props.bin === 'all reports' || this.props.bin === 'read' || this.props.bin === 'trash')
-      ? (
-        <MaterialTooltip
-          title="This toggle does not update this report inside you're cases. You must re-add this report to a case for your change to appear"
-          placement="top"
-          enterDelay={50}
-          classes={{
-            tooltip: this.props.classes.tooltipStyle,
-            popper: this.props.classes.tooltipStyle,
-          }}
-        >
-          <FormControlLabel
-            control={
-              <Switch
-                checked={this.state[row.row.primaryid]}
-                onChange={this.handleToggleChange(row.row.primaryid)}
-                color = "primary"
-              />
-            }
-            label={this.state[row.row.primaryid] ? 'Primary Evidence' : 'Supportive Evidence'}
-          />
-        </MaterialTooltip>
-      )
-      : (
+    return (
         <MaterialTooltip
           title="This updates the evidence type for this report in only this case"
           placement="top"
@@ -664,36 +639,91 @@ class ReportTable extends React.PureComponent {
           }}
         >
           <FormControlLabel
+            style={{height:35}}
             control={
-              <Switch
+              <CheckBox
+                style={{height:35}}
                 checked={this.state.evidenceType[row.row.primaryid] === 'primary'}
                 onChange={this.handleToggleChange(row.row.primaryid)}
                 color="primary"
               />
             }
-            label={(this.state.evidenceType[row.row.primaryid] === 'primary') ? 'Primary Evidence' : 'Supportive Evidence'}
+            label='Primary Evidence'
           />
         </MaterialTooltip>
       );
-  };
-
+  }
+  /* Prevents a parent event from being inherited by the child */
   blockParent = e => {
     e.stopPropagation();
   }
-
+  /* Our more options menu */
   toggleCell = row => {
     return (
-      <div onClick={this.blockParent} style={{padding:10}}>
+      <div onClick={this.blockParent} className={this.props.classes.ellipsisFrame}>
         <MenuProvider id={row.row.primaryid} event='onClick'>
           <img src={EllipsisIcon} alt='More Options'/>
         </MenuProvider>
         <Menu id={row.row.primaryid}>
-          <Item>{row.row.primaryid}</Item>
+          {(this.props.bin === 'all reports' || this.props.bin === 'read' || this.props.bin === 'trash')
+          ? null : <Item>{this.renderTypeToggle(row)}</Item>}
+          {/* Non-Case Move Tos */}
+          {this.props.bins.map((bin, index) => (
+            /* We only want cases */
+            (this.props.bin.toLowerCase() !== bin.name.toLowerCase() && (bin.name.toLowerCase() === 'read' || bin.name.toLowerCase() === 'trash'))
+              ? ( /* New item container for the move prompts*/
+                  <Item 
+                    key={bin.case_id + ' ' + bin.name}
+                    onClick={() => {
+                      this.handleMoveReport(
+                        row.row.primaryid,
+                        this.props.bin,
+                        this.props.bins[index].name.toLowerCase(),
+                        this.state[row.row.primaryid],
+                      );
+                    }}
+                  >
+                  {
+                    /* Fill with move to icons */
+                    (this.state.currentlyInCase[row.row.primaryid]
+                    && this.state.currentlyInCase[row.row.primaryid].includes(bin.name.toLowerCase()))
+                    ? this.renderMoveToIcon(bin.name, true)
+                    : this.renderMoveToIcon(bin.name)}
+                  </Item>
+              )
+              : null
+          ))}
+          {/* Generate submenu */}
+          <Submenu label='Add to a case:'>
+          {this.props.bins.map((bin, index) => (
+            /* We only want cases */
+            (this.props.bin.toLowerCase() !== bin.name.toLowerCase() && bin.name.toLowerCase() !== 'read' && bin.name.toLowerCase() !== 'trash')
+              ? ( /* New item container for the move prompts*/
+                  <Item 
+                    key={bin.case_id + ' ' + bin.name}
+                    onClick={() => {
+                      this.handleMoveReport(
+                        row.row.primaryid,
+                        this.props.bin,
+                        this.props.bins[index].name.toLowerCase(),
+                        this.state[row.row.primaryid],
+                      );
+                    }}
+                  >
+                  { /* Fill with move to icons */
+                    (this.state.currentlyInCase[row.row.primaryid]
+                    && this.state.currentlyInCase[row.row.primaryid].includes(bin.name.toLowerCase()))
+                    ? this.renderMoveToIcon(bin.name, true)
+                    : this.renderMoveToIcon(bin.name)}
+                  </Item>
+              )
+              : null
+          ))}
+          </Submenu>
         </Menu>
       </div>
     );
   }
-
 
     /**
    * Defines the html content inside each expandable dropdown area for each row

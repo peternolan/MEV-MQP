@@ -26,27 +26,25 @@ export default {
   },
   caseGridList: {
     padding: '5px',
-    margin: '5px',
-    width: 'auto',
-    height: 'auto',
   },
   sendToCaseContainer: {
     position: 'relative',
+  },
+  moveToPair: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   tableDetailCell: {
     background: 'repeating-linear-gradient( -55deg, #fafafa 0px, #fafafa 30px, #f1f1f1 30px, #f1f1f1 50px)',
     padding: '12px 24px',
   },
   ellipsisFrame: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    padding: 10,
     borderStyle: 'solid',
     borderWidth: 0,
     borderBottomWidth: 1,
-    borderColor: 'rgba(0,0,0,.25)',
-    height: '100%',
-    width: '100%',
+    borderColor: 'rgba(0,0,0,.08)',
   },
   tooltipStyle: {
     fontSize: '10pt',
@@ -64,7 +62,7 @@ export default {
     borderWidth: 1,
     borderRadius: 0,
     boxShadow: 'none',
-    borderColor: 'rgba(0, 0, 0, 0.25)',
+    borderColor: 'rgba(0, 0, 0, 0.7)',
   },
   searchDD: {
     height: 25,

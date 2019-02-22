@@ -99,7 +99,6 @@ class CaseSummary extends Component {
         caseDescription: (rows[0] ? rows[0].description : ''),
       }, () => {
         this.updateSummary();
-        this.updateReports();
       }));
   }
 
@@ -631,6 +630,7 @@ class CaseSummary extends Component {
 
   render(){{
             this.getReports();
+            this.updateReports();
             }
     return (
       <div key={this.state.caseName} className={this.props.classes.summaryContent}>

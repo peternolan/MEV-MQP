@@ -44,8 +44,6 @@ import 'react-contexify/dist/ReactContexify.min.css';
  */
 class ReportTable extends React.PureComponent {
   static propTypes = {
-    returnedIds: PropTypes.array.isRequired,
-    returnedResults: PropTypes.array.isRequired,
     printSearchResults: PropTypes.func.isRequired,
     changeTab: PropTypes.func.isRequired,
     getCaseReports: PropTypes.func.isRequired,
@@ -114,6 +112,7 @@ class ReportTable extends React.PureComponent {
       currentPage: 0,
       summaryToggleText: 'Hide',
       selected: -1,
+      returnedResults: [1, 2, 3],
       returnedIds: [],
       item: null,
 
@@ -473,9 +472,13 @@ class ReportTable extends React.PureComponent {
   //EXECUTE SEARCH
   search = (value) => {
     var contents = document.getElementById('search').value;
+
     console.log('Search');
 
+
+
     var results;
+
     var resultsArr = [];
     var resultIds  = [];
 

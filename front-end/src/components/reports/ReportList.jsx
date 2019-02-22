@@ -53,7 +53,6 @@ const defaultTheme = createMuiTheme({
  */
 class ReportList extends Component {
   static propTypes = {
-    searchString: undefined,
     getUserCases: PropTypes.func.isRequired,
     createUserBin: PropTypes.func.isRequired,
     userID: PropTypes.number.isRequired,
@@ -180,7 +179,11 @@ class ReportList extends Component {
   };
 
   printSearchResults = (array) => {
-      this.setState({returnedResults: array}, () => {console.log(this.state.returnedResults)});
+      console.log('print');
+      console.log(array);
+        this.setState({returnedResults: array}, () => {console.log(this.state.returnedResults)});
+
+
     };
 
 
@@ -414,13 +417,12 @@ class ReportList extends Component {
           {/* ====== SideBar for Viewing the Case Summary ====== */}
           <div id="summary-sidebar" className={this.calculateSummarySize()}>
             <CaseSummaryListing
-              printSearchResults = {this.printSearchResults}
               updateTab={this.updateTab}
               bins={this.state.userBins}
               userID={this.props.userID}
               summaryOpen={this.state.summaryOpen}
               summaryCounter={this.state.summaryCounter}
-              changeTab = {this.changeTab}
+              handleClickPieChart={this.handleCaseChangePrimary}
             />
           </div>
           <div key='summaryCollapse' className={this.props.classes.collapseDivider} style={{float: 'left'}} onClick={this.handleViewCaseSummary}>
@@ -445,6 +447,7 @@ class ReportList extends Component {
               printSearchResults = {this.printSearchResults}
               currentTab={this.state.currentTab}
               returnedResults = {this.state.returnedResults}
+
             />
           </div>
           <div key='reportCollapse' className={this.props.classes.collapseDivider}  onClick={this.handleHideReport}>

@@ -16,6 +16,10 @@ import {
   PagingPanel,
   TableColumnResizing,
 } from '@devexpress/dx-react-grid-material-ui';
+import ExpansionPanel, {
+  ExpansionPanelSummary,
+  ExpansionPanelDetails,
+} from 'material-ui/ExpansionPanel';
 import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
 import Divider from 'material-ui/Divider';
 import MaterialTooltip from 'material-ui/Tooltip';
@@ -124,7 +128,7 @@ class ReportTable extends React.PureComponent {
         primaryid: 75,
         age_year: 35,
         sex: 35,
-        drugname: 100,
+        drugname: 125,
         me_type: 100,
         outc_cod: 60,
       },
@@ -470,7 +474,8 @@ class ReportTable extends React.PureComponent {
   //setData =
 
   //EXECUTE SEARCH
-  search = (value) => {
+  search = () => {
+
     var contents = document.getElementById('search').value;
 
     console.log('Search');
@@ -549,12 +554,19 @@ class ReportTable extends React.PureComponent {
 
           }
         });
+
   };
 
   handleSearchResults = (array1, array2) => {
+
     console.log("handle Search");
+
     this.props.printSearchResults(array1);
+
+
     this.setState({returnedResults : array1, returnedIds: array2});
+
+
     this.props.changeTab(1);
   };
 
@@ -685,6 +697,7 @@ class ReportTable extends React.PureComponent {
 
     return (
         <div onClick={this.blockParent} className={this.props.classes.ellipsisFrame}>
+
           <MenuProvider id={row.row.primaryid} event='onClick'>
             <img src={EllipsisIcon} alt='More Options'/>
           </MenuProvider>
@@ -749,7 +762,11 @@ class ReportTable extends React.PureComponent {
     );
   }
   render() {
-    //(this.props.currentTab === 1) ? console.log("Ids " + this.state.returnedIds) : console.log(Number(this.props.currentTab));
+
+    (this.props.currentTab === 1) ? console.log("Ids " + this.state.returnedIds) : console.log(Number(this.props.currentTab));
+
+
+
     return (
         <div id='table-wrapper' className={this.props.classes.tableWrapper}>
           <input id='search' type='text' className={this.props.classes.searchBar} placeholder="Search through reports..." onKeyDown={(e) => {if(e.key === 'Enter'){this.search()}}} />

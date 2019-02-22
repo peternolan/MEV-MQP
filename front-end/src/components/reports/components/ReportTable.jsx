@@ -657,7 +657,7 @@ class ReportTable extends React.PureComponent {
 
     var dummyNode = document.createElement('div');
 
-    (this.props.currentTab === 1) ? dummyNode.innerHTML = (row.row.excerpt) ? `<Paper>${row.row.excerpt[0]}</Paper>` : '<div>--</div>' : null;
+    (this.props.currentTab === 1) ? dummyNode.innerHTML = (row.row.excerpt) ? row.row.excerpt[0] + row.row.excerpt[1] : '<div>--</div>' : null;
 
     var content = ``;
     var final = content + dummyNode.innerText;
@@ -665,7 +665,11 @@ class ReportTable extends React.PureComponent {
 
     return (
     (this.props.currentTab === 1) ?
-       final
+        <Paper elevation={6} style={{padding: '5px'}}>
+          <div>
+            {dummyNode.innerText}
+          </div>
+        </Paper>
         :
         null
 

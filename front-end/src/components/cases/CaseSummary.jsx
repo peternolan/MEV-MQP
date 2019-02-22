@@ -6,7 +6,7 @@ import Typography from 'material-ui/Typography';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
 import {Combobox} from 'react-widgets';
-import { getTagsinCase, getReportsInCases, getReportsFromCase, getCaseNameByID, getCaseReports, setSearchedReports , getInstances } from '../../actions/reportActions';
+import { executeSearch, getTagsinCase, getReportsInCases, getReportsFromCase, getCaseNameByID, getCaseReports, setSearchedReports , getInstances } from '../../actions/reportActions';
 import * as JsSearch from 'js-search';
 import "react-widgets/dist/css/react-widgets.css";
 
@@ -22,6 +22,9 @@ import {Collapse} from 'react-collapse';
 class CaseSummary extends Component {
 
   static propTypes = {
+    changeTab: PropTypes.func.isRequired,
+    printSearchResults: PropTypes.func.isRequired,
+    executeSearch: PropTypes.func.isRequired,
     getTagsinCase: PropTypes.func.isRequired,
     getReportsInCases: PropTypes.func.isRequired,
     getReportsFromCase: PropTypes.func.isRequired,
@@ -67,6 +70,8 @@ class CaseSummary extends Component {
       caseNarrativesData:[],
       searchedReports:[],
       searchOption: '',
+      returnedResults: [1,2,3],
+      returnedIds: [],
       graphdata: 'outc_cod',
       keywordsExposed: false,
       recommendationArray: [],
@@ -524,9 +529,6 @@ class CaseSummary extends Component {
               return "#"+this.getFillColor(i,counts.length)
             });
       }
-      this.setState({
-        catColors: catcolors
-      });
     }
 
     let oldrects = rects.exit();
@@ -540,6 +542,90 @@ class CaseSummary extends Component {
               .attr("opacity", 0)
               .remove();//remove all old rects which we haven't updated
     }
+    this.setState({
+      catColors: catcolors
+    });
+  };
+
+  searchRecommendations = () => {
+    console.log(this.state.recommendationString);
+    var results;
+    var resultsArr = [];
+    var resultIds  = [];
+    var arr = 0;
+    var done = false;
+
+    this.props.executeSearch(this.state.recommendationString)
+        .then((data) => {
+          results = JSON.parse(data);
+
+          var j = 0;
+
+          var allGood = true;
+          console.log(results.results);
+
+          while (results.results[j] && allGood) {
+            if (Number.isInteger(Number(j))) {
+              arr.push(results.results[j]);
+            } else {
+              allGood = false;
+            }
+            j++;
+          }
+          j = 0;
+          while (arr[j]) {
+
+            var item = arr;
+            var i = 0;
+            this.props.getAgeAndCode(arr[j].id).then((rows) => {
+
+              if (rows.length > 0) {
+
+
+                var age;
+                var code;
+                console.log('id ' + item[i].id);
+                age = rows[0].age_year;
+                code = rows[0].outc_cod[0];
+
+
+                if (!age) {
+                  age = "--";
+                }
+                if (!code) {
+                  code = "--";
+                }
+
+                resultsArr.push({
+                  primaryid: item[i].id,
+                  drugname: item[i].drugname,
+                  sex: item[i].sex,
+                  me_type: item[i].error,
+                  excerpt: item[i].report_text_highlights,
+                  age_year: age,
+                  outc_cod: code
+                });
+                resultIds.push(item[i].id);
+
+                if (resultsArr.length >= arr.length && resultIds.length >= arr.length) {
+                  this.handleSearchResults(resultsArr, resultIds);
+                }
+              }
+
+              i++;
+            });
+
+            j++;
+
+          }
+        });
+  };
+
+  handleSearchResults = (array1, array2) => {
+    console.log("handle Search");
+    this.props.printSearchResults(array1);
+    this.setState({returnedResults : array1, returnedIds: array2});
+    this.props.changeTab(1);
   };
 
   render(){{
@@ -563,12 +649,12 @@ class CaseSummary extends Component {
               </select>
             </Typography>
           </div>
-          <div className={this.props.classes.bargraph} key="bargraph" id='bargraph' ref='bargraph'><svg ref="svg" preserveAspectRatio="none" viewBox="0 0 100 100" width="100%" height='100%'></svg> </div>
-        {this.updateReports()}
+          { (this.state.reportsInCase.length > 0)
+            ? <div className={this.props.classes.bargraph} key="bargraph" id='bargraph' ref='bargraph'><svg ref="svg" preserveAspectRatio="none" viewBox="0 0 100 100" width="100%" height='100%'></svg> </div>
+            : <Typography align='center'>The bar chart requires reports to be within the case, try adding some.</Typography>}
         <div className={this.props.classes.bglegend} key='bglegend'>
           {this.state.catColors.map((category) => {
-            console.log('catcol',this.state.catColors)
-            return (<div className={this.props.classes.legendPair}><div className={this.props.classes.legendColor} style={{backgroundColor:category[1]}}/><Typography className={this.props.classes.legendCategory}>{category[0]} ({category[2]})</Typography></div>)
+            return (<div key={category[0]} className={this.props.classes.legendPair}><div className={this.props.classes.legendColor} style={{backgroundColor:category[1]}}/><Typography className={this.props.classes.legendCategory}>{category[0]} ({category[2]})</Typography></div>)
           })}
         </div>
         <div className={this.props.classes.keywordHead}>
@@ -579,7 +665,7 @@ class CaseSummary extends Component {
           <div className={this.props.classes.keywordContainer}>
             <div key="highlighted_words">
               {(this.state.highlightedWordsData.length === 0) ? 
-              <Typography type='body1' style={{padding: 5, paddingLeft: 15}}>There are no annotated reports in this case for us to build keywords from; try annotating one of the reports.</Typography>
+              <Typography type='body1' align='center'>There are no annotated reports in this case for us to get keywords from, try annotating one of the reports.</Typography>
               : this.state.highlightedWordsData.map((word) =>{
                 return(
                   <div key={word.name} className={this.props.classes.keywordCapsule} style={{backgroundColor: (this.state.recommendationArray.indexOf(word.name) > -1) ? '#7bd389' : '#ee7674'}} onClick={this.toggleWord}>
@@ -611,6 +697,6 @@ const mapStateToProps = state => ({
  */
 export default connect(
   mapStateToProps,
-  { getTagsinCase, getReportsFromCase, getReportsInCases, getCaseNameByID , getCaseReports, setSearchedReports, getInstances},
+  { executeSearch, getTagsinCase, getReportsFromCase, getReportsInCases, getCaseNameByID , getCaseReports, setSearchedReports, getInstances},
 )(withStyles(styles)(CaseSummary));
 

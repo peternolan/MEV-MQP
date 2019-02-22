@@ -211,12 +211,12 @@ class QuillEditor extends Component {
                                             text = text.concat(dummyNode.getElementsByTagName("comment")[i].innerText);
 
                                            if (dummyNode.getElementsByTagName("comment")[i].getAttribute('viewable').toString() === "public") {
-                                               commentLines = commentLines.concat(`<div style='left: 3px; width: calc(50vw - 120px); border-radius: 5px; background-color: #43e8e8; position: relative; padding: 6px ' >
+                                               commentLines = commentLines.concat(`<div style='left: 3px; width: 65%; border-radius: 5px; background-color: #43e8e8; position: relative; padding: 6px ' >
                                                                                         <div style ='left: 20px'>${dummyNode.getElementsByTagName("comment")[i].innerText.replace("n$", "</br>")}</div>
                                                                                          </div>`);
                                            } else {
 
-                                               var block = `<div style='left: 3px; width: calc(50vw - 120px); border-radius: 5px; background-color: #c5cbd6; position: relative; padding: 6px ' >
+                                               var block = `<div style='left: 3px; width: 65%; border-radius: 5px; background-color: #c5cbd6; position: relative; padding: 6px ' >
                                                                  <div style ='left: 20px'>${dummyNode.getElementsByTagName("comment")[i].innerText.replace("n$", "</br>")} </div>
                                                                  </div>`;
 
@@ -458,13 +458,13 @@ class QuillEditor extends Component {
 
                                 if (dummyNode2.getElementsByTagName("comment")[i].getAttribute('viewable').toString() === "public") {
 
-                                    commentLines = commentLines.concat(`<div style='left: 3px; width: calc(50vw - 120px); border-radius: 5px; background-color: #43e8e8; position: relative; padding: 6px ' >
+                                    commentLines = commentLines.concat(`<div style='left: 3px; width: 65%; border-radius: 5px; background-color: #43e8e8; position: relative; padding: 6px ' >
                                                                         <div style ='left: 20px'>${dummyNode.getElementsByTagName("comment")[i].innerText.replace("n$", "</br>")} </div>
                                                                          </div>`);
                                 } else {
 
 
-                                    commentLines = commentLines.concat(`<div style='left: 3px; width: calc(50vw - 120px); border-radius: 5px; background-color: #c5cbd6; position: relative; padding: 6px ' >
+                                    commentLines = commentLines.concat(`<div style='left: 3px; width: 65%; border-radius: 5px; background-color: #c5cbd6; position: relative; padding: 6px ' >
                                                                         <div style ='left: 20px'>${dummyNode.getElementsByTagName("comment")[i].innerText.replace("n$", "</br>")} </div>
                                                                          </div>`);
                                 }

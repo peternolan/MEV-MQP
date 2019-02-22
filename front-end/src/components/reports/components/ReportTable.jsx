@@ -405,6 +405,7 @@ class ReportTable extends React.PureComponent {
 
 
   reportToPanel = ( id ) => {
+    console.log('Report to Panel ' + id);
     this.setState({selected: id,}, function() {
       this.props.handleViewReport(id);
     });
@@ -657,10 +658,43 @@ class ReportTable extends React.PureComponent {
   blockParent = e => {
     e.stopPropagation();
   }
+
+
+  /**
+   * Defines the html content inside each expandable dropdown area for each row
+   * of the table
+   */
+  renderDetailRowContent = row => {
+
+    var dummyNode = document.createElement('div');
+
+    (this.props.currentTab === 1) ? dummyNode.innerHTML = row.row.excerpt[0] : null;
+
+    console.log("dummy " + dummyNode.innerHTML);
+
+    return (
+    (this.props.currentTab === 1) ?
+        <Paper elevation={6} style={{padding: '5px'}}>
+          <div>
+            {dummyNode.innerText}
+          </div>
+        </Paper>
+        :
+        null
+
+    )
+
+
+  }
+
+
+
   /* Our more options menu */
   toggleCell = row => {
+
     return (
         <div onClick={this.blockParent} className={this.props.classes.ellipsisFrame}>
+
           <MenuProvider id={row.row.primaryid} event='onClick'>
             <img src={EllipsisIcon} alt='More Options'/>
           </MenuProvider>
@@ -726,7 +760,9 @@ class ReportTable extends React.PureComponent {
   }
   render() {
 
-    //console.log("Hello World " + this.state.data[0].primaryId);
+    (this.props.currentTab === 1) ? console.log("Ids " + this.state.returnedIds) : console.log(Number(this.props.currentTab));
+
+
 
     return (
         <div id='table-wrapper' className={this.props.classes.tableWrapper}>
@@ -756,13 +792,14 @@ class ReportTable extends React.PureComponent {
                 : null}
             {(this.state.tableHeight !== 0 && this.state.stillResizingTimer === '' && (!this.state.loadingData || this.state.keepTableWhileLoading))
                 ? (
+
                     <Grid
-                        rows={(Number(this.props.currentTab) === 1) ? this.state.returnedResults : this.state.data}
+                        rows={(this.props.currentTab === 1) ? this.state.returnedResults : this.state.data}
                         columns={this.columns}
-                        getRowId={(Number(this.props.currentTab) === 1) ? row => row.id : row => row.primaryid }
+                        getRowId={(this.props.currentTab === 1) ? row => row.primaryid: row => row.primaryid }
                     >
                       <RowDetailState
-                          expandedRows={(Number(this.props.currentTab) === 1) ? this.state.returnedIds : this.state.expandedRows}
+                          expandedRows={(this.props.currentTab === 1) ? this.state.returnedIds : this.state.expandedRows}
                           onExpandedRowsChange={this.changeExpandedDetails}
                       />
                       <DragDropProvider />
@@ -794,6 +831,7 @@ class ReportTable extends React.PureComponent {
 
                       <TableRowDetail
                           toggleCellComponent = {this.toggleCell}
+                          contentComponent =  {this.renderDetailRowContent}
                       />
                     </Grid>
                 )

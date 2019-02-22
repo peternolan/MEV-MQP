@@ -10,7 +10,7 @@ import { getTagsinCase, getReportsInCases, getReportsFromCase, getCaseNameByID, 
 import * as JsSearch from 'js-search';
 import "react-widgets/dist/css/react-widgets.css";
 
-import  natural from './natural.js';
+import natural from './natural.js';
 import TrashIcon from "../../resources/TrashIcon";
 import ReadCaseIcon from "../../resources/ReadCaseIcon";
 import CaseIcon from "../../resources/CaseIcon";
@@ -18,6 +18,7 @@ import * as d3 from "d3";
 import styles from "./CaseSummaryStyles.js";
 import MEVColors from '../../theme';
 import {Collapse} from 'react-collapse';
+
 class CaseSummary extends Component {
 
   static propTypes = {
@@ -53,6 +54,7 @@ class CaseSummary extends Component {
     super(props);
     this.state = {
       tags: {},
+      catColors: [],
       caseName: '',
       caseDescription: '',
       reportsInCase: [],
@@ -96,7 +98,6 @@ class CaseSummary extends Component {
   }
 
   componentDidUpdate() {
-    //console.log(this.refs);
   }
 
   getFillColor = (UNK, size) => {
@@ -143,8 +144,6 @@ class CaseSummary extends Component {
   }
 
   getReportTypeData = () => {
-    // console.log(getReportsInCases);
-
     const typeObject = this.state.reportsInCase.reduce((acc, report) => {
       acc[report.type] = (acc[report.type]) ? acc[report.type] + 1 : 1;
       return acc;
@@ -275,19 +274,14 @@ class CaseSummary extends Component {
   }
 
   getCaseNarratives = () => {
-    // console.log(this.state.caseNarratives)
 
     const caseNarrativesData = Object.keys(this.state.caseNarratives).reduce((acc, key) => {
-      // console.log(this.props.allReports[key] )
       return acc.concat({
         name:  this.state.caseNarratives[key].primaryid ,
         count: this.state.caseNarratives[key].report_text,
       });
     }, []);
 
-    // console.log(caseNarrativesData)
-
-    
     this.setState({
       caseNarrativesData,
     });
@@ -345,7 +339,6 @@ class CaseSummary extends Component {
         search.addDocuments( this.props.allReports);
 
 
-        // console.log(this.state.highlightedWords, this.props.allReports)
         if(this.state.highlightedWords.length !== 0) {
          var str = this.state.highlightedWords;
          for (var i = 0, length = str.length; i < length; i++) {
@@ -433,6 +426,8 @@ class CaseSummary extends Component {
   }
 
   drawChart = (reports) => {
+    var catcolors = [];
+
     function fmt(data){
       var data2 = [],keys = [];
       for(let key in data){
@@ -489,7 +484,7 @@ class CaseSummary extends Component {
         .attr("y", 0)
         .attr("stroke-width", 1)
         .attr("stroke", "#FFF")
-        .attr("opacity", .5)
+        .attr("opacity", .7)
         .attr("height", 100)
         .attr("x", d=>{return x(d.start/total_reports) > 50 ? 100 : 0;})//preset the x position of new elements to "push" them against the edges for a smoother animation
     
@@ -501,26 +496,37 @@ class CaseSummary extends Component {
       newrects
         .attr("height", 100)
         .attr("x", d=>x(d.start/total_reports))
-        .attr("width", d=> x((d.end-d.start)/total_reports))
-        .attr("fill", (d,i)=>"#"+this.getFillColor(i,counts.length))
+        .attr("width", d=> x((d.end-d.start)/total_reports))//x((d.end-d.start)/total_reports))
+        .attr("fill", (d,i)=>{
+            catcolors.push([d.label,"#"+this.getFillColor(i,counts.length),(d.end-d.start)])
+            return "#"+this.getFillColor(i,counts.length)
+          })
     }
     else {
       if(false && firsttime){ // if this is the first time (AND there are less than 10 nodes) then "grow" the bars from the top
         newrects.attr("height",0)
           .attr("x", d=>x(d.start/total_reports))
           .attr("width", d=> x((d.end-d.start)/total_reports))
-          .attr("fill", (d,i)=>"#"+this.getFillColor(i,counts.length))
+          .attr("fill", (d,i)=>{
+            catcolors.push([d.label,"#"+this.getFillColor(i,counts.length),(d.end-d.start)])
+            return "#"+this.getFillColor(i,counts.length)
+          })
           .transition("update")
-          .attr("height", 100)
+          .attr("height", 100);
       }
       else{
           newrects.attr("height", 100)
             .transition("update")
             .attr("x", d=>x(d.start/total_reports))
-            .attr("width", d=> x((d.end-d.start)/total_reports))
-            .attr("fill", (d,i)=>"#"+this.getFillColor(i,counts.length))
-          
+            .attr("width", (d,i)=> x((d.end-d.start)/total_reports))
+            .attr("fill", (d,i)=>{
+              catcolors.push([d.label,"#"+this.getFillColor(i,counts.length),(d.end-d.start)])
+              return "#"+this.getFillColor(i,counts.length)
+            });
       }
+      this.setState({
+        catColors: catcolors
+      });
     }
 
     let oldrects = rects.exit();
@@ -534,7 +540,6 @@ class CaseSummary extends Component {
               .attr("opacity", 0)
               .remove();//remove all old rects which we haven't updated
     }
-
   };
 
   render(){{
@@ -560,6 +565,12 @@ class CaseSummary extends Component {
           </div>
           <div className={this.props.classes.bargraph} key="bargraph" id='bargraph' ref='bargraph'><svg ref="svg" preserveAspectRatio="none" viewBox="0 0 100 100" width="100%" height='100%'></svg> </div>
         {this.updateReports()}
+        <div className={this.props.classes.bglegend} key='bglegend'>
+          {this.state.catColors.map((category) => {
+            console.log('catcol',this.state.catColors)
+            return (<div className={this.props.classes.legendPair}><div className={this.props.classes.legendColor} style={{backgroundColor:category[1]}}/><Typography className={this.props.classes.legendCategory}>{category[0]} ({category[2]})</Typography></div>)
+          })}
+        </div>
         <div className={this.props.classes.keywordHead}>
           <Typography type='button' className={this.props.classes.textButton} onClick={this.handleKeywordHide}>Keyword Summary</Typography>
           <Typography type='button' onClick={this.searchRecommendations} className={this.props.classes.recButton}>get recommendations</Typography>

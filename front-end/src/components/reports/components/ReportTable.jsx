@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import {Text} from 'react-native';
 import { Link } from 'react-router-dom';
 import {
   RowDetailState, SortingState, IntegratedSorting, PagingState, IntegratedPaging,
@@ -668,17 +669,17 @@ class ReportTable extends React.PureComponent {
 
     var dummyNode = document.createElement('div');
 
-    (this.props.currentTab === 1) ? dummyNode.innerHTML = (row.row.excerpt) ? row.row.excerpt[0] : '<div>--</div>' : null;
+    (this.props.currentTab === 1) ? dummyNode.innerHTML = (row.row.excerpt) ? `<Paper>${row.row.excerpt[0]}</Paper>` : '<div>--</div>' : null;
 
     console.log("dummy " + dummyNode.innerHTML);
 
+    var content = ``;
+    var final = content + dummyNode.innerHTML;
+
+
     return (
     (this.props.currentTab === 1) ?
-        <Paper elevation={6} style={{padding: '5px'}}>
-          <div>
-            {dummyNode.innerText}
-          </div>
-        </Paper>
+       <Text>final</Text>
         :
         null
 

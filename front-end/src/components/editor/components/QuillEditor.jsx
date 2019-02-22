@@ -480,7 +480,7 @@ class QuillEditor extends Component {
                         document.getElementById('commentList').innerHTML = ``;
                     }
                 }
-                console.log("Comments after " + document.getElementById('commentList').innerHTML);
+
             }
 
 

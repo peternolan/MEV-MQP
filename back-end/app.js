@@ -883,7 +883,7 @@ app.post('/getvis', (req, res) => {
 const default_search = {
     'search_string':"",//the string the user entered
     'start':0,//the offset of the results (this is to be used for pagination)
-    'size':3,//the number of results to return
+    'size':200,//the number of results to return
 };
 
 app.post('/executeSearch', (req, res) => {

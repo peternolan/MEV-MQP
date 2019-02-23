@@ -3,10 +3,12 @@ import grey from 'material-ui/colors/grey';
 export default {
     pdfView: {
         maxWidth: '100%',
-        height: '100%',
+        height: 'calc(94vh - 122px)',
         margin: 0,
         overflow : 'auto',
         padding: 0,
+        position: 'relative',
+        display: 'block'
     },
     commentSec: {
         width: '100%',

@@ -211,12 +211,12 @@ class QuillEditor extends Component {
                                             text = text.concat(dummyNode.getElementsByTagName("comment")[i].innerText);
 
                                            if (dummyNode.getElementsByTagName("comment")[i].getAttribute('viewable').toString() === "public") {
-                                               commentLines = commentLines.concat(`<div style='left: 3px; width: 65%; border-radius: 5px; background-color: #43e8e8; position: relative; padding: 6px ' >
+                                               commentLines = commentLines.concat(`<div style='left: 3px; width: 70%; border-radius: 5px; background-color: #43e8e8; position: relative; padding: 6px ' >
                                                                                         <div style ='left: 20px'>${dummyNode.getElementsByTagName("comment")[i].innerText.replace("n$", "</br>")}</div>
                                                                                          </div>`);
                                            } else {
 
-                                               var block = `<div style='left: 3px; width: 65%; border-radius: 5px; background-color: #c5cbd6; position: relative; padding: 6px ' >
+                                               var block = `<div style='left: 3px; width: 70%; border-radius: 5px; background-color: #c5cbd6; position: relative; padding: 6px ' >
                                                                  <div style ='left: 20px'>${dummyNode.getElementsByTagName("comment")[i].innerText.replace("n$", "</br>")} </div>
                                                                  </div>`;
 
@@ -458,13 +458,13 @@ class QuillEditor extends Component {
 
                                 if (dummyNode2.getElementsByTagName("comment")[i].getAttribute('viewable').toString() === "public") {
 
-                                    commentLines = commentLines.concat(`<div style='left: 3px; width: 65%; border-radius: 5px; background-color: #43e8e8; position: relative; padding: 6px ' >
+                                    commentLines = commentLines.concat(`<div style='left: 3px; width: 70%; border-radius: 5px; background-color: #43e8e8; position: relative; padding: 6px ' >
                                                                         <div style ='left: 20px'>${dummyNode.getElementsByTagName("comment")[i].innerText.replace("n$", "</br>")} </div>
                                                                          </div>`);
                                 } else {
 
 
-                                    commentLines = commentLines.concat(`<div style='left: 3px; width: 65%; border-radius: 5px; background-color: #c5cbd6; position: relative; padding: 6px ' >
+                                    commentLines = commentLines.concat(`<div style='left: 3px; width: 70%; border-radius: 5px; background-color: #c5cbd6; position: relative; padding: 6px ' >
                                                                         <div style ='left: 20px'>${dummyNode.getElementsByTagName("comment")[i].innerText.replace("n$", "</br>")} </div>
                                                                          </div>`);
                                 }
@@ -708,7 +708,7 @@ class QuillEditor extends Component {
 
     customToolbar = () => (
 
-        <div id={`react-quill-${this.state.primaryId}`} className = {this.props.classes.toolbar} style={{ height: 'calc(7vh)', display: 'none'}}>
+        <div id={`react-quill-${this.state.primaryId}`} className = {this.props.classes.toolbar} style={{ width: '84%', height: 'calc(8vh)', display: 'none'}}>
 
             {/*
             <select defaultValue="false" className="ql-header" style={{ width: '100px', height: '36px', margin: '4px' }}>
@@ -724,10 +724,10 @@ class QuillEditor extends Component {
                 <option value="justify" />
             </select>
             */}
-            <Button className="ql-colorBackground" value={annotationColors.drug} style={{ display: 'inline-flex',
+            <Button className="ql-colorBackground" value={annotationColors.drug} style={{ display: 'inline-block',
                 alignItems: 'center',
                 justifyContent: 'center',
-                minWidth: '8%',
+                minWidth: '7%',
                 borderStyle: 'solid',
                 padding: '0px',
                 borderWidth: 1,
@@ -735,14 +735,15 @@ class QuillEditor extends Component {
                 borderRadius: 0,
                 background: annotationColors.drug,
                 top: '5px',
-                minHeight: '6px'
+                minHeight: '6%',
+                fontSize: '10px'
             }}>
                 Drug
             </Button>
-            <Button className="ql-colorBackground" value={annotationColors.reaction} style={{ display: 'inline-flex',
+            <Button className="ql-colorBackground" value={annotationColors.reaction} style={{ display: 'inline-block',
                 alignItems: 'center',
                 justifyContent: 'center',
-                minWidth: '12%',
+                minWidth: '10%',
                 borderStyle: 'solid',
                 borderWidth: 1,
                 borderColor: 'rgba(0, 0, 0, .25)',
@@ -750,13 +751,14 @@ class QuillEditor extends Component {
                 padding: '0px',
                 background: annotationColors.reaction,
                 top: '5px',
-                minHeight: '6px'}}>
+                minHeight: '6%',
+                fontSize: '10px'}}>
                 Reaction
             </Button>
-            <Button className="ql-colorBackground" value={annotationColors.dosage} style={{ display: 'inline-flex',
+            <Button className="ql-colorBackground" value={annotationColors.dosage} style={{ display: 'inline-block',
                 alignItems: 'center',
                 justifyContent: 'center',
-                minWidth: '11.15%',
+                minWidth: '10%',
                 borderStyle: 'solid',
                 borderWidth: 1,
                 borderColor: 'rgba(0, 0, 0, .25)',
@@ -764,13 +766,15 @@ class QuillEditor extends Component {
                 padding: '0px',
                 background: annotationColors.dosage,
                 top: '5px',
-                minHeight: '6px'}}>
+                minHeight: '6%',
+                fontSize: '10px'
+            }}>
                 Dosage
             </Button>
-            <Button className="ql-colorBackground" value={annotationColors.age} style={{ display: 'inline-flex',
+            <Button className="ql-colorBackground" value={annotationColors.age} style={{ display: 'inline-block',
                 alignItems: 'center',
                 justifyContent: 'center',
-                minWidth: '8%',
+                minWidth: '6%',
                 borderStyle: 'solid',
                 borderWidth: 1,
                 borderColor: 'rgba(0, 0, 0, .25)',
@@ -778,13 +782,15 @@ class QuillEditor extends Component {
                 padding: '0px',
                 background: annotationColors.age,
                 top: '5px',
-                minHeight: '6px'}}>
+                minHeight: '6%',
+                fontSize: '10px'
+            }}>
                 Age
             </Button>
-            <Button className="ql-colorBackground" value={annotationColors.sex} style={{ display: 'inline-flex',
+            <Button className="ql-colorBackground" value={annotationColors.sex} style={{ display: 'inline-block',
                 alignItems: 'center',
                 justifyContent: 'center',
-                minWidth: '11.15%',
+                minWidth: '10%',
                 borderStyle: 'solid',
                 borderWidth: 1,
                 borderColor: 'rgba(0, 0, 0, .25)',
@@ -792,23 +798,27 @@ class QuillEditor extends Component {
                 padding: '0px',
                 background: annotationColors.sex,
                 top: '5px',
-                minHeight: '6px'}}>
+                minHeight: '6%',
+                fontSize: '10px'
+            }}>
                 Gender
             </Button>
-            <Button className = "ql-colorBackground" value={annotationColors.weight} style={{display: 'inline-flex',
+            <Button className = "ql-colorBackground" value={annotationColors.weight} style={{display: 'inline-block',
                 alignItems: 'center',
                 justifyContent: 'center',
-                minWidth: '11.15%',
+                minWidth: '11%',
                 borderStyle: 'solid',
                 borderWidth: 1,
                 borderColor: 'rgba(0, 0, 0, .25)',
                 borderRadius: 0,
                 background: annotationColors.weight,
                 top: '5px',
-                minHeight: '6px'}}>
+                minHeight: '6%',
+                fontSize: '10px'
+            }}>
                 Weight
             </Button>
-            <Button className="ql-colorBackground" value={annotationColors.indication} style={{display: 'inline-flex',
+            <Button className="ql-colorBackground" value={annotationColors.indication} style={{display: 'inline-block',
                 alignItems: 'center',
                 justifyContent: 'center',
                 minWidth: '12.5%',
@@ -819,10 +829,12 @@ class QuillEditor extends Component {
                 padding: '0px',
                 background: annotationColors.indication,
                 top: '5px',
-                minHeight: '6px'}}>
+                minHeight: '6%',
+                fontSize: '10px'
+            }}>
                 Indication
             </Button>
-            <Button className= "ql-colorBackground" value={annotationColors.interesting} style={{ display: 'inline-flex',
+            <Button className= "ql-colorBackground" value={annotationColors.interesting} style={{ display: 'inline-block',
                 alignItems: 'center',
                 justifyContent: 'center',
                 minWidth: '12.5%',
@@ -833,10 +845,11 @@ class QuillEditor extends Component {
                 padding: '0px',
                 background: annotationColors.interesting,
                 top: '5px',
-                minHeight: '6px'}}>
+                minHeight: '6%',
+                fontSize: '10px'}}>
                 Interesting
             </Button>
-            <Button className="ql-colorBackground" value="" style={{ display: 'inline-flex',
+            <Button className="ql-colorBackground" value="" style={{ display: 'inline-block',
                 alignItems: 'center',
                 justifyContent: 'center',
                 minWidth: '7.5%',
@@ -846,7 +859,8 @@ class QuillEditor extends Component {
                 borderColor: 'rgba(0, 0, 0, .25)',
                 borderRadius: 0,
                 top: '5px',
-                minHeight: '6px'}}>
+                minHeight: '6%',
+                fontSize: '10px'}}>
                 Clear
             </Button>
 
@@ -861,7 +875,7 @@ class QuillEditor extends Component {
                     }}
                     style ={{ width: 'calc(10vh - 120px)', fontSize: '20pt',}}
                 >
-                    <Button style={{ padding: '0px', marginLeft: '5px', minHeight: '2px', minWidth:'2px', border: '1px solid black',
+                    <Button style={{ padding: '0px', marginLeft: '3px', minHeight: '2px', minWidth:'2px', border: '1px solid black',
                         borderRadius: '15px',  background: annotationColors.clear, bottom: '0px'}}>
                         ? </Button>
                 </MaterialTooltip>
@@ -919,12 +933,12 @@ class QuillEditor extends Component {
 
         return (
             <div className={this.props.classes.pdfView} >
-                <div className = {this.props.classes.quillArea} style = {{ display: 'inline-block', height: (this.state.commentsOn) ? 'calc(59vh - 122px)': 'calc(95vh - 122px)', overflow: 'scroll'}}>
+                <div className = {this.props.classes.quillArea} style = {{ display: 'inline-block', height: (this.state.commentsOn) ? '50%': '90%', overflow: 'scroll' }}>
                         <div className={this.props.classes.editFacet}>
                             <ul style={{listStyleType:'none'}}>
                                 <li><div onClick={this.editMode} className={this.props.classes.editBtn}><Typography type='button'>{(this.state.editModeOn) ? 'Stop Editing' : 'Edit Highlights'}</Typography></div></li>
                                 <Collapse isOpened={this.state.editModeOn}>
-                                    <li><div className={this.props.classes.editButton} onClick={this.saveWork}><Typography id = 'saveButton' type='button'>Save Highlights</Typography></div></li>
+                                    <li><div className={this.props.classes.editBtn} onClick={this.saveWork}><Typography id = 'saveButton' type='button'>Save Highlights</Typography></div></li>
                                 </Collapse>
                             </ul>
                         </div>
@@ -955,7 +969,7 @@ class QuillEditor extends Component {
                     <div className={this.props.classes.commentBtn} onClick={() => this.showComments()}>
                         <Typography type='button' className={this.props.classes.textButton}>{(this.state.commentsOn) ? 'Hide' : 'Show'} Comments</Typography>
                     </div>
-                    <Collapse isOpened={this.state.commentsOn} style = {{position: 'relative', width: '65%'}}>
+                    <Collapse isOpened={this.state.commentsOn} style = {{position: 'relative', width: '100%'}}>
                         <div className='commentContent' style = {{width: '100%'}}>
                             <div id="commentsView">
                                 <h4 style = {{left: '3px'}}>Comments</h4>
@@ -964,10 +978,10 @@ class QuillEditor extends Component {
                                 </div>
                             </div>
                             <div style={{padding: '4px'}}>
-                                <textarea id="comment" style = {{resize: 'none', width: '65%'}} rows="4">  </textarea>
+                                <textarea id="comment" style = {{resize: 'none', width: '70%'}} rows="4">  </textarea>
                             </div>
 
-                            <div style={{padding: '4px', display: 'inline-block', width: '65%'}}>
+                            <div style={{padding: '4px', display: 'inline-block', width: '70%'}}>
 
                                 <span style = {{position: 'relative', left: '5px', bottom: '4px', marginRight: '2px'}}>Public:</span>
                                 <label class = "switch">
@@ -977,8 +991,8 @@ class QuillEditor extends Component {
 
                                 </label>
 
-                                <button id="MakeNote" style={{position: 'relative', border: '2px solid #1d00ff', left: '6.25%',  width: '15%', minHeight: 'calc(5.15vh)'}}
-                                        onClick={() => this.commentMade()}> Make Note </button>
+                                <Button id="MakeNote" style={{padding: '0', position: 'relative', border: '2px solid #1d00ff', left: '6.25%',  width: '15%'}}
+                                        onClick={() => this.commentMade()}> Make Note </Button>
                                 <Button
                                     id="saveButton2"
                                     raised
@@ -998,12 +1012,10 @@ class QuillEditor extends Component {
                                         tooltip: this.props.classes.toolTipStyle,
                                         popper: this.props.classes.tooltipStyle,
                                     }}
-                                    style={{fontSize: '20pt',}}
+                                    style={{fontSize: '20pt', left: '40%', position: 'relative'}}
                                 >
                                     <Button id="delete" style={{
                                         borderRadius: '20px',
-                                        position: 'relative',
-                                        left: '47.5%',
                                         border: '1px solid red',
                                         width: '8%',
                                         height: 'calc(1.25vw)'

@@ -918,7 +918,8 @@ class QuillEditor extends Component {
                         <div className={this.props.classes.editBox} style={{width:'auto'}}>
                             <div onClick={this.editMode}><Typography align='right' type='button'>{(this.state.editModeOn) ? 'Stop Editing' : 'Edit Highlights'}</Typography></div>
                         </div>
-                        <div className={(this.state.editModeOn) ? this.props.classes.editBox : this.props.classes.noBox} onClick={this.saveWork}><Typography align='right' id ='saveButton' type='button' style={{color:(this.state.saving) ? '#1D1F83' : '#000'}}>Save Highlights</Typography></div>
+                        <div className={(this.state.editModeOn) ? this.props.classes.editBox : this.props.classes.noBox}
+                             onClick={this.saveWork}><Typography align='right' id ='saveButton' type='button' style={{color:(this.state.saving) ? '#1D1F83' : '#000', backgroundColor: '#D3D3D3'}}>Save Highlights</Typography></div>
                     </div>
 
                 {/* ====== Quill editor for Annotating the Report Text ====== */}

@@ -59,6 +59,7 @@ export default {
         overflow: 'hidden',
     },
     editBox: {
+        marginLeft: 20,
         display: 'inline-block',
         float: 'right',
         width: '8vw',

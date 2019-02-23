@@ -21,6 +21,7 @@ import {Collapse} from 'react-collapse';
  */
 class CaseSummaryListing extends React.PureComponent {
   static propTypes = {
+    setSearchLoading: PropTypes.func.isRequired,
     changeTab: PropTypes.func.isRequired,
     printSearchResults: PropTypes.func.isRequired,
     bins: PropTypes.arrayOf(PropTypes.object).isRequired,
@@ -68,6 +69,7 @@ class CaseSummaryListing extends React.PureComponent {
             </div>
             <Collapse isOpened={(this.state.expandedPanelName === bin.name) ? true : false}>
               <CaseSummary
+                setSearchLoading = {this.props.setSearchLoading}
                 changeTab = {this.props.changeTab}
                 printSearchResults = {this.props.printSearchResults}
                 caseID={bin.case_id}

@@ -94,7 +94,7 @@ class ReportList extends Component {
       searchedReports:[],
       returnedResults: [1, 2, 3],
       returnedIds: [],
-
+      searchLoading: false,
     };
     //handleCaseChangePrimary = handleCaseChangePrimary.bind(this);
   }
@@ -167,13 +167,9 @@ class ReportList extends Component {
    * Changes the first letter of any word in a string to be capital
    */
   toTitleCase = str => str.replace(/\w\S*/g, txt => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
-
-
   changeTab = (currentTab) => {
-
       if (currentTab === 1) {  // This is the searched tab
           //***************  Searched reports can be accessed */
-          console.log("Search clicked");
           this.setState({currentTab});
 
       }
@@ -181,10 +177,10 @@ class ReportList extends Component {
 
   printSearchResults = (arr1,arr2) => {
     /* propagated */
-    console.log('propagated');
     this.setState({
       returnedResults: arr1,
       returnedIds: arr2,
+      searchLoading: false,
     });
   };
 
@@ -348,6 +344,12 @@ class ReportList extends Component {
     }
   };
 
+  setSearchLoading = (bool) => {
+    this.setState({
+      searchLoading: bool,
+    });
+  }
+
   /**
    * Checks name validity of new bin and shows an error or sends a backend fetch request
    */
@@ -429,6 +431,7 @@ class ReportList extends Component {
               printSearchResults = {this.printSearchResults}
               returnedResults = {this.state.returnedResults}
               returnedIds = {this.state.returnedIds}
+              setSearchLoading = {this.setSearchLoading}
             />
           </div>
           <div key='summaryCollapse' className={this.props.classes.collapseDivider} style={{float: 'left'}} onClick={this.handleViewCaseSummary}>
@@ -454,6 +457,8 @@ class ReportList extends Component {
               currentTab={this.state.currentTab}
               returnedResults = {this.state.returnedResults}
               returnedIds = {this.state.returnedIds}
+              searchLoading = {this.state.searchLoading}
+              setSearchLoading = {this.setSearchLoading}
             />
           </div>
           <div key='reportCollapse' className={this.props.classes.collapseDivider}  onClick={this.handleHideReport}>

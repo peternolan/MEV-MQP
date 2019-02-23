@@ -22,6 +22,7 @@ import {Collapse} from 'react-collapse';
 class CaseSummary extends Component {
 
   static propTypes = {
+    setSearchLoading: PropTypes.func.isRequired,
     returnedIds: PropTypes.array.isRequired,
     returnedResults: PropTypes.array.isRequired,
     printSearchResults: PropTypes.func.isRequired,
@@ -394,8 +395,8 @@ class CaseSummary extends Component {
     var resultsArr = [];
     var resultIds  = [];
     var arr = [];
-    var done = false;
 
+    this.props.setSearchLoading(true);
     this.props.executeSearch(this.state.recommendationString)
         .then((data) => {
           results = JSON.parse(data);
@@ -458,7 +459,7 @@ class CaseSummary extends Component {
             j++;
 
           }
-        });
+    });
   }
   /* back propagate results to list */
   handleSearchResults = (array1, array2) => {

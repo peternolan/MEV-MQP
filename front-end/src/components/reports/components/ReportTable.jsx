@@ -48,6 +48,8 @@ import 'react-contexify/dist/ReactContexify.min.css';
  */
 class ReportTable extends React.PureComponent {
   static propTypes = {
+    setSearchLoading: PropTypes.func.isRequired,
+    searchLoading: PropTypes.bool.isRequired,
     returnedIds: PropTypes.array.isRequired,
     returnedResults: PropTypes.array.isRequired,
     printSearchResults: PropTypes.func.isRequired,
@@ -470,7 +472,6 @@ class ReportTable extends React.PureComponent {
 
   //EXECUTE SEARCH
   search = () => {
-
     var contents = document.getElementById('search').value;
 
     console.log('Search');
@@ -484,7 +485,7 @@ class ReportTable extends React.PureComponent {
 
     var arr = [];
     var done = false;
-
+    this.props.setSearchLoading(true);
     this.props.executeSearch(contents)
         .then((data) => {
           results = JSON.parse(data);
@@ -759,7 +760,7 @@ class ReportTable extends React.PureComponent {
             })};
           </select>
           <Paper id="table-container" className={this.props.classes.tableContainer} elevation={4}>
-            {(this.state.loadingData)
+            {(this.state.loadingData || this.props.searchLoading)
                 ? <div
                     style={{ position: 'absolute', top: '50px', left: '0px', width: '100%', height: 'calc(100% - 50px)', backgroundColor: 'rgba(25, 25, 25, 0.5)', zIndex: '10000', overflow: 'scroll' }}
                 >

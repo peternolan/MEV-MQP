@@ -69,6 +69,19 @@ export default {
             textDecorationLine: 'underline',
             cursor: 'pointer'
         },
+
+    },
+
+    saveBox: {
+        display: 'inline-block',
+        float: 'right',
+        width: '8vw',
+        transition: 'width 400ms ease-in-out',
+        cursor: 'pointer',
+        '&:hover': {
+            textDecorationLine: 'underline',
+            cursor: 'pointer'
+        },
     },
     noBox: {
         display: 'inline-block',

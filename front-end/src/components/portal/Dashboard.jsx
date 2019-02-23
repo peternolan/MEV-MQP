@@ -255,7 +255,7 @@ class Dashboard extends Component {
   render() {
     const { value } = this.state;
     return (
-      <MuiThemeProvider theme={defaultTheme} >
+      <MuiThemeProvider theme={defaultTheme}  >
         <Snackbar
           anchorOrigin={{
             vertical: 'bottom',
@@ -269,7 +269,7 @@ class Dashboard extends Component {
           }}
           message={<span id="message-id">{this.state.snackbarMessage}</span>}
         />
-        <div style={{ width: '90%', marginLeft: 'auto', marginRight: 'auto' }}>
+        <div style={{ width: '90%', marginLeft: 'auto', marginRight: 'auto'}}>
           <Modal
             aria-labelledby="simple-modal-title"
             aria-describedby="simple-modal-description"
@@ -354,7 +354,10 @@ class Dashboard extends Component {
                 {this.state.userBins.map((option, index) => {
                   if (value === index) {
                     return (
-                      <TabContainer key={index}>
+                        <div style = {{overflow: 'scroll',
+                          position: 'relative',
+                          height: 'calc(80vh - 122px)'}}>
+                      <TabContainer key={index} >
                         <div className="col-sm-12">
                           <Typography type="title" style={{ fontSize: '30px', color: '#333' }}>
                             {option}
@@ -411,11 +414,13 @@ class Dashboard extends Component {
 
                         <div className={`${this.props.classes.reportsWrapper} col-sm-12`}>
                           <div className={`${this.props.classes.paperNoPadding}`}>
-                            <UserReportTable bin={this.state.case} bins={this.state.userBins} setReportCount={this.setReportCount} />
+                            <UserReportTable bin={this.state.case} bins={this.state.userBins} setReportCount={this.setReportCount}
+                                             />
                           </div>
                         </div>
                         <div className={`${this.props.classes.clearfix}`} />
                       </TabContainer>
+                        </div>
                     );
                   }
                   return null;

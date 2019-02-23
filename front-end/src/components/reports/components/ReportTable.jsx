@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+//import {Text} from 'react-native';
 import { Link } from 'react-router-dom';
 import {
   RowDetailState, SortingState, IntegratedSorting, PagingState, IntegratedPaging,
@@ -26,41 +27,41 @@ import Snackbar from 'material-ui/Snackbar';
 import { withStyles } from 'material-ui/styles';
 import Paper from 'material-ui/Paper';
 import Button from 'material-ui/Button';
-import Switch from 'material-ui/Switch';
+import CheckBox from 'material-ui/Checkbox';
 import { CircularProgress } from 'material-ui/Progress';
 import Typography from 'material-ui/Typography';
 import { FormControlLabel } from 'material-ui/Form';
 import _ from 'lodash';
-import { moveReport, getCaseReports, getReportNarrativeFromID, getReportsInCases , setAllReports, executeSearch, getInstances, getAge} from '../../../actions/reportActions';
+import { moveReport, getCaseReports, getReportNarrativeFromID, getReportsInCases , setAllReports, executeSearch, getInstances, getAgeAndCode} from '../../../actions/reportActions';
 import QuillEditor from '../../editor/components/QuillEditor';
 import ReadCaseIcon from '../../../resources/ReadCaseIcon';
 import ClearFilterIcon from '../../../resources/RemoveFromCaseIcon';
 import CaseIcon from '../../../resources/CaseIcon';
 import TrashIcon from '../../../resources/TrashIcon';
 import styles from './ReportTableStyles';
-
+import EllipsisIcon from '../../../resources/ellipsis.svg';
+import { Menu, Item, Separator, Submenu, MenuProvider } from 'react-contexify';
+import 'react-contexify/dist/ReactContexify.min.css';
 
 /**
  * This is the component for the Report Table
  */
 class ReportTable extends React.PureComponent {
   static propTypes = {
+    setSearchLoading: PropTypes.func.isRequired,
+    searchLoading: PropTypes.bool.isRequired,
+    returnedIds: PropTypes.array.isRequired,
+    returnedResults: PropTypes.array.isRequired,
     printSearchResults: PropTypes.func.isRequired,
     changeTab: PropTypes.func.isRequired,
-    getCaseReports: PropTypes.func.isRequired,
     setAllReports: PropTypes.func.isRequired,
-      executeSearch: PropTypes.func.isRequired,
-    getAge: PropTypes.func.isRequired,
-      getInstances: PropTypes.func,
-    moveReport: PropTypes.func.isRequired,
-    getReportNarrativeFromID: PropTypes.func.isRequired,
-    getReportsInCases: PropTypes.func.isRequired,
+    executeSearch: PropTypes.func.isRequired,
     toTitleCase: PropTypes.func.isRequired,
-      primaryChosen:  PropTypes.bool,
-      supportiveChosen:  PropTypes.bool,
-      handleViewReport: PropTypes.func,
+    primaryChosen:  PropTypes.bool,
+    supportiveChosen:  PropTypes.bool,
+    handleViewReport: PropTypes.func,
     incrementSummary: PropTypes.func.isRequired,
-    summaryOpen: PropTypes.bool.isRequired,
+    reportOpen: PropTypes.bool.isRequired,
     bins: PropTypes.arrayOf(PropTypes.object).isRequired,
     filters: PropTypes.shape({
       init_fda_dt: PropTypes.object,
@@ -113,8 +114,6 @@ class ReportTable extends React.PureComponent {
       currentPage: 0,
       summaryToggleText: 'Hide',
       selected: -1,
-        returnedResults: [1, 2, 3],
-        returnedIds: [],
       item: null,
 
       /**
@@ -144,7 +143,7 @@ class ReportTable extends React.PureComponent {
         { columnName: 'outc_cod', compare: this.sortText }
       ],
     }
-      //
+    //
   }
 
   /**
@@ -153,16 +152,16 @@ class ReportTable extends React.PureComponent {
   componentWillMount() {
     if(this.props.bin !== 'searched reports'){
       this.props.getCaseReports(this.props.bin, this.props.userID)
-      .then(reports => {
-        this.props.setAllReports(reports);
+          .then(reports => {
+            this.props.setAllReports(reports);
 
 
-        this.setState({
-        data: reports,
-        allData: reports,
-        loadingData: false,
-      })
-      });
+            this.setState({
+              data: reports,
+              allData: reports,
+              loadingData: false,
+            })
+          });
     }
 
     this.updateHighlightedRows();
@@ -191,11 +190,11 @@ class ReportTable extends React.PureComponent {
   componentDidUpdate(prevProps) {
     if (prevProps.bin !== this.props.bin || !_.isEqual(this.props.filters, prevProps.filters)) {
       if(this.props.bin !== 'searched reports'){
-          this.setState({
-            loadingData: true,
-          });
-      
-          this.props.getCaseReports(this.props.bin, this.props.userID)
+        this.setState({
+          loadingData: true,
+        });
+
+        this.props.getCaseReports(this.props.bin, this.props.userID)
             .then((reports) => {
               this.props.setAllReports(reports);
               this.updateEvidenceRows();
@@ -204,7 +203,7 @@ class ReportTable extends React.PureComponent {
                 loadingData: false,
               });
               this.changeExpandedDetails([]);
-                (this.state.currentTab != 0 || this.state.currentTab != 1)
+              (this.state.currentTab != 0 || this.state.currentTab != 1)
             });
       }
       // else {
@@ -230,12 +229,12 @@ class ReportTable extends React.PureComponent {
    */
   getReportNarrative = (primaryid) => {
     this.props.getReportNarrativeFromID(primaryid)
-      .then((rows) => {
-        if (rows.length > 0) {
-          return `${rows[0].report_text}`;
-        }
-        return 'Unable to Retrieve Narrative';
-      });
+        .then((rows) => {
+          if (rows.length > 0) {
+            return `${rows[0].report_text}`;
+          }
+          return 'Unable to Retrieve Narrative';
+        });
   };
 
   handleTargetChange = (event) => {
@@ -281,33 +280,33 @@ class ReportTable extends React.PureComponent {
 
   updateHighlightedRows = () => {
     this.props.getReportsInCases(this.props.userID)
-      .then((response) => {
-        this.setState({
-          currentlyInCase: response.reduce((acc, row) => {
-            const caseNames = (acc[row.primaryid])
-              ? acc[row.primaryid].concat(row.name)
-              : [row.name];
-            return ({
-              ...acc,
-              [row.primaryid]: caseNames,
-            });
-          }, {}),
+        .then((response) => {
+          this.setState({
+            currentlyInCase: response.reduce((acc, row) => {
+              const caseNames = (acc[row.primaryid])
+                  ? acc[row.primaryid].concat(row.name)
+                  : [row.name];
+              return ({
+                ...acc,
+                [row.primaryid]: caseNames,
+              });
+            }, {}),
+          });
         });
-      });
   };
 
   updateEvidenceRows = () => {
     if (this.props.bin !== 'searched reports') {
       this.props.getReportsInCases(this.props.userID)
-        .then((response) => {
-          this.setState({
-            evidenceType: response.filter(row => row.name.toLowerCase() === this.props.bin.toLowerCase())
-              .reduce((acc, row) => ({
-                ...acc,
-                [row.primaryid]: row.type,
-              }), {}),
+          .then((response) => {
+            this.setState({
+              evidenceType: response.filter(row => row.name.toLowerCase() === this.props.bin.toLowerCase())
+                  .reduce((acc, row) => ({
+                    ...acc,
+                    [row.primaryid]: row.type,
+                  }), {}),
+            });
           });
-        });
     } else {
       this.setState({
         evidenceType: [],
@@ -352,28 +351,28 @@ class ReportTable extends React.PureComponent {
    */
   handleMoveReport = (primaryid, fromBin, toBin, type) => {
     this.props.moveReport(primaryid, fromBin, toBin, this.props.userID, type ? 'primary' : 'supportive')
-      .then(() => {
-        if (toBin === 'trash' || toBin === 'all reports') {
+        .then(() => {
+          if (toBin === 'trash' || toBin === 'all reports') {
+            this.setState({
+              loadingData: true,
+              keepTableWhileLoading: true,
+            });
+            this.props.getCaseReports(this.props.bin, this.props.userID)
+                .then(reports => this.setState({
+                  data: reports,
+                  loadingData: false,
+                  keepTableWhileLoading: false,
+                }));
+          } else {
+            this.updateHighlightedRows();
+            this.updateEvidenceRows();
+          }
+          this.updateSummary();
           this.setState({
-            loadingData: true,
-            keepTableWhileLoading: true,
+            snackbarOpen: true,
+            snackbarMessage: `Report ${primaryid} Moved to ${this.props.toTitleCase(toBin)}`,
           });
-          this.props.getCaseReports(this.props.bin, this.props.userID)
-            .then(reports => this.setState({
-              data: reports,
-              loadingData: false,
-              keepTableWhileLoading: false,
-            }));
-        } else {
-          this.updateHighlightedRows();
-          this.updateEvidenceRows();
-        }
-        this.updateSummary();
-        this.setState({
-          snackbarOpen: true,
-          snackbarMessage: `Report ${primaryid} Moved to ${this.props.toTitleCase(toBin)}`,
         });
-      });
     if (toBin === 'trash' || toBin === 'all reports') {
       const newExpandedRows = this.state.expandedRows;
       newExpandedRows.splice(this.state.expandedRows.indexOf(primaryid.toString()), 1);
@@ -403,16 +402,10 @@ class ReportTable extends React.PureComponent {
 
 
   reportToPanel = ( id ) => {
-
-
-
-    this.setState({selected: id}, function() {
-
-
+    console.log('Report to Panel ' + id);
+    this.setState({selected: id,}, function() {
       this.props.handleViewReport(id);
     });
-
-
   }
 
 
@@ -435,10 +428,11 @@ class ReportTable extends React.PureComponent {
 
     let incase;
     //NEED TO PUT IT IN HERE
-      let evidenceType;
+    let evidenceType;
     let backgroundColor;
 
     switch (this.props.bin) {
+      case 'searched reports':
       case 'all reports':
         incase = this.state.currentlyInCase[props.tableRow.rowId];
 
@@ -453,7 +447,7 @@ class ReportTable extends React.PureComponent {
       case 'read':
         backgroundColor = '';
         break;
-        default:
+      default:
         evidenceType = this.state.evidenceType[props.tableRow.rowId];
         backgroundColor = (evidenceType === 'primary') ? ((this.props.primaryChosen === true) ? 'rgba(255, 0, 255, 0.25)' : this.COLORS.primary)
             : ((this.props.supportiveChosen === true) ? 'rgba(255, 0, 255, 0.25)' : this.COLORS.supportive );
@@ -461,18 +455,15 @@ class ReportTable extends React.PureComponent {
     }
 
     return (
-
         <Table.Row
             {...props}
             style={{
               backgroundColor: (props.tableRow.rowId === this.state.selected) ? '#dbf0ff' : backgroundColor,
               height:45,
               cursor:'pointer'
-
             }}
             onClick = {() => this.reportToPanel(props.tableRow.rowId)}
         />
-
     );
   };
 
@@ -481,7 +472,6 @@ class ReportTable extends React.PureComponent {
 
   //EXECUTE SEARCH
   search = () => {
-
     var contents = document.getElementById('search').value;
 
     console.log('Search');
@@ -495,7 +485,7 @@ class ReportTable extends React.PureComponent {
 
     var arr = [];
     var done = false;
-
+    this.props.setSearchLoading(true);
     this.props.executeSearch(contents)
         .then((data) => {
           results = JSON.parse(data);
@@ -503,7 +493,6 @@ class ReportTable extends React.PureComponent {
           var j = 0;
 
           var allGood = true;
-          console.log(results.results);
 
           while (results.results[j] && allGood) {
             if (Number.isInteger(Number(j))) {
@@ -518,18 +507,11 @@ class ReportTable extends React.PureComponent {
 
             var item = arr;
             var i = 0;
-            this.props.getAge(arr[j].id).then((rows) => {
+            this.props.getAgeAndCode(arr[j].id).then((rows) => {
 
               if (rows.length > 0) {
-
-
-                var age;
-                var code;
-
-                age = rows[0].age_year;
-                code = rows[0].outc_cod[0];
-
-
+                var age = rows[0].age_year;
+                var code = rows[0].outc_cod[0];
                 if (!age) {
                   age = "--";
                 }
@@ -538,7 +520,7 @@ class ReportTable extends React.PureComponent {
                 }
 
                 resultsArr.push({
-                  id: item[i].id,
+                  primaryid: item[i].id,
                   drugname: item[i].drugname,
                   sex: item[i].sex,
                   me_type: item[i].error,
@@ -564,26 +546,18 @@ class ReportTable extends React.PureComponent {
   };
 
   handleSearchResults = (array1, array2) => {
-
-    console.log("handle Search");
-
-    this.props.printSearchResults(array1);
-
-
-    this.setState({returnedResults : array1, returnedIds: array2});
-
-
+    console.log('handling')
+    this.props.printSearchResults(array1,array2);
     this.props.changeTab(1);
   };
 
   handleToggleChange = primaryid => (event, checked) => {
-
     if (!(this.props.bin === 'all reports' || this.props.bin === 'read' || this.props.bin === 'trash')) {
       this.handleMoveReport(
-        primaryid,
-        '',
-        this.props.bin,
-        checked,
+          primaryid,
+          '',
+          this.props.bin,
+          checked,
       );
     } else {
       this.setState({ [primaryid]: checked });
@@ -591,295 +565,260 @@ class ReportTable extends React.PureComponent {
   };
 
   renderMoveToIcon = (binName, greyOutCaseIcon) => {
+    var sideL = 30;
     switch (binName) {
       case 'Trash':
         return (
-          <div>
-            <TrashIcon />
-            <Typography style={{ display: 'block' }} type="subheading">
-              {binName}
-            </Typography>
-          </div>
+            <div className={this.props.classes.moveToPair}>
+              <TrashIcon  width={sideL} height={sideL}/>
+              <Typography type="subheading" style={{ marginLeft: 15 }}>
+                {binName}
+              </Typography>
+            </div>
         );
       case 'Read':
         return (
-          <div>
-            {(greyOutCaseIcon)
-              ? <ReadCaseIcon width={45} height={45} style={{ filter: 'hue-rotate(270deg)' }} />
-              : <ReadCaseIcon width={45} height={45} />}
-            <Typography style={{ display: 'block' }} type="subheading">
-              {binName}
-            </Typography>
-          </div>
+            <div className={this.props.classes.moveToPair}>
+              {(greyOutCaseIcon)
+                  ? <ReadCaseIcon width={sideL} height={sideL} style={{ filter: 'hue-rotate(270deg)' }} />
+                  : <ReadCaseIcon width={sideL} height={sideL} />}
+              <Typography type="subheading" style={{ marginLeft: 15 }}>
+                {binName}
+              </Typography>
+            </div>
         );
       case 'All Reports':
         return (
-          <div>
-            <ClearFilterIcon />
-            <Typography style={{ display: 'block' }} type="subheading">
-              Remove From Case
-            </Typography>
-          </div>
+            <div className={this.props.classes.moveToPair}>
+              <ClearFilterIcon width={sideL} height={sideL} />
+              <Typography style={{ marginLeft: 15 }} type="subheading">
+                Remove From Case
+              </Typography>
+            </div>
         );
       default:
         return (
-          <div>
-            {(greyOutCaseIcon)
-              ? <CaseIcon width={45} height={45} style={{ filter: 'hue-rotate(270deg)' }} />
-              : <CaseIcon width={45} height={45} />}
-            <Typography style={{ display: 'block' }} type="subheading">
-              {binName}
-            </Typography>
-          </div>
+            <div className={this.props.classes.moveToPair}>
+              {(greyOutCaseIcon)
+                  ? <CaseIcon width={sideL} height={sideL} style={{ filter: 'hue-rotate(270deg)' }} />
+                  : <CaseIcon width={sideL} height={sideL} />}
+              <Typography type="subheading" style={{ marginLeft: 15 }}>
+                {binName}
+              </Typography>
+            </div>
         );
     }
   };
 
   renderTypeToggle = (row) => {
-
-    return (this.props.bin === 'all reports' || this.props.bin === 'read' || this.props.bin === 'trash')
-      ? (
+    return (
         <MaterialTooltip
-          title="This toggle does not update this report inside you're cases. You must re-add this report to a case for your change to appear"
-          placement="top"
-          enterDelay={50}
-          classes={{
-            tooltip: this.props.classes.tooltipStyle,
-            popper: this.props.classes.tooltipStyle,
-          }}
+            title="This updates the evidence type for this report in only this case"
+            placement="top"
+            enterDelay={50}
+            classes={{
+              tooltip: this.props.classes.tooltipStyle,
+              popper: this.props.classes.tooltipStyle,
+            }}
         >
           <FormControlLabel
-            control={
-              <Switch
-                checked={this.state[row.row.primaryid]}
-                onChange={this.handleToggleChange(row.row.primaryid)}
-                color = "primary"
-              />
-            }
-            label={this.state[row.row.primaryid] ? 'Primary Evidence' : 'Supportive Evidence'}
+              style={{height:35}}
+              control={
+                <CheckBox
+                    style={{height:35}}
+                    checked={this.state.evidenceType[row.row.primaryid] === 'primary'}
+                    onChange={this.handleToggleChange(row.row.primaryid)}
+                    color="primary"
+                />
+              }
+              label='Primary Evidence'
           />
         </MaterialTooltip>
-      )
-      : (
-        <MaterialTooltip
-          title="This updates the evidence type for this report in only this case"
-          placement="top"
-          enterDelay={50}
-          classes={{
-            tooltip: this.props.classes.tooltipStyle,
-            popper: this.props.classes.tooltipStyle,
-          }}
-        >
-          <FormControlLabel
-            control={
-              <Switch
-                checked={this.state.evidenceType[row.row.primaryid] === 'primary'}
-                onChange={this.handleToggleChange(row.row.primaryid)}
-                color="primary"
-              />
-            }
-            label={(this.state.evidenceType[row.row.primaryid] === 'primary') ? 'Primary Evidence' : 'Supportive Evidence'}
-          />
-        </MaterialTooltip>
-      );
-  };
+    );
+  }
+  /* Prevents a parent event from being inherited by the child */
+  blockParent = e => {
+    e.stopPropagation();
+  }
 
 
-
-    /**
+  /**
    * Defines the html content inside each expandable dropdown area for each row
    * of the table
    */
   renderDetailRowContent = row => {
-      var text = '';
-
-
-    console.log(this.props.currentTab === 1);
-    let incase;
-    let evidenceType;
-    let backgroundColor;
-
-    switch (this.props.bin) {
-      case 'all reports':
-        incase = this.state.currentlyInCase[row.row.id];
-
-        if (!incase) {
-          backgroundColor = '';
-        } else {
-          backgroundColor = (incase.includes('read') && incase.length === 1) ? 'RGBA(255,0,255, 0.2)' : 'RGBA(131, 255, 168, 0.2)';
-
-        }
-        break;
-      case 'trash':
-      case 'read':
-        backgroundColor = '';
-        break;
-      default:
-        evidenceType = this.state.evidenceType[row.row.id];
-        backgroundColor = (evidenceType === 'primary') ? ((this.props.primaryChosen === true) ? 'rgba(255, 0, 255, 0.25)' : this.COLORS.primary)
-            : ((this.props.supportiveChosen === true) ? 'rgba(255, 0, 255, 0.25)' : this.COLORS.supportive );
-
-    }
-
-    (this.props.currentTab === 1) ?
-        text = this.state.returnedResults.find(function (element) {
-          return element.id === row.row.id;
-        })
-
-        :
-        null;
 
     var dummyNode = document.createElement('div');
 
+    (this.props.currentTab === 1) ? dummyNode.innerHTML = (row.row.excerpt) ? row.row.excerpt[0] + row.row.excerpt[1] : '<div>--</div>' : null;
 
-    (this.props.currentTab === 1) ? dummyNode.innerHTML = row.row.excerpt[0] : null;
+    var content = ``;
+    var final = content + dummyNode.innerText;
 
-
-      return (
-
-          (this.props.currentTab.toString() != 1) ?
-              <div onClick={this.props.handleViewReport(row.row.primaryid)}>
-                  <div className="col-sm-3" style={{marginBottom: '1px'}}>
-                      <Paper elevation={6} style={{padding: '1px'}}>
-                          <div className="col-sm-12">
-                              {this.renderTypeToggle(row)}
-                          </div>
-                      </Paper>
-                  </div>
-                  <div className={`${this.props.classes.sendToCaseContainer} col-sm-9`}>
-                      <Paper elevation={6}>
-                          <div className="col-sm-12" style={{padding: '5px 10px'}}>
-                              <Typography style={{fontSize: '14px'}} type="button">
-                                  Add Report to Case:
-                              </Typography>
-                          </div>
-                          <div className={this.props.classes.moveToCaseDetailsContainer}>
-                              {this.props.bins.map((bin, index) => (
-                                  (this.props.bin.toLowerCase() !== bin.name.toLowerCase())
-                                      ? (
-                                          <MaterialTooltip
-                                              key={bin.name}
-                                              title={(bin.name.toLowerCase() === 'trash') ? 'HERE IT IS Warning: Adding this report to the Trash also removes the report from any other cases it is in' : 'Adds this report to this case'}
-                                              placement="top"
-                                              enterDelay={50}
-                                              classes={{
-                                                  tooltip: this.props.classes.tooltipStyle,
-                                                  popper: this.props.classes.tooltipStyle,
-                                              }}
-                                          >
-                                              <Button
-                                                  flat="true"
-                                                  key={bin.case_id}
-                                                  className={this.props.classes.caseGridList}
-                                                  onClick={() => {
-                                                      this.handleMoveReport(
-                                                          row.row.primaryid,
-                                                          this.props.bin,
-                                                          this.props.bins[index].name.toLowerCase(),
-                                                          this.state[row.row.primaryid],
-                                                      );
-                                                  }}
-                                              >
-                                                  {(this.state.currentlyInCase[row.row.primaryid]
-                                                      && this.state.currentlyInCase[row.row.primaryid].includes(bin.name.toLowerCase()))
-                                                      ? this.renderMoveToIcon(bin.name, true)
-                                                      : this.renderMoveToIcon(bin.name)}
-                                              </Button>
-                                          </MaterialTooltip>
-                                      )
-                                      : null
-                              ))}
-                          </div>
-                      </Paper>
-                  </div>
-              </div>
-              :
-              <Paper elevation={6} style={{padding: '5px', backgroundColor}}>
-                <div> {/*JSON.stringify(text.body_highlights[0].toString())*/}
-                  {dummyNode.innerText}
-                </div>
-              </Paper>
-      )
-  };
-
-
-  render() {
-
-    //console.log("Hello World " + this.state.data[0].primaryId);
 
     return (
-      <div id='table-wrapper' className={this.props.classes.tableWrapper}>
-      <input id='search' type='text' className={this.props.classes.searchBar} placeholder="Search through reports..." onKeyDown={(e) => {if(e.key === 'Enter'){this.search()}}} />
-      <select value={this.state.searchTarget} onChange={this.handleTargetChange} className={this.props.classes.searchDD}>
-        {this.props.bins.map((bin) => {
-          switch(bin.name){
-            case 'Trash':
-            case 'Read':
-            return null;
-            default:
-              return(
-                <option value={bin.name} key={bin.name}>{bin.name}</option>
-              );
-          }
-        })};
-      </select>
-      <Paper id="table-container" className={this.props.classes.tableContainer} elevation={4}>
-        {(this.state.loadingData)
-          ? <div
-              style={{ position: 'absolute', top: '50px', left: '0px', width: '100%', height: 'calc(100% - 50px)', backgroundColor: 'rgba(25, 25, 25, 0.5)', zIndex: '10000', overflow: 'scroll' }}
-            >
-              <div style={{ width: 'fit-content', position: 'absolute', top: '50%', left: '50%', transform: 'translateY(-50%) translateX(-50%)' }}> 
-                <CircularProgress size={300} />
-              </div>
-            </div>
-          : null}
-          {(this.state.tableHeight !== 0 && this.state.stillResizingTimer === '' && (!this.state.loadingData || this.state.keepTableWhileLoading))
-            ? (
+    (this.props.currentTab === 1) ?
+        <Paper elevation={6} style={{padding: '5px'}}>
+          <div>
+            {dummyNode.innerText}
+          </div>
+        </Paper>
+        :
+        null
 
-              <Grid
-                rows={(Number(this.props.currentTab) === 1) ? this.state.returnedResults : this.state.data}
-                columns={this.columns}
-                getRowId={(Number(this.props.currentTab) === 1) ? row => row.id : row => row.primaryid }
-              >
-                <RowDetailState
-                  expandedRows={(Number(this.props.currentTab) === 1) ? this.state.returnedIds : this.state.expandedRows}
-                />
-                <DragDropProvider />
-                <SortingState
-                  defaultSorting={[
-                    { columnName: 'Event Date', direction: 'asc' },
-                  ]}
-                />
-                <PagingState
-                  currentPage={this.state.currentPage}
-                  onCurrentPageChange={this.changeCurrentPage}
-                  pageSize={this.state.pageSize}
-                  onPageSizeChange={this.changePageSize}
-                />
-                <IntegratedSorting
-                  columnExtensions={this.state.customSorting}
-                />
-                <IntegratedPaging />
+    )
 
-                <Table rowComponent={this.TableRow} height={this.state.tableHeight} />
 
-                <PagingPanel/>
-                <TableColumnResizing
-                  columnWidths={this.state.widths}
-                  onColumnWidthsChange={this.onColumnWidthsChange}
-                />
-                <TableHeaderRow showSortingControls className="tableHeader"/>
-                <TableColumnReordering defaultOrder={this.columns.map(column => column.name)} />
-                <TableRowDetail
-                  contentComponent={this.renderDetailRowContent}
-                />
-              </Grid>
-            )
-            : null
-        }
-        {/* ====== Snackbar for Notificaitons to the User ====== */}
-      </Paper>
-      </div>
+  }
+
+
+
+  /* Our more options menu */
+  toggleCell = row => {
+
+    return (
+        <div onClick={this.blockParent} className={this.props.classes.ellipsisFrame}>
+
+          <MenuProvider id={row.row.primaryid} event='onClick'>
+            <img src={EllipsisIcon} alt='More Options'/>
+          </MenuProvider>
+          <Menu id={row.row.primaryid}>
+            {(this.props.bin === 'all reports' || this.props.bin === 'read' || this.props.bin === 'trash')
+                ? null : <Item>{this.renderTypeToggle(row)}</Item>}
+            {/* Non-Case Move Tos */}
+            {this.props.bins.map((bin, index) => (
+                /* We only want cases */
+                (this.props.bin.toLowerCase() !== bin.name.toLowerCase() && (bin.name.toLowerCase() === 'read' || bin.name.toLowerCase() === 'trash'))
+                    ? ( /* New item container for the move prompts*/
+                        <Item
+                            key={bin.case_id + ' ' + bin.name}
+                            onClick={() => {
+                              this.handleMoveReport(
+                                  row.row.primaryid,
+                                  this.props.bin,
+                                  this.props.bins[index].name.toLowerCase(),
+                                  this.state[row.row.primaryid],
+                              );
+                            }}
+                        >
+                          {
+                            /* Fill with move to icons */
+                            (this.state.currentlyInCase[row.row.primaryid]
+                                && this.state.currentlyInCase[row.row.primaryid].includes(bin.name.toLowerCase()))
+                                ? this.renderMoveToIcon(bin.name, true)
+                                : this.renderMoveToIcon(bin.name)}
+                        </Item>
+                    )
+                    : null
+            ))}
+            {/* Generate submenu */}
+            <Submenu label='Add to a case:'>
+              {this.props.bins.map((bin, index) => (
+                  /* We only want cases */
+                  (this.props.bin.toLowerCase() !== bin.name.toLowerCase() && bin.name.toLowerCase() !== 'read' && bin.name.toLowerCase() !== 'trash')
+                      ? ( /* New item container for the move prompts*/
+                          <Item
+                              key={bin.case_id + ' ' + bin.name}
+                              onClick={() => {
+                                this.handleMoveReport(
+                                    row.row.primaryid,
+                                    this.props.bin,
+                                    this.props.bins[index].name.toLowerCase(),
+                                    this.state[row.row.primaryid],
+                                );
+                              }}
+                          >
+                            { /* Fill with move to icons */
+                              (this.state.currentlyInCase[row.row.primaryid]
+                                  && this.state.currentlyInCase[row.row.primaryid].includes(bin.name.toLowerCase()))
+                                  ? this.renderMoveToIcon(bin.name, true)
+                                  : this.renderMoveToIcon(bin.name)}
+                          </Item>
+                      )
+                      : null
+              ))}
+            </Submenu>
+          </Menu>
+        </div>
+    );
+  }
+  render() {
+    return (
+        <div id='table-wrapper' className={this.props.classes.tableWrapper}>
+          <input id='search' type='text' className={this.props.classes.searchBar} placeholder="Search through reports..." onKeyDown={(e) => {if(e.key === 'Enter'){this.search()}}} />
+          <select value={this.state.searchTarget} onChange={this.handleTargetChange} className={this.props.classes.searchDD}>
+            {this.props.bins.map((bin) => {
+              switch(bin.name){
+                case 'Trash':
+                case 'Read':
+                  return null;
+                default:
+                  return(
+                      <option value={bin.name} key={bin.name}>{bin.name}</option>
+                  );
+              }
+            })};
+          </select>
+          <Paper id="table-container" className={this.props.classes.tableContainer} elevation={4}>
+            {(this.state.loadingData || this.props.searchLoading)
+                ? <div
+                    style={{ position: 'absolute', top: '50px', left: '0px', width: '100%', height: 'calc(100% - 50px)', backgroundColor: 'rgba(25, 25, 25, 0.5)', zIndex: '10000', overflow: 'scroll' }}
+                >
+                  <div style={{ width: 'fit-content', position: 'absolute', top: '50%', left: '50%', transform: 'translateY(-50%) translateX(-50%)' }}>
+                    <CircularProgress size={300} />
+                  </div>
+                </div>
+                : null}
+            {(this.state.tableHeight !== 0 && this.state.stillResizingTimer === '' && (!this.state.loadingData || this.state.keepTableWhileLoading))
+                ? (
+
+                    <Grid
+                        rows={(this.props.currentTab === 1) ? this.props.returnedResults : this.state.data}
+                        columns={this.columns}
+                        getRowId={(this.props.currentTab === 1) ? row => row.primaryid: row => row.primaryid }
+                    >
+                      <RowDetailState
+                          expandedRows={(this.props.currentTab === 1) ? this.props.returnedIds : this.state.expandedRows}
+                          onExpandedRowsChange={this.changeExpandedDetails}
+                      />
+                      <DragDropProvider />
+                      <SortingState
+                          defaultSorting={[
+                            { columnName: 'Event Date', direction: 'asc' },
+                          ]}
+                      />
+                      <PagingState
+                          currentPage={this.state.currentPage}
+                          onCurrentPageChange={this.changeCurrentPage}
+                          pageSize={this.state.pageSize}
+                          onPageSizeChange={this.changePageSize}
+                      />
+                      <IntegratedSorting
+                          columnExtensions={this.state.customSorting}
+                      />
+                      <IntegratedPaging />
+
+                      <Table rowComponent={this.TableRow} height={this.state.tableHeight} />
+
+                      <PagingPanel/>
+                      <TableColumnResizing
+                          columnWidths={this.state.widths}
+                          onColumnWidthsChange={this.onColumnWidthsChange}
+                      />
+                      <TableHeaderRow showSortingControls className="tableHeader"/>
+                      <TableColumnReordering defaultOrder={this.columns.map(column => column.name)} />
+
+                      <TableRowDetail
+                          toggleCellComponent = {this.toggleCell}
+                          contentComponent =  {this.renderDetailRowContent}
+                      />
+                    </Grid>
+                )
+                : null
+            }
+            {/* ====== Snackbar for Notificaitons to the User ====== */}
+          </Paper>
+        </div>
     );
   }
 }
@@ -897,15 +836,15 @@ const mapStateToProps = state => ({
  * Exports this component with the proper JSS styles.
  */
 export default connect(
-  mapStateToProps,
-  {
-    moveReport,
-    getCaseReports,
+    mapStateToProps,
+    {
+      moveReport,
+      getCaseReports,
       executeSearch,
-    setAllReports,
-    getReportNarrativeFromID,
-    getReportsInCases,
+      setAllReports,
+      getReportNarrativeFromID,
+      getReportsInCases,
       getInstances,
-    getAge
-  },
+      getAgeAndCode
+    },
 )(withStyles(styles)(ReportTable));

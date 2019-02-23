@@ -3,10 +3,12 @@ import grey from 'material-ui/colors/grey';
 export default {
     pdfView: {
         maxWidth: '100%',
-        height: 'auto',
+        height: 'calc(94vh - 122px)',
         margin: 0,
-        overflow : 'hidden',
+        overflow : 'auto',
         padding: 0,
+        position: 'relative',
+        display: 'block'
     },
     commentSec: {
         width: '100%',
@@ -21,7 +23,7 @@ export default {
         width: '100%',
         margin: 0,
         overflow: 'hidden',
-        zIndex: '-1',
+        zIndex: 1,
         borderColor:'white'
     },
 
@@ -37,8 +39,6 @@ export default {
     },
     editBtn: {
         fontSize: 12,
-        float: 'right',
-        display: 'flex',
         padding: 3,
         color: '#1D1F83',
         cursor: 'pointer',
@@ -50,20 +50,28 @@ export default {
         },
     },
     /* Container for the edit and save buttons */
-    editSpecific: {
-        float: 'right',
-        //display: 'inline-block',
-        width: 'auto',
-        height: 20,
-        transition: 'width 200ms ease-in-out',
-    },
-    editSpecOff: {
-        float: 'right',
-        height: 20,
-        //display: 'inline-block',
-        width: 0,
-        transition: 'width 200ms ease-in-out',
+    editFacet: {
+        display: 'inline-block',
+        width: '100%',
+        maxHeight: 20,
+        padding: 5,
+        fontSize: 12,
+        color: '#1D1F83',
         overflow: 'hidden',
+    },
+    editBox: {
+        marginLeft: 20,
+        display: 'inline-block',
+        float: 'right',
+        width: '8vw',
+        transition: 'width 400ms ease-in-out',
+    },
+    noBox: {
+        display: 'inline-block',
+        float: 'right',
+        width: 0,
+        overflow: 'hidden',
+        transition: 'width 400ms ease-in-out',
     },
     /* Container for the legend */
     legend: {
@@ -145,5 +153,12 @@ export default {
         '&:hover':{
             backgroundColor: '#dbf0ff'
         }        
+    },
+
+    toolbar: {
+        top: 0,
+        zIndex: 4,
+        position: 'sticky',
+        backgroundColor: '#fff',
     }
 };

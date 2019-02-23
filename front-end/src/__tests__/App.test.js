@@ -59,78 +59,38 @@ ReactDOM.render(
       <ConnectedRouter history={history}>
         <div class="page">
           {/* <TopNavigation showFilters={test}/> */}
-          <Route exact path="/" component={(props) => {
-              return (
-                <div>
-                  <TopNavigation showFilters={false}/>
-                  <Login { ...props } />
-                </div>
-              );
+          <Route exact path="/" render={(props) => {
+              return (<Login { ...props } />);
             }}
           />
-          <Route path="/visualization" component={(props) => {
-
-              return (
-                <div>
-                  <TopNavigation showFilters={true}/>
-                  <App { ...props } />
-                </div>
-              );
+          <Route path="/visualization" render={(props) => {
+              mount(<App { ...props } />, document.createElement('div'));
+              return (<App { ...props } />);
             }}
           />
-          <Route path="/report" component={(props) => {
-
-              return (
-                <div>
-                  <TopNavigation showFilters={true}/>
-                  <ReportList { ...props } />
-                </div>
-              );
+          <Route path="/report" render={(props) => {
+              return (<ReportList { ...props } />);
             }}
           />
-          <Route path="/help" component={(props) => {
-              return (
-                <div>
-                  <TopNavigation showFilters={false}/>
-                  <Help { ...props } />
-                </div>
-              );
+          <Route path="/help" render={(props) => {
+              return (<Help { ...props } />);
             }}
           />
-          <Route path="/about" component={(props) => {
-              return (
-                <div>
-                  <TopNavigation showFilters={false}/>
-                  <About { ...props } />
-                </div>
-              );
+          <Route path="/about" render={(props) => {
+              return (<About { ...props } />);
             }}
           />
-          <Route path="/dashboard" component={(props) => {
-              return (
-                <div>
-                  <TopNavigation showFilters={false}/>
-                  <Dashboard { ...props } />
-                </div>
-              );
+          <Route path="/dashboard" render={(props) => {
+              return (<Dashboard { ...props } />);
             }}
           />
-          <Route path="/pdf/:id?" component={(props) => {
-              return (
-                <div>
-                  <TopNavigation showFilters={false}/>
-                  <NarrativeAnnotator { ...props } />
-                </div>
-              );
+          <Route path="/pdf/:id?" render={(props) => {
+              return (<NarrativeAnnotator { ...props } />);
             }}
           />
-          <Route path="/case/:id?" component={(props) => {
-              return (
-                <div>
-                  <TopNavigation showFilters={false}/>
-                  <CaseSummary { ...props } />
-                </div>
-              );
+          <Route path="/case/:id?" render={(props) => {
+          	  mount(<CaseSummary { ...props } />, document.createElement('div'));
+              return (<CaseSummary { ...props } />);
             }}
           />
         </div>

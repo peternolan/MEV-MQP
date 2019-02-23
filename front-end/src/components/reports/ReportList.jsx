@@ -58,7 +58,7 @@ class ReportList extends Component {
     userID: PropTypes.number.isRequired,
     userEmail: PropTypes.string,
     isLoggedIn: PropTypes.bool.isRequired,
-      getCountData: PropTypes.func.isRequired,
+    getCountData: PropTypes.func.isRequired,
     classes: PropTypes.shape({
       newCaseArea: PropTypes.string,
       goToVisualizationSVG: PropTypes.string,
@@ -93,7 +93,8 @@ class ReportList extends Component {
       summaryCounter: 0,
       searchedReports:[],
       returnedResults: [1, 2, 3],
-
+      returnedIds: [],
+      searchLoading: false,
     };
     //handleCaseChangePrimary = handleCaseChangePrimary.bind(this);
   }
@@ -166,25 +167,22 @@ class ReportList extends Component {
    * Changes the first letter of any word in a string to be capital
    */
   toTitleCase = str => str.replace(/\w\S*/g, txt => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
-
-
   changeTab = (currentTab) => {
-
       if (currentTab === 1) {  // This is the searched tab
           //***************  Searched reports can be accessed */
-          console.log("Search clicked");
           this.setState({currentTab});
 
       }
   };
 
-  printSearchResults = (array) => {
-      console.log('print');
-      console.log(array);
-        this.setState({returnedResults: array}, () => {console.log(this.state.returnedResults)});
-
-
-    };
+  printSearchResults = (arr1,arr2) => {
+    /* propagated */
+    this.setState({
+      returnedResults: arr1,
+      returnedIds: arr2,
+      searchLoading: false,
+    });
+  };
 
 
 
@@ -346,6 +344,12 @@ class ReportList extends Component {
     }
   };
 
+  setSearchLoading = (bool) => {
+    this.setState({
+      searchLoading: bool,
+    });
+  }
+
   /**
    * Checks name validity of new bin and shows an error or sends a backend fetch request
    */
@@ -423,6 +427,11 @@ class ReportList extends Component {
               summaryOpen={this.state.summaryOpen}
               summaryCounter={this.state.summaryCounter}
               handleClickPieChart={this.handleCaseChangePrimary}
+              changeTab = {this.changeTab}
+              printSearchResults = {this.printSearchResults}
+              returnedResults = {this.state.returnedResults}
+              returnedIds = {this.state.returnedIds}
+              setSearchLoading = {this.setSearchLoading}
             />
           </div>
           <div key='summaryCollapse' className={this.props.classes.collapseDivider} style={{float: 'left'}} onClick={this.handleViewCaseSummary}>
@@ -431,6 +440,7 @@ class ReportList extends Component {
           {/* ====== Table for Viewing the table of reports ====== */}
           <div key='reporttable' className={this.props.classes.tableContainer} >
             <ReportTable
+              reportPanel = {this.state.reportOpen}
               bin={this.state.bin}
               padding = '0px'
               bins={this.state.userBins}
@@ -446,7 +456,9 @@ class ReportList extends Component {
               printSearchResults = {this.printSearchResults}
               currentTab={this.state.currentTab}
               returnedResults = {this.state.returnedResults}
-
+              returnedIds = {this.state.returnedIds}
+              searchLoading = {this.state.searchLoading}
+              setSearchLoading = {this.setSearchLoading}
             />
           </div>
           <div key='reportCollapse' className={this.props.classes.collapseDivider}  onClick={this.handleHideReport}>

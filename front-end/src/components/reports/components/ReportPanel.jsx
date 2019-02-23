@@ -41,6 +41,7 @@ class ReportPanel extends React.PureComponent {
     static defaultProps = {
         match: {},
         primaryid: null,
+        commentsOn: false,
         incrementSummary: () => {},
     };
 
@@ -88,6 +89,8 @@ class ReportPanel extends React.PureComponent {
         // this.autosave = setInterval(() => this.saveWork(), 10000);
     }
 
+
+
     componentWillUnmount() {
         window.removeEventListener('beforeunload', this.onUnload);
         // clearInterval(this.autosave);
@@ -134,22 +137,34 @@ class ReportPanel extends React.PureComponent {
     handleHideSummary = () => {
         this.setState({summaryShown: !this.state.summaryShown})
     };
-
+    commentOnHandler = (setting) => {
+        console.log("CommentsOn");
+        if (setting == null) {
+            if (this.state.commentsOn) {
+                this.setState({commentsOn: false});
+            } else {
+                this.setState({commentsOn: true});
+            }
+        }
+        else {
+            this.setState({commentsOn: setting});
+        }
+    };
     renderInside = (primaryID) => {
         return (
             <div key={primaryID}>
-                
-                <div>
+
                     {(!this.state.searching)
-                        ? (<div>
+                        ? (
                             <QuillEditor
                             primaryid={Number(primaryID)}
                             incrementSummary={this.props.incrementSummary}
                             userEmail={this.props.userEmail}
+                            commentsOn = {this.commentOnHandler}
                             match={this.props.match}
                             />
 
-                        </div>)
+                        )
                         : (
                             <Highlighter
                                 activeClassName={styles.Active}
@@ -160,7 +175,6 @@ class ReportPanel extends React.PureComponent {
                             />
                             )
                         }
-                    </div>
             </div>
         );
     };
@@ -168,6 +182,7 @@ class ReportPanel extends React.PureComponent {
     render = () => {
         return (
             <Paper id='summary-container' className={this.props.classes.summaryContainer} elevation={4}>
+                {console.log("CommentsON : " + this.state.commentsOn)}
                 <Paper id='summarytitle' className={this.props.classes.summaryTitle}><Typography type="title" style={{padding: 5}}>Report {this.props.primaryid}</Typography><div onClick={this.handleHideSummary} className={this.props.classes.hideBtn}><Typography type='button'>{this.state.summaryShown ? 'Hide' : 'Show'} Summary</Typography></div></Paper>
                 <Collapse isOpened={this.state.summaryShown}>
                     <div className={this.props.classes.summarySummary}>
@@ -175,7 +190,9 @@ class ReportPanel extends React.PureComponent {
                     </div>
                 </Collapse>
                 <Divider />
+
                 {this.renderInside(this.props.primaryid)}
+
                 <Paper id='commentsection' className={this.props.classes.commentSection}></Paper>
             </Paper>
         );

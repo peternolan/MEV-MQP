@@ -3,17 +3,14 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withStyles } from 'material-ui/styles';
 import Typography from 'material-ui/Typography';
+import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
-// import Select from 'react-select';
 import {Combobox} from 'react-widgets';
-import { getTagsinCase, getReportsInCases, getReportsFromCase, getCaseNameByID, getCaseReports, setSearchedReports , getInstances } from '../../actions/reportActions';
+import { executeSearch, getTagsinCase, getReportsInCases, getReportsFromCase, getCaseNameByID, getCaseReports, setSearchedReports, getInstances, getAgeAndCode } from '../../actions/reportActions';
 import * as JsSearch from 'js-search';
 import "react-widgets/dist/css/react-widgets.css";
 
-// import natural from 'natural';
-import  natural from './natural.js';
-import { Quill } from 'quill';
-import {Tab} from "material-ui";
+import natural from './natural.js';
 import TrashIcon from "../../resources/TrashIcon";
 import ReadCaseIcon from "../../resources/ReadCaseIcon";
 import CaseIcon from "../../resources/CaseIcon";
@@ -21,15 +18,15 @@ import * as d3 from "d3";
 import styles from "./CaseSummaryStyles.js";
 import MEVColors from '../../theme';
 import {Collapse} from 'react-collapse';
+
 class CaseSummary extends Component {
 
   static propTypes = {
-    getTagsinCase: PropTypes.func.isRequired,
-    getReportsInCases: PropTypes.func.isRequired,
-    getReportsFromCase: PropTypes.func.isRequired,
-    getCaseNameByID: PropTypes.func.isRequired,
-    getCaseReports: PropTypes.func,
-    getInstances: PropTypes.func,
+    setSearchLoading: PropTypes.func.isRequired,
+    returnedIds: PropTypes.array.isRequired,
+    returnedResults: PropTypes.array.isRequired,
+    printSearchResults: PropTypes.func.isRequired,
+    changeTab: PropTypes.func.isRequired,
     setSearchedReports: PropTypes.func.isRequired,
     handleClick: PropTypes.func.isRequired,
     summaryCounter: PropTypes.number,
@@ -56,6 +53,7 @@ class CaseSummary extends Component {
     super(props);
     this.state = {
       tags: {},
+      catColors: [],
       caseName: '',
       caseDescription: '',
       reportsInCase: [],
@@ -70,7 +68,8 @@ class CaseSummary extends Component {
       searchOption: '',
       graphdata: 'outc_cod',
       keywordsExposed: false,
-      recommendationString: [],
+      recommendationArray: [],
+      recommendationString: undefined,
     };
   }
 
@@ -80,7 +79,6 @@ class CaseSummary extends Component {
   componentWillReceiveProps(incomingProps) {
     if (this.state.summaryCounter !== incomingProps.summaryCounter) {
       this.updateSummary();
-      console.log("COMPONENT WILL RECEIVE");
       this.setState({
         summaryCounter: incomingProps.summaryCounter,
       });
@@ -94,13 +92,11 @@ class CaseSummary extends Component {
         caseName: (rows[0] ? rows[0].name : ''),
         caseDescription: (rows[0] ? rows[0].description : ''),
       }, () => {
-        console.log("COMPONENT DID MOUNT")
         this.updateSummary();
       }));
   }
 
   componentDidUpdate() {
-    //console.log(this.refs);
   }
 
   getFillColor = (UNK, size) => {
@@ -147,8 +143,6 @@ class CaseSummary extends Component {
   }
 
   getReportTypeData = () => {
-    // console.log(getReportsInCases);
-
     const typeObject = this.state.reportsInCase.reduce((acc, report) => {
       acc[report.type] = (acc[report.type]) ? acc[report.type] + 1 : 1;
       return acc;
@@ -161,7 +155,6 @@ class CaseSummary extends Component {
     this.setState({
       pieChartData,
     });
-
   };
 
 
@@ -181,11 +174,9 @@ class CaseSummary extends Component {
     }, []);
 
     /********  To get the highlighed words */
-    console.log(this.state.tags)
     Object.keys(this.state.tags).map((keyName) => {
       var x = this.state.tags[keyName];
       Object.keys(x).map((values) => {
-        // console.log(x[values]);
         highlightedRawWords.push(x[values].toLowerCase().split(' '));
       })
     })
@@ -202,7 +193,6 @@ class CaseSummary extends Component {
       highlightedWords[i]= highlightedWords[i].replace(/(^,)|(,$)/g, "");
       highlightedWords[i]= highlightedWords[i].replace(/[""().:;|/^%\'5]/g, "");
     }
-    // console.log(highlightedWords)
 
       /********** remove stop words */
     highlightedWords = highlightedWords.filter( function( el ) {
@@ -223,9 +213,9 @@ class CaseSummary extends Component {
         count: counts[key],
       });
     }, []);
-    console.log('HLWORDS', highlightedWords)
     this.setState({
-      recommendationString: highlightedWords,
+      recommendationArray: highlightedWords,
+      recommendationString: highlightedWords.join(' '),
       barChartData,
       highlightedWordsData,
       highlightedWords,
@@ -255,12 +245,8 @@ class CaseSummary extends Component {
 
   getReports = () => {
       /********* reports assigned to the variable */
-      console.log("case name " + this.state.caseName);
-      console.log("userID " + this.props.userID);
       this.props.getCaseReports(this.state.caseName, this.props.userID)
           .then((reports)=>{
-          //console.log(reports)
-          //if(reports.length > 0){console.log(this.props.getInstances(reports));}
           return ()=>{return (reports.length > 0) ? this.props.getInstances(reports) : null;}
       });
   };
@@ -287,19 +273,14 @@ class CaseSummary extends Component {
   }
 
   getCaseNarratives = () => {
-    // console.log(this.state.caseNarratives)
 
     const caseNarrativesData = Object.keys(this.state.caseNarratives).reduce((acc, key) => {
-      // console.log(this.props.allReports[key] )
       return acc.concat({
         name:  this.state.caseNarratives[key].primaryid ,
         count: this.state.caseNarratives[key].report_text,
       });
     }, []);
 
-    // console.log(caseNarrativesData)
-
-    
     this.setState({
       caseNarrativesData,
     });
@@ -320,7 +301,6 @@ class CaseSummary extends Component {
 
   /************ when case changes, update the reports */
   handleCaseChange = () => {
-      console.log("State caseName" + this.state.caseName);
       this.props.updateTab(this.state.caseName);
   };
 
@@ -344,12 +324,12 @@ class CaseSummary extends Component {
     else
       this.searchDocs();
 
-  };
+  }
 
   /************** Search and build index to find documents related to highlighted words */
   searchDocs= () => {
     var searchedReports =[];
-    var newArr=[]
+    var newArr=[];
 
     if(this.props.allReports){
         var search = new JsSearch.Search('primaryid');
@@ -358,7 +338,6 @@ class CaseSummary extends Component {
         search.addDocuments( this.props.allReports);
 
 
-        // console.log(this.state.highlightedWords, this.props.allReports)
         if(this.state.highlightedWords.length !== 0) {
          var str = this.state.highlightedWords;
          for (var i = 0, length = str.length; i < length; i++) {
@@ -379,22 +358,10 @@ class CaseSummary extends Component {
             t.primaryid === searchedReports.primaryid
           ))
         );
-
-        console.log(searchedReports);
         this.props.setSearchedReports (searchedReports);
 
     } 
-  };
-/*
-//CHANGE HERE
-  getInitialStat = function () {
-      return {currentBackground: "green"};
-  };
-
-  handleColorChange = function (background) {
-      this.setState({currentBackground: background})
-  };
-*/
+  }
 
   /*********** Prepare data for keywords barcharts */
   BarChart = ()  => {    
@@ -420,33 +387,111 @@ class CaseSummary extends Component {
       } 
     } 
     return data;
-    console.log('DATA', data)
   }
+  /* search for recommendations */
+  searchRecommendations = () => {
+    console.log(this.state.recommendationString);
+    var results;
+    var resultsArr = [];
+    var resultIds  = [];
+    var arr = [];
 
+    this.props.setSearchLoading(true);
+    this.props.executeSearch(this.state.recommendationString)
+        .then((data) => {
+          results = JSON.parse(data);
+          console.log(results.results)
+          var j = 0;
+
+          var allGood = true;
+          console.log('okay')
+          while (results.results[j] && allGood) {
+            if (Number.isInteger(Number(j))) {
+              arr.push(results.results[j]);
+            } else {
+              allGood = false;
+            }
+            j++;
+          }
+          j = 0;
+          while (arr[j]) {
+            console.log('maybe')
+            var item = arr;
+            var i = 0;
+            this.props.getAgeAndCode(arr[j].id).then((rows) => {
+              console.log('ageandcode')
+              if (rows.length > 0) {
+
+
+                var age;
+                var code;
+                age = rows[0].age_year;
+                code = rows[0].outc_cod[0];
+
+
+                if (!age) {
+                  age = "--";
+                }
+                if (!code) {
+                  code = "--";
+                }
+
+                resultsArr.push({
+                  primaryid: item[i].id,
+                  drugname: item[i].drugname,
+                  sex: item[i].sex,
+                  me_type: item[i].error,
+                  excerpt: item[i].report_text_highlights,
+                  age_year: age,
+                  outc_cod: code
+                });
+                resultIds.push(item[i].id);
+                if (resultsArr.length >= arr.length && resultIds.length >= arr.length) {
+                  /* Made it? */
+                  console.log(resultsArr);
+                  this.handleSearchResults(resultsArr, resultIds);
+                }
+              }
+
+              i++;
+            });
+
+            j++;
+
+          }
+    });
+  }
+  /* back propagate results to list */
+  handleSearchResults = (array1, array2) => {
+    console.log('printing');
+    this.props.printSearchResults(array1,array2);
+    this.props.changeTab(1);
+  }
   /* Toggle the hiding of keyword section */
   handleKeywordHide = () => {
     this.setState({
-      keywordsExposed: !this.state.keywordsExposed
+      keywordsExposed: !this.state.keywordsExposed,
     });
   }
   /* Toggle a word's activation for recommendations */
   toggleWord = (event) => {
     var strchk = event.target.getAttribute('value');
-    var index = this.state.recommendationString.indexOf(strchk);
+    var index = this.state.recommendationArray.indexOf(strchk);
     if (index > -1){
-      var rmdrec = this.state.recommendationString;
+      var rmdrec = this.state.recommendationArray;
       rmdrec.splice(index,1);
       this.setState({
-        recommendationString: rmdrec
+        recommendationArray: rmdrec,
+        recommendationString: this.state.recommendationArray.join(' '),
       });
     } else {
       this.setState({
-        recommendationString: [...this.state.recommendationString, strchk]
+        recommendationArray: [...this.state.recommendationArray, strchk],
+        recommendationString: this.state.recommendationArray.join(' '),
       });
     }
-    console.log('rec string', this.state.recommendationString)
   }
-
+  /* Illustrate graphs with d3 */
   drawChart = (reports) => {
     function fmt(data){
       var data2 = [],keys = [];
@@ -475,7 +520,6 @@ class CaseSummary extends Component {
     }
     var counts = formatted_data["counts"][formatted_data["fields"].indexOf(label)];
     if(counts.length == 0){return;}
-    console.log(counts);
 
     var svg = d3.select(this.refs.svg);
 
@@ -496,20 +540,16 @@ class CaseSummary extends Component {
         .attr("transform", (d,i)=>{return "translate("+ 0+","+(20*i)+")"});
 
     var total_reports = reports.length;
-    //console.log(x);
     let rects = svg.selectAll("rect.new")//select all rects not marked for deletion (they may be marked from the previous step)
         .data(counts);//create our initial rect selection
 
-    console.log(rects.transition("update"))
-
-    console.log(rects);
     let newrects = rects.enter()
         .append("rect")//add new rects for all new data elements
         .attr("class", "new")
         .attr("y", 0)
         .attr("stroke-width", 1)
         .attr("stroke", "#FFF")
-        .attr("opacity", .5)
+        .attr("opacity", .7)
         .attr("height", 100)
         .attr("x", d=>{return x(d.start/total_reports) > 50 ? 100 : 0;})//preset the x position of new elements to "push" them against the edges for a smoother animation
     
@@ -521,25 +561,33 @@ class CaseSummary extends Component {
       newrects
         .attr("height", 100)
         .attr("x", d=>x(d.start/total_reports))
-        .attr("width", d=> x((d.end-d.start)/total_reports))
-        .attr("fill", (d,i)=>"#"+this.getFillColor(i,counts.length))
+        .attr("width", d=> x((d.end-d.start)/total_reports))//x((d.end-d.start)/total_reports))
+        .attr("fill", (d,i)=>{
+            //catcolors.push([d.label,"#"+this.getFillColor(i,counts.length),(d.end-d.start)])
+            return "#"+this.getFillColor(i,counts.length)
+          })
     }
     else {
       if(false && firsttime){ // if this is the first time (AND there are less than 10 nodes) then "grow" the bars from the top
         newrects.attr("height",0)
           .attr("x", d=>x(d.start/total_reports))
           .attr("width", d=> x((d.end-d.start)/total_reports))
-          .attr("fill", (d,i)=>"#"+this.getFillColor(i,counts.length))
+          .attr("fill", (d,i)=>{
+            //catcolors.push([d.label,"#"+this.getFillColor(i,counts.length),(d.end-d.start)])
+            return "#"+this.getFillColor(i,counts.length)
+          })
           .transition("update")
-          .attr("height", 100)
+          .attr("height", 100);
       }
       else{
           newrects.attr("height", 100)
             .transition("update")
             .attr("x", d=>x(d.start/total_reports))
-            .attr("width", d=> x((d.end-d.start)/total_reports))
-            .attr("fill", (d,i)=>"#"+this.getFillColor(i,counts.length))
-          
+            .attr("width", (d,i)=> x((d.end-d.start)/total_reports))
+            .attr("fill", (d,i)=>{
+              //catcolors.push([d.label,"#"+this.getFillColor(i,counts.length),(d.end-d.start)])
+              return "#"+this.getFillColor(i,counts.length)
+            });
       }
     }
 
@@ -554,8 +602,6 @@ class CaseSummary extends Component {
               .attr("opacity", 0)
               .remove();//remove all old rects which we haven't updated
     }
-
-    console.log(this);
   };
 
   render(){{
@@ -565,8 +611,11 @@ class CaseSummary extends Component {
     return (
       <div key={this.state.caseName} className={this.props.classes.summaryContent}>
           <div key="upper_part" style={{paddingLeft: 10}}>
-            <Typography type='button'>Total Count of Reports: {this.state.reportsInCase.length} </Typography>
-            <Typography type='button'>Case Breakdown:
+            <div className={this.props.classes.reportBox}>
+              <Typography type='button' className={this.props.classes.countText}>Total Count of Reports: {this.state.reportsInCase.length}</Typography>
+              <Typography id={this.state.caseName + 'casebutton'} type='button' className={this.props.classes.caseButton} onClick={this.handleCaseChange}>show reports</Typography>
+            </div>
+            <Typography type='button' className={this.props.classes.caseBDText}>Case Breakdown:
               <select disabled={(this.state.reportsInCase.length > 0) ? false : true} ref='options' value={this.state.graphdata} onChange={this.handleDataChange} className={this.props.classes.dataSelector}>
                 <option key='pvs' value='TODO'>Primary v. Supportive</option>
                 <option key='outc_cod' value='outc_cod'>Outcome Code</option>
@@ -577,21 +626,29 @@ class CaseSummary extends Component {
             </Typography>
           </div>
           <div className={this.props.classes.bargraph} key="bargraph" id='bargraph' ref='bargraph'><svg ref="svg" preserveAspectRatio="none" viewBox="0 0 100 100" width="100%" height='100%'></svg> </div>
-        {this.updateReports()}
-        <Typography type='button' className={this.props.classes.textButton} onClick={this.handleKeywordHide}>Keyword Summary</Typography>
+        <div className={this.props.classes.bglegend} key='bglegend'>
+          {this.state.catColors.map((category) => {
+            console.log('catcol',this.state.catColors)
+            return (<div className={this.props.classes.legendPair}><div className={this.props.classes.legendColor} style={{backgroundColor:category[1]}}/><Typography className={this.props.classes.legendCategory}>{category[0]} ({category[2]})</Typography></div>)
+          })}
+        </div>
+        <div className={this.props.classes.keywordHead}>
+          <Typography type='button' className={this.props.classes.textButton} onClick={this.handleKeywordHide}>Keyword Summary</Typography>
+          <Typography type='button' onClick={this.searchRecommendations} className={this.props.classes.recButton}>get recommendations</Typography>
+        </div>
         <Collapse isOpened={this.state.keywordsExposed}>
-        <div className={this.props.classes.keywordContainer}>
-          <div key="highlighted_words">
-            {(this.state.highlightedWordsData.length === 0) ? 
-             <Typography type='body1' style={{padding: 5, paddingLeft: 15}}>There are no annotated reports in this case for us to build keywords from; try annotating one of the reports.</Typography>
-            : this.state.highlightedWordsData.map((word) => {
-              return(
-                <div id={word.name} key={word.name} className={this.props.classes.keywordCapsule} style={{backgroundColor: (this.state.recommendationString.indexOf(word.name) > -1) ? '#7bd389' : '#ee7674'}} onClick={this.toggleWord}>
-                  <Typography value={word.name} type='body1'>{word.name} ({word.count})</Typography>
-                </div>
-              )
-            })}
-          </div>
+          <div className={this.props.classes.keywordContainer}>
+            <div key="highlighted_words">
+              {(this.state.highlightedWordsData.length === 0) ? 
+              <Typography type='body1' style={{padding: 5, paddingLeft: 15}}>There are no annotated reports in this case for us to build keywords from; try annotating one of the reports.</Typography>
+              : this.state.highlightedWordsData.map((word) =>{
+                return(
+                  <div key={word.name} className={this.props.classes.keywordCapsule} style={{backgroundColor: (this.state.recommendationArray.indexOf(word.name) > -1) ? '#7bd389' : '#ee7674'}} onClick={this.toggleWord}>
+                    <Typography value={word.name} type='body1'>{word.name} ({word.count})</Typography>
+                  </div>
+                )
+              })}
+            </div>
           </div>
         </Collapse>
       </div>
@@ -615,6 +672,14 @@ const mapStateToProps = state => ({
  */
 export default connect(
   mapStateToProps,
-  { getTagsinCase, getReportsFromCase, getReportsInCases, getCaseNameByID , getCaseReports, setSearchedReports, getInstances},
+  { executeSearch, 
+    getTagsinCase, 
+    getReportsFromCase, 
+    getReportsInCases, 
+    getCaseNameByID , 
+    getCaseReports, 
+    setSearchedReports, 
+    getInstances, 
+    getAgeAndCode}
 )(withStyles(styles)(CaseSummary));
 

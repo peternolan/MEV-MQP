@@ -536,7 +536,7 @@ app.post('/getactivecases', (req, res) => {
   } 
 });
 
-app.post('/getAge', (req, res) => {
+app.post('/getAgeAndCode', (req, res) => {
   console.log('got a age_year request with body:\n ', req.body);
   let query =
       'SELECT age_year, outc_cod '
@@ -883,7 +883,7 @@ app.post('/getvis', (req, res) => {
 const default_search = {
     'search_string':"",//the string the user entered
     'start':0,//the offset of the results (this is to be used for pagination)
-    'size':3,//the number of results to return
+    'size':200,//the number of results to return
 };
 
 app.post('/executeSearch', (req, res) => {

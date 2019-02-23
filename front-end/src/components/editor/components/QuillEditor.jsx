@@ -30,10 +30,12 @@ class QuillEditor extends Component {
         htmlEncode: PropTypes.func.isRequired,
         htmlUnescape: PropTypes.func.isRequired,
         incrementSummary: PropTypes.func,
+        commentsOn: PropTypes.func,
         classes: PropTypes.shape({
             pdfView: PropTypes.string,
             editorWindow: PropTypes.string,
             paperWindow: PropTypes.string,
+            toolbar: PropTypes.string,
             root: PropTypes.string,
             wrapper: PropTypes.string,
             buttonSuccess: PropTypes.string,
@@ -52,6 +54,7 @@ class QuillEditor extends Component {
             commentButton: PropTypes.string,
             commentContent: PropTypes.string,
             highlightButtons: PropTypes.string,
+
         }).isRequired,
         primaryid: PropTypes.number,
         userID: PropTypes.number.isRequired,
@@ -129,7 +132,6 @@ class QuillEditor extends Component {
 
     commentDelete = () => {
 
-
         var dummyNode = document.createElement('div');
 
         dummyNode.innerHTML = this.state.comment;
@@ -170,7 +172,7 @@ class QuillEditor extends Component {
 
 
     getTextFromID = (id) => {
-
+        this.props.commentsOn(false);
         if (isNaN(id)) {
             this.setState({
                 saving: true,
@@ -209,12 +211,12 @@ class QuillEditor extends Component {
                                             text = text.concat(dummyNode.getElementsByTagName("comment")[i].innerText);
 
                                            if (dummyNode.getElementsByTagName("comment")[i].getAttribute('viewable').toString() === "public") {
-                                               commentLines = commentLines.concat(`<div style='width: 685px; border-radius: 25px; background-color: #43e8e8; position: relative; padding: 6px ' >
-                                                                                        <div style ='left: 20px'>${dummyNode.getElementsByTagName("comment")[i].innerText.replace("n$", "</br>")}></div>
+                                               commentLines = commentLines.concat(`<div style='left: 3px; width: 70%; border-radius: 5px; background-color: #43e8e8; position: relative; padding: 6px ' >
+                                                                                        <div style ='left: 20px'>${dummyNode.getElementsByTagName("comment")[i].innerText.replace("n$", "</br>")}</div>
                                                                                          </div>`);
                                            } else {
 
-                                               var block = `<div style='width: 685px; border-radius: 25px; background-color: #c5cbd6; position: relative; padding: 6px ' >
+                                               var block = `<div style='left: 3px; width: 70%; border-radius: 5px; background-color: #c5cbd6; position: relative; padding: 6px ' >
                                                                  <div style ='left: 20px'>${dummyNode.getElementsByTagName("comment")[i].innerText.replace("n$", "</br>")} </div>
                                                                  </div>`;
 
@@ -296,7 +298,6 @@ class QuillEditor extends Component {
 
     saveWork = () => {
         if (!this.state.saving && !_.isEqual(this.state.current, this.state.saved)) {
-            document.getElementById('saveButton').style.backgroundColor = '#D3D3D3';
             this.setState({
                 success: false,
                 saving: true,
@@ -322,7 +323,6 @@ class QuillEditor extends Component {
             fetch(`${process.env.REACT_APP_NODE_SERVER}/savereporttext`, fetchData)
                 .then(() => {
                     this.props.incrementSummary();
-                    document.getElementById('saveButton').style.backgroundColor = "#D3D3D3";
                     this.setState({
                         saved: this.state.current,
                         success: true,
@@ -336,15 +336,8 @@ class QuillEditor extends Component {
 
 
     display =() =>{
-
-
         var dummyNode = document.createElement('div');
         dummyNode.innerHTML = `<span style = 'font-size: 6px'> ${this.state.report} </span>`;
-
-        console.log(this.state.report);
-        console.log(dummyNode.outerHTML);
-        console.log(dummyNode.outerHTML);
-
 
         return <div className={this.props.classes.quillText}>
             { (!this.state.loading)
@@ -368,12 +361,6 @@ class QuillEditor extends Component {
 
     //Need to Set State in order to make sure it doesn't change when we add comments.
     handleChange = (value) => {
-        console.log("HandleChange");
-
-        document.getElementById('saveButton').style.backgroundColor = '#dbf0ff';
-
-        console.log("addingComment " + this.state.addingComment);
-
         const drugRE = `background-color: ${annotationColors.drug};`;
         const reactionRE = `background-color: ${annotationColors.reaction};`;
         const dosageRE = `background-color: ${annotationColors.dosage};`;
@@ -467,13 +454,13 @@ class QuillEditor extends Component {
 
                                 if (dummyNode2.getElementsByTagName("comment")[i].getAttribute('viewable').toString() === "public") {
 
-                                    commentLines = commentLines.concat(`<div style='width: 685px; border-radius: 25px; background-color: #43e8e8; position: relative; padding: 6px ' >
+                                    commentLines = commentLines.concat(`<div style='left: 3px; width: 70%; border-radius: 5px; background-color: #43e8e8; position: relative; padding: 6px ' >
                                                                         <div style ='left: 20px'>${dummyNode.getElementsByTagName("comment")[i].innerText.replace("n$", "</br>")} </div>
                                                                          </div>`);
                                 } else {
 
 
-                                    commentLines = commentLines.concat(`<div style='width: 685px; border-radius: 25px; background-color: #c5cbd6; position: relative; padding: 6px ' >
+                                    commentLines = commentLines.concat(`<div style='left: 3px; width: 70%; border-radius: 5px; background-color: #c5cbd6; position: relative; padding: 6px ' >
                                                                         <div style ='left: 20px'>${dummyNode.getElementsByTagName("comment")[i].innerText.replace("n$", "</br>")} </div>
                                                                          </div>`);
                                 }
@@ -489,7 +476,7 @@ class QuillEditor extends Component {
                         document.getElementById('commentList').innerHTML = ``;
                     }
                 }
-                console.log("Comments after " + document.getElementById('commentList').innerHTML);
+
             }
 
 
@@ -509,7 +496,6 @@ class QuillEditor extends Component {
 
 
     colorBackground(color) {
-
         const { index, length } = this.quill.getSelection();
         this.quill.formatText(index, length, 'background', color);
 
@@ -527,7 +513,9 @@ class QuillEditor extends Component {
         dummyNode.innerHTML = this.state.comment;
 
         var newText = '';
-        var radios = document.getElementsByName("viewable");
+        var checked = document.getElementById('viewToggle');
+
+        console.log('checked ' + checked.checked);
 
         if (dummyNode.getElementsByTagName("comments")[0]) {
 
@@ -545,12 +533,15 @@ class QuillEditor extends Component {
 
                                 dummyNode.getElementsByTagName("comment")[i].innerHTML = `${this.state.userEmail}: ${comment.replace(/\n/g, " n$")}\n<br/>`;
 
-                                for (var j in radios) {
-                                    if (radios[j].checked) {
-                                        dummyNode.getElementsByTagName("comment")[i].setAttribute("viewable", radios[j].value);
-                                    }
 
+                                if (checked.checked) {
+                                    dummyNode.getElementsByTagName("comment")[i].setAttribute("viewable", 'public');
                                 }
+                                else {
+                                    dummyNode.getElementsByTagName("comment")[i].setAttribute("viewable", 'private');
+                                }
+
+
 
 
                                 newText = dummyNode.innerHTML;
@@ -570,13 +561,18 @@ class QuillEditor extends Component {
 
                 var newInner;
 
-                for (var k in radios) {
-                    if (radios[k].checked) {
-                        newInner = dummyNode.getElementsByTagName("comments")[0].innerHTML.concat(`<comment id=${this.state.userID} 
-viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${comment.replace(/\n/g, " n$")}\n<br/></comment>`);
-                    }
+
+                if (checked.checked) {
+                    console.log("Checked True")
+                    newInner = dummyNode.getElementsByTagName("comments")[0].innerHTML.concat(`<comment id=${this.state.userID} viewable = 'public' className="comment">${this.state.userEmail}: ${comment.replace(/\n/g, " n$")}\n<br/></comment>`);
 
                 }
+                else {
+                    console.log("Checked False")
+                    newInner = dummyNode.getElementsByTagName("comments")[0].innerHTML.concat(`<comment id=${this.state.userID} viewable = 'private' className="comment">${this.state.userEmail}: ${comment.replace(/\n/g, " n$")}\n<br/></comment>`);
+
+                }
+
 
 
 
@@ -593,12 +589,14 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
 
         } else {
 
-            for (var x in radios) {
-                if (radios[x].checked) {
-                    console.log("comment " + comment.replace(/\n/g, " n$"));
-                    var comSpecial = `<comments id = 'comment-${this.props.primaryid}'><comment id = ${this.state.userID} viewable = ${radios[x].value} class = "comment" >${this.state.userEmail}: ${comment.replace(/\n/g, " n$")}\n<br/></comment></comments>`;
 
-                }
+            if (checked.checked) {
+                console.log("Checked True")
+                var comSpecial = `<comments id = 'comment-${this.props.primaryid}'><comment id = ${this.state.userID} viewable = 'public' class = "comment" >${this.state.userEmail}: ${comment.replace(/\n/g, " n$")}\n<br/></comment></comments>`;
+
+            } else {
+                console.log("Checked False")
+                var comSpecial = `<comments id = 'comment-${this.props.primaryid}'><comment id = ${this.state.userID} viewable = 'private' class = "comment" >${this.state.userEmail}: ${comment.replace(/\n/g, " n$")}\n<br/></comment></comments>`;
 
             }
 
@@ -638,10 +636,12 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
 
         if (this.state.commentsOn) {
             this.setState({commentsOn: false});
+            this.props.commentsOn();
             document.getElementById('MakeNote').focus()
         }
         else {
             this.setState({commentsOn: true});
+            this.props.commentsOn();
             document.getElementById('MakeNote').focus()
         }
     };
@@ -703,7 +703,7 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
 
     customToolbar = () => (
 
-        <div id={`react-quill-${this.state.primaryId}`} style={{ height: 'calc(7vh)', display: 'none'}}>
+        <div id={`react-quill-${this.state.primaryId}`} className = {this.props.classes.toolbar} style={{ width: '84%', height: 'calc(8vh)', display: 'none'}}>
 
             {/*
             <select defaultValue="false" className="ql-header" style={{ width: '100px', height: '36px', margin: '4px' }}>
@@ -719,10 +719,10 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
                 <option value="justify" />
             </select>
             */}
-            <Button className="ql-colorBackground" value={annotationColors.drug} style={{ display: 'inline-flex',
+            <Button className="ql-colorBackground" value={annotationColors.drug} style={{ display: 'inline-block',
                 alignItems: 'center',
                 justifyContent: 'center',
-                minWidth: '9%',
+                minWidth: '7%',
                 borderStyle: 'solid',
                 padding: '0px',
                 borderWidth: 1,
@@ -730,14 +730,15 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
                 borderRadius: 0,
                 background: annotationColors.drug,
                 top: '5px',
-                minHeight: '6px'
+                minHeight: '6%',
+                fontSize: '10px'
             }}>
                 Drug
             </Button>
-            <Button className="ql-colorBackground" value={annotationColors.reaction} style={{ display: 'inline-flex',
+            <Button className="ql-colorBackground" value={annotationColors.reaction} style={{ display: 'inline-block',
                 alignItems: 'center',
                 justifyContent: 'center',
-                minWidth: '12%',
+                minWidth: '10%',
                 borderStyle: 'solid',
                 borderWidth: 1,
                 borderColor: 'rgba(0, 0, 0, .25)',
@@ -745,13 +746,14 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
                 padding: '0px',
                 background: annotationColors.reaction,
                 top: '5px',
-                minHeight: '6px'}}>
+                minHeight: '6%',
+                fontSize: '10px'}}>
                 Reaction
             </Button>
-            <Button className="ql-colorBackground" value={annotationColors.dosage} style={{ display: 'inline-flex',
+            <Button className="ql-colorBackground" value={annotationColors.dosage} style={{ display: 'inline-block',
                 alignItems: 'center',
                 justifyContent: 'center',
-                minWidth: '11.15%',
+                minWidth: '10%',
                 borderStyle: 'solid',
                 borderWidth: 1,
                 borderColor: 'rgba(0, 0, 0, .25)',
@@ -759,13 +761,15 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
                 padding: '0px',
                 background: annotationColors.dosage,
                 top: '5px',
-                minHeight: '6px'}}>
+                minHeight: '6%',
+                fontSize: '10px'
+            }}>
                 Dosage
             </Button>
-            <Button className="ql-colorBackground" value={annotationColors.age} style={{ display: 'inline-flex',
+            <Button className="ql-colorBackground" value={annotationColors.age} style={{ display: 'inline-block',
                 alignItems: 'center',
                 justifyContent: 'center',
-                minWidth: '9%',
+                minWidth: '6%',
                 borderStyle: 'solid',
                 borderWidth: 1,
                 borderColor: 'rgba(0, 0, 0, .25)',
@@ -773,13 +777,15 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
                 padding: '0px',
                 background: annotationColors.age,
                 top: '5px',
-                minHeight: '6px'}}>
+                minHeight: '6%',
+                fontSize: '10px'
+            }}>
                 Age
             </Button>
-            <Button className="ql-colorBackground" value={annotationColors.sex} style={{ display: 'inline-flex',
+            <Button className="ql-colorBackground" value={annotationColors.sex} style={{ display: 'inline-block',
                 alignItems: 'center',
                 justifyContent: 'center',
-                minWidth: '11.15%',
+                minWidth: '10%',
                 borderStyle: 'solid',
                 borderWidth: 1,
                 borderColor: 'rgba(0, 0, 0, .25)',
@@ -787,23 +793,27 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
                 padding: '0px',
                 background: annotationColors.sex,
                 top: '5px',
-                minHeight: '6px'}}>
+                minHeight: '6%',
+                fontSize: '10px'
+            }}>
                 Gender
             </Button>
-            <Button className = "ql-colorBackground" value={annotationColors.weight} style={{display: 'inline-flex',
+            <Button className = "ql-colorBackground" value={annotationColors.weight} style={{display: 'inline-block',
                 alignItems: 'center',
                 justifyContent: 'center',
-                minWidth: '11.15%',
+                minWidth: '11%',
                 borderStyle: 'solid',
                 borderWidth: 1,
                 borderColor: 'rgba(0, 0, 0, .25)',
                 borderRadius: 0,
                 background: annotationColors.weight,
                 top: '5px',
-                minHeight: '6px'}}>
+                minHeight: '6%',
+                fontSize: '10px'
+            }}>
                 Weight
             </Button>
-            <Button className="ql-colorBackground" value={annotationColors.indication} style={{display: 'inline-flex',
+            <Button className="ql-colorBackground" value={annotationColors.indication} style={{display: 'inline-block',
                 alignItems: 'center',
                 justifyContent: 'center',
                 minWidth: '12.5%',
@@ -814,10 +824,12 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
                 padding: '0px',
                 background: annotationColors.indication,
                 top: '5px',
-                minHeight: '6px'}}>
+                minHeight: '6%',
+                fontSize: '10px'
+            }}>
                 Indication
             </Button>
-            <Button className= "ql-colorBackground" value={annotationColors.interesting} style={{ display: 'inline-flex',
+            <Button className= "ql-colorBackground" value={annotationColors.interesting} style={{ display: 'inline-block',
                 alignItems: 'center',
                 justifyContent: 'center',
                 minWidth: '12.5%',
@@ -828,10 +840,11 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
                 padding: '0px',
                 background: annotationColors.interesting,
                 top: '5px',
-                minHeight: '6px'}}>
+                minHeight: '6%',
+                fontSize: '10px'}}>
                 Interesting
             </Button>
-            <Button className="ql-colorBackground" value="" style={{ display: 'inline-flex',
+            <Button className="ql-colorBackground" value="" style={{ display: 'inline-block',
                 alignItems: 'center',
                 justifyContent: 'center',
                 minWidth: '7.5%',
@@ -841,7 +854,8 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
                 borderColor: 'rgba(0, 0, 0, .25)',
                 borderRadius: 0,
                 top: '5px',
-                minHeight: '6px'}}>
+                minHeight: '6%',
+                fontSize: '10px'}}>
                 Clear
             </Button>
 
@@ -854,9 +868,9 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
                         popper: this.props.classes.tooltipStyle,
 
                     }}
-                    style ={{ fontSize: '20pt',}}
+                    style ={{ width: 'calc(10vh - 120px)', fontSize: '20pt',}}
                 >
-                    <Button style={{ padding: '0px', marginLeft: '5px', minHeight: '2px', minWidth:'2px', border: '1px solid black',
+                    <Button style={{ padding: '0px', marginLeft: '3px', minHeight: '2px', minWidth:'2px', border: '1px solid black',
                         borderRadius: '15px',  background: annotationColors.clear, bottom: '0px'}}>
                         ? </Button>
                 </MaterialTooltip>
@@ -913,35 +927,14 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
         const searchWords= searchText.split(/\s/).filter(word => word)
 
         return (
-            <div className={this.props.classes.pdfView}>
-                <div className = {this.props.classes.quillArea}>
-                    {/*
-                        <Paper className={this.props.classes.legend}>
-
-                            <Paper className={this.props.classes.legendEntry} style={{backgroundColor: 'chartreuse'}}><Typography type='button'>Drug</Typography></Paper>
-                            <Paper className={this.props.classes.legendEntry} style={{backgroundColor: 'cadetblue'}}><Typography type='button'>Reaction</Typography></Paper>
-                            <Paper className={this.props.classes.legendEntry} style={{backgroundColor: 'darkorange'}}><Typography type='button'>Dosage</Typography></Paper>
-                            <Paper className={this.props.classes.legendEntry} style={{backgroundColor: 'gold'}}><Typography type='button'>Age</Typography></Paper>
-                            <Paper className={this.props.classes.legendEntry} style={{backgroundColor: 'lightpink'}}><Typography type='button'>Sex</Typography></Paper>
-                            <Paper className={this.props.classes.legendEntry} style={{backgroundColor: 'orchid'}}><Typography type='button'>Weight</Typography></Paper>
-                            <Paper className={this.props.classes.legendEntry} style={{backgroundColor: 'silver'}}><Typography type='button'>Indication</Typography></Paper>
-                            <Paper className={this.props.classes.legendEntry} style={{backgroundColor: 'cyan'}}><Typography type='button'>Interesting</Typography></Paper>
-                        </Paper>
-                        */}
-                        <Paper>
-                            <div onClick={this.editMode} className={this.props.classes.editBtn}><Typography type='button'>{(this.state.editModeOn) ? 'Stop Editing' : 'Edit Highlights'}</Typography></div>
-                            <Paper key='editSpecificButtons'>
-                                <Collapse isOpened={this.state.editModeOn}>
-                                    <Paper className={this.props.classes.editButton} onClick={this.saveWork}>
-                                        <Typography id = 'saveButton' type='button'>Save Highlights</Typography>
-                                    </Paper>
-                                </Collapse>
-                            </Paper>
-                        </Paper>
+            <div className={this.props.classes.pdfView} >
+                <div className = {this.props.classes.quillArea} style = {{ display: 'inline-block', height: (this.state.commentsOn) ? '50%': '90%', overflow: 'scroll' }}>
                     <div className={this.props.classes.editFacet}>
-                        
+                        <div className={this.props.classes.editBox} style={{width:'auto'}}>
+                            <div onClick={this.editMode}><Typography align='right' type='button'>{(this.state.editModeOn) ? 'Stop Editing' : 'Edit Highlights'}</Typography></div>
+                        </div>
+                        <div className={(this.state.editModeOn) ? this.props.classes.editBox : this.props.classes.noBox} onClick={this.saveWork}><Typography align='right' id ='saveButton' type='button' style={{color:(this.state.saving) ? '#1D1F83' : '#000'}}>Save Highlights</Typography></div>
                     </div>
-
                 {/* ====== Quill editor for Annotating the Report Text ====== */}
 
                 {/* <!--<Paper elevation={4} className={this.props.classes.paperWindow}>--> */}
@@ -964,35 +957,34 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
                             />
                         )
                     }
-
-
-
             </div>
-
-
-                <div id="commentArea" className={this.props.classes.commentSec}>
+                <div id="commentArea" className={this.props.classes.commentSec} >
                     <div className={this.props.classes.commentBtn} onClick={() => this.showComments()}>
                         <Typography type='button' className={this.props.classes.textButton}>{(this.state.commentsOn) ? 'Hide' : 'Show'} Comments</Typography>
                     </div>
-                    <Collapse isOpened={this.state.commentsOn}>
-                        <div className='commentContent'>
+                    <Collapse isOpened={this.state.commentsOn} style = {{position: 'relative', width: '100%'}}>
+                        <div className='commentContent' style = {{width: '100%'}}>
                             <div id="commentsView">
-                                <h3>Comments</h3>
+                                <h4 style = {{left: '3px'}}>Comments</h4>
                                 <div id="commentList">
 
                                 </div>
                             </div>
                             <div style={{padding: '4px'}}>
-                                <textarea id="comment" cols="120" rows="4">  </textarea>
+                                <textarea id="comment" style = {{resize: 'none', width: '70%'}} rows="4">  </textarea>
                             </div>
 
-                            <div style={{padding: '4px', display: 'inline-block'}}>
-                                <form id="radio-form" style={{display: 'inline-block'}}>
-                                    <input type="radio" name="viewable" value="private" checked="yes" style={{padding: '5px'}} defaultChecked/>Private
-                                    <input type="radio" name="viewable" value="public" style={{padding: '5px'}}/>Public
-                                </form>
+                            <div style={{padding: '4px', display: 'inline-block', width: '70%'}}>
 
-                                <Button id="MakeNote" style={{border: '2px solid #1d00ff', left: '30px'}}
+                                <span style = {{position: 'relative', left: '5px', bottom: '4px', marginRight: '2px'}}>Public:</span>
+                                <label class = "switch">
+
+                                    <input id = 'viewToggle' type ="checkbox" name="viewable" />
+                                    <span class ="slider"></span>
+
+                                </label>
+
+                                <Button id="MakeNote" style={{padding: '0', position: 'relative', border: '2px solid #1d00ff', left: '6.25%',  width: '15%'}}
                                         onClick={() => this.commentMade()}> Make Note </Button>
                                 <Button
                                     id="saveButton2"
@@ -1001,7 +993,7 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
                                     className={(this.state.success) ? this.props.classes.buttonSuccess : ''}
                                     disabled={this.state.saving}
                                     onClick={this.saveWork}
-                                    style={{ left: '40px'}}>
+                                    style={{ left: '7%', minWidth: '5%', minHeight: 'calc(1.25vw)'}}>
 
                                     Save
                                 </Button>
@@ -1013,16 +1005,16 @@ viewable = ${radios[k].value} className="comment">${this.state.userEmail}: ${com
                                         tooltip: this.props.classes.toolTipStyle,
                                         popper: this.props.classes.tooltipStyle,
                                     }}
-                                    style={{fontSize: '20pt',}}
+                                    style={{fontSize: '20pt', left: '40%', position: 'relative'}}
                                 >
-                                    <button id="delete" style={{
+                                    <Button id="delete" style={{
                                         borderRadius: '20px',
-                                        position: 'relative',
-                                        left: '650px',
-                                        border: '2px solid #ff0000'
+                                        border: '1px solid red',
+                                        width: '8%',
+                                        height: 'calc(1.25vw)'
                                     }} onClick={() => this.commentDelete()}>
-                                        <img src={DeleteIcon} style={{width: '15px', height: '20px'}}/>
-                                    </button>
+                                        Delete X
+                                    </Button>
                                 </MaterialTooltip>
 
                             </div>

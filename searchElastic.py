@@ -10,7 +10,7 @@ import json
 # THIS IS ONLY FOR DEV/DEBUGGING
 connections.create_connection(hosts=['localhost'])
 
-DEBUG = True
+DEBUG = False
 LOGGING = True #writes some log info to ./searchlog.log
 
 #if(len(sys.argv) > 1):
@@ -24,7 +24,7 @@ def read_in(string = None):
     return json.loads("".join(lines))
 
 if DEBUG:
-    params = read_in(string='{"search_string":"patient","start":0,"size":3}')
+    params = read_in(string='{"search_string":"synthroid","start":0,"size":3}')
 else:
     params = read_in()
 
@@ -81,11 +81,11 @@ for result in results:
     index += 1
 
     resObj["results"][index] = {
-        "id":result.primaryid,
-        "drugname": result.drugname,
-        "sex": result.sex,
-        "error": result.me_type,
-        "score":result.meta.score,
+        "id": (result.primaryid if 'primaryid' in dir(result) else 'UNK'),
+        "drugname":  (result.drugname if 'drugname' in dir(result) else 'UNK'),
+        "sex":  (result.sex if 'sex' in dir(result) else 'UNK'),
+        "error":  (result.me_type if 'me_type' in dir(result) else 'UNK'),
+        "score": (result.score if 'score' in dir(result) else 'UNK'),
     }
     
     for key in dir(result.meta.highlight):

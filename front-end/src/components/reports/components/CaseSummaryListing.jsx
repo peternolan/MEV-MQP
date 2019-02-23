@@ -26,7 +26,6 @@ class CaseSummaryListing extends React.PureComponent {
     bins: PropTypes.arrayOf(PropTypes.object).isRequired,
     summaryCounter: PropTypes.number.isRequired,
     userID: PropTypes.number.isRequired,
-    getReportsInCases: PropTypes.func,
     classes: PropTypes.shape({
       summaryContainer: PropTypes.string,
       expansionPanelSummary: PropTypes.string,
@@ -69,7 +68,7 @@ class CaseSummaryListing extends React.PureComponent {
             </div>
             <Collapse isOpened={(this.state.expandedPanelName === bin.name) ? true : false}>
               <CaseSummary
-              changeTab = {this.props.changeTab}
+                changeTab = {this.props.changeTab}
                 printSearchResults = {this.props.printSearchResults}
                 caseID={bin.case_id}
                 userID={this.props.userID}

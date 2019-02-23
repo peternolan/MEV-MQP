@@ -48,16 +48,12 @@ import 'react-contexify/dist/ReactContexify.min.css';
  */
 class ReportTable extends React.PureComponent {
   static propTypes = {
+    returnedIds: PropTypes.array.isRequired,
+    returnedResults: PropTypes.array.isRequired,
     printSearchResults: PropTypes.func.isRequired,
     changeTab: PropTypes.func.isRequired,
-    getCaseReports: PropTypes.func.isRequired,
     setAllReports: PropTypes.func.isRequired,
     executeSearch: PropTypes.func.isRequired,
-    getAgeAndCode: PropTypes.func.isRequired,
-    getInstances: PropTypes.func,
-    moveReport: PropTypes.func.isRequired,
-    getReportNarrativeFromID: PropTypes.func.isRequired,
-    getReportsInCases: PropTypes.func.isRequired,
     toTitleCase: PropTypes.func.isRequired,
     primaryChosen:  PropTypes.bool,
     supportiveChosen:  PropTypes.bool,
@@ -116,8 +112,6 @@ class ReportTable extends React.PureComponent {
       currentPage: 0,
       summaryToggleText: 'Hide',
       selected: -1,
-      returnedResults: [1, 2, 3],
-      returnedIds: [],
       item: null,
 
       /**
@@ -436,6 +430,7 @@ class ReportTable extends React.PureComponent {
     let backgroundColor;
 
     switch (this.props.bin) {
+      case 'searched reports':
       case 'all reports':
         incase = this.state.currentlyInCase[props.tableRow.rowId];
 
@@ -497,7 +492,6 @@ class ReportTable extends React.PureComponent {
           var j = 0;
 
           var allGood = true;
-          console.log(results.results);
 
           while (results.results[j] && allGood) {
             if (Number.isInteger(Number(j))) {
@@ -515,15 +509,8 @@ class ReportTable extends React.PureComponent {
             this.props.getAgeAndCode(arr[j].id).then((rows) => {
 
               if (rows.length > 0) {
-
-
-                var age;
-                var code;
-                console.log('id ' + item[i].id);
-                age = rows[0].age_year;
-                code = rows[0].outc_cod[0];
-
-
+                var age = rows[0].age_year;
+                var code = rows[0].outc_cod[0];
                 if (!age) {
                   age = "--";
                 }
@@ -558,15 +545,8 @@ class ReportTable extends React.PureComponent {
   };
 
   handleSearchResults = (array1, array2) => {
-
-    console.log("handle Search");
-
-    this.props.printSearchResults(array1);
-
-
-    this.setState({returnedResults : array1, returnedIds: array2});
-
-
+    console.log('handling')
+    this.props.printSearchResults(array1,array2);
     this.props.changeTab(1);
   };
 
@@ -762,11 +742,6 @@ class ReportTable extends React.PureComponent {
     );
   }
   render() {
-
-    (this.props.currentTab === 1) ? console.log("Ids " + this.state.returnedIds) : console.log(Number(this.props.currentTab));
-
-
-
     return (
         <div id='table-wrapper' className={this.props.classes.tableWrapper}>
           <input id='search' type='text' className={this.props.classes.searchBar} placeholder="Search through reports..." onKeyDown={(e) => {if(e.key === 'Enter'){this.search()}}} />
@@ -797,12 +772,12 @@ class ReportTable extends React.PureComponent {
                 ? (
 
                     <Grid
-                        rows={(this.props.currentTab === 1) ? this.state.returnedResults : this.state.data}
+                        rows={(this.props.currentTab === 1) ? this.props.returnedResults : this.state.data}
                         columns={this.columns}
                         getRowId={(this.props.currentTab === 1) ? row => row.primaryid: row => row.primaryid }
                     >
                       <RowDetailState
-                          expandedRows={(this.props.currentTab === 1) ? this.state.returnedIds : this.state.expandedRows}
+                          expandedRows={(this.props.currentTab === 1) ? this.props.returnedIds : this.state.expandedRows}
                           onExpandedRowsChange={this.changeExpandedDetails}
                       />
                       <DragDropProvider />

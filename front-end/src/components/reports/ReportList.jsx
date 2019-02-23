@@ -93,6 +93,7 @@ class ReportList extends Component {
       summaryCounter: 0,
       searchedReports:[],
       returnedResults: [1, 2, 3],
+      returnedIds: [],
 
     };
     //handleCaseChangePrimary = handleCaseChangePrimary.bind(this);
@@ -178,13 +179,14 @@ class ReportList extends Component {
       }
   };
 
-  printSearchResults = (array) => {
-      console.log('print');
-      console.log(array);
-        this.setState({returnedResults: array}, () => {console.log(this.state.returnedResults)});
-
-
-    };
+  printSearchResults = (arr1,arr2) => {
+    /* propagated */
+    console.log('propagated');
+    this.setState({
+      returnedResults: arr1,
+      returnedIds: arr2,
+    });
+  };
 
 
 
@@ -423,6 +425,10 @@ class ReportList extends Component {
               summaryOpen={this.state.summaryOpen}
               summaryCounter={this.state.summaryCounter}
               handleClickPieChart={this.handleCaseChangePrimary}
+              changeTab = {this.changeTab}
+              printSearchResults = {this.printSearchResults}
+              returnedResults = {this.state.returnedResults}
+              returnedIds = {this.state.returnedIds}
             />
           </div>
           <div key='summaryCollapse' className={this.props.classes.collapseDivider} style={{float: 'left'}} onClick={this.handleViewCaseSummary}>
@@ -447,7 +453,7 @@ class ReportList extends Component {
               printSearchResults = {this.printSearchResults}
               currentTab={this.state.currentTab}
               returnedResults = {this.state.returnedResults}
-
+              returnedIds = {this.state.returnedIds}
             />
           </div>
           <div key='reportCollapse' className={this.props.classes.collapseDivider}  onClick={this.handleHideReport}>

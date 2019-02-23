@@ -933,7 +933,7 @@ class QuillEditor extends Component {
 
         return (
             <div className={this.props.classes.pdfView} >
-                <div className = {this.props.classes.quillArea} style = {{ display: 'inline-block', height: (this.state.commentsOn) ? '50%': '90%', overflow: 'scroll' }}>
+                <div className = {this.props.classes.quillArea} style = {{ display: 'inline-block', height: (this.state.commentsOn) ? '60%': '90%', overflow: 'scroll' }}>
                         <div className={this.props.classes.editFacet}>
                             <ul style={{listStyleType:'none'}}>
                                 <li><div onClick={this.editMode} className={this.props.classes.editBtn}><Typography type='button'>{(this.state.editModeOn) ? 'Stop Editing' : 'Edit Highlights'}</Typography></div></li>

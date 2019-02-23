@@ -6,7 +6,7 @@ import Typography from 'material-ui/Typography';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
 import {Combobox} from 'react-widgets';
-import { getTagsinCase, getReportsInCases, getReportsFromCase, getCaseNameByID, getCaseReports, setSearchedReports , getInstances } from '../../actions/reportActions';
+import { executeSearch, getTagsinCase, getReportsInCases, getReportsFromCase, getCaseNameByID, getCaseReports, setSearchedReports, getInstances, getAgeAndCode } from '../../actions/reportActions';
 import * as JsSearch from 'js-search';
 import "react-widgets/dist/css/react-widgets.css";
 
@@ -22,12 +22,11 @@ import {Collapse} from 'react-collapse';
 class CaseSummary extends Component {
 
   static propTypes = {
-    getTagsinCase: PropTypes.func.isRequired,
-    getReportsInCases: PropTypes.func.isRequired,
-    getReportsFromCase: PropTypes.func.isRequired,
-    getCaseNameByID: PropTypes.func.isRequired,
-    getCaseReports: PropTypes.func,
-    getInstances: PropTypes.func,
+    setSearchLoading: PropTypes.func.isRequired,
+    returnedIds: PropTypes.array.isRequired,
+    returnedResults: PropTypes.array.isRequired,
+    printSearchResults: PropTypes.func.isRequired,
+    changeTab: PropTypes.func.isRequired,
     setSearchedReports: PropTypes.func.isRequired,
     handleClick: PropTypes.func.isRequired,
     summaryCounter: PropTypes.number,
@@ -325,7 +324,7 @@ class CaseSummary extends Component {
     else
       this.searchDocs();
 
-  };
+  }
 
   /************** Search and build index to find documents related to highlighted words */
   searchDocs= () => {
@@ -362,17 +361,7 @@ class CaseSummary extends Component {
         this.props.setSearchedReports (searchedReports);
 
     } 
-  };
-/*
-//CHANGE HERE
-  getInitialStat = function () {
-      return {currentBackground: "green"};
-  };
-
-  handleColorChange = function (background) {
-      this.setState({currentBackground: background})
-  };
-*/
+  }
 
   /*********** Prepare data for keywords barcharts */
   BarChart = ()  => {    
@@ -399,7 +388,85 @@ class CaseSummary extends Component {
     } 
     return data;
   }
+  /* search for recommendations */
+  searchRecommendations = () => {
+    console.log(this.state.recommendationString);
+    var results;
+    var resultsArr = [];
+    var resultIds  = [];
+    var arr = [];
 
+    this.props.setSearchLoading(true);
+    this.props.executeSearch(this.state.recommendationString)
+        .then((data) => {
+          results = JSON.parse(data);
+          console.log(results.results)
+          var j = 0;
+
+          var allGood = true;
+          console.log('okay')
+          while (results.results[j] && allGood) {
+            if (Number.isInteger(Number(j))) {
+              arr.push(results.results[j]);
+            } else {
+              allGood = false;
+            }
+            j++;
+          }
+          j = 0;
+          while (arr[j]) {
+            console.log('maybe')
+            var item = arr;
+            var i = 0;
+            this.props.getAgeAndCode(arr[j].id).then((rows) => {
+              console.log('ageandcode')
+              if (rows.length > 0) {
+
+
+                var age;
+                var code;
+                age = rows[0].age_year;
+                code = rows[0].outc_cod[0];
+
+
+                if (!age) {
+                  age = "--";
+                }
+                if (!code) {
+                  code = "--";
+                }
+
+                resultsArr.push({
+                  primaryid: item[i].id,
+                  drugname: item[i].drugname,
+                  sex: item[i].sex,
+                  me_type: item[i].error,
+                  excerpt: item[i].report_text_highlights,
+                  age_year: age,
+                  outc_cod: code
+                });
+                resultIds.push(item[i].id);
+                if (resultsArr.length >= arr.length && resultIds.length >= arr.length) {
+                  /* Made it? */
+                  console.log(resultsArr);
+                  this.handleSearchResults(resultsArr, resultIds);
+                }
+              }
+
+              i++;
+            });
+
+            j++;
+
+          }
+    });
+  }
+  /* back propagate results to list */
+  handleSearchResults = (array1, array2) => {
+    console.log('printing');
+    this.props.printSearchResults(array1,array2);
+    this.props.changeTab(1);
+  }
   /* Toggle the hiding of keyword section */
   handleKeywordHide = () => {
     this.setState({
@@ -424,10 +491,8 @@ class CaseSummary extends Component {
       });
     }
   }
-
+  /* Illustrate graphs with d3 */
   drawChart = (reports) => {
-    var catcolors = [];
-
     function fmt(data){
       var data2 = [],keys = [];
       for(let key in data){
@@ -498,7 +563,7 @@ class CaseSummary extends Component {
         .attr("x", d=>x(d.start/total_reports))
         .attr("width", d=> x((d.end-d.start)/total_reports))//x((d.end-d.start)/total_reports))
         .attr("fill", (d,i)=>{
-            catcolors.push([d.label,"#"+this.getFillColor(i,counts.length),(d.end-d.start)])
+            //catcolors.push([d.label,"#"+this.getFillColor(i,counts.length),(d.end-d.start)])
             return "#"+this.getFillColor(i,counts.length)
           })
     }
@@ -508,7 +573,7 @@ class CaseSummary extends Component {
           .attr("x", d=>x(d.start/total_reports))
           .attr("width", d=> x((d.end-d.start)/total_reports))
           .attr("fill", (d,i)=>{
-            catcolors.push([d.label,"#"+this.getFillColor(i,counts.length),(d.end-d.start)])
+            //catcolors.push([d.label,"#"+this.getFillColor(i,counts.length),(d.end-d.start)])
             return "#"+this.getFillColor(i,counts.length)
           })
           .transition("update")
@@ -520,7 +585,7 @@ class CaseSummary extends Component {
             .attr("x", d=>x(d.start/total_reports))
             .attr("width", (d,i)=> x((d.end-d.start)/total_reports))
             .attr("fill", (d,i)=>{
-              catcolors.push([d.label,"#"+this.getFillColor(i,counts.length),(d.end-d.start)])
+              //catcolors.push([d.label,"#"+this.getFillColor(i,counts.length),(d.end-d.start)])
               return "#"+this.getFillColor(i,counts.length)
             });
       }
@@ -607,6 +672,14 @@ const mapStateToProps = state => ({
  */
 export default connect(
   mapStateToProps,
-  { getTagsinCase, getReportsFromCase, getReportsInCases, getCaseNameByID , getCaseReports, setSearchedReports, getInstances},
+  { executeSearch, 
+    getTagsinCase, 
+    getReportsFromCase, 
+    getReportsInCases, 
+    getCaseNameByID , 
+    getCaseReports, 
+    setSearchedReports, 
+    getInstances, 
+    getAgeAndCode}
 )(withStyles(styles)(CaseSummary));
 

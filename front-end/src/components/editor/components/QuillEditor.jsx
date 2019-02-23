@@ -298,7 +298,6 @@ class QuillEditor extends Component {
 
     saveWork = () => {
         if (!this.state.saving && !_.isEqual(this.state.current, this.state.saved)) {
-            document.getElementById('saveButton').style.backgroundColor = '#D3D3D3';
             this.setState({
                 success: false,
                 saving: true,
@@ -324,7 +323,6 @@ class QuillEditor extends Component {
             fetch(`${process.env.REACT_APP_NODE_SERVER}/savereporttext`, fetchData)
                 .then(() => {
                     this.props.incrementSummary();
-                    document.getElementById('saveButton').style.backgroundColor = "#D3D3D3";
                     this.setState({
                         saved: this.state.current,
                         success: true,
@@ -363,8 +361,6 @@ class QuillEditor extends Component {
 
     //Need to Set State in order to make sure it doesn't change when we add comments.
     handleChange = (value) => {
-        document.getElementById('saveButton').style.backgroundColor = '#dbf0ff';
-
         const drugRE = `background-color: ${annotationColors.drug};`;
         const reactionRE = `background-color: ${annotationColors.reaction};`;
         const dosageRE = `background-color: ${annotationColors.dosage};`;
@@ -500,7 +496,6 @@ class QuillEditor extends Component {
 
 
     colorBackground(color) {
-
         const { index, length } = this.quill.getSelection();
         this.quill.formatText(index, length, 'background', color);
 
@@ -933,15 +928,14 @@ class QuillEditor extends Component {
 
         return (
             <div className={this.props.classes.pdfView} >
-                <div className = {this.props.classes.quillArea} style = {{ display: 'inline-block', height: (this.state.commentsOn) ? '60%': '90%', overflow: 'scroll' }}>
-                        <div className={this.props.classes.editFacet}>
-                            <ul style={{listStyleType:'none'}}>
-                                <li><div onClick={this.editMode} className={this.props.classes.editBtn}><Typography type='button'>{(this.state.editModeOn) ? 'Stop Editing' : 'Edit Highlights'}</Typography></div></li>
-                                <Collapse isOpened={this.state.editModeOn}>
-                                    <li><div className={this.props.classes.editBtn} onClick={this.saveWork}><Typography id = 'saveButton' type='button'>Save Highlights</Typography></div></li>
-                                </Collapse>
-                            </ul>
+                <div className = {this.props.classes.quillArea} style = {{ display: 'inline-block', height: (this.state.commentsOn) ? '50%': '90%', overflow: 'scroll' }}>
+                    <div className={this.props.classes.editFacet}>
+                        <div className={this.props.classes.editBox} style={{width:'auto'}}>
+                            <div onClick={this.editMode}><Typography align='right' type='button'>{(this.state.editModeOn) ? 'Stop Editing' : 'Edit Highlights'}</Typography></div>
                         </div>
+                        <div className={(this.state.editModeOn) ? this.props.classes.editBox : this.props.classes.noBox} onClick={this.saveWork}><Typography align='right' id ='saveButton' type='button' style={{color:(this.state.saving) ? '#1D1F83' : '#000'}}>Save Highlights</Typography></div>
+                    </div>
+
                 {/* ====== Quill editor for Annotating the Report Text ====== */}
 
                 {/* <!--<Paper elevation={4} className={this.props.classes.paperWindow}>--> */}

@@ -50,11 +50,27 @@ export default {
     },
     /* Container for the edit and save buttons */
     editFacet: {
+        display: 'inline-block',
+        width: '100%',
+        maxHeight: 20,
+        padding: 5,
+        fontSize: 12,
+        color: '#1D1F83',
+        overflow: 'hidden',
+    },
+    editBox: {
+        marginLeft: 20,
+        display: 'inline-block',
         float: 'right',
-        display: 'flex',
-        zIndex: 20,
-        width: 'auto',
-        transition: 'width 200ms ease-in-out',
+        width: '8vw',
+        transition: 'width 400ms ease-in-out',
+    },
+    noBox: {
+        display: 'inline-block',
+        float: 'right',
+        width: 0,
+        overflow: 'hidden',
+        transition: 'width 400ms ease-in-out',
     },
     /* Container for the legend */
     legend: {

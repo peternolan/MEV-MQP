@@ -9,7 +9,7 @@ export default {
         borderStyle: 'solid',
         fontFamily: 'Roboto',
         width: '100%',
-        height: '90%'
+        height: '100%'
     },
     expansionPanelSummary: {
         justifyContent: 'center',

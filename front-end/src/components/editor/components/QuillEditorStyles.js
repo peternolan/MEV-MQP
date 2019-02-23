@@ -15,7 +15,6 @@ export default {
         margin: 0,
         padding: 0,
         bottom: 0,
-        height: 'auto',
         position: 'absolute',
         backgroundColor: '#fff',
     },

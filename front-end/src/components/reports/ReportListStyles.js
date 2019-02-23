@@ -59,7 +59,7 @@ export default {
     float: 'right',
   },
   ReportList: {
-    maxheight: 'calc(100% - 122px)',
+    maxHeight: 'calc(100vh - 122px)',
     maxWidth: '100vw',
     display: 'inline-block',
     boxShadow: 'none'

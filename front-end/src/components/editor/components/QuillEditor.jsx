@@ -211,12 +211,12 @@ class QuillEditor extends Component {
                                             text = text.concat(dummyNode.getElementsByTagName("comment")[i].innerText);
 
                                            if (dummyNode.getElementsByTagName("comment")[i].getAttribute('viewable').toString() === "public") {
-                                               commentLines = commentLines.concat(`<div style='left: 3px; width: 70%; border-radius: 5px; background-color: #43e8e8; position: relative; padding: 6px ' >
+                                               commentLines = commentLines.concat(`<div style='left: 3px; width: 80%; border-radius: 5px; background-color: #43e8e8; position: relative; padding: 6px ' >
                                                                                         <div style ='left: 20px'>${dummyNode.getElementsByTagName("comment")[i].innerText.replace("n$", "</br>")}</div>
                                                                                          </div>`);
                                            } else {
 
-                                               var block = `<div style='left: 3px; width: 70%; border-radius: 5px; background-color: #c5cbd6; position: relative; padding: 6px ' >
+                                               var block = `<div style='left: 3px; width: 80%; border-radius: 5px; background-color: #c5cbd6; position: relative; padding: 6px ' >
                                                                  <div style ='left: 20px'>${dummyNode.getElementsByTagName("comment")[i].innerText.replace("n$", "</br>")} </div>
                                                                  </div>`;
 
@@ -458,13 +458,13 @@ class QuillEditor extends Component {
 
                                 if (dummyNode2.getElementsByTagName("comment")[i].getAttribute('viewable').toString() === "public") {
 
-                                    commentLines = commentLines.concat(`<div style='left: 3px; width: 70%; border-radius: 5px; background-color: #43e8e8; position: relative; padding: 6px ' >
+                                    commentLines = commentLines.concat(`<div style='left: 3px; width: 80%; border-radius: 5px; background-color: #43e8e8; position: relative; padding: 6px ' >
                                                                         <div style ='left: 20px'>${dummyNode.getElementsByTagName("comment")[i].innerText.replace("n$", "</br>")} </div>
                                                                          </div>`);
                                 } else {
 
 
-                                    commentLines = commentLines.concat(`<div style='left: 3px; width: 70%; border-radius: 5px; background-color: #c5cbd6; position: relative; padding: 6px ' >
+                                    commentLines = commentLines.concat(`<div style='left: 3px; width: 80%; border-radius: 5px; background-color: #c5cbd6; position: relative; padding: 6px ' >
                                                                         <div style ='left: 20px'>${dummyNode.getElementsByTagName("comment")[i].innerText.replace("n$", "</br>")} </div>
                                                                          </div>`);
                                 }
@@ -978,10 +978,10 @@ class QuillEditor extends Component {
                                 </div>
                             </div>
                             <div style={{padding: '4px'}}>
-                                <textarea id="comment" style = {{resize: 'none', width: '70%'}} rows="4">  </textarea>
+                                <textarea id="comment" style = {{resize: 'none', width: '80%'}} rows="4">  </textarea>
                             </div>
 
-                            <div style={{padding: '4px', display: 'inline-block', width: '70%'}}>
+                            <div style={{padding: '4px', display: 'inline-block', width: '80%'}}>
 
                                 <span style = {{position: 'relative', left: '5px', bottom: '4px', marginRight: '2px'}}>Public:</span>
                                 <label class = "switch">
@@ -991,7 +991,7 @@ class QuillEditor extends Component {
 
                                 </label>
 
-                                <Button id="MakeNote" style={{padding: '0', position: 'relative', border: '2px solid #1d00ff', left: '6.25%',  width: '15%'}}
+                                <Button id="MakeNote" style={{padding: '0', position: 'relative', border: '2px solid #1d00ff', left: '6.25%',  width: '10%'}}
                                         onClick={() => this.commentMade()}> Make Note </Button>
                                 <Button
                                     id="saveButton2"
@@ -1015,8 +1015,7 @@ class QuillEditor extends Component {
                                     style={{fontSize: '20pt', left: '40%', position: 'relative'}}
                                 >
                                     <Button id="delete" style={{
-                                        borderRadius: '20px',
-                                        border: '1px solid red',
+                                        border: '2px solid red',
                                         width: '8%',
                                         height: 'calc(1.25vw)'
                                     }} onClick={() => this.commentDelete()}>

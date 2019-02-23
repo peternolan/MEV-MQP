@@ -656,13 +656,6 @@ class QuillEditor extends Component {
             var x = document.getElementById(`react-quill-${this.props.primaryid}`);
             x.style.display = "none";
 
-            /*
-            var yyy = document.getElementById(`saveButton1`);
-            yyy.style.display = "none";
-
-            var yx = document.getElementById(`saveButton1b`);
-            yx.style.display = "none";
-            */
             var y = document.getElementById(`react-quill-${this.props.primaryid}-2`);
             y.style.display = "block";
 
@@ -678,14 +671,6 @@ class QuillEditor extends Component {
             var a = document.getElementById(`react-quill-${this.props.primaryid}-2`);
             a.style.display = "none";
 
-            /*
-            var cc = document.getElementById(`saveButton1`);
-            cc.style.display = "inline-block";
-
-            var ca = document.getElementById(`saveButton1b`);
-            ca.style.display = "inline-block";
-
-            */
             var b = document.getElementById(`react-quill-${this.props.primaryid}`);
             b.style.display = "block";
 
@@ -703,7 +688,7 @@ class QuillEditor extends Component {
 
     customToolbar = () => (
 
-        <div id={`react-quill-${this.state.primaryId}`} className = {this.props.classes.toolbar} style={{ width: '84%', height: 'calc(8vh)', display: 'none'}}>
+        <div id={`react-quill-${this.state.primaryId}`} className = {this.props.classes.toolbar} style={{ width: '99%', height: 'calc(8vh)', display: 'none'}}>
 
             {/*
             <select defaultValue="false" className="ql-header" style={{ width: '100px', height: '36px', margin: '4px' }}>

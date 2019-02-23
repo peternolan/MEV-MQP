@@ -59,11 +59,15 @@ export default {
         overflow: 'hidden',
     },
     editBox: {
-        marginLeft: 20,
         display: 'inline-block',
         float: 'right',
         width: '8vw',
         transition: 'width 400ms ease-in-out',
+        cursor: 'pointer',
+        '&:hover':{
+            textDecorationLine: 'underline',
+            cursor: 'pointer'
+        },
     },
     noBox: {
         display: 'inline-block',

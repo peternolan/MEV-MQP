@@ -60,6 +60,7 @@ export const createUserBin = (userID, binName, binDesc) => () => {
  * move a report from one bin to another
  */
 export const moveReport = (primaryid, fromBin, toBin, userID, type) => () => {
+  console.log('Action Move Report ' + primaryid + ' ' + fromBin + ' ' + toBin + ' ' + userID + ' ' + type);
   const fetchData = {
     method: 'POST',
     mode: 'cors',

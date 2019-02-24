@@ -153,8 +153,8 @@ class ReportTable extends React.PureComponent {
     if(this.props.bin !== 'searched reports'){
       this.props.getCaseReports(this.props.bin, this.props.userID)
           .then(reports => {
-            this.props.setAllReports(reports);
 
+            this.props.setAllReports(reports);
 
             this.setState({
               data: reports,
@@ -194,8 +194,11 @@ class ReportTable extends React.PureComponent {
           loadingData: true,
         });
 
+        console.log(this.props.bin);
+
         this.props.getCaseReports(this.props.bin, this.props.userID)
             .then((reports) => {
+              console.log(reports);
               this.props.setAllReports(reports);
               this.updateEvidenceRows();
               this.setState({
@@ -720,6 +723,8 @@ class ReportTable extends React.PureComponent {
                           <Item
                               key={bin.case_id + ' ' + bin.name}
                               onClick={() => {
+                                console.log('Move Case');
+                                console.log('props ' + this.props.bin);
                                 this.handleMoveReport(
                                     row.row.primaryid,
                                     this.props.bin,

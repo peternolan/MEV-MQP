@@ -141,6 +141,7 @@ class ReportList extends Component {
       searchedReports: this.props.searchedReports,
     } , () => {
 
+        console.log(this.state.bin);
         console.log(this.props.searchedReports)
 
        });
@@ -170,7 +171,11 @@ class ReportList extends Component {
   changeTab = (currentTab) => {
       if (currentTab === 1) {  // This is the searched tab
           //***************  Searched reports can be accessed */
-          this.setState({currentTab});
+          this.setState({currentTab} , () => {
+
+              console.log(this.state.bin);
+
+          });
 
       }
   };

@@ -194,8 +194,6 @@ export const getInstances = (reports) => {
  */
 export const getCaseReports = (bin, userID, filters) => (dispatch, getState) => {
 
-  //var defaultFilter = { };
-
   const defaultFilters = {
     init_fda_dt: {
       start: '1',
@@ -210,7 +208,6 @@ export const getCaseReports = (bin, userID, filters) => (dispatch, getState) => 
     stage: [],
     cause: [],
   };
-
   const filtersToUse = (filters) ? Object.assign(defaultFilters, filters) : getState().filters;
   const fetchData = {
     method: 'POST',
@@ -224,13 +221,9 @@ export const getCaseReports = (bin, userID, filters) => (dispatch, getState) => 
       userID,
     }),
   };
-
-
-
   return fetch(`${process.env.REACT_APP_NODE_SERVER}/getreports`, fetchData)
     .then(response => response.json())
     .then(reports => (reports.rows ? reports.rows : []))
-
 };
 
 /**
@@ -293,7 +286,7 @@ export const getReportsFromCase = (userID, caseName) => () => {
       caseName,
     }),
   };
-
+  console.log(process.env.REACT_APP_NODE_SERVER);
   return fetch(`${process.env.REACT_APP_NODE_SERVER}/getreportsfromcasename`, fetchData)
     .then(response => {return response.json();})
     .then(response => (response.rows ? response.rows : []))

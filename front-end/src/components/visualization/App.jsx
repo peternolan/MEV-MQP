@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { MuiThemeProvider, createMuiTheme, withStyles } from 'material-ui/styles';
-import { blue, green, red } from 'material-ui/colors';
+import { MuiThemeProvider, createMuiTheme, withStyles } from '@material-ui/core/styles';
+import { blue, green, red } from '@material-ui/core/colors';
 import TreeMap from './components/treeMap/TreeMap';
 import Demographics from './components/demographics/Demographics';
 import { setCurrentlySelecting } from '../../actions/filterActions';

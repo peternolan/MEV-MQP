@@ -20,19 +20,19 @@ import ExpansionPanel, {
   ExpansionPanelSummary,
   ExpansionPanelDetails,
 } from 'material-ui/ExpansionPanel';
-import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
-import Divider from 'material-ui/Divider';
-import MaterialTooltip from 'material-ui/Tooltip';
-import Snackbar from 'material-ui/Snackbar';
-import { withStyles } from 'material-ui/styles';
-import Paper from 'material-ui/Paper';
-import Button from 'material-ui/Button';
-import CheckBox from 'material-ui/Checkbox';
-import { CircularProgress } from 'material-ui/Progress';
-import Typography from 'material-ui/Typography';
-import { FormControlLabel } from 'material-ui/Form';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Divider from '@material-ui/core/Divider';
+import MaterialTooltip from '@material-ui/core/Tooltip';
+import Snackbar from '@material-ui/core/Snackbar';
+import { withStyles } from '@material-ui/styles';
+import Paper from '@material-ui/core/Paper';
+import Button from '@material-ui/core/Button';
+import CheckBox from '@material-ui/core/Checkbox';
+import { CircularProgress } from '@material-ui/core/Progress';
+import Typography from '@material-ui/core/Typography';
+import { FormControlLabel } from '@material-ui/core/Form';
 import _ from 'lodash';
-import { moveReport, getCaseReports, getReportNarrativeFromID, getReportsInCases , setAllReports, executeSearch, getInstances, getAgeAndCode} from '../../../actions/reportActions';
+import { moveReport, getCaseReports, getReportNarrativeFromID, getReportsInCases, getReportsFromCase , setAllReports, executeSearch, getInstances, getAgeAndCode} from '../../../actions/reportActions';
 import QuillEditor from '../../editor/components/QuillEditor';
 import ReadCaseIcon from '../../../resources/ReadCaseIcon';
 import ClearFilterIcon from '../../../resources/RemoveFromCaseIcon';
@@ -50,8 +50,8 @@ class ReportTable extends React.PureComponent {
   static propTypes = {
     setSearchLoading: PropTypes.func.isRequired,
     searchLoading: PropTypes.bool.isRequired,
-    returnedIds: PropTypes.array.isRequired,
-    returnedResults: PropTypes.array.isRequired,
+    returnedIds: PropTypes.array,
+    returnedResults: PropTypes.array,
     printSearchResults: PropTypes.func.isRequired,
     changeTab: PropTypes.func.isRequired,
     setAllReports: PropTypes.func.isRequired,
@@ -61,7 +61,7 @@ class ReportTable extends React.PureComponent {
     supportiveChosen:  PropTypes.bool,
     handleViewReport: PropTypes.func,
     incrementSummary: PropTypes.func.isRequired,
-    reportOpen: PropTypes.bool.isRequired,
+    reportOpen: PropTypes.bool,
     bins: PropTypes.arrayOf(PropTypes.object).isRequired,
     filters: PropTypes.shape({
       init_fda_dt: PropTypes.object,
@@ -184,17 +184,8 @@ class ReportTable extends React.PureComponent {
       console.log('component Did mount');
 
     this.resizeTable();
-
     // Listen for window resize, but wait till they have stopped to do the size calculations.
     window.addEventListener('resize', this.resizeTimer);
-  }
-
-  componentWillReceiveProps(nextProps){
-
-    if (nextProps.searchedReports.length!==0){
-
-      this.setState({ data:nextProps.searchedReports});
-    }
   }
 
   /**
@@ -211,8 +202,7 @@ class ReportTable extends React.PureComponent {
         });
       }
 
-
-          console.log('component Did Update');
+      console.log('component Did Update');
         console.log(this.props.bin);
         if (this.props.bin !== 'all reports') {
           if (this.props.filters.sex.length > 0 || this.props.filters.age.length > 0  || this.props.filters.cause.length > 0
@@ -412,9 +402,10 @@ class ReportTable extends React.PureComponent {
    * Sends a backend request to move a report from one bin to another
    */
   handleMoveReport = (primaryid, fromBin, toBin, type) => {
+    console.log('from',fromBin,'to',toBin);
     this.props.moveReport(primaryid, fromBin, toBin, this.props.userID, type ? 'primary' : 'supportive')
         .then(() => {
-          if (toBin === 'trash' || toBin === 'all reports') {
+          if (toBin === 'trash' || toBin ==='all reports') {
             this.setState({
               loadingData: true,
               keepTableWhileLoading: true,
@@ -437,7 +428,7 @@ class ReportTable extends React.PureComponent {
             snackbarMessage: `Report ${primaryid} Moved to ${this.props.toTitleCase(toBin)}`,
           });
         });
-    if (toBin === 'trash' || toBin === 'all reports') {
+    if (toBin === 'trash' || toBin ==='all reports') {
       const newExpandedRows = this.state.expandedRows;
       newExpandedRows.splice(this.state.expandedRows.indexOf(primaryid.toString()), 1);
       this.changeExpandedDetails(newExpandedRows);
@@ -904,6 +895,7 @@ const mapStateToProps = state => ({
 export default connect(
     mapStateToProps,
     {
+      getReportsFromCase,
       moveReport,
       getCaseReports,
       executeSearch,

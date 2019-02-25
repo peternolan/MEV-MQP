@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { MuiThemeProvider, createMuiTheme, withStyles } from 'material-ui/styles';
-import { blue, green, red } from 'material-ui/colors';
-import Paper from 'material-ui/Paper';
-import Typography from 'material-ui/Typography';
+import { MuiThemeProvider, createMuiTheme, withStyles } from '@material-ui/core/styles';
+import { blue, green, red } from '@material-ui/core/colors';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
 import { setUserInfo, makeUserTrash, makeUserRead, checkUserTrash, checkUserRead } from '../../actions/userActions';
 import MEVColors from '../../theme';
 

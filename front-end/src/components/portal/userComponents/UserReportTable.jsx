@@ -16,15 +16,15 @@ import {
   PagingPanel,
   TableColumnResizing,
 } from '@devexpress/dx-react-grid-material-ui';
-import { withStyles } from 'material-ui/styles';
-import Divider from 'material-ui/Divider';
-import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
+import { withStyles } from '@material-ui/styles';
+import Divider from '@material-ui/core/Divider';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpansionPanel, {
   ExpansionPanelSummary,
   ExpansionPanelDetails,
-} from 'material-ui/ExpansionPanel';
-import Button from 'material-ui/Button';
-import Typography from 'material-ui/Typography';
+} from '@material-ui/core/ExpansionPanel';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/Typography';
 import { moveReport, getCaseReports, getInstances } from '../../../actions/reportActions';
 
 const styles = {};

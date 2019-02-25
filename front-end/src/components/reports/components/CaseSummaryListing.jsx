@@ -1,15 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withStyles } from 'material-ui/styles';
-import Paper from 'material-ui/Paper';
-import Divider from 'material-ui/Divider';
-import ExpansionPanel, {
-  ExpansionPanelSummary,
-  ExpansionPanelDetails,
-} from 'material-ui/ExpansionPanel';
-import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
-import Typography from 'material-ui/Typography';
+import { withStyles } from '@material-ui/styles';
+import Paper from '@material-ui/core/Paper';
+import Divider from '@material-ui/core/Divider';
+import Typography from '@material-ui/core/Typography';
 import CaseSummary from '../../cases/CaseSummary';
 import { moveReport, getCaseReports, getInstances, getReportsInCases } from '../../../actions/reportActions';
 import CaseIcon from '../../../resources/CaseIcon';

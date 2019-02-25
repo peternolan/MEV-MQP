@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withStyles } from 'material-ui/styles';
-import Typography from 'material-ui/Typography';
-import TextField from 'material-ui/TextField';
-import Button from 'material-ui/Button';
+import { withStyles } from '@material-ui/styles';
+import Typography from '@material-ui/core/Typography';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 import {Combobox} from 'react-widgets';
 import { executeSearch, getTagsinCase, getReportsInCases, getReportsFromCase, getCaseNameByID, getCaseReports, setSearchedReports, getInstances, getAgeAndCode } from '../../actions/reportActions';
 import * as JsSearch from 'js-search';
@@ -23,8 +23,8 @@ class CaseSummary extends Component {
 
   static propTypes = {
     setSearchLoading: PropTypes.func.isRequired,
-    returnedIds: PropTypes.array.isRequired,
-    returnedResults: PropTypes.array.isRequired,
+    returnedIds: PropTypes.array,
+    returnedResults: PropTypes.array,
     printSearchResults: PropTypes.func.isRequired,
     changeTab: PropTypes.func.isRequired,
     setSearchedReports: PropTypes.func.isRequired,
@@ -301,6 +301,7 @@ class CaseSummary extends Component {
 
   /************ when case changes, update the reports */
   handleCaseChange = () => {
+      console.log('reports',this.state.reportsInCase);
       this.props.updateTab(this.state.caseName);
   };
 

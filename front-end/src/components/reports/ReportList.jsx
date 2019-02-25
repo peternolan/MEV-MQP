@@ -3,17 +3,17 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Button from 'material-ui/Button';
-import { MuiThemeProvider, createMuiTheme, withStyles } from 'material-ui/styles';
-import { blue, green, red, yellow } from 'material-ui/colors';
-import TextField from 'material-ui/TextField';
-import AppBar from 'material-ui/AppBar';
-import Typography from 'material-ui/Typography';
-import Modal from 'material-ui/Modal';
-import Tabs, { Tab } from 'material-ui/Tabs';
-import Snackbar from 'material-ui/Snackbar';
-import MaterialTooltip from 'material-ui/Tooltip';
-import Paper from 'material-ui/Paper';
-import Divider from 'material-ui/Divider';
+import { MuiThemeProvider, createMuiTheme, withStyles } from '@material-ui/core/styles';
+import { blue, green, red, yellow } from '@material-ui/core/colors';
+import TextField from '@material-ui/core/TextField';
+import AppBar from '@material-ui/core/AppBar';
+import Typography from '@material-ui/core/Typography';
+import Modal from '@material-ui/core/Modal';
+import Tabs, { Tab } from '@material-ui/core/Tabs';
+import Snackbar from '@material-ui/core/Snackbar';
+import MaterialTooltip from '@material-ui/core/Tooltip';
+import Paper from '@material-ui/core/Paper';
+import Divider from '@material-ui/core/Divider';
 import ReportTable from './components/ReportTable';
 import CaseSummaryListing from './components/CaseSummaryListing';
 import ReportPanel from './components/ReportPanel';
@@ -91,8 +91,7 @@ class ReportList extends Component {
       primaryChosen: false,
       supportiveChosen: false,
       summaryCounter: 0,
-      searchedReports:[],
-      returnedResults: [1, 2, 3],
+      returnedResults: [],
       returnedIds: [],
       searchLoading: false,
     };
@@ -138,12 +137,8 @@ class ReportList extends Component {
       bin: name,
       //background: color,
       currentTab: index,
-      searchedReports: this.props.searchedReports,
-    } , () => {
-
-        console.log(this.props.searchedReports)
-
-       });
+      returnedResults: this.props.returnedResults,
+    });
   };
 
 
@@ -156,7 +151,7 @@ class ReportList extends Component {
             bin: name,
             //background: color,
             currentTab: index,
-            searchedReports: this.props.searchedReports,
+            returnedResults: this.props.returnedResults,
 
         });
     };
@@ -199,18 +194,14 @@ class ReportList extends Component {
       });
     } else if (currentTab === 1) {  // This is the searched tab
       //***************  Searched reports can be accessed */
-        console.log("Current Tab is 1");
-        console.log("Here " + this.props.searchedReports.length);
-        if(this.props.searchedReports.length > 0){
-          console.log("Here")
-          this.setState({ currentTab, searchedReports : this.props.searchedReports , bin: 'searched reports', })
+        if(this.state.returnedResults.length > 0){
+          this.setState({ currentTab, bin: 'searched reports'})
         }
 
     } else {
       this.setState({
         currentTab,
         bin: event.currentTarget.getAttribute('name').toLowerCase(),
-        searchedReports: []
       });
     }
   };
@@ -448,7 +439,6 @@ class ReportList extends Component {
               toTitleCase={this.toTitleCase}
               tableClass={this.state.summaryOpen}
               incrementSummary={this.updateSummary}
-              searchedReports = {this.state.searchedReports}
               primaryChosen = {this.state.primaryChosen}
               supportiveChosen = {this.state.supportiveChosen}
               handleViewReport = {this.handleViewReportPanel}
@@ -530,7 +520,6 @@ const mapStateToProps = state => ({
     userEmail: state.user.userEmail,
   isLoggedIn: state.user.isLoggedIn,
     /**********  Searched reports */
-  searchedReports: state.all_reports.searched_reports,
 });
 
 /**

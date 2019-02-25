@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withStyles } from 'material-ui/styles';
-import Paper from 'material-ui/Paper';
-import Divider from 'material-ui/Divider';
+import { withStyles } from '@material-ui/styles';
+import Paper from '@material-ui/core/Paper';
+import Divider from '@material-ui/core/Divider';
 import { getReportNarrativeFromID, htmlEncode, htmlUnescape } from '../../../actions/reportActions';
 import styles from "./ReportPanelStyles";
 import Highlighter from "react-highlight-words";
-import Typography from "material-ui/Typography/Typography";
+import Typography from "@material-ui/core/Typography";
 import QuillEditor from "../../editor/components/QuillEditor";
 import {Collapse} from 'react-collapse';
 //import CaseIcon from '../../../resources/CaseIcon';

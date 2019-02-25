@@ -150,25 +150,39 @@ class ReportTable extends React.PureComponent {
    * Sends fetch request to retrieve list of reports to be shown in table
    */
   componentWillMount() {
+      console.log('component Will mount');
     if(this.props.bin !== 'searched reports'){
-      this.props.getCaseReports(this.props.bin, this.props.userID)
-          .then(reports => {
+      console.log(this.props.filters);
 
-            this.props.setAllReports(reports);
 
-            this.setState({
-              data: reports,
-              allData: reports,
-              loadingData: false,
-            })
-          });
-    }
+      //if (this.props.filters.sex.length > 0 || this.props.filters.age.length > 0  || this.props.filters.cause.length > 0
+       //   || this.props.filters.meType.length > 0  || this.props.filters.occp_cod.length > 0  ||
+       // this.props.filters.occr_country.length > 0  || this.props.filters.product.length > 0  || this.props.filters.stage.length > 0 ) {
+       // console.log('FILTERS PRESENT');
+        this.props.getCaseReports(this.props.bin, this.props.userID)
+            .then(reports => {
+
+              this.props.setAllReports(reports);
+
+              this.setState({
+                data: reports,
+                allData: reports,
+                loadingData: false,
+              })
+            });
+      //}
+
+     }
+
 
     this.updateHighlightedRows();
     this.updateEvidenceRows();
   }
 
   componentDidMount() {
+
+      console.log('component Did mount');
+
     this.resizeTable();
 
     // Listen for window resize, but wait till they have stopped to do the size calculations.
@@ -188,27 +202,71 @@ class ReportTable extends React.PureComponent {
    * new list of reports if necessary
    */
   componentDidUpdate(prevProps) {
-    if (prevProps.bin !== this.props.bin || !_.isEqual(this.props.filters, prevProps.filters)) {
-      if(this.props.bin !== 'searched reports'){
+
+      if (prevProps.bin !== this.props.bin || !_.isEqual(this.props.filters, prevProps.filters)) {
+      if(this.props.bin !== 'searched reports') {
+        console.log('component Did Update not searched reports');
         this.setState({
           loadingData: true,
         });
-
-        console.log(this.props.bin);
-
-        this.props.getCaseReports(this.props.bin, this.props.userID)
-            .then((reports) => {
-              console.log(reports);
-              this.props.setAllReports(reports);
-              this.updateEvidenceRows();
-              this.setState({
-                data: reports,
-                loadingData: false,
-              });
-              this.changeExpandedDetails([]);
-              (this.state.currentTab != 0 || this.state.currentTab != 1)
-            });
       }
+
+
+          console.log('component Did Update');
+        console.log(this.props.bin);
+        if (this.props.bin !== 'all reports') {
+          if (this.props.filters.sex.length > 0 || this.props.filters.age.length > 0  || this.props.filters.cause.length > 0
+              || this.props.filters.meType.length > 0  || this.props.filters.occp_cod.length > 0  ||
+              this.props.filters.occr_country.length > 0  || this.props.filters.product.length > 0  || this.props.filters.stage.length > 0 ) {
+
+            console.log('FILTERS PRESENT');
+            this.props.getCaseReports(this.props.bin, this.props.userID, {})
+              .then((reports) => {
+                console.log(reports);
+                this.props.setAllReports(reports);
+                this.updateEvidenceRows();
+                this.setState({
+                  data: reports,
+                  loadingData: false,
+                });
+                this.changeExpandedDetails([]);
+                //(this.state.currentTab != 0 || this.state.currentTab != 1)
+              });
+
+          }
+          else {
+
+            console.log('NO FILTERS PRESENT');
+            this.props.getCaseReports(this.props.bin, this.props.userID, {})
+                .then((reports) => {
+                  console.log(reports);
+                  this.props.setAllReports(reports);
+                  this.updateEvidenceRows();
+                  this.setState({
+                    data: reports,
+                    loadingData: false,
+                  });
+                  this.changeExpandedDetails([]);
+                  //(this.state.currentTab != 0 || this.state.currentTab != 1)
+                });
+
+          }
+
+        }
+        else {
+          this.props.getCaseReports(this.props.bin, this.props.userID)
+              .then((reports) => {
+                console.log(reports);
+                this.props.setAllReports(reports);
+                this.updateEvidenceRows();
+                this.setState({
+                  data: reports,
+                  loadingData: false,
+                });
+                this.changeExpandedDetails([]);
+                //(this.state.currentTab != 0 || this.state.currentTab != 1)
+              });
+        }
       // else {
       //   this.updateEvidenceRows();
       // }
@@ -299,6 +357,7 @@ class ReportTable extends React.PureComponent {
   };
 
   updateEvidenceRows = () => {
+      console.log("Update Evidence this.props.bin " + this.props.bin  );
     if (this.props.bin !== 'searched reports') {
       this.props.getReportsInCases(this.props.userID)
           .then((response) => {
@@ -360,12 +419,14 @@ class ReportTable extends React.PureComponent {
               loadingData: true,
               keepTableWhileLoading: true,
             });
-            this.props.getCaseReports(this.props.bin, this.props.userID)
-                .then(reports => this.setState({
-                  data: reports,
-                  loadingData: false,
-                  keepTableWhileLoading: false,
-                }));
+
+
+              this.props.getCaseReports(this.props.bin, this.props.userID)
+                  .then(reports => this.setState({
+                    data: reports,
+                    loadingData: false,
+                    keepTableWhileLoading: false,
+                  }));
           } else {
             this.updateHighlightedRows();
             this.updateEvidenceRows();

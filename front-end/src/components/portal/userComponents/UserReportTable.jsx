@@ -77,8 +77,7 @@ class UserReportTable extends React.PureComponent {
 
     this.props.getCaseReports(this.props.bin, this.props.userID, {})
       .then(bins => {
-
-
+        console.log(bins);
         this.props.setReportCount(bins.length);
         this.setState({ data: bins });
 
@@ -97,8 +96,9 @@ class UserReportTable extends React.PureComponent {
       this.props.getCaseReports(this.props.bin, this.props.userID, {})
         .then((bins) => {
           this.setState({ data: bins });
-          this.props.setReportCount(bins.length)
+          this.props.setReportCount(bins.length);
           this.changeExpandedDetails([]);
+
         });
     }
   }
@@ -209,6 +209,7 @@ class UserReportTable extends React.PureComponent {
   )
 
   render() {
+    console.log(this.state.data);
     return (
       <Grid
         id="test2"

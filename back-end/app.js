@@ -382,6 +382,7 @@ app.post('/getdemographicdata', (req, res) => {
 //WHERE THE REPORTS COME FROM? -- yes, but you can not get reports from cases using this method
 app.post('/getreports', (req, res) => {
   //console.log('got a report request with body:\n ', req.body);
+
   let query = '';
   if (req.body.bin === 'all reports') {
     query =
@@ -443,7 +444,7 @@ app.post('/getreportsincases', (req, res) => {
       query += ` AND name='${req.body.caseName}'`;
     }
 
-    console.log(query)
+    console.log(query);
     db.query(query, (err, data) => {
       res.status(200).send(data);
     });

@@ -254,7 +254,7 @@ class Dashboard extends Component {
   )
 
   render() {
-    const { value } = this.state;
+    const value = this.state;
     return (
       <MuiThemeProvider theme={defaultTheme}  >
         <Snackbar
@@ -278,7 +278,7 @@ class Dashboard extends Component {
             onClose={this.handleEditCaseClose}
           >
             <Paper elevation={8} className={this.props.classes.newCaseModal} >
-              <Typography type="title" id="modal-title">
+              <Typography variant="title" id="modal-title">
                 Edit Case
               </Typography>
               <hr />
@@ -360,7 +360,7 @@ class Dashboard extends Component {
                           height: 'calc(80vh - 122px)'}}>
                       <TabContainer key={index} >
                         <div className="col-sm-12">
-                          <Typography type="title" style={{ fontSize: '30px', color: '#333' }}>
+                          <Typography variant="title" style={{ fontSize: '30px', color: '#333' }}>
                             {option}
                             {(!(this.state.value === this.getTrashValue()) && !(this.state.value === this.getReadValue()))
                               ? <FormControlLabel
@@ -390,21 +390,21 @@ class Dashboard extends Component {
                               ? <Button raised className="pull-right" onClick={this.handleEditCaseOpen}> Edit Case </Button>
                               : null}
                           </Typography>
-                          <Typography type="subheading" style={{ fontSize: '16px', color: '#333' }}>
+                          <Typography variant="subheading" style={{ fontSize: '16px', color: '#333' }}>
                             <i>{this.state.binDescs[this.state.case] || 'No Description' }</i>
                           </Typography>
                           <br />
                           {
                             (this.state.value === this.getTrashValue() || this.state.value === this.getReadValue())
                             ? (
-                              <Typography type="subheading" style={{ fontSize: '16px', color: '#333' }}>
+                              <Typography variant="subheading" style={{ fontSize: '16px', color: '#333' }}>
                                 <strong>Number of Reports:</strong> {this.state.reportCount}
                               </Typography>
                             )
                             : (
                               <div>
                                 <div className="col-sm-12" style={{ padding: '0px' }}>
-                                  <Typography type="subheading" style={{ fontSize: '16px', color: '#333' }}>
+                                  <Typography variant="subheading" style={{ fontSize: '16px', color: '#333' }}>
                                     <strong>Number of Reports:</strong> {this.state.reportCount}
                                   </Typography>
                                 </div>

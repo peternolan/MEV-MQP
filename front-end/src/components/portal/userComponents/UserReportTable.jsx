@@ -16,7 +16,7 @@ import {
   PagingPanel,
   TableColumnResizing,
 } from '@devexpress/dx-react-grid-material-ui';
-import { withStyles } from '@material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 import Divider from '@material-ui/core/Divider';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpansionPanel, {

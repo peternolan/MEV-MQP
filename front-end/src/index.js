@@ -1,7 +1,7 @@
 /* eslint react/jsx-filename-extension: 0 */
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
+import {Provider} from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 
 import createHistory from 'history/createBrowserHistory';

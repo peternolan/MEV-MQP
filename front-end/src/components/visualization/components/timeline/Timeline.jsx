@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withStyles } from '@material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import { setTimelineMinimizedToggle, getEntireTimeline, setSelectedDate } from '../../../../actions/timelineActions';
 import styles from './TimelineStyles';

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes, {string} from 'prop-types';
-import { withStyles } from '@material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 import { CircularProgress } from '@material-ui/core/CircularProgress';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';

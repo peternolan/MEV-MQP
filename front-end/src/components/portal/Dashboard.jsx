@@ -9,10 +9,10 @@ import MaterialTooltip from '@material-ui/core/Tooltip';
 import Button from '@material-ui/core/Button';
 import AppBar from '@material-ui/core/AppBar';
 import TextField from '@material-ui/core/TextField';
-import { FormControlLabel } from '@material-ui/core/FormControlLabel';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import Modal from '@material-ui/core/Modal';
-import Tabs, { Tab } from '@material-ui/core/Tabs';
+import Tabs, {Tab}  from '@material-ui/core/Tabs';
 import Typography from '@material-ui/core/Typography';
 import Snackbar from '@material-ui/core/Snackbar';
 import GoToVisualizationIcon from '../../resources/goToVisualizationIcon.svg';
@@ -121,6 +121,7 @@ class Dashboard extends Component {
         bins.forEach((bin, i) => active[bin.name] = bin.active);
         const userBins = this.sortUserBins(bins);
         const defaultCase = (userBins[this.state.value]) ? userBins[this.state.value].toLowerCase() : '';
+        console.log('ub',userBins,descs,active,defaultCase);
         this.setState({
           userBins,
           binDescs: descs,
@@ -414,8 +415,8 @@ class Dashboard extends Component {
 
                         <div className={`${this.props.classes.reportsWrapper} col-sm-12`}>
                           <div className={`${this.props.classes.paperNoPadding}`}>
-                            <UserReportTable bin={this.state.case} bins={this.state.userBins} setReportCount={this.setReportCount}
-                                             />
+                            {<UserReportTable bin={this.state.case} bins={this.state.userBins} setReportCount={this.setReportCount}
+                                             />}
                           </div>
                         </div>
                         <div className={`${this.props.classes.clearfix}`} />

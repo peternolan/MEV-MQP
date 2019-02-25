@@ -16,10 +16,6 @@ import {
   PagingPanel,
   TableColumnResizing,
 } from '@devexpress/dx-react-grid-material-ui';
-import ExpansionPanel, {
-  ExpansionPanelSummary,
-  ExpansionPanelDetails,
-} from 'material-ui/ExpansionPanel';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Divider from '@material-ui/core/Divider';
 import MaterialTooltip from '@material-ui/core/Tooltip';
@@ -28,9 +24,9 @@ import { withStyles } from '@material-ui/styles';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import CheckBox from '@material-ui/core/Checkbox';
-import { CircularProgress } from '@material-ui/core/Progress';
+import { CircularProgress } from '@material-ui/core/CircularProgress';
 import Typography from '@material-ui/core/Typography';
-import { FormControlLabel } from '@material-ui/core/Form';
+import { FormControlLabel } from '@material-ui/core/FormControlLabel';
 import _ from 'lodash';
 import { moveReport, getCaseReports, getReportNarrativeFromID, getReportsInCases, getReportsFromCase , setAllReports, executeSearch, getInstances, getAgeAndCode} from '../../../actions/reportActions';
 import QuillEditor from '../../editor/components/QuillEditor';
@@ -828,9 +824,7 @@ const mapStateToProps = state => ({
  * Gets Redux actions to be called in this component.
  * Exports this component with the proper JSS styles.
  */
-export default connect(
-    mapStateToProps,
-    {
+export default withStyles(styles)(connect(mapStateToProps,{
       getReportsFromCase,
       moveReport,
       getCaseReports,
@@ -841,4 +835,4 @@ export default connect(
       getInstances,
       getAgeAndCode
     },
-)(withStyles(styles)(ReportTable));
+)(ReportTable));

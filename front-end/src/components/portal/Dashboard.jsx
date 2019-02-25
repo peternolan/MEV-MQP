@@ -9,7 +9,7 @@ import MaterialTooltip from '@material-ui/core/Tooltip';
 import Button from '@material-ui/core/Button';
 import AppBar from '@material-ui/core/AppBar';
 import TextField from '@material-ui/core/TextField';
-import { FormControlLabel } from '@material-ui/core/Form';
+import { FormControlLabel } from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import Modal from '@material-ui/core/Modal';
 import Tabs, { Tab } from '@material-ui/core/Tabs';

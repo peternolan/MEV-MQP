@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import Button from 'material-ui/Button';
+import Button from '@material-ui/core/Button';
 import { MuiThemeProvider, createMuiTheme, withStyles } from '@material-ui/core/styles';
 import { blue, green, red, yellow } from '@material-ui/core/colors';
 import TextField from '@material-ui/core/TextField';
@@ -528,7 +528,4 @@ const mapStateToProps = state => ({
  * Gets Redux actions to be called in this component.
  * Exports this component with the proper JSS styles.
  */
-export default connect(
-  mapStateToProps,
-  { getUserCases, createUserBin, getCountData },
-)(withStyles(styles)(ReportList));
+export default withStyles(styles)(connect(mapStateToProps,{ getUserCases, createUserBin, getCountData })(ReportList));

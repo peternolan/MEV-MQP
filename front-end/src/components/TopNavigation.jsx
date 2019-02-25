@@ -233,7 +233,7 @@ const mapStateToProps = state => ({
   totalCount: state.demographic.totalCount,
 });
 
-export default connect(
+export default withStyles(styles)(connect(
   mapStateToProps,
   {
     setUserInfo,
@@ -247,4 +247,4 @@ export default connect(
     toggleCauseFilter,
     setSelectedDate,
   },
-)(withStyles(styles)(TopNavigation));
+)(TopNavigation));

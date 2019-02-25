@@ -6,7 +6,7 @@ import { blue, green, red } from '@material-ui/core/colors';
 import TreeMap from './components/treeMap/TreeMap';
 import Demographics from './components/demographics/Demographics';
 import { setCurrentlySelecting } from '../../actions/filterActions';
-import { CircularProgress } from 'material-ui/Progress';
+import { CircularProgress } from '@material-ui/core/CircularProgress';
 import Timeline from './components/timeline/Timeline';
 import MEVColors from '../../theme';
 
@@ -145,7 +145,4 @@ const mapStateToProps = state => ({
  * Gets Redux actions to be called in this component.
  * Exports this component with the proper JSS styles.
  */
-export default connect(
-  mapStateToProps,
-  { setCurrentlySelecting },
-)(withStyles(styles)(App));
+export default withStyles(styles)(connect(mapStateToProps,{ setCurrentlySelecting })(App));

@@ -24,7 +24,7 @@ import ExpansionPanel, {
   ExpansionPanelDetails,
 } from '@material-ui/core/ExpansionPanel';
 import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/Typography';
+import Typography from '@material-ui/core/Typography';
 import { moveReport, getCaseReports, getInstances } from '../../../actions/reportActions';
 
 const styles = {};
@@ -262,7 +262,4 @@ const mapStateToProps = state => ({
  * Gets Redux actions to be called in this component.
  * Exports this component with the proper JSS styles.
  */
-export default connect(
-  mapStateToProps,
-  { moveReport, getCaseReports, getInstances  },
-)(withStyles(styles)(UserReportTable));
+export default withStyles(styles)(connect(mapStateToProps,{moveReport, getCaseReports, getInstances})(UserReportTable));

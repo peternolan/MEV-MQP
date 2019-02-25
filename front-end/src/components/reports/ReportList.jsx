@@ -44,6 +44,9 @@ const defaultTheme = createMuiTheme({
     ...MEVColors,
     error: red,
   },
+  typography: {
+    useNextVariants: true,
+  },
   shadows: ["none"],
   borderRadius: 0
 });

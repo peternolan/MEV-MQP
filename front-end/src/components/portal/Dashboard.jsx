@@ -58,6 +58,9 @@ const defaultTheme = createMuiTheme({
     ...MEVColors,
     error: red,
   },
+  typography: {
+    useNextVariants: true,
+  },
 });
 
 /**
@@ -255,7 +258,7 @@ class Dashboard extends Component {
   )
 
   render() {
-    const value = this.state;
+    const value = this.state.value;
     return (
       <MuiThemeProvider theme={defaultTheme}  >
         <Snackbar
@@ -278,11 +281,13 @@ class Dashboard extends Component {
             open={this.state.editCaseModalOpen}
             onClose={this.handleEditCaseClose}
           >
+
             <Paper elevation={8} className={this.props.classes.newCaseModal} >
               <Typography variant="title" id="modal-title">
                 Edit Case
               </Typography>
               <hr />
+
               <TextField
                 label="Case Name"
                 placeholder=""
@@ -329,7 +334,7 @@ class Dashboard extends Component {
                     onChange={this.handleChange}
                     indicatorColor="primary"
                     textColor="primary"
-                    scrollable
+                    variant="scrollable"
                     scrollButtons="auto"
                   >
 
@@ -354,7 +359,9 @@ class Dashboard extends Component {
                   </Tabs>
                 </AppBar>
                 {this.state.userBins.map((option, index) => {
+
                   if (value === index) {
+                    console.log(value + ' ' + index);
                     return (
                         <div style = {{overflow: 'scroll',
                           position: 'relative',
@@ -443,7 +450,7 @@ class Dashboard extends Component {
                 }}
           >
             <Link href="/visualization" to="/visualization" >
-              <Button fab style={{ margin: 12 }} color="primary">
+              <Button fab = "true" style={{ margin: 12 }} color="primary">
                 <img src={GoToVisualizationIcon} width="35px" height="35px" alt="Go To Visualization" />
               </Button>
             </Link>
@@ -461,7 +468,7 @@ class Dashboard extends Component {
                 }}
           >
             <Link href="/report" to="/report" >
-              <Button fab style={{ margin: 12 }} color="primary">
+              <Button fab = "true" style={{ margin: 12 }} color="primary">
                 <img src={GoToReportsIcon} width="35px" height="35px" alt="Go To Reports Listing" />
               </Button>
             </Link>

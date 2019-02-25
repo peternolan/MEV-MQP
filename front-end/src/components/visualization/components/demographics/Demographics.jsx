@@ -97,7 +97,7 @@ class Demographics extends Component {
         </Grid>
         <Button
           id="MinimizeButton"
-          fab
+          fab = "true"
           mini
           color="primary"
           aria-label="minimize"

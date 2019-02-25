@@ -186,7 +186,7 @@ class Timeline extends Component {
         id="TimelineContainer"
         className={`${this.props.classes.timelineContainer} ${(this.props.minimized) ? this.props.classes.timelineContainerMinimized : ''}`}
       >
-        <Button id="MinimizeButtonTimeline" fab mini color="primary" aria-label="minimize" className={this.props.classes.minimizeButton} onClick={this.toggleSize}>
+        <Button id="MinimizeButtonTimeline" fab = "true" mini color="primary" aria-label="minimize" className={this.props.classes.minimizeButton} onClick={this.toggleSize}>
           {(this.props.minimized) ? '+' : '-'}
         </Button>
         {(this.props.minimized)

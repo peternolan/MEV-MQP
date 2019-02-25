@@ -23,6 +23,10 @@ const defaultTheme = createMuiTheme({
     ...MEVColors,
     error: red,
   },
+  typography: {
+    useNextVariants: true,
+  },
+
 });
 
 const styles = theme => ({

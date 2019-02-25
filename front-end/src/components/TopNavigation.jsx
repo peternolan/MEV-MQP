@@ -9,7 +9,9 @@ import Typography from '@material-ui/core/Typography';
 import Chip from '@material-ui/core/Chip';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
-import List, { ListItem, ListItemText } from '@material-ui/core/List';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem'
+import ListItemText from '@material-ui/core/ListItemText'
 import MaterialTooltip from '@material-ui/core/Tooltip';
 import Divider from '@material-ui/core/Divider';
 import { setUserInfo } from '../actions/userActions';

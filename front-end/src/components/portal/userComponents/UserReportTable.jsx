@@ -6,10 +6,9 @@ import _ from 'lodash';
 import {
   RowDetailState, SortingState, IntegratedSorting, PagingState, IntegratedPaging,
 } from '@devexpress/dx-react-grid';
-import Grid from '@material-ui/core/Grid';
-import Table from '@material-ui/core/Table';
-
 import {
+  Grid,
+  Table,
   TableHeaderRow,
   DragDropProvider,
   TableColumnReordering,
@@ -17,7 +16,6 @@ import {
   PagingPanel,
   TableColumnResizing,
 } from '@devexpress/dx-react-grid-material-ui';
-
 import { withStyles } from '@material-ui/core/styles';
 import Divider from '@material-ui/core/Divider';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -210,7 +208,7 @@ class UserReportTable extends React.PureComponent {
   )
 
   render() {
-    console.log(this.state.data);
+    console.log("RENDER");
     return (
       <Grid
         id="test2"

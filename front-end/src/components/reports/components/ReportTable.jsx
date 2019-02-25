@@ -200,43 +200,43 @@ class ReportTable extends React.PureComponent {
 
       console.log('component Did Update');
         console.log(this.props.bin);
-        if (this.props.bin !== 'all reports') {
-          if (this.props.filters.sex.length > 0 || this.props.filters.age.length > 0  || this.props.filters.cause.length > 0
-              || this.props.filters.meType.length > 0  || this.props.filters.occp_cod.length > 0  ||
-              this.props.filters.occr_country.length > 0  || this.props.filters.product.length > 0  || this.props.filters.stage.length > 0 ) {
+          if (this.props.bin !== 'all reports') {
+            if (this.props.filters.sex.length > 0 || this.props.filters.age.length > 0  || this.props.filters.cause.length > 0
+                || this.props.filters.meType.length > 0  || this.props.filters.occp_cod.length > 0  ||
+                this.props.filters.occr_country.length > 0  || this.props.filters.product.length > 0  || this.props.filters.stage.length > 0 ) {
 
-            console.log('FILTERS PRESENT');
-            this.props.getCaseReports(this.props.bin, this.props.userID, {})
-              .then((reports) => {
-                console.log(reports);
-                this.props.setAllReports(reports);
-                this.updateEvidenceRows();
-                this.setState({
-                  data: reports,
-                  loadingData: false,
-                });
-                this.changeExpandedDetails([]);
-                //(this.state.currentTab != 0 || this.state.currentTab != 1)
-              });
-
-          }
-          else {
-
-            console.log('NO FILTERS PRESENT');
-            this.props.getCaseReports(this.props.bin, this.props.userID, {})
-                .then((reports) => {
-                  console.log(reports);
-                  this.props.setAllReports(reports);
-                  this.updateEvidenceRows();
-                  this.setState({
-                    data: reports,
-                    loadingData: false,
+              console.log('FILTERS PRESENT');
+              this.props.getCaseReports(this.props.bin, this.props.userID, {})
+                  .then((reports) => {
+                    console.log(reports);
+                    this.props.setAllReports(reports);
+                    this.updateEvidenceRows();
+                    this.setState({
+                      data: reports,
+                      loadingData: false,
+                    });
+                    this.changeExpandedDetails([]);
+                    //(this.state.currentTab != 0 || this.state.currentTab != 1)
                   });
-                  this.changeExpandedDetails([]);
-                  //(this.state.currentTab != 0 || this.state.currentTab != 1)
-                });
 
-          }
+            }
+            else {
+
+              console.log('NO FILTERS PRESENT');
+              this.props.getCaseReports(this.props.bin, this.props.userID, {})
+                  .then((reports) => {
+                    console.log(reports);
+                    this.props.setAllReports(reports);
+                    this.updateEvidenceRows();
+                    this.setState({
+                      data: reports,
+                      loadingData: false,
+                    });
+                    this.changeExpandedDetails([]);
+                    //(this.state.currentTab != 0 || this.state.currentTab != 1)
+                  });
+
+            }
 
         }
         else {

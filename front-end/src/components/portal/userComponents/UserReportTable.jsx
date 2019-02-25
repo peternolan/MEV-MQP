@@ -6,9 +6,10 @@ import _ from 'lodash';
 import {
   RowDetailState, SortingState, IntegratedSorting, PagingState, IntegratedPaging,
 } from '@devexpress/dx-react-grid';
+import Grid from '@material-ui/core/Grid';
+import Table from '@material-ui/core/Table';
+
 import {
-  Grid,
-  Table,
   TableHeaderRow,
   DragDropProvider,
   TableColumnReordering,
@@ -16,13 +17,13 @@ import {
   PagingPanel,
   TableColumnResizing,
 } from '@devexpress/dx-react-grid-material-ui';
+
 import { withStyles } from '@material-ui/core/styles';
 import Divider from '@material-ui/core/Divider';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import ExpansionPanel, {
-  ExpansionPanelSummary,
-  ExpansionPanelDetails,
-} from '@material-ui/core/ExpansionPanel';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { moveReport, getCaseReports, getInstances } from '../../../actions/reportActions';

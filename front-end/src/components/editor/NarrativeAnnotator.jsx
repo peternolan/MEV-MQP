@@ -5,7 +5,7 @@ import { withStyles } from '@material-ui/styles';
 import 'react-quill/dist/quill.snow.css';
 import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui-icons/core/Close';
+import CloseIcon from '@material-ui/icons/Close';
 import QuillEditor from './components/QuillEditor';
 import styles from './NarrativeAnnotatorStyles';
 
@@ -79,10 +79,10 @@ class NarrativeAnnotator extends Component {
     }
 }
 
-export default connect(
+export default withStyles(styles)(connect(
     null,
     null,
-)(withStyles(styles)(NarrativeAnnotator));
+)(NarrativeAnnotator));
 
 
 

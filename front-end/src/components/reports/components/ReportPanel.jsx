@@ -204,10 +204,10 @@ const mapStateToProps = state => ({
     userID: state.user.userID,
 });
 
-export default connect(
+export default withStyles(styles)(connect(
     mapStateToProps,
     { getReportNarrativeFromID,
         htmlEncode,
         htmlUnescape,
         },
-)(withStyles(styles)(ReportPanel));
+)(ReportPanel));

@@ -128,7 +128,4 @@ const mapStateToProps = state => ({
  * Gets Redux actions to be called in this component.
  * Exports this component with the proper JSS styles.
  */
-export default connect(
-  mapStateToProps,
-  { setDemographicsMinimizedToggle, toggleSexFilter, toggleAgeFilter, toggleLocationFilter, toggleOccupationFilter },
-)(withStyles(styles)(Demographics));
+export default withStyles(styles)(connect(mapStateToProps,{ setDemographicsMinimizedToggle, toggleSexFilter, toggleAgeFilter, toggleLocationFilter, toggleOccupationFilter })(Demographics));

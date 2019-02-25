@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes, {string} from 'prop-types';
 import { withStyles } from '@material-ui/styles';
-import { CircularProgress } from '@material-ui/core/Progress';
+import { CircularProgress } from '@material-ui/core/CircularProgress';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import Paper from '@material-ui/core/Paper';
@@ -1019,12 +1019,12 @@ const mapStateToProps = state => ({
     userID: state.user.userID,
 });
 
-export default connect(
+export default withStyles(styles)(connect(
     mapStateToProps,
     { getReportNarrativeFromID,
         htmlEncode,
         htmlUnescape,},
-)(withStyles(styles)(QuillEditor));
+)(QuillEditor));
 
 
 

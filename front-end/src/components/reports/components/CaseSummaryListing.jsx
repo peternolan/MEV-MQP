@@ -103,7 +103,7 @@ const mapStateToProps = state => ({
  * Gets Redux actions to be called in this component.
  * Exports this component with the proper JSS styles.
  */
-export default connect(
+export default withStyles(styles)(connect(
   mapStateToProps,
   { moveReport, getReportsInCases, getCaseReports, getInstances },
-)(withStyles(styles)(CaseSummaryListing));
+)(CaseSummaryListing));

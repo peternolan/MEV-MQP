@@ -528,4 +528,6 @@ const mapStateToProps = state => ({
  * Gets Redux actions to be called in this component.
  * Exports this component with the proper JSS styles.
  */
+
 export default withStyles(styles)(connect(mapStateToProps,{ getUserCases, createUserBin, getCountData })(ReportList));
+

@@ -9,7 +9,8 @@ import TextField from '@material-ui/core/TextField';
 import AppBar from '@material-ui/core/AppBar';
 import Typography from '@material-ui/core/Typography';
 import Modal from '@material-ui/core/Modal';
-import Tabs, { Tab } from '@material-ui/core/Tabs';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
 import Snackbar from '@material-ui/core/Snackbar';
 import MaterialTooltip from '@material-ui/core/Tooltip';
 import Paper from '@material-ui/core/Paper';
@@ -386,9 +387,8 @@ class ReportList extends Component {
                   onChange={this.handleTabClick}
                   indicatorColor="primary"
                   textColor="primary"
-                  scrollable
+                  variant="scrollable"
                   scrollButtons="auto"
-                  centered
               >
                 <Tab icon={<AllReportsIcon />} label="All Reports" key="All Reports" name="All Reports" />
                 <Tab icon={<AllReportsIcon />} label="Searched Reports" key = "Searched Reports" name="Searched Reports" />

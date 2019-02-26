@@ -22,6 +22,8 @@ export default {
   drawerClass: {
     'background-color': MEVColors.navBarSlide,
     color: '#fff',
+    width: '15%',
+    height : '100%'
   },
   logo: {
     'font-family': "'Montserrat', sans-serif",

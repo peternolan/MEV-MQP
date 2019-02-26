@@ -60,6 +60,7 @@ export const createUserBin = (userID, binName, binDesc) => () => {
  * move a report from one bin to another
  */
 export const moveReport = (primaryid, fromBin, toBin, userID, type) => () => {
+  console.log('Action Move Report ' + primaryid + ' ' + fromBin + ' ' + toBin + ' ' + userID + ' ' + type);
   const fetchData = {
     method: 'POST',
     mode: 'cors',
@@ -120,58 +121,30 @@ export const getCaseNameByID = caseID => () => {
     .then(reports => (reports.rows ? reports.rows : []));
 };
 
-
-const countInstance = (array) => {
-    var ind = 0;
-    var duplicates = [];
-    for (var i in array) {
-
-        if (!duplicates.find(function(item) {
-
-            return item.word === array[i]
-        })) {
-
-
-
-            duplicates.push({word: array[i], count: 1});
-        }
-        else {
-
-            ind = duplicates.findIndex(function(item) {return item.word === array[i]});
-            duplicates[ind].count++;
-        }
-
-    }
-
-    return duplicates;
-
-}
-
-
 /**
  * counts the number of times certain terms are present within a list of reports
  *
  */
 export const getInstances = (reports) => {
-  if(reports == undefined){return ()=>{null;}}
+  if(reports === undefined){return null}
   //at this point, reports is an array of report objects
   const fields = ["sex", "age_year", "me_type", "outc_cod"];//the fields we will be counting terms from (keeping it seperate allows us to modify fields of interest easily)
   var results = {};
   
   for(var field of fields){//iterate over each report 4 times -- once for each field we're interested in
-    if(results[field] == undefined){results[field] = {}}
+    if(results[field] === undefined){results[field] = {}}
     for(var report of reports){ //for each report in the list of reports
-      if(report[field] == null){continue;}//ignore null fields
-      if(typeof report[field][Symbol.iterator] === 'function' && report[field].__proto__ != String.prototype){//if the field is iterable but NOT a string (ie a dict or an array of some sort)
+      if(report[field] === null){continue;}//ignore null fields
+      if(typeof report[field][Symbol.iterator] === 'function' && report[field].__proto__ !== String.prototype){//if the field is iterable but NOT a string (ie a dict or an array of some sort)
         for(var element of report[field]){//then let's iterate through each element of the field
-          if(element == null){continue;} //skip nulled elements
-          if(results[field][element] == undefined){ //if we have not encountered the current element
+          if(element === null){continue;} //skip nulled elements
+          if(results[field][element] === undefined){ //if we have not encountered the current element
             results[field][element] = 0; //make a new dict entry for it
           }
           results[field][element]++;// increase the currently encountered dict entry
         }
       }
-      else if(results[field][report[field]] == undefined){
+      else if(results[field][report[field]] === undefined){
         results[field][report[field]] = 1; //if we haven't seen the dict entry, then make a new one and increment it
       }
       else{
@@ -181,7 +154,7 @@ export const getInstances = (reports) => {
   }
 
 
-  return ()=>{return results};
+  return results;
 
 };
 
@@ -207,7 +180,6 @@ export const getCaseReports = (bin, userID, filters) => (dispatch, getState) => 
     stage: [],
     cause: [],
   };
-
   const filtersToUse = (filters) ? Object.assign(defaultFilters, filters) : getState().filters;
   const fetchData = {
     method: 'POST',
@@ -221,13 +193,9 @@ export const getCaseReports = (bin, userID, filters) => (dispatch, getState) => 
       userID,
     }),
   };
-
-
-
   return fetch(`${process.env.REACT_APP_NODE_SERVER}/getreports`, fetchData)
     .then(response => response.json())
     .then(reports => (reports.rows ? reports.rows : []))
-
 };
 
 /**
@@ -290,7 +258,6 @@ export const getReportsFromCase = (userID, caseName) => () => {
       caseName,
     }),
   };
-
   return fetch(`${process.env.REACT_APP_NODE_SERVER}/getreportsfromcasename`, fetchData)
     .then(response => {return response.json();})
     .then(response => (response.rows ? response.rows : []))
@@ -326,10 +293,7 @@ export const executeSearch = (str) => () => {
 
   if(typeof(String.prototype.trim) === "undefined")
   {
-    String.prototype.trim = function() 
-    {
-        return String(this).replace(/^\s+|\s+$/g, '');
-    };
+    String.prototype.trim = String(this).replace(/^\s+|\s+$/g, '');
   }
   const fetchData = {
         method: 'POST',

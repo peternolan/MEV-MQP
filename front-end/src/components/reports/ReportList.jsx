@@ -1,19 +1,17 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import Button from 'material-ui/Button';
-import { MuiThemeProvider, createMuiTheme, withStyles } from 'material-ui/styles';
-import { blue, green, red, yellow } from 'material-ui/colors';
-import TextField from 'material-ui/TextField';
-import AppBar from 'material-ui/AppBar';
-import Typography from 'material-ui/Typography';
-import Modal from 'material-ui/Modal';
-import Tabs, { Tab } from 'material-ui/Tabs';
-import Snackbar from 'material-ui/Snackbar';
-import MaterialTooltip from 'material-ui/Tooltip';
-import Paper from 'material-ui/Paper';
-import Divider from 'material-ui/Divider';
+import Button from '@material-ui/core/Button';
+import { MuiThemeProvider, createMuiTheme, withStyles } from '@material-ui/core/styles';
+import { blue, green, red } from '@material-ui/core/colors';
+import TextField from '@material-ui/core/TextField';
+import AppBar from '@material-ui/core/AppBar';
+import Typography from '@material-ui/core/Typography';
+import Modal from '@material-ui/core/Modal';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import Snackbar from '@material-ui/core/Snackbar';
+import Paper from '@material-ui/core/Paper';
 import ReportTable from './components/ReportTable';
 import CaseSummaryListing from './components/CaseSummaryListing';
 import ReportPanel from './components/ReportPanel';
@@ -24,8 +22,6 @@ import ReadCaseIcon from '../../resources/ReadCaseIcon';
 import NewCaseIcon from '../../resources/NewCaseIcon';
 import TrashIcon from '../../resources/TrashIcon';
 import AllReportsIcon from '../../resources/AllReportsIcon';
-import GoToVisualizationIcon from '../../resources/goToVisualizationIcon.svg';
-import ViewCaseSummary from '../../resources/caseSummary.svg';
 import styles from './ReportListStyles';
 //import {getEntireTimeline, setSelectedDate} from '../../actions/timelineActions';
 
@@ -44,7 +40,10 @@ const defaultTheme = createMuiTheme({
     ...MEVColors,
     error: red,
   },
-  shadows: ["none"],
+  typography: {
+    useNextVariants: true,
+  },
+  shadows: Array(25).fill('none'),
   borderRadius: 0
 });
 
@@ -73,7 +72,7 @@ class ReportList extends Component {
     }).isRequired,
   };
 
-    constructor() {
+  constructor() {
     super();
     this.handleCaseChangePrimary = this.handleCaseChangePrimary.bind(this);
     this.state = {
@@ -82,7 +81,7 @@ class ReportList extends Component {
       newCaseModalOpen: false,
       snackbarOpen: false,
       primaryIDReport: 0,
-        currentlyFilteredDateRange: '03/24/2017 - 03/31/2017',
+      currentlyFilteredDateRange: '03/24/2017 - 03/31/2017',
       snackbarMessage: '',
       currentTab: 0,
       summaryOpen: false,
@@ -91,8 +90,7 @@ class ReportList extends Component {
       primaryChosen: false,
       supportiveChosen: false,
       summaryCounter: 0,
-      searchedReports:[],
-      returnedResults: [1, 2, 3],
+      returnedResults: [],
       returnedIds: [],
       searchLoading: false,
     };
@@ -101,7 +99,7 @@ class ReportList extends Component {
 
   getCount = () => {
 
-      this.props.getCountData();
+    this.props.getCountData();
 
   };
 
@@ -120,17 +118,17 @@ class ReportList extends Component {
    */
   getBins = () => {
     this.props.getUserCases(this.props.userID)
-      .then((bins) => {
-        if (bins) {
-          this.setState({
-            userBins: [{ name: 'All Reports', case_id: -1 }].concat(bins.filter(bin => bin.active)
-              .map(bin => ({ name: this.toTitleCase(bin.name), case_id: bin.case_id }))),
-          });
-        }
-      });
+        .then((bins) => {
+          if (bins) {
+            this.setState({
+              userBins: [{ name: 'All Reports', case_id: -1 }].concat(bins.filter(bin => bin.active)
+                  .map(bin => ({ name: this.toTitleCase(bin.name), case_id: bin.case_id }))),
+            });
+          }
+        });
   };
 
-   updateTab = (name, color) => {
+  updateTab = (name, color) => {
     const userCreatedArray = this.state.userBins.map(bin => bin.name.toLowerCase()).filter(bin => (bin !== 'trash' && bin !== 'read' && bin !== 'all reports' && bin !== 'new case' && bin !== 'searched reports'));
     const array = ['all reports', 'searched reports', 'read', 'trash', 'new case'].concat(userCreatedArray);
     const index = array.indexOf(name);
@@ -138,28 +136,24 @@ class ReportList extends Component {
       bin: name,
       //background: color,
       currentTab: index,
-      searchedReports: this.props.searchedReports,
-    } , () => {
-
-        console.log(this.props.searchedReports)
-
-       });
+      returnedResults: this.props.returnedResults,
+    });
   };
 
 
 
-    updateColor = (name, color) => {
-        const userCreatedArray = this.state.userBins.map(bin => bin.name.toLowerCase()).filter(bin => (bin !== 'trash' && bin !== 'read' && bin !== 'all reports' && bin !== 'new case' && bin !== 'searched reports'));
-        const array = ['all reports', 'searched reports', 'read', 'trash', 'new case'].concat(userCreatedArray);
-        const index = array.indexOf(name);
-        this.setState({
-            bin: name,
-            //background: color,
-            currentTab: index,
-            searchedReports: this.props.searchedReports,
+  updateColor = (name, color) => {
+    const userCreatedArray = this.state.userBins.map(bin => bin.name.toLowerCase()).filter(bin => (bin !== 'trash' && bin !== 'read' && bin !== 'all reports' && bin !== 'new case' && bin !== 'searched reports'));
+    const array = ['all reports', 'searched reports', 'read', 'trash', 'new case'].concat(userCreatedArray);
+    const index = array.indexOf(name);
+    this.setState({
+      bin: name,
+      //background: color,
+      currentTab: index,
+      returnedResults: this.props.returnedResults,
 
-        });
-    };
+    });
+  };
 
 
 
@@ -168,11 +162,11 @@ class ReportList extends Component {
    */
   toTitleCase = str => str.replace(/\w\S*/g, txt => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
   changeTab = (currentTab) => {
-      if (currentTab === 1) {  // This is the searched tab
-          //***************  Searched reports can be accessed */
-          this.setState({currentTab});
+    if (currentTab === 1) {  // This is the searched tab
+      //***************  Searched reports can be accessed */
+      this.setState({currentTab});
 
-      }
+    }
   };
 
   printSearchResults = (arr1,arr2) => {
@@ -181,6 +175,8 @@ class ReportList extends Component {
       returnedResults: arr1,
       returnedIds: arr2,
       searchLoading: false,
+    }, () => {
+      console.log(this.state.returnedIds);
     });
   };
 
@@ -199,18 +195,14 @@ class ReportList extends Component {
       });
     } else if (currentTab === 1) {  // This is the searched tab
       //***************  Searched reports can be accessed */
-        console.log("Current Tab is 1");
-        console.log("Here " + this.props.searchedReports.length);
-        if(this.props.searchedReports.length > 0){
-          console.log("Here")
-          this.setState({ currentTab, searchedReports : this.props.searchedReports , bin: 'searched reports', })
-        }
+      if(this.state.returnedResults.length > 0){
+        this.setState({ currentTab, bin: 'searched reports'})
+      }
 
     } else {
       this.setState({
         currentTab,
         bin: event.currentTarget.getAttribute('name').toLowerCase(),
-        searchedReports: []
       });
     }
   };
@@ -229,13 +221,13 @@ class ReportList extends Component {
     this.setState({ newCaseModalOpen: true });
   };
 
-    handleSupportChosen = () => {
-        this.setState({ supportiveChosen: !this.state.supportiveChosen });
-    };
+  handleSupportChosen = () => {
+    this.setState({ supportiveChosen: !this.state.supportiveChosen });
+  };
 
-    handlePrimaryChosen = () => {
-        this.setState({ primaryChosen: !this.state.primaryChosen });
-    };
+  handlePrimaryChosen = () => {
+    this.setState({ primaryChosen: !this.state.primaryChosen });
+  };
 
   /* Collapse report panel */
   handleHideReport = () => {
@@ -258,13 +250,13 @@ class ReportList extends Component {
       return this.setState({ textOpen: !this.state.textOpen});
     }
   };
-    /**
-     * Handler for Opening the Report Panel
-     */
-    handleViewReportPanel = (primaryID) => {
+  /**
+   * Handler for Opening the Report Panel
+   */
+  handleViewReportPanel = (primaryID) => {
 
-        this.setState({ reportOpen: !this.state.reportOpen,  primaryIDReport: Number(primaryID) });
-    };
+    this.setState({ reportOpen: !this.state.reportOpen,  primaryIDReport: Number(primaryID) });
+  };
 
   /**
    * Handler for Closing the New Case Modal
@@ -277,44 +269,44 @@ class ReportList extends Component {
       bin: 'all reports',
     });
   };
-    COLORS = {
-        supportive: '#0CC8E8',
-        primary: '#0CE88E',
-        selected: '#ffff00'
-    };
-    //CHANGED HERE. WILL BE USED WITH THE PIE CHART FOR IMPLEMENTATION.
-    handleCaseChangePrimary = (color, caseName) => {
+  COLORS = {
+    supportive: '#0CC8E8',
+    primary: '#0CE88E',
+    selected: '#ffff00'
+  };
+  //CHANGED HERE. WILL BE USED WITH THE PIE CHART FOR IMPLEMENTATION.
+  handleCaseChangePrimary = (color, caseName) => {
 
-        switch (color) {
+    switch (color) {
 
-            case this.COLORS.primary:
-                console.log("Primary " + this.COLORS.primary);
-                this.setState (
-                    {
-                        primaryChosen: true,
-                        supportiveChosen: false
-                    }
-                );
-                console.log("Primary chosen in Case " + this.state.primaryChosen);
-                this.updateTab(caseName, color);
-                break;
-            case this.COLORS.supportive:
-                console.log("Supportive " + this.COLORS.supportive);
-                this.setState(
-                    {
-                        primaryChosen: false,
-                        supportiveChosen: true
-                    }
-                );
-                console.log("Supportive chosen in Case " + this.state.supportiveChosen);
-                this.updateTab(caseName, color);
-                break;
-            default:
-                return null;
+      case this.COLORS.primary:
+        console.log("Primary " + this.COLORS.primary);
+        this.setState (
+            {
+              primaryChosen: true,
+              supportiveChosen: false
+            }
+        );
+        console.log("Primary chosen in Case " + this.state.primaryChosen);
+        this.updateTab(caseName, color);
+        break;
+      case this.COLORS.supportive:
+        console.log("Supportive " + this.COLORS.supportive);
+        this.setState(
+            {
+              primaryChosen: false,
+              supportiveChosen: true
+            }
+        );
+        console.log("Supportive chosen in Case " + this.state.supportiveChosen);
+        this.updateTab(caseName, color);
+        break;
+      default:
+        return null;
 
-        }
+    }
 
-    };
+  };
 
   calculateSummarySize = () => {
     if(this.state.summaryOpen){
@@ -358,18 +350,18 @@ class ReportList extends Component {
     const binDesc = document.getElementById('newCaseDesc').value.trim();
     if (binName !== '' && !(this.state.userBins.filter(bin => bin.name.toLowerCase() === binName).length)) {
       this.props.createUserBin(this.props.userID, binName, binDesc)
-        .then((newCaseID) => {
-          this.setState({
-            snackbarOpen: true,
-            snackbarMessage: `Case ${this.toTitleCase(binName)} Created!`,
-            userBins: this.state.userBins.concat({
-              name: this.toTitleCase(binName), case_id: newCaseID,
-            }),
+          .then((newCaseID) => {
+            this.setState({
+              snackbarOpen: true,
+              snackbarMessage: `Case ${this.toTitleCase(binName)} Created!`,
+              userBins: this.state.userBins.concat({
+                name: this.toTitleCase(binName), case_id: newCaseID,
+              }),
+            });
+            document.getElementById('newCaseName').value = '';
+            document.getElementById('newCaseDesc').value = '';
+            this.handleNewCaseClose();
           });
-          document.getElementById('newCaseName').value = '';
-          document.getElementById('newCaseDesc').value = '';
-          this.handleNewCaseClose();
-        });
     } else {
       this.setState({ snackbarOpen: true, snackbarMessage: 'Error! Invalid Case Name' });
     }
@@ -382,155 +374,152 @@ class ReportList extends Component {
   render() {
     // console.log(this.state.searchedReports)
     return (
-      <MuiThemeProvider theme={defaultTheme} >
-        <div className={this.props.classes.ReportList} >
-          {/* ====== Top Bar with Tabs for each Case ====== */}
-          <AppBar position="static" color="default" className={this.props.classes.borderBottom}>
-            <Tabs
-              style={{height: '72px'}}
-              value={this.state.currentTab}
-              onChange={this.handleTabClick}
-              indicatorColor="primary"
-              textColor="primary"
-              scrollable
-              scrollButtons="auto"
-              centered
-            >
-              <Tab icon={<AllReportsIcon />} label="All Reports" key="All Reports" name="All Reports" />
-              <Tab icon={<AllReportsIcon />} label="Searched Reports" key = "Searched Reports" name="Searched Reports" />
-              <Tab icon={<ReadCaseIcon />} label="Read" key="Read" name="Read" />
-              <Tab icon={<TrashIcon />} label="Trash" key="Trash" name="Trash" />
-              <Tab icon={<NewCaseIcon />} label="New Case" name="New Case" />
-              
-              {this.state.userBins.map((bin) => {
-                switch (bin.name) {
-                  case 'Trash':
-                  case 'All Reports':
-                  case 'Read':
-                  case 'Searched Reports':
-                  return null;
-                  default:
-                    return (
-                      <Tab icon={<CaseIcon />} label={bin.name} key={bin.case_id} name={bin.name} />
-                    );
-                }
-              })}
-            </Tabs>
-          </AppBar>
-          
-          {/* ====== SideBar for Viewing the Case Summary ====== */}
-          <div id="summary-sidebar" className={this.calculateSummarySize()}>
-            <CaseSummaryListing
-              updateTab={this.updateTab}
-              bins={this.state.userBins}
-              userID={this.props.userID}
-              summaryOpen={this.state.summaryOpen}
-              summaryCounter={this.state.summaryCounter}
-              handleClickPieChart={this.handleCaseChangePrimary}
-              changeTab = {this.changeTab}
-              printSearchResults = {this.printSearchResults}
-              returnedResults = {this.state.returnedResults}
-              returnedIds = {this.state.returnedIds}
-              setSearchLoading = {this.setSearchLoading}
-            />
-          </div>
-          <div key='summaryCollapse' className={this.props.classes.collapseDivider} style={{float: 'left'}} onClick={this.handleViewCaseSummary}>
-            <div className={(this.state.summaryOpen) ? this.props.classes.inverseTri : this.props.classes.collapseTri}/>
-          </div>
-          {/* ====== Table for Viewing the table of reports ====== */}
-          <div key='reporttable' className={this.props.classes.tableContainer} >
-            <ReportTable
-              reportPanel = {this.state.reportOpen}
-              bin={this.state.bin}
-              padding = '0px'
-              bins={this.state.userBins}
-              summaryOpen={this.state.summaryOpen}
-              toTitleCase={this.toTitleCase}
-              tableClass={this.state.summaryOpen}
-              incrementSummary={this.updateSummary}
-              searchedReports = {this.state.searchedReports}
-              primaryChosen = {this.state.primaryChosen}
-              supportiveChosen = {this.state.supportiveChosen}
-              handleViewReport = {this.handleViewReportPanel}
-              changeTab = {this.changeTab}
-              printSearchResults = {this.printSearchResults}
-              currentTab={this.state.currentTab}
-              returnedResults = {this.state.returnedResults}
-              returnedIds = {this.state.returnedIds}
-              searchLoading = {this.state.searchLoading}
-              setSearchLoading = {this.setSearchLoading}
-            />
-          </div>
-          <div key='reportCollapse' className={this.props.classes.collapseDivider}  onClick={this.handleHideReport}>
-            <div className={(this.state.textOpen) ? this.props.classes.collapseTri : this.props.classes.inverseTri}/>
-          </div>
+        <MuiThemeProvider theme={defaultTheme} >
+          <div className={this.props.classes.ReportList} >
+            {/* ====== Top Bar with Tabs for each Case ====== */}
+            <AppBar position="static" color="default" className={this.props.classes.borderBottom}>
+              <Tabs
+                  style={{height: '72px'}}
+                  value={this.state.currentTab}
+                  onChange={this.handleTabClick}
+                  indicatorColor="primary"
+                  textColor="primary"
+                  variant="scrollable"
+                  scrollButtons="auto"
+              >
+                <Tab icon={<AllReportsIcon />} label="All Reports" key="All Reports" name="All Reports" />
+                <Tab icon={<AllReportsIcon />} label="Searched Reports" key = "Searched Reports" name="Searched Reports" />
+                <Tab icon={<ReadCaseIcon />} label="Read" key="Read" name="Read" />
+                <Tab icon={<TrashIcon />} label="Trash" key="Trash" name="Trash" />
+                <Tab icon={<NewCaseIcon />} label="New Case" name="New Case" />
+
+                {this.state.userBins.map((bin) => {
+                  switch (bin.name) {
+                    case 'Trash':
+                    case 'All Reports':
+                    case 'Read':
+                    case 'Searched Reports':
+                      return null;
+                    default:
+                      return (
+                          <Tab icon={<CaseIcon />} label={bin.name} key={bin.case_id} name={bin.name} />
+                      );
+                  }
+                })}
+              </Tabs>
+            </AppBar>
+
+            {/* ====== SideBar for Viewing the Case Summary ====== */}
+            <div id="summary-sidebar" className={this.calculateSummarySize()}>
+              <CaseSummaryListing
+                  updateTab={this.updateTab}
+                  bins={this.state.userBins}
+                  userID={this.props.userID}
+                  summaryOpen={this.state.summaryOpen}
+                  summaryCounter={this.state.summaryCounter}
+                  handleClickPieChart={this.handleCaseChangePrimary}
+                  changeTab = {this.changeTab}
+                  printSearchResults = {this.printSearchResults}
+                  returnedResults = {this.state.returnedResults}
+                  returnedIds = {this.state.returnedIds}
+                  setSearchLoading = {this.setSearchLoading}
+              />
+            </div>
+            <div key='summaryCollapse' className={this.props.classes.collapseDivider} style={{float: 'left'}} onClick={this.handleViewCaseSummary}>
+              <div className={(this.state.summaryOpen) ? this.props.classes.inverseTri : this.props.classes.collapseTri}/>
+            </div>
+            {/* ====== Table for Viewing the table of reports ====== */}
+            <div key='reporttable' className={this.props.classes.tableContainer} >
+              <ReportTable
+                  reportPanel = {this.state.reportOpen}
+                  bin={this.state.bin}
+                  padding = '0px'
+                  bins={this.state.userBins}
+                  summaryOpen={this.state.summaryOpen}
+                  toTitleCase={this.toTitleCase}
+                  tableClass={this.state.summaryOpen}
+                  incrementSummary={this.updateSummary}
+                  primaryChosen = {this.state.primaryChosen}
+                  supportiveChosen = {this.state.supportiveChosen}
+                  handleViewReport = {this.handleViewReportPanel}
+                  changeTab = {this.changeTab}
+                  printSearchResults = {this.printSearchResults}
+                  currentTab={this.state.currentTab}
+                  returnedResults = {this.state.returnedResults}
+                  returnedIds = {this.state.returnedIds}
+                  searchLoading = {this.state.searchLoading}
+                  setSearchLoading = {this.setSearchLoading}
+              />
+            </div>
+            <div key='reportCollapse' className={this.props.classes.collapseDivider}  onClick={this.handleHideReport}>
+              <div className={(this.state.textOpen) ? this.props.classes.collapseTri : this.props.classes.inverseTri}/>
+            </div>
             {/* ====== SideBar for reading a report ======*/}
             <div id="report-sidebar" className={this.calculateReportSize()}  >
-                <ReportPanel
-                    updateTab={this.updateTab}
-                    bins={this.state.userBins}
-                    primaryid={this.state.primaryIDReport}
-                    userID={this.props.userID}
-                    userEmail={this.props.userEmail}
-                    reportOpen={this.state.reportOpen}
-                />
+              <ReportPanel
+                  updateTab={this.updateTab}
+                  bins={this.state.userBins}
+                  primaryid={this.state.primaryIDReport}
+                  userID={this.props.userID}
+                  userEmail={this.props.userEmail}
+                  reportOpen={this.state.reportOpen}
+              />
             </div>
-          {/* ====== Modal for Creating a New Case ====== */}
-          <Modal
-            aria-labelledby="simple-modal-title"
-            aria-describedby="simple-modal-description"
-            open={this.state.newCaseModalOpen}
-            onClose={this.handleNewCaseClose}
-          >
-            <Paper elevation={8} className={this.props.classes.newCaseModal}>
-              <Typography type="title" id="modal-title">
-                Create a Case
-              </Typography>
-              <hr />
-              <TextField
-                label="Case Name"
-                placeholder="Advil"
-                id="newCaseName"
-                style={{ margin: 12, width: '100%' }}
-              />
-              <TextField
-                multiline
-                rowsMax="4"
-                label="Case Description"
-                placeholder="This case contains reports about Advil"
-                id="newCaseDesc"
-                style={{ margin: 12, width: '100%' }}
-              />
-              <hr />
-              <Button raised onClick={this.handleNewCaseClick} style={{ margin: 12 }} color="primary">Create Case</Button>
-            </Paper>
-          </Modal>
-          {/* ====== Snackbar for Notificaitons to the User ====== */}
-          <Snackbar
-            anchorOrigin={{
-              vertical: 'bottom',
-              horizontal: 'left',
-            }}
-            open={this.state.snackbarOpen}
-            onClose={this.handleCloseSnackbar}
-            transitionDuration={1000}
-            SnackbarContentProps={{
-              'aria-describedby': 'message-id',
-            }}
-            message={<span id="message-id">{this.state.snackbarMessage}</span>}
-          />
-        </div>
-      </MuiThemeProvider>
+            {/* ====== Modal for Creating a New Case ====== */}
+            <Modal
+                aria-labelledby="simple-modal-title"
+                aria-describedby="simple-modal-description"
+                open={this.state.newCaseModalOpen}
+                onClose={this.handleNewCaseClose}
+            >
+              <Paper elevation={8} className={this.props.classes.newCaseModal}>
+                <Typography variant="title" id="modal-title">
+                  Create a Case
+                </Typography>
+                <hr />
+                <TextField
+                    label="Case Name"
+                    placeholder="Advil"
+                    id="newCaseName"
+                    style={{ margin: 12, width: '100%' }}
+                />
+                <TextField
+                    multiline
+                    rowsMax="4"
+                    label="Case Description"
+                    placeholder="This case contains reports about Advil"
+                    id="newCaseDesc"
+                    style={{ margin: 12, width: '100%' }}
+                />
+                <hr />
+                <Button raised onClick={this.handleNewCaseClick} style={{ margin: 12 }} color="primary">Create Case</Button>
+              </Paper>
+            </Modal>
+            {/* ====== Snackbar for Notificaitons to the User ====== */}
+            <Snackbar
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'left',
+                }}
+                open={this.state.snackbarOpen}
+                onClose={this.handleCloseSnackbar}
+                transitionDuration={1000}
+                SnackbarContentProps={{
+                  'aria-describedby': 'message-id',
+                }}
+                message={<span id="message-id">{this.state.snackbarMessage}</span>}
+            />
+          </div>
+        </MuiThemeProvider>
     );
   }
 }
 
 const mapStateToProps = state => ({
   userID: state.user.userID,
-    userEmail: state.user.userEmail,
+  userEmail: state.user.userEmail,
   isLoggedIn: state.user.isLoggedIn,
-    /**********  Searched reports */
-  searchedReports: state.all_reports.searched_reports,
+  /**********  Searched reports */
 });
 
 /**
@@ -539,7 +528,6 @@ const mapStateToProps = state => ({
  * Gets Redux actions to be called in this component.
  * Exports this component with the proper JSS styles.
  */
-export default connect(
-  mapStateToProps,
-  { getUserCases, createUserBin, getCountData },
-)(withStyles(styles)(ReportList));
+
+export default withStyles(styles)(connect(mapStateToProps,{ getUserCases, createUserBin, getCountData })(ReportList));
+

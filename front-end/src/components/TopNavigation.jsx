@@ -1,17 +1,19 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withStyles } from 'material-ui/styles';
-import Drawer from 'material-ui/Drawer';
-import Paper from 'material-ui/Paper';
+import { withStyles } from '@material-ui/core/styles';
+import Drawer from '@material-ui/core/Drawer';
+import Paper from '@material-ui/core/Paper';
 import { Link } from 'react-router-dom';
-import Typography from 'material-ui/Typography';
-import Chip from 'material-ui/Chip';
-import Avatar from 'material-ui/Avatar';
-import Button from 'material-ui/Button';
-import List, { ListItem, ListItemText } from 'material-ui/List';
-import MaterialTooltip from 'material-ui/Tooltip';
-import Divider from 'material-ui/Divider';
+import Typography from '@material-ui/core/Typography';
+import Chip from '@material-ui/core/Chip';
+import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem'
+import ListItemText from '@material-ui/core/ListItemText'
+import MaterialTooltip from '@material-ui/core/Tooltip';
+import Divider from '@material-ui/core/Divider';
 import { setUserInfo } from '../actions/userActions';
 import CurrentlySelectedFilters from './components/CurrentlySelectedFilters';
 import wpiLogo from '../resources/wpi-logo.png';
@@ -70,13 +72,15 @@ class TopNavigation extends Component {
         <div className="container-fluid">
           <div className="pull-left">
             <div>
-              <Button onClick={this.toggleDrawer('left', true)} className={this.props.classes.buttonClass}><i className="material-icons">menu</i></Button>
-              <Drawer open={this.state.left} onClose={this.toggleDrawer('left', false)} classes={{ modal: this.props.classes.drawerToggleContainer }}SlideProps={{ className: this.props.classes.drawerClass }}>
+              <Button onClick={this.toggleDrawer('left', true)} className={this.props.classes.buttonClass}>
+                  <i className="material-icons">menu</i></Button>
+              <Drawer open={this.state.left} onClose={this.toggleDrawer('left', false)} classes={{ modal: this.props.classes.drawerToggleContainer }} SlideProps={{ className: this.props.classes.drawerClass }}>
                 <div
                   tabIndex={0}
                   role="button"
                   onClick={this.toggleDrawer('left', false)}
                   onKeyDown={this.toggleDrawer('left', false)}
+
                 >
                   <div className={this.props.classes.drawerHeader}>
                     <h2>Navigation Panel</h2>
@@ -233,7 +237,7 @@ const mapStateToProps = state => ({
   totalCount: state.demographic.totalCount,
 });
 
-export default connect(
+export default withStyles(styles)(connect(
   mapStateToProps,
   {
     setUserInfo,
@@ -247,4 +251,4 @@ export default connect(
     toggleCauseFilter,
     setSelectedDate,
   },
-)(withStyles(styles)(TopNavigation));
+)(TopNavigation));

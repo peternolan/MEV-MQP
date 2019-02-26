@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { MuiThemeProvider, createMuiTheme, withStyles } from 'material-ui/styles';
-import { blue, green, red } from 'material-ui/colors';
-import Paper from 'material-ui/Paper';
-import Typography from 'material-ui/Typography';
+import { MuiThemeProvider, createMuiTheme, withStyles } from '@material-ui/core/styles';
+import { blue, green, red } from '@material-ui/core/colors';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
 import { setUserInfo, makeUserTrash, makeUserRead, checkUserTrash, checkUserRead } from '../../actions/userActions';
 import MEVColors from '../../theme';
 
@@ -20,6 +20,9 @@ const defaultTheme = createMuiTheme({
     },
     ...MEVColors,
     error: red,
+  },
+  typography: {
+    useNextVariants: true,
   },
 });
 
@@ -162,10 +165,10 @@ class Login extends Component {
             <div className="row">
               <div className="col-sm-12">
                 <Paper elevation={2} style={{ padding: '20px 20px 20px 20px', marginTop: '15px' }} >
-                  <Typography type="title" style={{ fontSize: '30px', color: '#333' }}>
+                  <Typography variant="title" style={{ fontSize: '30px', color: '#333' }}>
                     Sign in to Get Started
                   </Typography>
-                  <Typography type="subheading" style={{ fontSize: '16px', color: '#333' }}>
+                  <Typography variant="subheading" style={{ fontSize: '16px', color: '#333' }}>
                     <i>Please enter a username to be directed to the system</i>
                   </Typography>
                   <br />

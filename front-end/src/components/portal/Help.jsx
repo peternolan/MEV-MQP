@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { MuiThemeProvider, createMuiTheme, withStyles } from 'material-ui/styles';
-import { blue, green, red } from 'material-ui/colors';
-import Paper from 'material-ui/Paper';
-import AppBar from 'material-ui/AppBar';
-import Tabs, { Tab } from 'material-ui/Tabs';
-import Typography from 'material-ui/Typography';
+import { MuiThemeProvider, createMuiTheme, withStyles } from '@material-ui/core/styles';
+import { blue, green, red } from '@material-ui/core/colors';
+import Paper from '@material-ui/core/Paper';
+import AppBar from '@material-ui/core/AppBar';
+import Tabs, { Tab } from '@material-ui/core/Tabs';
+import Typography from '@material-ui/core/Typography';
 import imageOne from '../../resources/images/image1.png';
 import imageTwo from '../../resources/images/image2.png';
 import imageThree from '../../resources/images/image3.png';
@@ -48,6 +48,9 @@ const defaultTheme = createMuiTheme({
     },
     ...MEVColors,
     error: red,
+  },
+  typography: {
+    useNextVariants: true,
   },
 });
 

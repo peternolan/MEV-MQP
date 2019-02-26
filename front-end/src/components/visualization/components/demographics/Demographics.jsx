@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withStyles } from 'material-ui/styles';
-import Grid from 'material-ui/Grid';
-import Paper from 'material-ui/Paper';
-import Button from 'material-ui/Button';
+import { withStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import Button from '@material-ui/core/Button';
 import { setDemographicsMinimizedToggle, toggleSexFilter, toggleAgeFilter, toggleLocationFilter, toggleOccupationFilter } from '../../../../actions/demographicActions';
 import Sex from './components/Sex';
 import Age from './components/Age';
@@ -97,7 +97,7 @@ class Demographics extends Component {
         </Grid>
         <Button
           id="MinimizeButton"
-          fab
+          fab = "true"
           mini
           color="primary"
           aria-label="minimize"
@@ -128,7 +128,4 @@ const mapStateToProps = state => ({
  * Gets Redux actions to be called in this component.
  * Exports this component with the proper JSS styles.
  */
-export default connect(
-  mapStateToProps,
-  { setDemographicsMinimizedToggle, toggleSexFilter, toggleAgeFilter, toggleLocationFilter, toggleOccupationFilter },
-)(withStyles(styles)(Demographics));
+export default withStyles(styles)(connect(mapStateToProps,{ setDemographicsMinimizedToggle, toggleSexFilter, toggleAgeFilter, toggleLocationFilter, toggleOccupationFilter })(Demographics));

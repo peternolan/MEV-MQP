@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withStyles } from 'material-ui/styles';
-import Button from 'material-ui/Button';
+import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 import { setTimelineMinimizedToggle, getEntireTimeline, setSelectedDate } from '../../../../actions/timelineActions';
 import styles from './TimelineStyles';
 import TimelineMaximized from './components/TimelineMaximized';
@@ -186,9 +186,10 @@ class Timeline extends Component {
         id="TimelineContainer"
         className={`${this.props.classes.timelineContainer} ${(this.props.minimized) ? this.props.classes.timelineContainerMinimized : ''}`}
       >
-        <Button id="MinimizeButtonTimeline" fab mini color="primary" aria-label="minimize" className={this.props.classes.minimizeButton} onClick={this.toggleSize}>
+        <Button id="MinimizeButtonTimeline" fab = "true" mini color="primary" aria-label="minimize" className={this.props.classes.minimizeButton} onClick={this.toggleSize}>
           {(this.props.minimized) ? '+' : '-'}
         </Button>
+        {console.log(this.state.selectedStartX)}
         {(this.props.minimized)
           ? <TimelineMinimized
             entireTimelineData={this.props.entireTimelineData}
@@ -227,7 +228,4 @@ const mapStateToProps = state => ({
  * Gets Redux actions to be called in this component.
  * Exports this component with the proper JSS styles.
  */
-export default connect(
-  mapStateToProps,
-  { setTimelineMinimizedToggle, getEntireTimeline, setSelectedDate },
-)(withStyles(styles)(Timeline));
+export default withStyles(styles)(connect(mapStateToProps,{ setTimelineMinimizedToggle, getEntireTimeline, setSelectedDate })(Timeline));

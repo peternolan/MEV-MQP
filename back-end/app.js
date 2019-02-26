@@ -382,6 +382,7 @@ app.post('/getdemographicdata', (req, res) => {
 //WHERE THE REPORTS COME FROM? -- yes, but you can not get reports from cases using this method
 app.post('/getreports', (req, res) => {
   //console.log('got a report request with body:\n ', req.body);
+
   let query = '';
   if (req.body.bin === 'all reports') {
     query =
@@ -443,7 +444,7 @@ app.post('/getreportsincases', (req, res) => {
       query += ` AND name='${req.body.caseName}'`;
     }
 
-    console.log(query)
+    console.log(query);
     db.query(query, (err, data) => {
       res.status(200).send(data);
     });
@@ -563,7 +564,7 @@ app.post('/binreport', (req, res) => {
       + `SET type = '${req.body.type}' `
       + `WHERE cases.case_id = '${caseID}' AND cases.primaryid = ${req.body.primaryid} AND cases.name = '${req.body.toBin}' AND cases.user_id = ${req.body.userID}`;
 
-      console.log(toQuery)
+      console.log(toQuery);
 
       fromQuery = 'DELETE FROM cases '
       + `WHERE primaryid = ${req.body.primaryid} AND `
@@ -584,6 +585,7 @@ app.post('/binreport', (req, res) => {
         });
       } else if (req.body.fromBin === 'all reports' && req.body.toBin !== 'all reports') {
         console.log(toQuery);
+        console.log('IN HERE');
         db.query(toQuery, (err, toData) => {
             res.status(200).send();
         });
@@ -883,7 +885,7 @@ app.post('/getvis', (req, res) => {
 const default_search = {
     'search_string':"",//the string the user entered
     'start':0,//the offset of the results (this is to be used for pagination)
-    'size':200,//the number of results to return
+    'size':150,//the number of results to return
 };
 
 app.post('/executeSearch', (req, res) => {

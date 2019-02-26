@@ -1,5 +1,5 @@
-import green from 'material-ui/colors/green';
-import grey from 'material-ui/colors/grey';
+import green from '@material-ui/core/colors/green';
+import grey from '@material-ui/core/colors/grey';
 export default {
     pdfView: {
         maxWidth: '100%',

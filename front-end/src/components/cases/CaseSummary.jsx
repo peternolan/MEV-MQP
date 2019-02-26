@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withStyles } from 'material-ui/styles';
-import Typography from 'material-ui/Typography';
-import TextField from 'material-ui/TextField';
-import Button from 'material-ui/Button';
+import { withStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 import {Combobox} from 'react-widgets';
 import { executeSearch, getTagsinCase, getReportsInCases, getReportsFromCase, getCaseNameByID, getCaseReports, setSearchedReports, getInstances, getAgeAndCode } from '../../actions/reportActions';
 import * as JsSearch from 'js-search';
@@ -23,8 +23,8 @@ class CaseSummary extends Component {
 
   static propTypes = {
     setSearchLoading: PropTypes.func.isRequired,
-    returnedIds: PropTypes.array.isRequired,
-    returnedResults: PropTypes.array.isRequired,
+    returnedIds: PropTypes.array,
+    returnedResults: PropTypes.array,
     printSearchResults: PropTypes.func.isRequired,
     changeTab: PropTypes.func.isRequired,
     setSearchedReports: PropTypes.func.isRequired,
@@ -301,6 +301,7 @@ class CaseSummary extends Component {
 
   /************ when case changes, update the reports */
   handleCaseChange = () => {
+      console.log('reports',this.state.reportsInCase);
       this.props.updateTab(this.state.caseName);
   };
 
@@ -612,10 +613,10 @@ class CaseSummary extends Component {
       <div key={this.state.caseName} className={this.props.classes.summaryContent}>
           <div key="upper_part" style={{paddingLeft: 10}}>
             <div className={this.props.classes.reportBox}>
-              <Typography type='button' className={this.props.classes.countText}>Total Count of Reports: {this.state.reportsInCase.length}</Typography>
+              <Typography variant='button' className={this.props.classes.countText}>Total Count of Reports: {this.state.reportsInCase.length}</Typography>
               <Typography id={this.state.caseName + 'casebutton'} type='button' className={this.props.classes.caseButton} onClick={this.handleCaseChange}>show reports</Typography>
             </div>
-            <Typography type='button' className={this.props.classes.caseBDText}>Case Breakdown:
+            <Typography variant='button' className={this.props.classes.caseBDText}>Case Breakdown:
               <select disabled={(this.state.reportsInCase.length > 0) ? false : true} ref='options' value={this.state.graphdata} onChange={this.handleDataChange} className={this.props.classes.dataSelector}>
                 <option key='pvs' value='TODO'>Primary v. Supportive</option>
                 <option key='outc_cod' value='outc_cod'>Outcome Code</option>
@@ -633,18 +634,18 @@ class CaseSummary extends Component {
           })}
         </div>
         <div className={this.props.classes.keywordHead}>
-          <Typography type='button' className={this.props.classes.textButton} onClick={this.handleKeywordHide}>Keyword Summary</Typography>
-          <Typography type='button' onClick={this.searchRecommendations} className={this.props.classes.recButton}>get recommendations</Typography>
+          <Typography variant='button' className={this.props.classes.textButton} onClick={this.handleKeywordHide}>Keyword Summary</Typography>
+          <Typography variant='button' onClick={this.searchRecommendations} className={this.props.classes.recButton}>get recommendations</Typography>
         </div>
         <Collapse isOpened={this.state.keywordsExposed}>
           <div className={this.props.classes.keywordContainer}>
             <div key="highlighted_words">
               {(this.state.highlightedWordsData.length === 0) ? 
-              <Typography type='body1' style={{padding: 5, paddingLeft: 15}}>There are no annotated reports in this case for us to build keywords from; try annotating one of the reports.</Typography>
+              <Typography variant='body1' style={{padding: 5, paddingLeft: 15}}>There are no annotated reports in this case for us to build keywords from; try annotating one of the reports.</Typography>
               : this.state.highlightedWordsData.map((word) =>{
                 return(
                   <div key={word.name} className={this.props.classes.keywordCapsule} style={{backgroundColor: (this.state.recommendationArray.indexOf(word.name) > -1) ? '#7bd389' : '#ee7674'}} onClick={this.toggleWord}>
-                    <Typography value={word.name} type='body1'>{word.name} ({word.count})</Typography>
+                    <Typography value={word.name} variant='body1'>{word.name} ({word.count})</Typography>
                   </div>
                 )
               })}
@@ -670,7 +671,7 @@ const mapStateToProps = state => ({
  * Gets Redux actions to be called in this component.
  * Exports this component with the proper JSS styles.
  */
-export default connect(
+export default withStyles(styles)(connect(
   mapStateToProps,
   { executeSearch, 
     getTagsinCase, 
@@ -681,5 +682,5 @@ export default connect(
     setSearchedReports, 
     getInstances, 
     getAgeAndCode}
-)(withStyles(styles)(CaseSummary));
+)(CaseSummary));
 

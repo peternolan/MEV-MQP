@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-//import {Text} from 'react-native';
-import { Link } from 'react-router-dom';
 import {
   RowDetailState, SortingState, IntegratedSorting, PagingState, IntegratedPaging,
 } from '@devexpress/dx-react-grid';
@@ -16,23 +14,19 @@ import {
   PagingPanel,
   TableColumnResizing,
 } from '@devexpress/dx-react-grid-material-ui';
-import ExpansionPanel, {
-  ExpansionPanelSummary,
-  ExpansionPanelDetails,
-} from 'material-ui/ExpansionPanel';
-import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
-import Divider from 'material-ui/Divider';
-import MaterialTooltip from 'material-ui/Tooltip';
-import Snackbar from 'material-ui/Snackbar';
-import { withStyles } from 'material-ui/styles';
-import Paper from 'material-ui/Paper';
-import Button from 'material-ui/Button';
-import CheckBox from 'material-ui/Checkbox';
-import { CircularProgress } from 'material-ui/Progress';
-import Typography from 'material-ui/Typography';
-import { FormControlLabel } from 'material-ui/Form';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Divider from '@material-ui/core/Divider';
+import MaterialTooltip from '@material-ui/core/Tooltip';
+import Snackbar from '@material-ui/core/Snackbar';
+import { withStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Button from '@material-ui/core/Button';
+import CheckBox from '@material-ui/core/Checkbox';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Typography from '@material-ui/core/Typography';
+import FormControlLabel  from '@material-ui/core/FormControlLabel';
 import _ from 'lodash';
-import { moveReport, getCaseReports, getReportNarrativeFromID, getReportsInCases , setAllReports, executeSearch, getInstances, getAgeAndCode} from '../../../actions/reportActions';
+import { moveReport, getCaseReports, getReportNarrativeFromID, getReportsInCases, getReportsFromCase , setAllReports, executeSearch, getInstances, getAgeAndCode} from '../../../actions/reportActions';
 import QuillEditor from '../../editor/components/QuillEditor';
 import ReadCaseIcon from '../../../resources/ReadCaseIcon';
 import ClearFilterIcon from '../../../resources/RemoveFromCaseIcon';
@@ -50,8 +44,8 @@ class ReportTable extends React.PureComponent {
   static propTypes = {
     setSearchLoading: PropTypes.func.isRequired,
     searchLoading: PropTypes.bool.isRequired,
-    returnedIds: PropTypes.array.isRequired,
-    returnedResults: PropTypes.array.isRequired,
+    returnedIds: PropTypes.array,
+    returnedResults: PropTypes.array,
     printSearchResults: PropTypes.func.isRequired,
     changeTab: PropTypes.func.isRequired,
     setAllReports: PropTypes.func.isRequired,
@@ -61,7 +55,7 @@ class ReportTable extends React.PureComponent {
     supportiveChosen:  PropTypes.bool,
     handleViewReport: PropTypes.func,
     incrementSummary: PropTypes.func.isRequired,
-    reportOpen: PropTypes.bool.isRequired,
+    reportOpen: PropTypes.bool,
     bins: PropTypes.arrayOf(PropTypes.object).isRequired,
     filters: PropTypes.shape({
       init_fda_dt: PropTypes.object,
@@ -119,15 +113,15 @@ class ReportTable extends React.PureComponent {
       /**
        * Default widths for the columns of the table
        */
-      widths: {
-        //init_fda_dt: 85,
-        primaryid: 75,
-        age_year: 35,
-        sex: 35,
-        drugname: 125,
-        me_type: 100,
-        outc_cod: 60,
-      },
+      widths: [
+        { columnName: 'primaryid', width: 75 },
+        { columnName: 'age_year', width: 35 },
+        { columnName: 'sex', width: 35 },
+        { columnName: 'drugname', width: 100 },
+        { columnName: 'me_type', width: 100 },
+        { columnName: 'outc_cod', width: 60 }
+
+      ],
 
 
       /**
@@ -150,37 +144,42 @@ class ReportTable extends React.PureComponent {
    * Sends fetch request to retrieve list of reports to be shown in table
    */
   componentWillMount() {
+      console.log('component Will mount');
     if(this.props.bin !== 'searched reports'){
-      this.props.getCaseReports(this.props.bin, this.props.userID)
-          .then(reports => {
-            this.props.setAllReports(reports);
+      console.log(this.props.filters);
 
 
-            this.setState({
-              data: reports,
-              allData: reports,
-              loadingData: false,
-            })
-          });
-    }
+      //if (this.props.filters.sex.length > 0 || this.props.filters.age.length > 0  || this.props.filters.cause.length > 0
+       //   || this.props.filters.meType.length > 0  || this.props.filters.occp_cod.length > 0  ||
+       // this.props.filters.occr_country.length > 0  || this.props.filters.product.length > 0  || this.props.filters.stage.length > 0 ) {
+       // console.log('FILTERS PRESENT');
+        this.props.getCaseReports(this.props.bin, this.props.userID)
+            .then(reports => {
+
+              this.props.setAllReports(reports);
+
+              this.setState({
+                data: reports,
+                allData: reports,
+                loadingData: false,
+              })
+            });
+      //}
+
+     }
+
 
     this.updateHighlightedRows();
     this.updateEvidenceRows();
   }
 
   componentDidMount() {
-    this.resizeTable();
 
+      console.log('component Did mount');
+
+    this.resizeTable();
     // Listen for window resize, but wait till they have stopped to do the size calculations.
     window.addEventListener('resize', this.resizeTimer);
-  }
-
-  componentWillReceiveProps(nextProps){
-
-    if (nextProps.searchedReports.length!==0){
-
-      this.setState({ data:nextProps.searchedReports});
-    }
   }
 
   /**
@@ -188,24 +187,70 @@ class ReportTable extends React.PureComponent {
    * new list of reports if necessary
    */
   componentDidUpdate(prevProps) {
-    if (prevProps.bin !== this.props.bin || !_.isEqual(this.props.filters, prevProps.filters)) {
-      if(this.props.bin !== 'searched reports'){
+
+      if (prevProps.bin !== this.props.bin || !_.isEqual(this.props.filters, prevProps.filters)) {
+      if(this.props.bin !== 'searched reports') {
+        console.log('component Did Update not searched reports');
         this.setState({
           loadingData: true,
         });
-
-        this.props.getCaseReports(this.props.bin, this.props.userID)
-            .then((reports) => {
-              this.props.setAllReports(reports);
-              this.updateEvidenceRows();
-              this.setState({
-                data: reports,
-                loadingData: false,
-              });
-              this.changeExpandedDetails([]);
-              (this.state.currentTab != 0 || this.state.currentTab != 1)
-            });
       }
+
+      console.log('component Did Update');
+        console.log(this.props.bin);
+          if (this.props.bin !== 'all reports') {
+            if (this.props.filters.sex.length > 0 || this.props.filters.age.length > 0  || this.props.filters.cause.length > 0
+                || this.props.filters.meType.length > 0  || this.props.filters.occp_cod.length > 0  ||
+                this.props.filters.occr_country.length > 0  || this.props.filters.product.length > 0  || this.props.filters.stage.length > 0 ) {
+
+              console.log('FILTERS PRESENT');
+              this.props.getCaseReports(this.props.bin, this.props.userID, {})
+                  .then((reports) => {
+                    console.log(reports);
+                    this.props.setAllReports(reports);
+                    this.updateEvidenceRows();
+                    this.setState({
+                      data: reports,
+                      loadingData: false,
+                    });
+                    this.changeExpandedDetails([]);
+                    //(this.state.currentTab != 0 || this.state.currentTab != 1)
+                  });
+
+            }
+            else {
+
+              console.log('NO FILTERS PRESENT');
+              this.props.getCaseReports(this.props.bin, this.props.userID, {})
+                  .then((reports) => {
+                    console.log(reports);
+                    this.props.setAllReports(reports);
+                    this.updateEvidenceRows();
+                    this.setState({
+                      data: reports,
+                      loadingData: false,
+                    });
+                    this.changeExpandedDetails([]);
+                    //(this.state.currentTab != 0 || this.state.currentTab != 1)
+                  });
+
+            }
+
+        }
+        else {
+          this.props.getCaseReports(this.props.bin, this.props.userID)
+              .then((reports) => {
+                console.log(reports);
+                this.props.setAllReports(reports);
+                this.updateEvidenceRows();
+                this.setState({
+                  data: reports,
+                  loadingData: false,
+                });
+                this.changeExpandedDetails([]);
+                //(this.state.currentTab != 0 || this.state.currentTab != 1)
+              });
+        }
       // else {
       //   this.updateEvidenceRows();
       // }
@@ -275,6 +320,7 @@ class ReportTable extends React.PureComponent {
    * Sets what rows are expanded in the table
    */
   changeExpandedDetails = (expandedRows) => {
+    console.log("change expanded");
     this.setState({ expandedRows });
   };
 
@@ -296,6 +342,7 @@ class ReportTable extends React.PureComponent {
   };
 
   updateEvidenceRows = () => {
+      console.log("Update Evidence this.props.bin " + this.props.bin  );
     if (this.props.bin !== 'searched reports') {
       this.props.getReportsInCases(this.props.userID)
           .then((response) => {
@@ -350,19 +397,22 @@ class ReportTable extends React.PureComponent {
    * Sends a backend request to move a report from one bin to another
    */
   handleMoveReport = (primaryid, fromBin, toBin, type) => {
+    console.log('from',fromBin,'to',toBin);
     this.props.moveReport(primaryid, fromBin, toBin, this.props.userID, type ? 'primary' : 'supportive')
         .then(() => {
-          if (toBin === 'trash' || toBin === 'all reports') {
+          if (toBin === 'trash' || toBin ==='all reports') {
             this.setState({
               loadingData: true,
               keepTableWhileLoading: true,
             });
-            this.props.getCaseReports(this.props.bin, this.props.userID)
-                .then(reports => this.setState({
-                  data: reports,
-                  loadingData: false,
-                  keepTableWhileLoading: false,
-                }));
+
+
+              this.props.getCaseReports(this.props.bin, this.props.userID)
+                  .then(reports => this.setState({
+                    data: reports,
+                    loadingData: false,
+                    keepTableWhileLoading: false,
+                  }));
           } else {
             this.updateHighlightedRows();
             this.updateEvidenceRows();
@@ -373,7 +423,7 @@ class ReportTable extends React.PureComponent {
             snackbarMessage: `Report ${primaryid} Moved to ${this.props.toTitleCase(toBin)}`,
           });
         });
-    if (toBin === 'trash' || toBin === 'all reports') {
+    if (toBin === 'trash' || toBin ==='all reports') {
       const newExpandedRows = this.state.expandedRows;
       newExpandedRows.splice(this.state.expandedRows.indexOf(primaryid.toString()), 1);
       this.changeExpandedDetails(newExpandedRows);
@@ -546,7 +596,7 @@ class ReportTable extends React.PureComponent {
   };
 
   handleSearchResults = (array1, array2) => {
-    console.log('handling')
+    console.log('handling');
     this.props.printSearchResults(array1,array2);
     this.props.changeTab(1);
   };
@@ -571,7 +621,7 @@ class ReportTable extends React.PureComponent {
         return (
             <div className={this.props.classes.moveToPair}>
               <TrashIcon  width={sideL} height={sideL}/>
-              <Typography type="subheading" style={{ marginLeft: 15 }}>
+              <Typography variant="subheading" style={{ marginLeft: 15 }}>
                 {binName}
               </Typography>
             </div>
@@ -582,7 +632,7 @@ class ReportTable extends React.PureComponent {
               {(greyOutCaseIcon)
                   ? <ReadCaseIcon width={sideL} height={sideL} style={{ filter: 'hue-rotate(270deg)' }} />
                   : <ReadCaseIcon width={sideL} height={sideL} />}
-              <Typography type="subheading" style={{ marginLeft: 15 }}>
+              <Typography variant="subheading" style={{ marginLeft: 15 }}>
                 {binName}
               </Typography>
             </div>
@@ -591,7 +641,7 @@ class ReportTable extends React.PureComponent {
         return (
             <div className={this.props.classes.moveToPair}>
               <ClearFilterIcon width={sideL} height={sideL} />
-              <Typography style={{ marginLeft: 15 }} type="subheading">
+              <Typography style={{ marginLeft: 15 }} variant="subheading">
                 Remove From Case
               </Typography>
             </div>
@@ -602,7 +652,7 @@ class ReportTable extends React.PureComponent {
               {(greyOutCaseIcon)
                   ? <CaseIcon width={sideL} height={sideL} style={{ filter: 'hue-rotate(270deg)' }} />
                   : <CaseIcon width={sideL} height={sideL} />}
-              <Typography type="subheading" style={{ marginLeft: 15 }}>
+              <Typography variant = "subheading" style={{ marginLeft: 15 }}>
                 {binName}
               </Typography>
             </div>
@@ -647,21 +697,18 @@ class ReportTable extends React.PureComponent {
    * of the table
    */
   renderDetailRowContent = row => {
-
+    var final;
     var dummyNode = document.createElement('div');
 
-    (this.props.currentTab === 1) ? dummyNode.innerHTML = (row.row.excerpt) ? row.row.excerpt[0] + row.row.excerpt[1] : '<div>--</div>' : null;
+    (this.props.currentTab === 1) ? final = (row.row.excerpt) ? row.row.excerpt[0] + row.row.excerpt[1] : '<div>--</div>' : null;
 
-    var content = ``;
-    var final = content + dummyNode.innerText;
+    dummyNode.innerHTML = final;
 
 
     return (
     (this.props.currentTab === 1) ?
         <Paper elevation={6} style={{padding: '5px'}}>
-          <div>
-            {dummyNode.innerText}
-          </div>
+          {dummyNode.innerText}
         </Paper>
         :
         null
@@ -677,7 +724,7 @@ class ReportTable extends React.PureComponent {
   toggleCell = row => {
 
     return (
-        <div onClick={this.blockParent} className={this.props.classes.ellipsisFrame}>
+        <td onClick={this.blockParent} className={this.props.classes.ellipsisFrame}>
 
           <MenuProvider id={row.row.primaryid} event='onClick'>
             <img src={EllipsisIcon} alt='More Options'/>
@@ -720,6 +767,8 @@ class ReportTable extends React.PureComponent {
                           <Item
                               key={bin.case_id + ' ' + bin.name}
                               onClick={() => {
+                                console.log('Move Case');
+                                console.log('props ' + this.props.bin);
                                 this.handleMoveReport(
                                     row.row.primaryid,
                                     this.props.bin,
@@ -739,7 +788,7 @@ class ReportTable extends React.PureComponent {
               ))}
             </Submenu>
           </Menu>
-        </div>
+        </td>
     );
   }
   render() {
@@ -778,10 +827,10 @@ class ReportTable extends React.PureComponent {
                         getRowId={(this.props.currentTab === 1) ? row => row.primaryid: row => row.primaryid }
                     >
                       <RowDetailState
-                          expandedRows={(this.props.currentTab === 1) ? this.props.returnedIds : this.state.expandedRows}
-                          onExpandedRowsChange={this.changeExpandedDetails}
+                          expandedRowIds={(this.props.currentTab === 1) ? this.props.returnedIds : this.state.expandedRows}
+                          onExpandedRowIdsChange={this.changeExpandedDetails}
                       />
-                      <DragDropProvider />
+                      <DragDropProvider/>
                       <SortingState
                           defaultSorting={[
                             { columnName: 'Event Date', direction: 'asc' },
@@ -805,12 +854,12 @@ class ReportTable extends React.PureComponent {
                           columnWidths={this.state.widths}
                           onColumnWidthsChange={this.onColumnWidthsChange}
                       />
-                      <TableHeaderRow showSortingControls className="tableHeader"/>
+                      <TableHeaderRow/>
                       <TableColumnReordering defaultOrder={this.columns.map(column => column.name)} />
 
                       <TableRowDetail
                           toggleCellComponent = {this.toggleCell}
-                          contentComponent =  {this.renderDetailRowContent}
+                          contentComponent = {this.renderDetailRowContent}
                       />
                     </Grid>
                 )
@@ -835,9 +884,8 @@ const mapStateToProps = state => ({
  * Gets Redux actions to be called in this component.
  * Exports this component with the proper JSS styles.
  */
-export default connect(
-    mapStateToProps,
-    {
+export default withStyles(styles)(connect(mapStateToProps,{
+      getReportsFromCase,
       moveReport,
       getCaseReports,
       executeSearch,
@@ -847,4 +895,4 @@ export default connect(
       getInstances,
       getAgeAndCode
     },
-)(withStyles(styles)(ReportTable));
+)(ReportTable));

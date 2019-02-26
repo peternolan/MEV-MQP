@@ -1,26 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import PropTypes, {string} from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-import { CircularProgress } from 'material-ui/Progress';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import Paper from 'material-ui/Paper';
 import _ from 'lodash';
-import Button from 'material-ui/Button';
+import Button from '@material-ui/core/Button';
 import { getReportNarrativeFromID, htmlEncode, htmlUnescape} from '../../../actions/reportActions';
 import styles from './QuillEditorStyles';
 import annotationColors from './AnnotationColors';
 import Highlighter from 'react-highlight-words';
-import MaterialTooltip from 'material-ui/Tooltip';
-import Divider from 'material-ui/Divider';
-import Typography from 'material-ui/Typography';
+import MaterialTooltip from '@material-ui/core/Tooltip';
+import Typography from '@material-ui/core/Typography';
 import './NarrativeAnnotator.css';
-import CustomTooltip from "../../visualization/components/demographics/components/ReportedBy";
-import {Link} from "react-router-dom";
-import GoToVisualizationIcon from "../../../resources/goToVisualizationIcon.svg";
-import ViewCaseSummary from "../../../resources/caseSummary.svg";
-import DeleteIcon from '../../../resources/Delete.svg';
 import {Collapse} from 'react-collapse';
 
 class QuillEditor extends Component {
@@ -591,14 +583,14 @@ class QuillEditor extends Component {
 
         } else {
 
-
+            var comSpecial;
             if (checked.checked) {
                 console.log("Checked True")
-                var comSpecial = `<comments id = 'comment-${this.props.primaryid}'><comment id = ${this.state.userID} viewable = 'public' class = "comment" >${this.state.userEmail}: ${comment.replace(/\n/g, " n$")}\n<br/></comment></comments>`;
+                comSpecial = `<comments id = 'comment-${this.props.primaryid}'><comment id = ${this.state.userID} viewable = 'public' class = "comment" >${this.state.userEmail}: ${comment.replace(/\n/g, " n$")}\n<br/></comment></comments>`;
 
             } else {
                 console.log("Checked False")
-                var comSpecial = `<comments id = 'comment-${this.props.primaryid}'><comment id = ${this.state.userID} viewable = 'private' class = "comment" >${this.state.userEmail}: ${comment.replace(/\n/g, " n$")}\n<br/></comment></comments>`;
+                comSpecial = `<comments id = 'comment-${this.props.primaryid}'><comment id = ${this.state.userID} viewable = 'private' class = "comment" >${this.state.userEmail}: ${comment.replace(/\n/g, " n$")}\n<br/></comment></comments>`;
 
             }
 
@@ -905,9 +897,7 @@ class QuillEditor extends Component {
 
 
     render() {
-
-        const { ...props } = this.props;
-        const { activeIndex, caseSensitive, searchText } = this.state.textHighlight;
+        const { searchText } = this.state.textHighlight;
         const  textToHighlight = this.state.current.reportText;
 
 
@@ -918,7 +908,7 @@ class QuillEditor extends Component {
                 <div className = {this.props.classes.quillArea} style = {{ display: 'inline-block', height: (this.state.commentsOn) ? '50%': '90%', overflow: 'scroll' }}>
                     <div className={this.props.classes.editFacet}>
                         <div className={this.props.classes.editBox} style={{width:'auto'}}>
-                            <div onClick={this.editMode}><Typography align='right' type='button'>{(this.state.editModeOn) ? 'Stop Editing' : 'Edit Highlights'}</Typography></div>
+                            <div onClick={this.editMode}><Typography align='right' variant='button'>{(this.state.editModeOn) ? 'Stop Editing' : 'Edit Highlights'}</Typography></div>
                         </div>
                         <div className={(this.state.editModeOn) ? this.props.classes.saveBox : this.props.classes.noBox}
                              onClick={this.saveWork}><Typography align='center' id ='saveButton' type='button' style={{color:(this.state.saving) ? '#1D1F83' : '#000', backgroundColor: (this.state.success)  ?  '#D3D3D3' : '#dbf0ff'}}>Save Highlights</Typography></div>
@@ -949,7 +939,7 @@ class QuillEditor extends Component {
             </div>
                 <div id="commentArea" className={this.props.classes.commentSec} >
                     <div className={this.props.classes.commentBtn} onClick={() => this.showComments()}>
-                        <Typography type='button' className={this.props.classes.textButton}>{(this.state.commentsOn) ? 'Hide' : 'Show'} Comments</Typography>
+                        <Typography variant='button' className={this.props.classes.textButton}>{(this.state.commentsOn) ? 'Hide' : 'Show'} Comments</Typography>
                     </div>
                     <Collapse isOpened={this.state.commentsOn} style = {{position: 'relative', width: '100%'}}>
                         <div className='commentContent' style = {{width: '100%'}}>
@@ -960,24 +950,24 @@ class QuillEditor extends Component {
                                 </div>
                             </div>
                             <div style={{padding: '4px'}}>
-                                <textarea id="comment" style = {{resize: 'none', width: '80%'}} rows="4">  </textarea>
+                                <textarea id="comment" style = {{resize: 'none', width: '80%'}} rows="4"/>
                             </div>
 
                             <div style={{padding: '4px', display: 'inline-block', width: '80%'}}>
 
                                 <span style = {{position: 'relative', left: '5px', bottom: '4px', marginRight: '2px'}}>Public:</span>
-                                <label class = "switch">
+                                <label className = "switch">
 
                                     <input id = 'viewToggle' type ="checkbox" name="viewable" />
-                                    <span class ="slider"></span>
+                                    <span className ="slider"/>
 
                                 </label>
 
-                                <Button id="MakeNote" style={{padding: '0', position: 'relative', border: '2px solid #1d00ff', left: '6.25%',  width: '10%'}}
+                                <Button id="MakeNote" style={{padding: '0', position: 'relative', border: '2px solid #1d00ff', left: '6.25%',  width: '11%'}}
                                         onClick={() => this.commentMade()}> Make Note </Button>
                                 <Button
                                     id="saveButton2"
-                                    raised
+                                    raised="true"
                                     color="primary"
                                     className={(this.state.success) ? this.props.classes.buttonSuccess : ''}
                                     disabled={this.state.saving}
@@ -994,12 +984,13 @@ class QuillEditor extends Component {
                                         tooltip: this.props.classes.toolTipStyle,
                                         popper: this.props.classes.tooltipStyle,
                                     }}
-                                    style={{fontSize: '20pt', left: '40%', position: 'relative'}}
+                                    style={{fontSize: '20pt', position: 'relative'}}
                                 >
                                     <Button id="delete" style={{
                                         border: '2px solid red',
-                                        width: '8%',
-                                        height: 'calc(1.25vw)'
+                                        width: '11%',
+                                        height: 'calc(1.25vw)',
+                                        left: '50%',
                                     }} onClick={() => this.commentDelete()}>
                                         Delete X
                                     </Button>
@@ -1019,12 +1010,12 @@ const mapStateToProps = state => ({
     userID: state.user.userID,
 });
 
-export default connect(
+export default withStyles(styles)(connect(
     mapStateToProps,
     { getReportNarrativeFromID,
         htmlEncode,
         htmlUnescape,},
-)(withStyles(styles)(QuillEditor));
+)(QuillEditor));
 
 
 

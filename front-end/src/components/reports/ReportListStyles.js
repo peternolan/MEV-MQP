@@ -1,6 +1,3 @@
-import ReportPanel from "./components/ReportPanel";
-import React from "react";
-
 export default {
   collapseDivider: {
     height: 'calc(100vh - 122px)',

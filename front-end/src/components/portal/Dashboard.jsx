@@ -2,19 +2,20 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { MuiThemeProvider, createMuiTheme, withStyles } from 'material-ui/styles';
-import { blue, green, red } from 'material-ui/colors';
-import Paper from 'material-ui/Paper';
-import MaterialTooltip from 'material-ui/Tooltip';
-import Button from 'material-ui/Button';
-import AppBar from 'material-ui/AppBar';
-import TextField from 'material-ui/TextField';
-import { FormControlLabel } from 'material-ui/Form';
-import Switch from 'material-ui/Switch';
-import Modal from 'material-ui/Modal';
-import Tabs, { Tab } from 'material-ui/Tabs';
-import Typography from 'material-ui/Typography';
-import Snackbar from 'material-ui/Snackbar';
+import { MuiThemeProvider, createMuiTheme, withStyles } from '@material-ui/core/styles';
+import { blue, green, red } from '@material-ui/core/colors';
+import Paper from '@material-ui/core/Paper';
+import MaterialTooltip from '@material-ui/core/Tooltip';
+import AppBar from '@material-ui/core/AppBar';
+import TextField from '@material-ui/core/TextField';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Switch from '@material-ui/core/Switch';
+import Modal from '@material-ui/core/Modal';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import Snackbar from '@material-ui/core/Snackbar';
 import GoToVisualizationIcon from '../../resources/goToVisualizationIcon.svg';
 import GoToReportsIcon from '../../resources/goToReportsIcon.svg';
 import CaseIcon from '../../resources/CaseIcon';
@@ -56,6 +57,9 @@ const defaultTheme = createMuiTheme({
     },
     ...MEVColors,
     error: red,
+  },
+  typography: {
+    useNextVariants: true,
   },
 });
 
@@ -121,6 +125,7 @@ class Dashboard extends Component {
         bins.forEach((bin, i) => active[bin.name] = bin.active);
         const userBins = this.sortUserBins(bins);
         const defaultCase = (userBins[this.state.value]) ? userBins[this.state.value].toLowerCase() : '';
+        console.log('ub',userBins,descs,active,defaultCase);
         this.setState({
           userBins,
           binDescs: descs,
@@ -253,7 +258,7 @@ class Dashboard extends Component {
   )
 
   render() {
-    const { value } = this.state;
+    const value = this.state.value;
     return (
       <MuiThemeProvider theme={defaultTheme}  >
         <Snackbar
@@ -276,11 +281,13 @@ class Dashboard extends Component {
             open={this.state.editCaseModalOpen}
             onClose={this.handleEditCaseClose}
           >
+
             <Paper elevation={8} className={this.props.classes.newCaseModal} >
-              <Typography type="title" id="modal-title">
+              <Typography variant="title" id="modal-title">
                 Edit Case
               </Typography>
               <hr />
+
               <TextField
                 label="Case Name"
                 placeholder=""
@@ -308,7 +315,7 @@ class Dashboard extends Component {
             <div className="col-sm-12">
               <Paper elevation={2} className={`${this.props.classes.paper}`} >
                 <div className="col-sm-4">
-                  <p><strong>Logged In User:</strong> {this.props.userEmail != '' ? (this.props.userEmail) : ('Unkown')}</p>
+                  <p><strong>Logged In User:</strong> {this.props.userEmail !== '' ? (this.props.userEmail) : ('Unkown')}</p>
                 </div>
                 <div className="col-sm-4">
                   <p><strong>Number of Active Cases:</strong> {this.state.activeBinNumbers}</p>
@@ -327,7 +334,7 @@ class Dashboard extends Component {
                     onChange={this.handleChange}
                     indicatorColor="primary"
                     textColor="primary"
-                    scrollable
+                    variant="scrollable"
                     scrollButtons="auto"
                   >
 
@@ -352,14 +359,16 @@ class Dashboard extends Component {
                   </Tabs>
                 </AppBar>
                 {this.state.userBins.map((option, index) => {
+
                   if (value === index) {
+                    console.log(value + ' ' + index);
                     return (
                         <div style = {{overflow: 'scroll',
                           position: 'relative',
                           height: 'calc(80vh - 122px)'}}>
                       <TabContainer key={index} >
                         <div className="col-sm-12">
-                          <Typography type="title" style={{ fontSize: '30px', color: '#333' }}>
+                          <Typography variant="title" style={{ fontSize: '30px', color: '#333' }}>
                             {option}
                             {(!(this.state.value === this.getTrashValue()) && !(this.state.value === this.getReadValue()))
                               ? <FormControlLabel
@@ -389,21 +398,21 @@ class Dashboard extends Component {
                               ? <Button raised className="pull-right" onClick={this.handleEditCaseOpen}> Edit Case </Button>
                               : null}
                           </Typography>
-                          <Typography type="subheading" style={{ fontSize: '16px', color: '#333' }}>
+                          <Typography variant="subheading" style={{ fontSize: '16px', color: '#333' }}>
                             <i>{this.state.binDescs[this.state.case] || 'No Description' }</i>
                           </Typography>
                           <br />
                           {
                             (this.state.value === this.getTrashValue() || this.state.value === this.getReadValue())
                             ? (
-                              <Typography type="subheading" style={{ fontSize: '16px', color: '#333' }}>
+                              <Typography variant="subheading" style={{ fontSize: '16px', color: '#333' }}>
                                 <strong>Number of Reports:</strong> {this.state.reportCount}
                               </Typography>
                             )
                             : (
                               <div>
                                 <div className="col-sm-12" style={{ padding: '0px' }}>
-                                  <Typography type="subheading" style={{ fontSize: '16px', color: '#333' }}>
+                                  <Typography variant="subheading" style={{ fontSize: '16px', color: '#333' }}>
                                     <strong>Number of Reports:</strong> {this.state.reportCount}
                                   </Typography>
                                 </div>
@@ -414,8 +423,8 @@ class Dashboard extends Component {
 
                         <div className={`${this.props.classes.reportsWrapper} col-sm-12`}>
                           <div className={`${this.props.classes.paperNoPadding}`}>
-                            <UserReportTable bin={this.state.case} bins={this.state.userBins} setReportCount={this.setReportCount}
-                                             />
+                            {<UserReportTable bin={this.state.case} bins={this.state.userBins} setReportCount={this.setReportCount}
+                                             />}
                           </div>
                         </div>
                         <div className={`${this.props.classes.clearfix}`} />
@@ -441,7 +450,7 @@ class Dashboard extends Component {
                 }}
           >
             <Link href="/visualization" to="/visualization" >
-              <Button fab style={{ margin: 12 }} color="primary">
+              <Button fab = "true" style={{ margin: 12 }} color="primary">
                 <img src={GoToVisualizationIcon} width="35px" height="35px" alt="Go To Visualization" />
               </Button>
             </Link>
@@ -459,7 +468,7 @@ class Dashboard extends Component {
                 }}
           >
             <Link href="/report" to="/report" >
-              <Button fab style={{ margin: 12 }} color="primary">
+              <Button fab = "true" style={{ margin: 12 }} color="primary">
                 <img src={GoToReportsIcon} width="35px" height="35px" alt="Go To Reports Listing" />
               </Button>
             </Link>

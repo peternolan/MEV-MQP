@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Treemap, Tooltip } from 'recharts';
-import { withStyles } from 'material-ui/styles';
-import Paper from 'material-ui/Paper';
-import Chip from 'material-ui/Chip';
-import Avatar from 'material-ui/Avatar';
-import Typography from 'material-ui/Typography';
+import { withStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Chip from '@material-ui/core/Chip';
+import Avatar from '@material-ui/core/Avatar';
+import Typography from '@material-ui/core/Typography';
 import { toggleMETypeFilter, toggleProductFilter, toggleStageFilter, toggleCauseFilter } from '../../../../actions/visualizationActions';
 import ClearFilterIcon from '../../../../resources/clearFilterIcon.svg';
 import CustomizedContent from './components/CustomizedContent';
@@ -348,9 +348,4 @@ const mapStateToProps = state => ({
  * Gets Redux actions to be called in this component.
  * Exports this component with the proper JSS styles.
  */
-export default connect(
-  mapStateToProps,
-  {
- toggleMETypeFilter, toggleProductFilter, toggleStageFilter, toggleCauseFilter 
-},
-)(withStyles(styles)(TreeMap));
+export default withStyles(styles)(connect(mapStateToProps,{toggleMETypeFilter, toggleProductFilter, toggleStageFilter, toggleCauseFilter })(TreeMap));

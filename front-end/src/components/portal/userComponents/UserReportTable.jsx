@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import _ from 'lodash';
 import {
   RowDetailState, SortingState, IntegratedSorting, PagingState, IntegratedPaging,
@@ -14,17 +13,16 @@ import {
   TableColumnReordering,
   TableRowDetail,
   PagingPanel,
-  TableColumnResizing,
+
 } from '@devexpress/dx-react-grid-material-ui';
-import { withStyles } from 'material-ui/styles';
-import Divider from 'material-ui/Divider';
-import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
-import ExpansionPanel, {
-  ExpansionPanelSummary,
-  ExpansionPanelDetails,
-} from 'material-ui/ExpansionPanel';
-import Button from 'material-ui/Button';
-import Typography from 'material-ui/Typography';
+import {TableColumnResizing} from '@devexpress/dx-react-grid-material-ui';
+import { withStyles } from '@material-ui/core/styles';
+import Divider from '@material-ui/core/Divider';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import Typography from '@material-ui/core/Typography';
 import { moveReport, getCaseReports, getInstances } from '../../../actions/reportActions';
 
 const styles = {};
@@ -77,8 +75,7 @@ class UserReportTable extends React.PureComponent {
 
     this.props.getCaseReports(this.props.bin, this.props.userID, {})
       .then(bins => {
-
-
+        console.log(bins);
         this.props.setReportCount(bins.length);
         this.setState({ data: bins });
 
@@ -97,8 +94,9 @@ class UserReportTable extends React.PureComponent {
       this.props.getCaseReports(this.props.bin, this.props.userID, {})
         .then((bins) => {
           this.setState({ data: bins });
-          this.props.setReportCount(bins.length)
+          this.props.setReportCount(bins.length);
           this.changeExpandedDetails([]);
+
         });
     }
   }
@@ -152,19 +150,21 @@ class UserReportTable extends React.PureComponent {
   /**
    * Default widths for the columns of the table
    */
-  columnWidths = {
-    init_fda_dt: 85,
-    primaryid: 90,
-    caseid: 80,
-    caseversion: 95,
-    age_year: 50,
-    sex: 50,
-    wt_lb: 65,
-    drugname: 200,
-    me_type: 180,
-    outc_cod: 85,
-    report_text: 200,
-  };
+
+  columnWidths = [
+      { columnName: 'init_fda_dt', width: 85 },
+      { columnName: 'primaryid', width: 90 },
+      { columnName: 'caseid', width: 80 },
+      { columnName: 'caseversion', width: 95 },
+      { columnName: 'age_year', width: 50 },
+      { columnName: 'sex', width: 50 },
+      { columnName: 'wt_lb', width: 65 },
+      { columnName: 'drugname', width: 200 },
+      { columnName: 'me_type', width: 180 },
+      { columnName: 'outc_cod', width: 85 },
+    { columnName: 'report_text', width: 200 },
+
+      ];
 
   /**
    * Sends a backend request to move a report from one bin to another
@@ -192,7 +192,7 @@ class UserReportTable extends React.PureComponent {
         <div style={{ marginTop: '10px' }}>
           <ExpansionPanel elevation={6}>
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-              <Typography type="subheading">Preview Narrative</Typography>
+              <Typography variant="subheading">Preview Narrative</Typography>
             </ExpansionPanelSummary>
             <Divider light />
             <ExpansionPanelDetails style={{ display: 'block' }}>
@@ -209,6 +209,7 @@ class UserReportTable extends React.PureComponent {
   )
 
   render() {
+    console.log("RENDER");
     return (
       <Grid
         id="test2"
@@ -262,7 +263,4 @@ const mapStateToProps = state => ({
  * Gets Redux actions to be called in this component.
  * Exports this component with the proper JSS styles.
  */
-export default connect(
-  mapStateToProps,
-  { moveReport, getCaseReports, getInstances  },
-)(withStyles(styles)(UserReportTable));
+export default withStyles(styles)(connect(mapStateToProps,{moveReport, getCaseReports, getInstances})(UserReportTable));

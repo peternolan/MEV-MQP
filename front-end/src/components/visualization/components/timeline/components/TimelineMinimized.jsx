@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { withStyles } from 'material-ui/styles';
-import Grid from 'material-ui/Grid';
-import Paper from 'material-ui/Paper';
-import TextField from 'material-ui/TextField';
-import Button from 'material-ui/Button';
-import MaterialTooltip from 'material-ui/Tooltip';
+import { withStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import MaterialTooltip from '@material-ui/core/Tooltip';
 import { Area, AreaChart, CartesianGrid, XAxis, ResponsiveContainer, ReferenceArea } from 'recharts';
 import BrushImpl from './components/BrushImpl';
 import styles from './TimelineMinimizedStyles';
@@ -28,8 +28,8 @@ class TimelineMinimized extends Component {
     getUnformattedDateFromFormattedRange: PropTypes.func.isRequired,
     formatDate: PropTypes.func.isRequired,
 
-    selectedStartX: PropTypes.string.isRequired,
-    selectedEndX: PropTypes.string.isRequired,
+    selectedStartX: PropTypes.number.isRequired,
+    selectedEndX: PropTypes.number.isRequired,
 
     classes: PropTypes.shape({
       dateSelectedTextField: PropTypes.string,

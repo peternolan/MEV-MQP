@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { BarChart, XAxis, YAxis, CartesianGrid, Tooltip, Bar, ResponsiveContainer } from 'recharts';
-import { withStyles } from 'material-ui/styles';
-import Chip from 'material-ui/Chip';
-import Avatar from 'material-ui/Avatar';
-import Typography from 'material-ui/Typography';
+import { withStyles } from '@material-ui/core/styles';
+import Chip from '@material-ui/core/Chip';
+import Avatar from '@material-ui/core/Avatar';
+import Typography from '@material-ui/core/Typography';
 import CustomTooltip from './components/CustomTooltip';
 import ClearFilterIcon from '../../../../../resources/clearFilterIcon.svg';
 import MEVColors from '../../../../../theme';
@@ -176,7 +176,7 @@ class Age extends Component {
             onClick={this.clearFilter}
             className={this.props.classes.clearFilterChip}
           />
-          <Typography id="age-graph-title" className={this.props.classes.labelFont} type="title" component="h1">
+          <Typography id="age-graph-title" className={this.props.classes.labelFont} variant="title" component="h1">
             THIS IS THE AGE SECTION
           </Typography>
         </div>

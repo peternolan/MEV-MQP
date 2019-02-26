@@ -176,7 +176,7 @@ class Age extends Component {
             onClick={this.clearFilter}
             className={this.props.classes.clearFilterChip}
           />
-          <Typography id="age-graph-title" className={this.props.classes.labelFont} type="title" component="h1">
+          <Typography id="age-graph-title" className={this.props.classes.labelFont} variant="title" component="h1">
             THIS IS THE AGE SECTION
           </Typography>
         </div>

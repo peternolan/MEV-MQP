@@ -38,8 +38,8 @@ class TimelineMaximized extends Component {
     updateSelectedDate: PropTypes.func.isRequired,
     recordMouseMove: PropTypes.func.isRequired,
 
-    selectedStartX: PropTypes.string.isRequired,
-    selectedEndX: PropTypes.string.isRequired,
+    selectedStartX: PropTypes.number.isRequired,
+    selectedEndX: PropTypes.number.isRequired,
     currentlyFilteredDateRange: PropTypes.string.isRequired,
     currentlySelecting: PropTypes.bool.isRequired,
     mouseMovePosition: PropTypes.string.isRequired,

@@ -476,7 +476,7 @@ class ReportList extends Component {
                 onClose={this.handleNewCaseClose}
             >
               <Paper elevation={8} className={this.props.classes.newCaseModal}>
-                <Typography type="title" id="modal-title">
+                <Typography variant="title" id="modal-title">
                   Create a Case
                 </Typography>
                 <hr />

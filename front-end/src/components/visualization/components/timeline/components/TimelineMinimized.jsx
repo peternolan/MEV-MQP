@@ -28,8 +28,8 @@ class TimelineMinimized extends Component {
     getUnformattedDateFromFormattedRange: PropTypes.func.isRequired,
     formatDate: PropTypes.func.isRequired,
 
-    selectedStartX: PropTypes.string.isRequired,
-    selectedEndX: PropTypes.string.isRequired,
+    selectedStartX: PropTypes.number.isRequired,
+    selectedEndX: PropTypes.number.isRequired,
 
     classes: PropTypes.shape({
       dateSelectedTextField: PropTypes.string,

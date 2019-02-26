@@ -181,7 +181,7 @@ class ReportedBy extends Component {
             onClick={this.clearFilter}
             className={this.props.classes.clearFilterChip}
           />
-          <Typography id="occupation-graph-title" className={this.props.classes.labelFont} type="title" component="h1">
+          <Typography id="occupation-graph-title" className={this.props.classes.labelFont} variant="title" component="h1">
             Occupation
           </Typography>
         </div>

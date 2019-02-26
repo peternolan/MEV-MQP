@@ -918,7 +918,7 @@ class QuillEditor extends Component {
                 <div className = {this.props.classes.quillArea} style = {{ display: 'inline-block', height: (this.state.commentsOn) ? '50%': '90%', overflow: 'scroll' }}>
                     <div className={this.props.classes.editFacet}>
                         <div className={this.props.classes.editBox} style={{width:'auto'}}>
-                            <div onClick={this.editMode}><Typography align='right' type='button'>{(this.state.editModeOn) ? 'Stop Editing' : 'Edit Highlights'}</Typography></div>
+                            <div onClick={this.editMode}><Typography align='right' variant='button'>{(this.state.editModeOn) ? 'Stop Editing' : 'Edit Highlights'}</Typography></div>
                         </div>
                         <div className={(this.state.editModeOn) ? this.props.classes.saveBox : this.props.classes.noBox}
                              onClick={this.saveWork}><Typography align='center' id ='saveButton' type='button' style={{color:(this.state.saving) ? '#1D1F83' : '#000', backgroundColor: (this.state.success)  ?  '#D3D3D3' : '#dbf0ff'}}>Save Highlights</Typography></div>
@@ -949,7 +949,7 @@ class QuillEditor extends Component {
             </div>
                 <div id="commentArea" className={this.props.classes.commentSec} >
                     <div className={this.props.classes.commentBtn} onClick={() => this.showComments()}>
-                        <Typography type='button' className={this.props.classes.textButton}>{(this.state.commentsOn) ? 'Hide' : 'Show'} Comments</Typography>
+                        <Typography variant='button' className={this.props.classes.textButton}>{(this.state.commentsOn) ? 'Hide' : 'Show'} Comments</Typography>
                     </div>
                     <Collapse isOpened={this.state.commentsOn} style = {{position: 'relative', width: '100%'}}>
                         <div className='commentContent' style = {{width: '100%'}}>
@@ -973,7 +973,7 @@ class QuillEditor extends Component {
 
                                 </label>
 
-                                <Button id="MakeNote" style={{padding: '0', position: 'relative', border: '2px solid #1d00ff', left: '6.25%',  width: '10%'}}
+                                <Button id="MakeNote" style={{padding: '0', position: 'relative', border: '2px solid #1d00ff', left: '6.25%',  width: '11%'}}
                                         onClick={() => this.commentMade()}> Make Note </Button>
                                 <Button
                                     id="saveButton2"
@@ -994,12 +994,13 @@ class QuillEditor extends Component {
                                         tooltip: this.props.classes.toolTipStyle,
                                         popper: this.props.classes.tooltipStyle,
                                     }}
-                                    style={{fontSize: '20pt', left: '40%', position: 'relative'}}
+                                    style={{fontSize: '20pt', position: 'relative'}}
                                 >
                                     <Button id="delete" style={{
                                         border: '2px solid red',
-                                        width: '8%',
-                                        height: 'calc(1.25vw)'
+                                        width: '11%',
+                                        height: 'calc(1.25vw)',
+                                        left: '50%',
                                     }} onClick={() => this.commentDelete()}>
                                         Delete X
                                     </Button>

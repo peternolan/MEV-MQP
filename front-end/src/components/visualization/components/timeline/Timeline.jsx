@@ -189,6 +189,7 @@ class Timeline extends Component {
         <Button id="MinimizeButtonTimeline" fab = "true" mini color="primary" aria-label="minimize" className={this.props.classes.minimizeButton} onClick={this.toggleSize}>
           {(this.props.minimized) ? '+' : '-'}
         </Button>
+        {console.log(this.state.selectedStartX)}
         {(this.props.minimized)
           ? <TimelineMinimized
             entireTimelineData={this.props.entireTimelineData}

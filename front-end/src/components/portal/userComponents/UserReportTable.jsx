@@ -194,7 +194,7 @@ class UserReportTable extends React.PureComponent {
         <div style={{ marginTop: '10px' }}>
           <ExpansionPanel elevation={6}>
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-              <Typography type="subheading">Preview Narrative</Typography>
+              <Typography variant="subheading">Preview Narrative</Typography>
             </ExpansionPanelSummary>
             <Divider light />
             <ExpansionPanelDetails style={{ display: 'block' }}>

@@ -6,7 +6,7 @@ import { blue, green, red } from '@material-ui/core/colors';
 import TreeMap from './components/treeMap/TreeMap';
 import Demographics from './components/demographics/Demographics';
 import { setCurrentlySelecting } from '../../actions/filterActions';
-import { CircularProgress } from '@material-ui/core/CircularProgress';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import Timeline from './components/timeline/Timeline';
 import MEVColors from '../../theme';
 
@@ -120,7 +120,9 @@ class App extends Component {
     return (
       <MuiThemeProvider theme={defaultTheme} >
         <div className="App" style={{ position: 'relative' }}>
-        {this.props.loadingVisData ? <div style={{ position: 'absolute', top: '0px', left: '0px', width: '100%', height: '100%', backgroundColor: 'rgba(25, 25, 25, 0.5)', zIndex: '10000' }}> <div style={{ width: 'fit-content', position: 'absolute', top: '50%', left: '50%', transform: 'translateY(-50%) translateX(-50%)' }}>  <CircularProgress size={300} /> </div> </div> : null }
+        {this.props.loadingVisData ? <div style={{ position: 'absolute', top: '0px', left: '0px', width: '100%', height: '100%', backgroundColor: 'rgba(25, 25, 25, 0.5)', zIndex: '10000' }}>
+          <div style={{ width: 'fit-content', position: 'absolute', top: '50%', left: '50%', transform: 'translateY(-50%) translateX(-50%)' }}>
+          <CircularProgress size={300} /> </div> </div> : null }
           <Demographics
             minimized={this.props.demographicsMinimized}
           />

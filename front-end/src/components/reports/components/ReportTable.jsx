@@ -622,7 +622,7 @@ class ReportTable extends React.PureComponent {
         return (
             <div className={this.props.classes.moveToPair}>
               <TrashIcon  width={sideL} height={sideL}/>
-              <Typography type="subheading" style={{ marginLeft: 15 }}>
+              <Typography variant="subheading" style={{ marginLeft: 15 }}>
                 {binName}
               </Typography>
             </div>
@@ -633,7 +633,7 @@ class ReportTable extends React.PureComponent {
               {(greyOutCaseIcon)
                   ? <ReadCaseIcon width={sideL} height={sideL} style={{ filter: 'hue-rotate(270deg)' }} />
                   : <ReadCaseIcon width={sideL} height={sideL} />}
-              <Typography type="subheading" style={{ marginLeft: 15 }}>
+              <Typography variant="subheading" style={{ marginLeft: 15 }}>
                 {binName}
               </Typography>
             </div>
@@ -642,7 +642,7 @@ class ReportTable extends React.PureComponent {
         return (
             <div className={this.props.classes.moveToPair}>
               <ClearFilterIcon width={sideL} height={sideL} />
-              <Typography style={{ marginLeft: 15 }} type="subheading">
+              <Typography style={{ marginLeft: 15 }} variant="subheading">
                 Remove From Case
               </Typography>
             </div>
@@ -653,7 +653,7 @@ class ReportTable extends React.PureComponent {
               {(greyOutCaseIcon)
                   ? <CaseIcon width={sideL} height={sideL} style={{ filter: 'hue-rotate(270deg)' }} />
                   : <CaseIcon width={sideL} height={sideL} />}
-              <Typography type="subheading" style={{ marginLeft: 15 }}>
+              <Typography variant = "subheading" style={{ marginLeft: 15 }}>
                 {binName}
               </Typography>
             </div>

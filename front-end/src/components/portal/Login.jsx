@@ -165,10 +165,10 @@ class Login extends Component {
             <div className="row">
               <div className="col-sm-12">
                 <Paper elevation={2} style={{ padding: '20px 20px 20px 20px', marginTop: '15px' }} >
-                  <Typography type="title" style={{ fontSize: '30px', color: '#333' }}>
+                  <Typography variant="title" style={{ fontSize: '30px', color: '#333' }}>
                     Sign in to Get Started
                   </Typography>
-                  <Typography type="subheading" style={{ fontSize: '16px', color: '#333' }}>
+                  <Typography variant="subheading" style={{ fontSize: '16px', color: '#333' }}>
                     <i>Please enter a username to be directed to the system</i>
                   </Typography>
                   <br />

@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import { MuiThemeProvider, createMuiTheme, withStyles } from '@material-ui/core/styles';
-import { blue, green, red, yellow } from '@material-ui/core/colors';
+import { blue, green, red } from '@material-ui/core/colors';
 import TextField from '@material-ui/core/TextField';
 import AppBar from '@material-ui/core/AppBar';
 import Typography from '@material-ui/core/Typography';
@@ -12,9 +11,7 @@ import Modal from '@material-ui/core/Modal';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Snackbar from '@material-ui/core/Snackbar';
-import MaterialTooltip from '@material-ui/core/Tooltip';
 import Paper from '@material-ui/core/Paper';
-import Divider from '@material-ui/core/Divider';
 import ReportTable from './components/ReportTable';
 import CaseSummaryListing from './components/CaseSummaryListing';
 import ReportPanel from './components/ReportPanel';
@@ -25,8 +22,6 @@ import ReadCaseIcon from '../../resources/ReadCaseIcon';
 import NewCaseIcon from '../../resources/NewCaseIcon';
 import TrashIcon from '../../resources/TrashIcon';
 import AllReportsIcon from '../../resources/AllReportsIcon';
-import GoToVisualizationIcon from '../../resources/goToVisualizationIcon.svg';
-import ViewCaseSummary from '../../resources/caseSummary.svg';
 import styles from './ReportListStyles';
 //import {getEntireTimeline, setSelectedDate} from '../../actions/timelineActions';
 
@@ -48,7 +43,7 @@ const defaultTheme = createMuiTheme({
   typography: {
     useNextVariants: true,
   },
-  shadows: ["none"],
+  shadows: Array(25).fill('none'),
   borderRadius: 0
 });
 

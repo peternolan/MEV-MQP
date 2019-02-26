@@ -1,7 +1,5 @@
 import { Brush } from 'recharts';
 import PropTypes from 'prop-types';
-import { scalePoint } from 'd3-scale';
-import _ from 'lodash';
 
 /**
  * This is the wrapper component of the Recharts Brush to add our own custom functionality

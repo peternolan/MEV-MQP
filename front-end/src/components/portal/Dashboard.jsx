@@ -6,7 +6,6 @@ import { MuiThemeProvider, createMuiTheme, withStyles } from '@material-ui/core/
 import { blue, green, red } from '@material-ui/core/colors';
 import Paper from '@material-ui/core/Paper';
 import MaterialTooltip from '@material-ui/core/Tooltip';
-import Button from '@material-ui/core/Button';
 import AppBar from '@material-ui/core/AppBar';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -14,6 +13,7 @@ import Switch from '@material-ui/core/Switch';
 import Modal from '@material-ui/core/Modal';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Snackbar from '@material-ui/core/Snackbar';
 import GoToVisualizationIcon from '../../resources/goToVisualizationIcon.svg';
@@ -315,7 +315,7 @@ class Dashboard extends Component {
             <div className="col-sm-12">
               <Paper elevation={2} className={`${this.props.classes.paper}`} >
                 <div className="col-sm-4">
-                  <p><strong>Logged In User:</strong> {this.props.userEmail != '' ? (this.props.userEmail) : ('Unkown')}</p>
+                  <p><strong>Logged In User:</strong> {this.props.userEmail !== '' ? (this.props.userEmail) : ('Unkown')}</p>
                 </div>
                 <div className="col-sm-4">
                   <p><strong>Number of Active Cases:</strong> {this.state.activeBinNumbers}</p>

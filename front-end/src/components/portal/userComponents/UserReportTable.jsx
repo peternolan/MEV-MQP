@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import _ from 'lodash';
 import {
   RowDetailState, SortingState, IntegratedSorting, PagingState, IntegratedPaging,
@@ -23,7 +22,6 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { moveReport, getCaseReports, getInstances } from '../../../actions/reportActions';
 

@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import PropTypes, {string} from 'prop-types';
+import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import { CircularProgress } from '@material-ui/core/CircularProgress';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import Paper from '@material-ui/core/Paper';
 import _ from 'lodash';
 import Button from '@material-ui/core/Button';
 import { getReportNarrativeFromID, htmlEncode, htmlUnescape} from '../../../actions/reportActions';
@@ -13,14 +11,8 @@ import styles from './QuillEditorStyles';
 import annotationColors from './AnnotationColors';
 import Highlighter from 'react-highlight-words';
 import MaterialTooltip from '@material-ui/core/Tooltip';
-import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import './NarrativeAnnotator.css';
-import CustomTooltip from "../../visualization/components/demographics/components/ReportedBy";
-import {Link} from "react-router-dom";
-import GoToVisualizationIcon from "../../../resources/goToVisualizationIcon.svg";
-import ViewCaseSummary from "../../../resources/caseSummary.svg";
-import DeleteIcon from '../../../resources/Delete.svg';
 import {Collapse} from 'react-collapse';
 
 class QuillEditor extends Component {
@@ -591,14 +583,14 @@ class QuillEditor extends Component {
 
         } else {
 
-
+            var comSpecial;
             if (checked.checked) {
                 console.log("Checked True")
-                var comSpecial = `<comments id = 'comment-${this.props.primaryid}'><comment id = ${this.state.userID} viewable = 'public' class = "comment" >${this.state.userEmail}: ${comment.replace(/\n/g, " n$")}\n<br/></comment></comments>`;
+                comSpecial = `<comments id = 'comment-${this.props.primaryid}'><comment id = ${this.state.userID} viewable = 'public' class = "comment" >${this.state.userEmail}: ${comment.replace(/\n/g, " n$")}\n<br/></comment></comments>`;
 
             } else {
                 console.log("Checked False")
-                var comSpecial = `<comments id = 'comment-${this.props.primaryid}'><comment id = ${this.state.userID} viewable = 'private' class = "comment" >${this.state.userEmail}: ${comment.replace(/\n/g, " n$")}\n<br/></comment></comments>`;
+                comSpecial = `<comments id = 'comment-${this.props.primaryid}'><comment id = ${this.state.userID} viewable = 'private' class = "comment" >${this.state.userEmail}: ${comment.replace(/\n/g, " n$")}\n<br/></comment></comments>`;
 
             }
 
@@ -905,9 +897,7 @@ class QuillEditor extends Component {
 
 
     render() {
-
-        const { ...props } = this.props;
-        const { activeIndex, caseSensitive, searchText } = this.state.textHighlight;
+        const { searchText } = this.state.textHighlight;
         const  textToHighlight = this.state.current.reportText;
 
 

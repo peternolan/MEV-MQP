@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-//import {Text} from 'react-native';
-import { Link } from 'react-router-dom';
 import {
   RowDetailState, SortingState, IntegratedSorting, PagingState, IntegratedPaging,
 } from '@devexpress/dx-react-grid';
@@ -114,7 +112,7 @@ class ReportTable extends React.PureComponent {
         { columnName: 'primaryid', width: 75 },
         { columnName: 'age_year', width: 35 },
         { columnName: 'sex', width: 35 },
-        { columnName: 'drugname', width: 125 },
+        { columnName: 'drugname', width: 100 },
         { columnName: 'me_type', width: 100 },
         { columnName: 'outc_cod', width: 60 }
 
@@ -693,12 +691,8 @@ class ReportTable extends React.PureComponent {
    * of the table
    */
   renderDetailRowContent = row => {
-
     var final;
-
     var dummyNode = document.createElement('div');
-
-    console.log(this.props.currentTab);
 
     (this.props.currentTab === 1) ? final = (row.row.excerpt) ? row.row.excerpt[0] + row.row.excerpt[1] : '<div>--</div>' : null;
 
@@ -723,7 +717,7 @@ class ReportTable extends React.PureComponent {
   toggleCell = row => {
 
     return (
-        <div onClick={this.blockParent} className={this.props.classes.ellipsisFrame}>
+        <td onClick={this.blockParent} className={this.props.classes.ellipsisFrame}>
 
           <MenuProvider id={row.row.primaryid} event='onClick'>
             <img src={EllipsisIcon} alt='More Options'/>
@@ -787,7 +781,7 @@ class ReportTable extends React.PureComponent {
               ))}
             </Submenu>
           </Menu>
-        </div>
+        </td>
     );
   }
   render() {
@@ -825,12 +819,11 @@ class ReportTable extends React.PureComponent {
                         columns={this.columns}
                         getRowId={(this.props.currentTab === 1) ? row => row.primaryid: row => row.primaryid }
                     >
-                      {console.log(this.props.currentTab === 1)}
                       <RowDetailState
                           expandedRowIds={(this.props.currentTab === 1) ? this.props.returnedIds : this.state.expandedRows}
                           onExpandedRowIdsChange={this.changeExpandedDetails}
                       />
-                      <DragDropProvider />
+                      <DragDropProvider/>
                       <SortingState
                           defaultSorting={[
                             { columnName: 'Event Date', direction: 'asc' },
@@ -854,7 +847,7 @@ class ReportTable extends React.PureComponent {
                           columnWidths={this.state.widths}
                           onColumnWidthsChange={this.onColumnWidthsChange}
                       />
-                      <TableHeaderRow showSortingControls className="tableHeader"/>
+                      <TableHeaderRow/>
                       <TableColumnReordering defaultOrder={this.columns.map(column => column.name)} />
 
                       <TableRowDetail

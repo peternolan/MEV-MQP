@@ -286,7 +286,6 @@ export const getReportsFromCase = (userID, caseName) => () => {
       caseName,
     }),
   };
-  console.log(process.env.REACT_APP_NODE_SERVER);
   return fetch(`${process.env.REACT_APP_NODE_SERVER}/getreportsfromcasename`, fetchData)
     .then(response => {return response.json();})
     .then(response => (response.rows ? response.rows : []))

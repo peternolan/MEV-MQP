@@ -960,16 +960,16 @@ class QuillEditor extends Component {
                                 </div>
                             </div>
                             <div style={{padding: '4px'}}>
-                                <textarea id="comment" style = {{resize: 'none', width: '80%'}} rows="4">  </textarea>
+                                <textarea id="comment" style = {{resize: 'none', width: '80%'}} rows="4"/>
                             </div>
 
                             <div style={{padding: '4px', display: 'inline-block', width: '80%'}}>
 
                                 <span style = {{position: 'relative', left: '5px', bottom: '4px', marginRight: '2px'}}>Public:</span>
-                                <label class = "switch">
+                                <label className = "switch">
 
                                     <input id = 'viewToggle' type ="checkbox" name="viewable" />
-                                    <span class ="slider"></span>
+                                    <span className ="slider"/>
 
                                 </label>
 
@@ -977,7 +977,7 @@ class QuillEditor extends Component {
                                         onClick={() => this.commentMade()}> Make Note </Button>
                                 <Button
                                     id="saveButton2"
-                                    raised
+                                    raised="true"
                                     color="primary"
                                     className={(this.state.success) ? this.props.classes.buttonSuccess : ''}
                                     disabled={this.state.saving}

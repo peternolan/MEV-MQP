@@ -115,15 +115,15 @@ class ReportTable extends React.PureComponent {
       /**
        * Default widths for the columns of the table
        */
-      widths: {
-        //init_fda_dt: 85,
-        primaryid: 75,
-        age_year: 35,
-        sex: 35,
-        drugname: 125,
-        me_type: 100,
-        outc_cod: 60,
-      },
+      widths: [
+        { columnName: 'primaryid', width: 75 },
+        { columnName: 'age_year', width: 35 },
+        { columnName: 'sex', width: 35 },
+        { columnName: 'drugname', width: 125 },
+        { columnName: 'me_type', width: 100 },
+        { columnName: 'outc_cod', width: 60 }
+
+      ],
 
 
       /**

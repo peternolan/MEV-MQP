@@ -152,19 +152,21 @@ class UserReportTable extends React.PureComponent {
   /**
    * Default widths for the columns of the table
    */
-  columnWidths = {
-    init_fda_dt: 85,
-    primaryid: 90,
-    caseid: 80,
-    caseversion: 95,
-    age_year: 50,
-    sex: 50,
-    wt_lb: 65,
-    drugname: 200,
-    me_type: 180,
-    outc_cod: 85,
-    report_text: 200,
-  };
+
+  columnWidths = [
+      { columnName: 'init_fda_dt', width: 85 },
+      { columnName: 'primaryid', width: 90 },
+      { columnName: 'caseid', width: 80 },
+      { columnName: 'caseversion', width: 95 },
+      { columnName: 'age_year', width: 50 },
+      { columnName: 'sex', width: 50 },
+      { columnName: 'wt_lb', width: 65 },
+      { columnName: 'drugname', width: 200 },
+      { columnName: 'me_type', width: 180 },
+      { columnName: 'outc_cod', width: 85 },
+    { columnName: 'report_text', width: 200 },
+
+      ];
 
   /**
    * Sends a backend request to move a report from one bin to another

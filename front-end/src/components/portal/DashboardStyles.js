@@ -1,3 +1,5 @@
+import MEVColors from '../../theme';
+
 export default {
   paper: {
     padding: '15px',

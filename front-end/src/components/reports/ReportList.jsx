@@ -180,6 +180,8 @@ class ReportList extends Component {
       returnedResults: arr1,
       returnedIds: arr2,
       searchLoading: false,
+    }, () => {
+      console.log(this.state.returnedIds);
     });
   };
 

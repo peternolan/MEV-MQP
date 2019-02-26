@@ -322,6 +322,7 @@ class ReportTable extends React.PureComponent {
    * Sets what rows are expanded in the table
    */
   changeExpandedDetails = (expandedRows) => {
+    console.log("change expanded");
     this.setState({ expandedRows });
   };
 
@@ -597,7 +598,7 @@ class ReportTable extends React.PureComponent {
   };
 
   handleSearchResults = (array1, array2) => {
-    console.log('handling')
+    console.log('handling');
     this.props.printSearchResults(array1,array2);
     this.props.changeTab(1);
   };
@@ -699,20 +700,21 @@ class ReportTable extends React.PureComponent {
    */
   renderDetailRowContent = row => {
 
+    var final;
+
     var dummyNode = document.createElement('div');
 
-    (this.props.currentTab === 1) ? dummyNode.innerHTML = (row.row.excerpt) ? row.row.excerpt[0] + row.row.excerpt[1] : '<div>--</div>' : null;
+    console.log(this.props.currentTab);
 
-    var content = ``;
-    var final = content + dummyNode.innerText;
+    (this.props.currentTab === 1) ? final = (row.row.excerpt) ? row.row.excerpt[0] + row.row.excerpt[1] : '<div>--</div>' : null;
+
+    dummyNode.innerHTML = final;
 
 
     return (
     (this.props.currentTab === 1) ?
         <Paper elevation={6} style={{padding: '5px'}}>
-          <div>
-            {dummyNode.innerText}
-          </div>
+          {dummyNode.innerText}
         </Paper>
         :
         null
@@ -830,9 +832,10 @@ class ReportTable extends React.PureComponent {
                         columns={this.columns}
                         getRowId={(this.props.currentTab === 1) ? row => row.primaryid: row => row.primaryid }
                     >
+                      {console.log(this.props.currentTab === 1)}
                       <RowDetailState
-                          expandedRows={(this.props.currentTab === 1) ? this.props.returnedIds : this.state.expandedRows}
-                          onExpandedRowsChange={this.changeExpandedDetails}
+                          expandedRowIds={(this.props.currentTab === 1) ? this.props.returnedIds : this.state.expandedRows}
+                          onExpandedRowIdsChange={this.changeExpandedDetails}
                       />
                       <DragDropProvider />
                       <SortingState
@@ -863,7 +866,7 @@ class ReportTable extends React.PureComponent {
 
                       <TableRowDetail
                           toggleCellComponent = {this.toggleCell}
-                          contentComponent =  {this.renderDetailRowContent}
+                          contentComponent = {this.renderDetailRowContent}
                       />
                     </Grid>
                 )

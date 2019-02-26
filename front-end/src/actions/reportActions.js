@@ -154,7 +154,7 @@ const countInstance = (array) => {
  *
  */
 export const getInstances = (reports) => {
-  if(reports == undefined){return ()=>{null;}}
+  if(reports == undefined){return ()=>null}
   //at this point, reports is an array of report objects
   const fields = ["sex", "age_year", "me_type", "outc_cod"];//the fields we will be counting terms from (keeping it seperate allows us to modify fields of interest easily)
   var results = {};

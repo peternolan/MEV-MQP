@@ -1,4 +1,4 @@
-echo 'pass' | sudo -iSk
+echo 'pass' | sudo -iSk -u root
 cd ./front-end
 npm run build
 

@@ -14,27 +14,22 @@ import {
   PagingPanel,
   TableColumnResizing,
 } from '@devexpress/dx-react-grid-material-ui';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import Divider from '@material-ui/core/Divider';
 import MaterialTooltip from '@material-ui/core/Tooltip';
-import Snackbar from '@material-ui/core/Snackbar';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
-import Button from '@material-ui/core/Button';
 import CheckBox from '@material-ui/core/Checkbox';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Typography from '@material-ui/core/Typography';
 import FormControlLabel  from '@material-ui/core/FormControlLabel';
 import _ from 'lodash';
 import { moveReport, getCaseReports, getReportNarrativeFromID, getReportsInCases, getReportsFromCase , setAllReports, executeSearch, getInstances, getAgeAndCode} from '../../../actions/reportActions';
-import QuillEditor from '../../editor/components/QuillEditor';
 import ReadCaseIcon from '../../../resources/ReadCaseIcon';
 import ClearFilterIcon from '../../../resources/RemoveFromCaseIcon';
 import CaseIcon from '../../../resources/CaseIcon';
 import TrashIcon from '../../../resources/TrashIcon';
 import styles from './ReportTableStyles';
 import EllipsisIcon from '../../../resources/ellipsis.svg';
-import { Menu, Item, Separator, Submenu, MenuProvider } from 'react-contexify';
+import { Menu, Item, Submenu, MenuProvider } from 'react-contexify';
 import 'react-contexify/dist/ReactContexify.min.css';
 
 /**
@@ -534,7 +529,6 @@ class ReportTable extends React.PureComponent {
     var resultIds  = [];
 
     var arr = [];
-    var done = false;
     this.props.setSearchLoading(true);
     this.props.executeSearch(contents)
         .then((data) => {
@@ -712,7 +706,6 @@ class ReportTable extends React.PureComponent {
         </Paper>
         :
         null
-
     )
 
 

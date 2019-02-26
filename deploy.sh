@@ -5,5 +5,5 @@ npm run build
 
 cd ../back-end
 rm -r ./build/
-mv ../front-end/build/ ./build/
+mv ../front-end/build ./
 npm run start

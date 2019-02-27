@@ -186,7 +186,7 @@ class ReportPanel extends React.PureComponent {
                 <Paper id='summarytitle' className={this.props.classes.summaryTitle}><Typography variant="title" style={{padding: 5}}>Report {this.props.primaryid}</Typography><div onClick={this.handleHideSummary} className={this.props.classes.hideBtn}><Typography variant='button'>{this.state.summaryShown ? 'Hide' : 'Show'} Summary</Typography></div></Paper>
                 <Collapse isOpened={this.state.summaryShown}>
                     <div className={this.props.classes.summarySummary}>
-                        <Typography>Cupcake ipsum dolor sit amet gingerbread marzipan cookie topping. Chocolate bar toffee carrot cake ice cream lollipop carrot cake tootsie roll. Sesame snaps marzipan carrot cake gummies cake croissant topping tart. Lollipop bear claw brownie halvah liquorice tiramisu. Oat cake muffin jelly caramels biscuit sugar plum cookie tart oat cake. Candy canes powder cheesecake sweet roll fruitcake jujubes lollipop bear claw.</Typography>
+                        <Typography variant='body1'>Cupcake ipsum dolor sit amet gingerbread marzipan cookie topping. Chocolate bar toffee carrot cake ice cream lollipop carrot cake tootsie roll. Sesame snaps marzipan carrot cake gummies cake croissant topping tart. Lollipop bear claw brownie halvah liquorice tiramisu. Oat cake muffin jelly caramels biscuit sugar plum cookie tart oat cake. Candy canes powder cheesecake sweet roll fruitcake jujubes lollipop bear claw.</Typography>
                     </div>
                 </Collapse>
                 <Divider />

@@ -190,7 +190,7 @@ class TopNavigation extends Component {
           </div>
           <div className="navbar-header pull-right">
             <a className={`${this.props.classes.logo} navbar-brand`} href="/">
-              ARRAT
+              ConText
             </a>
           </div>
             {console.log("total Count " + this.props.totalCount.toString())}
@@ -220,7 +220,7 @@ class TopNavigation extends Component {
                     textAlign: 'center', cursor: 'pointer', display: 'inline-block', position: 'relative' , height : '37px'}} elevation={4}>
 
                     <Typography type="subheading" align="center" style={{   display: 'inline-block', lineHeight: '2.3rem' }} >
-                        Clear Filters <span style = {{position: 'relative' , top: '3px', fontSize: '20px'}}> X </span>
+                        Clear Filters <span style = {{position: 'relative' , top: '3px', fontSize: '20px'}}></span>
                     </Typography>
                 </Paper>
               </MaterialTooltip>

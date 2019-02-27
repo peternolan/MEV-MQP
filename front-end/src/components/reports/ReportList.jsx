@@ -98,6 +98,7 @@ class ReportList extends Component {
       returnedResults: [],
       returnedIds: [],
       searchLoading: false,
+      previousSearchString: '',
     };
     //handleCaseChangePrimary = handleCaseChangePrimary.bind(this);
   }
@@ -174,12 +175,13 @@ class ReportList extends Component {
     }
   };
 
-  printSearchResults = (arr1,arr2) => {
+  printSearchResults = (arr1,arr2,string) => {
     /* propagated */
     this.setState({
       returnedResults: arr1,
       returnedIds: arr2,
       searchLoading: false,
+      previousSearchString: string,
     }, () => {
       console.log(this.state.returnedIds);
     });
@@ -454,6 +456,7 @@ class ReportList extends Component {
                   returnedIds = {this.state.returnedIds}
                   searchLoading = {this.state.searchLoading}
                   setSearchLoading = {this.setSearchLoading}
+                  previousSearchString = {this.state.previousSearchString}
               />
             </div>
             <div key='reportCollapse' className={this.props.classes.collapseDivider}  onClick={this.handleHideReport}>

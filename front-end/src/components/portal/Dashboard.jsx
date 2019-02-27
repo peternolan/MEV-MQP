@@ -305,7 +305,7 @@ class Dashboard extends Component {
                 style={{ margin: 12, width: '100%' }}
               />
               <hr />
-              <Button raised onClick={this.handleEditCaseClick} style={{ margin: 12 }} color="primary">Save</Button>
+              <Button variant ="raised" onClick={this.handleEditCaseClick} style={{ margin: 12 }} color="primary">Save</Button>
             </Paper>
           </Modal>
           <div className="row">
@@ -395,7 +395,7 @@ class Dashboard extends Component {
                             />
                           }
                             {(!(this.state.value === this.getTrashValue()) && !(this.state.value === this.getReadValue()))
-                              ? <Button raised className="pull-right" onClick={this.handleEditCaseOpen}> Edit Case </Button>
+                              ? <Button variant ="raised" className="pull-right" onClick={this.handleEditCaseOpen}> Edit Case </Button>
                               : null}
                           </Typography>
                           <Typography variant="subheading" style={{ fontSize: '16px', color: '#333' }}>

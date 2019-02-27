@@ -497,7 +497,7 @@ class ReportList extends Component {
                     style={{ margin: 12, width: '100%' }}
                 />
                 <hr />
-                <Button raised onClick={this.handleNewCaseClick} style={{ margin: 12 }} color="primary">Create Case</Button>
+                <Button variant ="raised" onClick={this.handleNewCaseClick} style={{ margin: 12 }} color="primary">Create Case</Button>
               </Paper>
             </Modal>
             {/* ====== Snackbar for Notificaitons to the User ====== */}

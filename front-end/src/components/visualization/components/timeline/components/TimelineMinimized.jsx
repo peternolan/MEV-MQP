@@ -179,12 +179,12 @@ class TimelineMinimized extends Component {
               }}
           >
             <Link to="/report">
-              <Button raised className={this.props.classes.goToReportsButton} color="primary" >
+              <Button variant ="raised" className={this.props.classes.goToReportsButton} color="primary" >
                 <img className={this.props.classes.reportsButtonSVG} src={GoToReportsIcon} alt="Go to Reports Listing" />
               </Button>
             </Link>
           </MaterialTooltip>
-          <Button raised color="primary" id="setDateBtn" style={{ display: 'none' }} >Set Date!</Button>
+          <Button variant ="raised" color="primary" id="setDateBtn" style={{ display: 'none' }} >Set Date!</Button>
           <TextField className={this.props.classes.dateSelectedTextField} label="Selected Date Range" defaultValue="03/24/2017 - 03/31/2017" id="dateRangePicker" style={{ display: 'none' }} />
         </Paper>
       </Grid>

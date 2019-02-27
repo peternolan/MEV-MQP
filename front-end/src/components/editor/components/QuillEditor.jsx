@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes, {string} from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import  CircularProgress  from '@material-ui/core/CircularProgress';
+import CircularProgress  from '@material-ui/core/CircularProgress';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import Paper from '@material-ui/core/Paper';
@@ -54,6 +54,7 @@ class QuillEditor extends Component {
             commentButton: PropTypes.string,
             commentContent: PropTypes.string,
             highlightButtons: PropTypes.string,
+            textButton: PropTypes.string,
 
         }).isRequired,
         primaryid: PropTypes.number,
@@ -973,16 +974,16 @@ class QuillEditor extends Component {
 
                                 </label>
 
-                                <Button id="MakeNote" style={{padding: '0', position: 'relative', border: '2px solid #1d00ff',  height: '5%', left: '6.25%',  width: '11%'}}
+                                <Button id="MakeNote" style={{padding: '0', position: 'relative', border: '2px solid #1d00ff',  height: 'calc(4vh)', left: '6.25%',  width: '11%'}}
                                         onClick={() => this.commentMade()}> Post </Button>
                                 <Button
                                     id="saveButton2"
-                                    raised="true"
+                                    variant ="raised"
                                     color="primary"
                                     className={(this.state.success) ? this.props.classes.buttonSuccess : ''}
                                     disabled={this.state.saving}
                                     onClick={this.saveWork}
-                                    style={{ left: '7%', minWidth: '5%',  height: '5%', minHeight: 'calc(1.25vw)'}}>
+                                    style={{ left: '7%', minWidth: '5%',  height: 'calc(4vh)', minHeight: 'calc(4vh)'}}>
 
                                     Save
                                 </Button>
@@ -998,9 +999,9 @@ class QuillEditor extends Component {
                                 >
                                     <Button id="delete" style={{
                                         border: '2px solid red',
-                                        width: '11%',
+                                        width: '12%',
                                         left: '50%',
-                                        height: '5%',
+                                        height: 'calc(4vh)',
                                         padding: '0',
                                     }} onClick={() => this.commentDelete()}>
                                         Delete X

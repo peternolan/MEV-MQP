@@ -52,6 +52,9 @@ class TopNavigation extends Component {
   formatNumberWithCommas = num => num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
   handleClearFilters = () => {
+    var today = new Date();
+    var todayNum = 10000*today.getFullYear()+100*(today.getMonth()+1)+today.getDate();
+    
     this.props.toggleSexFilter('CLEAR');
     this.props.toggleAgeFilter('CLEAR');
     this.props.toggleLocationFilter('CLEAR');
@@ -62,7 +65,7 @@ class TopNavigation extends Component {
     this.props.toggleCauseFilter('CLEAR');
     this.props.setSelectedDate({
       startDate: 20170324,
-      endDate: 20170331,
+      endDate: todayNum,
     });
   }
 

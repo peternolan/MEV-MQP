@@ -384,13 +384,13 @@ class ReportList extends Component {
             {/* ====== Top Bar with Tabs for each Case ====== */}
             <AppBar position="static" color="default" className={this.props.classes.borderBottom}>
               <Tabs
-                  style={{height: '72px'}}
+                  //style={{height: '72px'}}
                   value={this.state.currentTab}
                   onChange={this.handleTabClick}
-                  indicatorColor="primary"
-                  textColor="primary"
-                  variant="scrollable"
-                  scrollButtons="auto"
+                  indicatorColor = 'primary'
+                  textColor='primary'
+                  variant='scrollable'
+                  scrollButtons='auto'
               >
                 <Tab icon={<AllReportsIcon />} label="All Reports" key="All Reports" name="All Reports" />
                 <Tab icon={<AllReportsIcon />} label="Searched Reports" key = "Searched Reports" name="Searched Reports" />

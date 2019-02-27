@@ -1,9 +1,9 @@
-sudo -i
+#echo 'pass' | sudo -iS
 cd ./front-end
+rm -r ./build/
 npm run build
 
 cd ../back-end
-
-mv ../front-end/build/ ./build/
-
-npm run startBoth
+rm -r ./build/
+mv ../front-end/build ./
+npm run start

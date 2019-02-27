@@ -386,13 +386,13 @@ class ReportList extends Component {
             {/* ====== Top Bar with Tabs for each Case ====== */}
             <AppBar position="static" color="default" className={this.props.classes.borderBottom}>
               <Tabs
-                  style={{height: '72px'}}
+                  //style={{height: '72px'}}
                   value={this.state.currentTab}
                   onChange={this.handleTabClick}
-                  indicatorColor="primary"
-                  textColor="primary"
-                  variant="scrollable"
-                  scrollButtons="auto"
+                  indicatorColor = 'primary'
+                  textColor='primary'
+                  variant='scrollable'
+                  scrollButtons='auto'
               >
                 <Tab icon={<AllReportsIcon />} label="All Reports" key="All Reports" name="All Reports" />
                 <Tab icon={<AllReportsIcon />} label="Searched Reports" key = "Searched Reports" name="Searched Reports" />
@@ -500,7 +500,7 @@ class ReportList extends Component {
                     style={{ margin: 12, width: '100%' }}
                 />
                 <hr />
-                <Button raised onClick={this.handleNewCaseClick} style={{ margin: 12 }} color="primary">Create Case</Button>
+                <Button variant ="raised" onClick={this.handleNewCaseClick} style={{ margin: 12 }} color="primary">Create Case</Button>
               </Paper>
             </Modal>
             {/* ====== Snackbar for Notificaitons to the User ====== */}

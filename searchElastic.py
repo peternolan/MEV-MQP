@@ -8,7 +8,7 @@ import json
 
 
 # THIS IS ONLY FOR DEV/DEBUGGING
-connections.create_connection(hosts=['localhost'])
+connections.create_connection(hosts=['localhost:9200'])
 
 DEBUG = False
 LOGGING = True #writes some log info to ./searchlog.log

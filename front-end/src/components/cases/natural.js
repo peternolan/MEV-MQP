@@ -784,7 +784,7 @@ var Metaphone = new Phonetic();
 module.exports = Metaphone;
 
 Metaphone.process = function(token, maxLength) {
-    maxLength == maxLength || 32;
+    //maxLength == maxLength || 32;
     token = token.toLowerCase();
     token = dedup(token);
     token = dropInitialLetters(token);
@@ -881,7 +881,7 @@ function process(token, maxLength) {
 	token = token.toUpperCase();
 	var primary = '', secondary = '';	
     var pos = 0;
-    maxLength == maxLength || 32;
+    //maxLength == maxLength || 32;
 
     function subMatch(startOffset, stopOffset, terms) {
         return subMatchAbsolute(pos + startOffset, pos + stopOffset, terms);
@@ -5354,7 +5354,7 @@ function distance(s1, s2) {
     if (typeof(s1) != "string" || typeof(s2) != "string") return 0;
     if (s1.length == 0 || s2.length == 0) 
         return 0;
-    s1 = s1.toLowerCase(), s2 = s2.toLowerCase();
+    s1 = s1.toLowerCase(); s2 = s2.toLowerCase();
     var matchWindow = (Math.floor(Math.max(s1.length, s2.length) / 2.0)) - 1;
     var matches1 = new Array(s1.length);
     var matches2 = new Array(s2.length);

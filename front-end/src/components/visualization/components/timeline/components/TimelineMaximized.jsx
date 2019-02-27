@@ -281,7 +281,7 @@ class TimelineMaximized extends Component {
           className={this.props.classes.timelineChartWrapperMaximized}
         >
           <Button
-            raised
+              variant ="raised"
             color="primary"
             className={this.props.classes.setDateButton}
             onClick={this.setDateHandler}
@@ -290,7 +290,7 @@ class TimelineMaximized extends Component {
             Set Date
           </Button>
           <Button
-            raised
+              variant ="raised"
             color="primary"
             onClick={this.openDatePickerHandler}
             style={{
@@ -323,7 +323,7 @@ class TimelineMaximized extends Component {
               }}
           >
             <Link to="/report">
-              <Button raised className={this.props.classes.goToReportsButton} color="primary">
+              <Button variant ="raised" className={this.props.classes.goToReportsButton} color="primary">
                 <img className={this.props.classes.reportsButtonSVG} src={GoToReportsIcon} alt="Go to Reports Listing" />
               </Button>
             </Link>
@@ -344,7 +344,7 @@ class TimelineMaximized extends Component {
               <hr />
               <TextField className={this.props.classes.dateSelectedTextField} label="Selected Date Range" defaultValue="03/24/2017 - 03/31/2017" id="dateRangePicker" />
               <Button
-                raised
+                  variant ="raised"
                 onClick={this.setDateHandler}
                 style={{ margin: '12px 0px' }}
                 id="setDateBtn"

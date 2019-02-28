@@ -919,7 +919,7 @@ class QuillEditor extends Component {
                 <div className = {this.props.classes.quillArea} style = {{ display: 'inline-block', height: (this.state.commentsOn) ? '50%': '90%', overflow: 'scroll' }}>
                     <div className={this.props.classes.editFacet}>
                         <div className={this.props.classes.editBox} style={{width:'auto'}}>
-                            <div onClick={this.editMode}><Typography align='right' variant='button'>{(this.state.editModeOn) ? 'Stop Editing' : 'Edit Highlights'}</Typography></div>
+                            <div onClick={this.editMode}><Typography align='right' variant='button' className={this.props.classes.textButton}>{(this.state.editModeOn) ? 'Stop Editing' : 'Edit Highlights'}</Typography></div>
                         </div>
                         <div className={(this.state.editModeOn) ? this.props.classes.saveBox : this.props.classes.noBox}
                              onClick={this.saveWork}><Typography align='center' id ='saveButton' type='button' style={{color:(this.state.saving) ? '#1D1F83' : '#000', backgroundColor: (this.state.success)  ?  '#D3D3D3' : '#dbf0ff'}}>Save Highlights</Typography></div>

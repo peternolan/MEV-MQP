@@ -31,6 +31,7 @@ class QuillEditor extends Component {
         htmlUnescape: PropTypes.func.isRequired,
         incrementSummary: PropTypes.func,
         commentsOn: PropTypes.func,
+        summaryOn: PropTypes.bool,
         classes: PropTypes.shape({
             pdfView: PropTypes.string,
             editorWindow: PropTypes.string,
@@ -925,7 +926,8 @@ class QuillEditor extends Component {
         const searchWords= searchText.split(/\s/).filter(word => word)
 
         return (
-            <div className={this.props.classes.pdfView} >
+            <div className={this.props.classes.pdfView} style = {{ height: (this.props.summaryOn) ? 'calc(86vh - 122px)' : 'calc(93vh - 122px)'}} >
+
                 <div className = {this.props.classes.quillArea} style = {{ display: 'inline-block', height: (this.state.commentsOn) ? '60%': '90%', overflow: 'scroll' }}>
                     <div className={this.props.classes.editFacet}>
                         <div className={this.props.classes.editBox} style={{width:'auto'}}>

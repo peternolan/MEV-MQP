@@ -162,6 +162,7 @@ class ReportPanel extends React.PureComponent {
                             incrementSummary={this.props.incrementSummary}
                             userEmail={this.props.userEmail}
                             commentsOn = {this.commentOnHandler}
+                            summaryOn = {this.state.summaryShown}
                             match={this.props.match}
                             />
 
@@ -181,10 +182,8 @@ class ReportPanel extends React.PureComponent {
     };
 
     render = () => {
-        console.log('render Panel')
         return (
             <Paper id='summary-container' className={this.props.classes.summaryContainer} elevation={4}>
-                {console.log("CommentsON : " + this.state.commentsOn)}
                 <Paper id='summarytitle' className={this.props.classes.summaryTitle}>
                     <Typography variant="title" style={{padding: 5}}>Report {this.props.primaryid}</Typography>
                     <div onClick={this.handleHideSummary} className={this.props.classes.hideBtn}>

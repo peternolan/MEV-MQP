@@ -40,7 +40,7 @@ export default {
 	summaryContent: {
 		width: '100%',
 		height: 'auto',
-		//overflow: 'scroll',
+		overflow: 'scroll',
 	},
 	reportBox: {
 		padding: 5,

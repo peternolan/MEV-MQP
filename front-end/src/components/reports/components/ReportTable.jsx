@@ -816,10 +816,7 @@ class ReportTable extends React.PureComponent {
             })};
           </select>
           <Paper id="table-container" className={this.props.classes.tableContainer} elevation={4}>
-            {console.log('this.state.loadingData ' + this.state.loadingData)}
-            {console.log('this.props.searchLoading ' + this.props.searchLoading)}
-            {console.log('this.state.tableHeight ' + this.state.tableHeight)}
-            {console.log('this.state.stillResizingTimer ' + this.state.stillResizingTimer)}
+
             {(this.state.loadingData || this.props.searchLoading)
                 ? <div
                     style={{ position: 'absolute', top: '50px', left: '0px', width: '100%', height: 'calc(100% - 50px)', backgroundColor: 'rgba(25, 25, 25, 0.5)', zIndex: '10000', overflow: 'scroll' }}

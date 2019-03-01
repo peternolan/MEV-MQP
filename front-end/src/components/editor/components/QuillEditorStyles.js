@@ -3,7 +3,6 @@ import grey from '@material-ui/core/colors/grey';
 export default {
     pdfView: {
         maxWidth: '100%',
-        height: 'calc(94vh - 122px)',
         margin: 0,
         overflow : 'auto',
         padding: 0,
@@ -107,7 +106,7 @@ export default {
     wrapper: {
         margin: 10,
         position: 'relative',
-        overflow: 'scroll',
+        //overflow: 'scroll',
     },
     /* Not aprticularly useful */
     quillText: {

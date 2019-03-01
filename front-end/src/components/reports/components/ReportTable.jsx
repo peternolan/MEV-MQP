@@ -494,7 +494,7 @@ class ReportTable extends React.PureComponent {
         if (!incase) {
           backgroundColor = '';
         } else {
-          backgroundColor = (incase.includes('read') && incase.length === 1) ? 'RGBA(255,0,255, 0.2)' : 'RGBA(131, 255, 168, 0.2)';
+          backgroundColor = (incase.includes('read') && incase.length === 1) ? '#b2abd2' : 'RGBA(131, 255, 168, 0.2)';
 
         }
         break;

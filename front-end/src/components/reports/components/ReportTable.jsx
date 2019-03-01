@@ -158,7 +158,9 @@ class ReportTable extends React.PureComponent {
                 data: reports,
                 allData: reports,
                 loadingData: false,
-              })
+              }, () => {
+                console.log(this.state.data);
+              });
             });
       //}
 
@@ -269,6 +271,7 @@ class ReportTable extends React.PureComponent {
    * Gets the report narrative for a given primaryid
    */
   getReportNarrative = (primaryid) => {
+    console.log('id table ' + primaryid);
     this.props.getReportNarrativeFromID(primaryid)
         .then((rows) => {
           if (rows.length > 0) {

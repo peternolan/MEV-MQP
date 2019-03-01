@@ -194,6 +194,8 @@ export const getInstances = (reports) => {
  */
 export const getCaseReports = (bin, userID, filters) => (dispatch, getState) => {
 
+   console.log('getCaseReports');
+
   const defaultFilters = {
     init_fda_dt: {
       start: '1',

@@ -516,7 +516,7 @@ class ReportList extends Component {
                   }}
               >
                 <Link href="/visualization" to="/visualization" >
-                  <Button fab style={{ margin: 12 }} color="primary">
+                  <Button fab = 'true' style={{ margin: 12 }} color="primary">
                     <img src={GoToVisualizationIcon} className={this.props.classes.goToVisualizationSVG} alt="Go Back To Visualization" />
                   </Button>
                 </Link>

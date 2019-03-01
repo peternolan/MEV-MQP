@@ -106,6 +106,7 @@ class ReportPanel extends React.PureComponent {
                 loading: false,
             });
         } else {
+            console.log('id Panel' + id);
             this.props.getReportNarrativeFromID(id)
                 .then((rows) => {
                     if (rows.length > 0) {

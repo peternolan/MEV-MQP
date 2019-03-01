@@ -12,6 +12,12 @@ export default {
         width: '100%',
         height: '100%'
     },
+    textButton: {
+        color: '#1D1F83',
+        '&:hover': {
+            cursor: 'pointer',
+        }
+    },
     expansionPanelSummary: {
         justifyContent: 'center',
     },

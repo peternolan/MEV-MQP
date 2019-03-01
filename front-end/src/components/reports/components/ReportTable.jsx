@@ -792,6 +792,7 @@ class ReportTable extends React.PureComponent {
   }
   render() {
     console.log('render Table');
+    console.log(this.state.data);
     return (
         <div id='table-wrapper' className={this.props.classes.tableWrapper}>
           <input id='search' defaultValue={this.props.previousSearchString} type='text' className={this.props.classes.searchBar} placeholder="Search through reports..." onKeyDown={(e) => {if(e.key === 'Enter'){this.search()}}} />

@@ -181,6 +181,7 @@ class ReportPanel extends React.PureComponent {
     };
 
     render = () => {
+        console.log('render Panel')
         return (
             <Paper id='summary-container' className={this.props.classes.summaryContainer} elevation={4}>
                 {console.log("CommentsON : " + this.state.commentsOn)}

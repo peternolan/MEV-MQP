@@ -380,6 +380,7 @@ class ReportList extends Component {
 
   render() {
     // console.log(this.state.searchedReports)
+    console.log('render List');
     return (
         <MuiThemeProvider theme={defaultTheme} >
           <div className={this.props.classes.ReportList} >

@@ -503,6 +503,26 @@ class ReportList extends Component {
                 <Button variant ="raised" onClick={this.handleNewCaseClick} style={{ margin: 12 }} color="primary">Create Case</Button>
               </Paper>
             </Modal>
+
+            {/* ====== Floating Action Button for Going back to Main Visualization ====== */}
+            <div style={{ position: 'absolute', left: '0px', bottom: '0px', padding: '20px' }} >
+              <MaterialTooltip
+                  title="Go Back To Visualization"
+                  placement="top"
+                  enterDelay={50}
+                  classes={{
+                    tooltip: this.props.classes.tooltipStyle,
+                    popper: this.props.classes.tooltipStyle,
+                  }}
+              >
+                <Link href="/visualization" to="/visualization" >
+                  <Button fab style={{ margin: 12 }} color="primary">
+                    <img src={GoToVisualizationIcon} className={this.props.classes.goToVisualizationSVG} alt="Go Back To Visualization" />
+                  </Button>
+                </Link>
+              </MaterialTooltip>
+            </div>
+
             {/* ====== Snackbar for Notificaitons to the User ====== */}
             <Snackbar
                 anchorOrigin={{

@@ -90,6 +90,7 @@
       "darwin": "concurrently -n \"cache,back-end,front-end\" \"./back-end/redis/src/redis-server --loadmodule back-end/redis/rejson.so\" \"npm start --prefix ./back-end\" \"npm run startLocal --prefix ./front-end\"",
       "linux": "concurrently -n \"cache,back-end,front-end\" \"./back-end/redis/src/redis-server --loadmodule back-end/redis/rejson.so\" \"npm start --prefix ./back-end\" \"npm run startLocal --prefix ./front-end\""
     },
+    "jenkins": "concurrently -n \"cache,back-end,front-end\" \"./back-end/redis/src/redis-server --loadmodule back-end/redis/rejson.so\" \"npm start --prefix ./back-end\" \"npm run start --prefix ./front-end\"",
     "build-linux": "concurrently -n \"cache,back-end,front-end\" \"./back-end/redis/src/redis-server --loadmodule back-end/redis/rejson.so\" \"npm start --prefix ./back-end\" \"npm run start --prefix ./front-end\"",
     "test": "react-scripts test --env=jsdom",
     "test:ci": "npm run test:ci --prefix ./front-end",

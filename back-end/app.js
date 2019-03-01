@@ -927,7 +927,7 @@ app.post('/executeSearch', (req, res) => {
 app.post('/gettimelinedata', (req, res) => {
   console.log('got a request for timeline data')
   cache.send_command('JSON.GET', ['timeline'], (err, data) => {
-    if (data !== null) {
+    if (data !== null && data !== undefined) {
       console.log('got timeline data from cache')
       return res.status(200).send(data)
     } else {

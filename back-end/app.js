@@ -733,6 +733,9 @@ app.put('/makeusertrash', (req, res) => {
   'INSERT INTO cases (name, user_id, primaryid, description) VALUES ( \'trash\',' + req.body.userID + ', -1, \'This is a pre-generated case to store the reports that you do not want to show up the report listing page\')';
   console.log(query);
   db.query(query, (err, data) => {
+  	  	if(err){
+  		console.log(err);
+  	}
     res.status(200).send();
   });
 });
@@ -743,6 +746,9 @@ app.put('/makeuserread', (req, res) => {
   'INSERT INTO cases (name, user_id, primaryid, description) VALUES ( \'read\',' + req.body.userID + ', -1, \'This is a pre-generated case to store the reports that you want to mark as being already read. Reports in this case will display as grey on the report listing page\')';
   console.log(query);
   db.query(query, (err, data) => {
+  	 if(err){
+  		console.log(err);
+  	}
     res.status(200).send();
   });
 });
@@ -755,6 +761,9 @@ app.put('/archivecase', (req, res) => {
 + `WHERE name = '${req.body.name}' AND user_id = '${req.body.userID}'`
   console.log(query);
   db.query(query, (err, data) => {
+  	  	if(err){
+  		console.log(err);
+  	}
     res.status(200).send();
   });
 });
@@ -769,6 +778,9 @@ app.put('/savereporttext', (req, res) => {
 + 'WHERE primaryid = ' + req.body.primaryid;
   console.log(query)
   db.query(query, (err, data) => {
+  	  	if(err){
+  		console.log(err);
+  	}
     res.status(200).send();
   });
 });
@@ -870,6 +882,9 @@ app.post('/getvis', (req, res) => {
     db.query(productQuery, (err, productData) => {
       db.query(stageQuery, (err, stageData) => {
         db.query(causeQuery, (err, causeData) => {
+        if(err){
+  			console.log(err);
+  		}
           returnObject = { 
             meType: meTypeData.rows,
             product: productData.rows,
@@ -945,6 +960,9 @@ app.post('/gettimelinedata', (req, res) => {
           + "ORDER BY init_fda_dt"
         console.log(query)
       db.query(query, (err, data) => {
+      	if(err){
+  			console.log(err);
+  		}
         // console.log(data.rows)
         console.log('got timeline data from db');
         json = JSON.stringify(data.rows);

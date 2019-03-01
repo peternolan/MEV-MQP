@@ -926,7 +926,7 @@ class QuillEditor extends Component {
         const searchWords= searchText.split(/\s/).filter(word => word)
 
         return (
-            <div className={this.props.classes.pdfView} style = {{ height: (this.props.summaryOn) ? 'calc(86vh - 122px)' : 'calc(93vh - 122px)'}} >
+            <div className={this.props.classes.pdfView} style = {{ height: (this.props.summaryOn) ? 'calc(85vh - 122px)' : 'calc(93vh - 122px)'}} >
 
                 <div className = {this.props.classes.quillArea} style = {{ display: 'inline-block', height: (this.state.commentsOn) ? '60%': '90%', overflow: 'scroll' }}>
                     <div className={this.props.classes.editFacet}>

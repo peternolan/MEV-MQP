@@ -159,6 +159,7 @@ class ReportTable extends React.PureComponent {
                 allData: reports,
                 loadingData: false,
               })
+              console.log(this.state.data)
             });
       //}
 
@@ -816,7 +817,6 @@ class ReportTable extends React.PureComponent {
                 : null}
             {(this.state.tableHeight !== 0 && this.state.stillResizingTimer === '' && (!this.state.loadingData || this.state.keepTableWhileLoading))
                 ? (
-
                     <Grid
                         rows={(this.props.currentTab === 1) ? this.props.returnedResults : this.state.data}
                         columns={this.columns}

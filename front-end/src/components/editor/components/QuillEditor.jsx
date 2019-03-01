@@ -123,11 +123,6 @@ class QuillEditor extends Component {
         // this.autosave = setInterval(() => this.saveWork(), 10000);
     }
 
-    componentWillUnmount() {
-        window.removeEventListener('beforeunload', this.onUnload);
-        // clearInterval(this.autosave);
-    }
-
     onUnload = () => this.saveWork();
 
 

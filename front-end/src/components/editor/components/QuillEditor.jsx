@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes, {string} from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import { CircularProgress } from '@material-ui/core/CircularProgress';
+import CircularProgress  from '@material-ui/core/CircularProgress';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import Paper from '@material-ui/core/Paper';
@@ -54,6 +54,7 @@ class QuillEditor extends Component {
             commentButton: PropTypes.string,
             commentContent: PropTypes.string,
             highlightButtons: PropTypes.string,
+            textButton: PropTypes.string,
 
         }).isRequired,
         primaryid: PropTypes.number,
@@ -711,14 +712,15 @@ class QuillEditor extends Component {
                 justifyContent: 'center',
                 minWidth: '7%',
                 borderStyle: 'solid',
-                padding: '0px',
+                paddingRight: '1px',
+                paddingLeft: '1px',
                 borderWidth: 1,
                 borderColor: 'rgba(0, 0, 0, .25)',
                 borderRadius: 0,
                 background: annotationColors.drug,
                 top: '5px',
                 minHeight: '6%',
-                fontSize: '10px'
+                fontSize: '90%'
             }}>
                 Drug
             </Button>
@@ -730,11 +732,12 @@ class QuillEditor extends Component {
                 borderWidth: 1,
                 borderColor: 'rgba(0, 0, 0, .25)',
                 borderRadius: 0,
-                padding: '0px',
+                paddingRight: '1px',
+                paddingLeft: '1px',
                 background: annotationColors.reaction,
                 top: '5px',
                 minHeight: '6%',
-                fontSize: '10px'}}>
+                fontSize: '90%'}}>
                 Reaction
             </Button>
             <Button className="ql-colorBackground" value={annotationColors.dosage} style={{ display: 'inline-block',
@@ -745,11 +748,12 @@ class QuillEditor extends Component {
                 borderWidth: 1,
                 borderColor: 'rgba(0, 0, 0, .25)',
                 borderRadius: 0,
-                padding: '0px',
+                paddingRight: '1px',
+                paddingLeft: '1px',
                 background: annotationColors.dosage,
                 top: '5px',
                 minHeight: '6%',
-                fontSize: '10px'
+                fontSize: '90%'
             }}>
                 Dosage
             </Button>
@@ -761,11 +765,12 @@ class QuillEditor extends Component {
                 borderWidth: 1,
                 borderColor: 'rgba(0, 0, 0, .25)',
                 borderRadius: 0,
-                padding: '0px',
+                paddingRight: '1px',
+                paddingLeft: '1px',
                 background: annotationColors.age,
                 top: '5px',
                 minHeight: '6%',
-                fontSize: '10px'
+                fontSize: '90%'
             }}>
                 Age
             </Button>
@@ -777,11 +782,12 @@ class QuillEditor extends Component {
                 borderWidth: 1,
                 borderColor: 'rgba(0, 0, 0, .25)',
                 borderRadius: 0,
-                padding: '0px',
                 background: annotationColors.sex,
+                paddingRight: '1px',
+                paddingLeft: '1px',
                 top: '5px',
                 minHeight: '6%',
-                fontSize: '10px'
+                fontSize: '90%'
             }}>
                 Gender
             </Button>
@@ -794,9 +800,11 @@ class QuillEditor extends Component {
                 borderColor: 'rgba(0, 0, 0, .25)',
                 borderRadius: 0,
                 background: annotationColors.weight,
+                paddingRight: '1px',
+                paddingLeft: '1px',
                 top: '5px',
                 minHeight: '6%',
-                fontSize: '10px'
+                fontSize: '90%'
             }}>
                 Weight
             </Button>
@@ -808,11 +816,12 @@ class QuillEditor extends Component {
                 borderWidth: 1,
                 borderColor: 'rgba(0, 0, 0, .25)',
                 borderRadius: 0,
-                padding: '0px',
+                paddingRight: '1px',
+                paddingLeft: '1px',
                 background: annotationColors.indication,
                 top: '5px',
                 minHeight: '6%',
-                fontSize: '10px'
+                fontSize: '80%'
             }}>
                 Indication
             </Button>
@@ -824,11 +833,12 @@ class QuillEditor extends Component {
                 borderWidth: 1,
                 borderColor: 'rgba(0, 0, 0, .25)',
                 borderRadius: 0,
-                padding: '0px',
+                paddingRight: '1px',
+                paddingLeft: '1px',
                 background: annotationColors.interesting,
                 top: '5px',
                 minHeight: '6%',
-                fontSize: '10px'}}>
+                fontSize: '80%'}}>
                 Interesting
             </Button>
             <Button className="ql-colorBackground" value="" style={{ display: 'inline-block',
@@ -837,12 +847,13 @@ class QuillEditor extends Component {
                 minWidth: '7.5%',
                 borderStyle: 'solid',
                 borderWidth: 1,
-                padding: '0px',
+                paddingRight: '1px',
+                paddingLeft: '1px',
                 borderColor: 'rgba(0, 0, 0, .25)',
                 borderRadius: 0,
                 top: '5px',
                 minHeight: '6%',
-                fontSize: '10px'}}>
+                fontSize: '90%'}}>
                 Clear
             </Button>
 
@@ -918,7 +929,7 @@ class QuillEditor extends Component {
                 <div className = {this.props.classes.quillArea} style = {{ display: 'inline-block', height: (this.state.commentsOn) ? '50%': '90%', overflow: 'scroll' }}>
                     <div className={this.props.classes.editFacet}>
                         <div className={this.props.classes.editBox} style={{width:'auto'}}>
-                            <div onClick={this.editMode}><Typography align='right' variant='button'>{(this.state.editModeOn) ? 'Stop Editing' : 'Edit Highlights'}</Typography></div>
+                            <div onClick={this.editMode}><Typography align='right' variant='button' className={this.props.classes.textButton}>{(this.state.editModeOn) ? 'Stop Editing' : 'Edit Highlights'}</Typography></div>
                         </div>
                         <div className={(this.state.editModeOn) ? this.props.classes.saveBox : this.props.classes.noBox}
                              onClick={this.saveWork}><Typography align='center' id ='saveButton' type='button' style={{color:(this.state.saving) ? '#1D1F83' : '#000', backgroundColor: (this.state.success)  ?  '#D3D3D3' : '#dbf0ff'}}>Save Highlights</Typography></div>
@@ -973,16 +984,16 @@ class QuillEditor extends Component {
 
                                 </label>
 
-                                <Button id="MakeNote" style={{padding: '0', position: 'relative', border: '2px solid #1d00ff', left: '6.25%',  width: '11%'}}
-                                        onClick={() => this.commentMade()}> Make Note </Button>
+                                <Button id="MakeNote" style={{padding: '0', position: 'relative', border: '2px solid #1d00ff',  height: 'calc(4vh)', left: '6.25%',  width: '11%'}}
+                                        onClick={() => this.commentMade()}> Post </Button>
                                 <Button
                                     id="saveButton2"
-                                    raised="true"
+                                    variant ="raised"
                                     color="primary"
                                     className={(this.state.success) ? this.props.classes.buttonSuccess : ''}
                                     disabled={this.state.saving}
                                     onClick={this.saveWork}
-                                    style={{ left: '7%', minWidth: '5%', minHeight: 'calc(1.25vw)'}}>
+                                    style={{ left: '7%', minWidth: '5%',  height: 'calc(4vh)', minHeight: 'calc(4vh)'}}>
 
                                     Save
                                 </Button>
@@ -998,9 +1009,10 @@ class QuillEditor extends Component {
                                 >
                                     <Button id="delete" style={{
                                         border: '2px solid red',
-                                        width: '11%',
-                                        height: 'calc(1.25vw)',
+                                        width: '12%',
                                         left: '50%',
+                                        height: 'calc(4vh)',
+                                        padding: '0',
                                     }} onClick={() => this.commentDelete()}>
                                         Delete X
                                     </Button>

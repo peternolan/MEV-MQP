@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-//import {Text} from 'react-native';
-import { Link } from 'react-router-dom';
 import {
   RowDetailState, SortingState, IntegratedSorting, PagingState, IntegratedPaging,
 } from '@devexpress/dx-react-grid';
@@ -39,6 +37,7 @@ import 'react-contexify/dist/ReactContexify.min.css';
  */
 class ReportTable extends React.PureComponent {
   static propTypes = {
+    previousSearchString: PropTypes.string.isRequired,
     setSearchLoading: PropTypes.func.isRequired,
     searchLoading: PropTypes.bool.isRequired,
     returnedIds: PropTypes.array,
@@ -114,7 +113,7 @@ class ReportTable extends React.PureComponent {
         { columnName: 'primaryid', width: 75 },
         { columnName: 'age_year', width: 35 },
         { columnName: 'sex', width: 35 },
-        { columnName: 'drugname', width: 125 },
+        { columnName: 'drugname', width: 100 },
         { columnName: 'me_type', width: 100 },
         { columnName: 'outc_cod', width: 60 }
 
@@ -577,7 +576,7 @@ class ReportTable extends React.PureComponent {
                 resultIds.push(item[i].id);
 
                 if (resultsArr.length >= arr.length && resultIds.length >= arr.length) {
-                  this.handleSearchResults(resultsArr, resultIds);
+                  this.handleSearchResults(resultsArr, resultIds, contents);
                 }
               }
 
@@ -591,9 +590,9 @@ class ReportTable extends React.PureComponent {
 
   };
 
-  handleSearchResults = (array1, array2) => {
+  handleSearchResults = (array1, array2, string) => {
     console.log('handling');
-    this.props.printSearchResults(array1,array2);
+    this.props.printSearchResults(array1,array2,string);
     this.props.changeTab(1);
   };
 
@@ -693,9 +692,7 @@ class ReportTable extends React.PureComponent {
    * of the table
    */
   renderDetailRowContent = row => {
-
     var final;
-
     var dummyNode = document.createElement('div');
 
     console.log(this.props.currentTab);
@@ -725,7 +722,7 @@ class ReportTable extends React.PureComponent {
   toggleCell = row => {
 
     return (
-        <div onClick={this.blockParent} className={this.props.classes.ellipsisFrame}>
+        <td onClick={this.blockParent} className={this.props.classes.ellipsisFrame}>
 
           <MenuProvider id={row.row.primaryid} event='onClick'>
             <img src={EllipsisIcon} alt='More Options'/>
@@ -736,7 +733,7 @@ class ReportTable extends React.PureComponent {
             {/* Non-Case Move Tos */}
             {this.props.bins.map((bin, index) => (
                 /* We only want cases */
-                (this.props.bin.toLowerCase() !== bin.name.toLowerCase() && (bin.name.toLowerCase() === 'read' || bin.name.toLowerCase() === 'trash'))
+                (this.props.bin.toLowerCase() !== bin.name.toLowerCase() && (bin.name.toLowerCase() === 'read' || bin.name.toLowerCase() === 'trash' || bin.name.toLowerCase() === 'all reports'))
                     ? ( /* New item container for the move prompts*/
                         <Item
                             key={bin.case_id + ' ' + bin.name}
@@ -760,16 +757,14 @@ class ReportTable extends React.PureComponent {
                     : null
             ))}
             {/* Generate submenu */}
-            <Submenu label='Add to a case:'>
+            <Submenu label='Add to case:'>
               {this.props.bins.map((bin, index) => (
                   /* We only want cases */
-                  (this.props.bin.toLowerCase() !== bin.name.toLowerCase() && bin.name.toLowerCase() !== 'read' && bin.name.toLowerCase() !== 'trash')
+                  (this.props.bin.toLowerCase() !== bin.name.toLowerCase() && bin.name.toLowerCase() !== 'read' && bin.name.toLowerCase() !== 'trash' && bin.name.toLowerCase() !== 'all reports')
                       ? ( /* New item container for the move prompts*/
                           <Item
                               key={bin.case_id + ' ' + bin.name}
                               onClick={() => {
-                                console.log('Move Case');
-                                console.log('props ' + this.props.bin);
                                 this.handleMoveReport(
                                     row.row.primaryid,
                                     this.props.bin,
@@ -789,13 +784,13 @@ class ReportTable extends React.PureComponent {
               ))}
             </Submenu>
           </Menu>
-        </div>
+        </td>
     );
   }
   render() {
     return (
         <div id='table-wrapper' className={this.props.classes.tableWrapper}>
-          <input id='search' type='text' className={this.props.classes.searchBar} placeholder="Search through reports..." onKeyDown={(e) => {if(e.key === 'Enter'){this.search()}}} />
+          <input id='search' defaultValue={this.props.previousSearchString} type='text' className={this.props.classes.searchBar} placeholder="Search through reports..." onKeyDown={(e) => {if(e.key === 'Enter'){this.search()}}} />
           <select value={this.state.searchTarget} onChange={this.handleTargetChange} className={this.props.classes.searchDD}>
             {this.props.bins.map((bin) => {
               switch(bin.name){
@@ -827,7 +822,6 @@ class ReportTable extends React.PureComponent {
                         columns={this.columns}
                         getRowId={(this.props.currentTab === 1) ? row => row.primaryid: row => row.primaryid }
                     >
-                      {console.log(this.props.currentTab === 1)}
                       <RowDetailState
                           expandedRowIds={(this.props.currentTab === 1) ? this.props.returnedIds : this.state.expandedRows}
                           onExpandedRowIdsChange={this.changeExpandedDetails}
@@ -856,7 +850,7 @@ class ReportTable extends React.PureComponent {
                           columnWidths={this.state.widths}
                           onColumnWidthsChange={this.onColumnWidthsChange}
                       />
-                      <TableHeaderRow showSortingControls className="tableHeader"/>
+                      <TableHeaderRow/>
                       <TableColumnReordering defaultOrder={this.columns.map(column => column.name)} />
 
                       <TableRowDetail

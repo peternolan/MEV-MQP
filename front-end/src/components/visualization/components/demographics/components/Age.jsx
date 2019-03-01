@@ -14,7 +14,7 @@ const styles = {
     'text-align': 'center',
     'font-size': '20pt',
     'pointer-events': 'none',
-    'padding-left': '45px',
+    transform: 'translateX(45px)',
   },
   responsiveContainerMaximized: {
     'margin-left': '-15px',
@@ -177,7 +177,7 @@ class Age extends Component {
             className={this.props.classes.clearFilterChip}
           />
           <Typography id="age-graph-title" className={this.props.classes.labelFont} variant="title" component="h1">
-            THIS IS THE AGE SECTION
+            Age
           </Typography>
         </div>
         <ResponsiveContainer className={this.props.classes.responsiveContainerMaximized} width="100%" height={this.state.graphHeight} >

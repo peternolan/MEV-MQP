@@ -52,6 +52,9 @@ class TopNavigation extends Component {
   formatNumberWithCommas = num => num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
   handleClearFilters = () => {
+    var today = new Date();
+    var todayNum = 10000*today.getFullYear()+100*(today.getMonth()+1)+today.getDate();
+    
     this.props.toggleSexFilter('CLEAR');
     this.props.toggleAgeFilter('CLEAR');
     this.props.toggleLocationFilter('CLEAR');
@@ -62,7 +65,7 @@ class TopNavigation extends Component {
     this.props.toggleCauseFilter('CLEAR');
     this.props.setSelectedDate({
       startDate: 20170324,
-      endDate: 20170331,
+      endDate: todayNum,
     });
   }
 
@@ -190,7 +193,7 @@ class TopNavigation extends Component {
           </div>
           <div className="navbar-header pull-right">
             <a className={`${this.props.classes.logo} navbar-brand`} href="/">
-              ARRAT
+              ConText
             </a>
           </div>
             {console.log("total Count " + this.props.totalCount.toString())}
@@ -220,7 +223,7 @@ class TopNavigation extends Component {
                     textAlign: 'center', cursor: 'pointer', display: 'inline-block', position: 'relative' , height : '37px'}} elevation={4}>
 
                     <Typography type="subheading" align="center" style={{   display: 'inline-block', lineHeight: '2.3rem' }} >
-                        Clear Filters <span style = {{position: 'relative' , top: '3px', fontSize: '20px'}}> X </span>
+                        Clear Filters <span style = {{position: 'relative' , top: '3px', fontSize: '20px'}}></span>
                     </Typography>
                 </Paper>
               </MaterialTooltip>

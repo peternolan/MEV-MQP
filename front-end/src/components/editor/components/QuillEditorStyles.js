@@ -10,6 +10,12 @@ export default {
         position: 'relative',
         display: 'block'
     },
+    textButton: {
+        color: '#1D1F83',
+        '&:hover': {
+            cursor: 'pointer',
+        }
+    },
     commentSec: {
         width: '100%',
         margin: 0,
@@ -167,6 +173,8 @@ export default {
         backgroundColor: '#dbf0ff',
         alignItems: 'center',
         cursor: 'pointer',
+        borderBottom: '1px rgba(0, 0, 0, 0.25) solid',
+        borderTop: '1px rgba(0, 0, 0, 0.25) solid',
         '&:hover':{
             backgroundColor: '#dbf0ff'
         }        

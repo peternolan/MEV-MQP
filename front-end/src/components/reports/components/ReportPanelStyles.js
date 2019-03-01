@@ -8,6 +8,7 @@ export default {
         borderColor: 'rgba(0, 0, 0, 0.08)',
         borderStyle: 'solid',
         fontFamily: 'Roboto',
+        fontSize: 12,
         width: '100%',
         height: '100%'
     },

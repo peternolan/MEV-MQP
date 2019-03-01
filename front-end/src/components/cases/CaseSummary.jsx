@@ -450,7 +450,7 @@ class CaseSummary extends Component {
                 if (resultsArr.length >= arr.length && resultIds.length >= arr.length) {
                   /* Made it? */
                   console.log(resultsArr);
-                  this.handleSearchResults(resultsArr, resultIds);
+                  this.handleSearchResults(resultsArr, resultIds, this.state.recommendationString);
                 }
               }
 
@@ -463,9 +463,9 @@ class CaseSummary extends Component {
     });
   }
   /* back propagate results to list */
-  handleSearchResults = (array1, array2) => {
+  handleSearchResults = (array1, array2, string) => {
     console.log('printing');
-    this.props.printSearchResults(array1,array2);
+    this.props.printSearchResults(array1,array2,string);
     this.props.changeTab(1);
   }
   /* Toggle the hiding of keyword section */

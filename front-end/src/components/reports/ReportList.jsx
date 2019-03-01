@@ -98,6 +98,7 @@ class ReportList extends Component {
       returnedResults: [],
       returnedIds: [],
       searchLoading: false,
+      previousSearchString: '',
     };
     //handleCaseChangePrimary = handleCaseChangePrimary.bind(this);
   }
@@ -174,12 +175,13 @@ class ReportList extends Component {
     }
   };
 
-  printSearchResults = (arr1,arr2) => {
+  printSearchResults = (arr1,arr2,string) => {
     /* propagated */
     this.setState({
       returnedResults: arr1,
       returnedIds: arr2,
       searchLoading: false,
+      previousSearchString: string,
     }, () => {
       console.log(this.state.returnedIds);
     });
@@ -384,13 +386,13 @@ class ReportList extends Component {
             {/* ====== Top Bar with Tabs for each Case ====== */}
             <AppBar position="static" color="default" className={this.props.classes.borderBottom}>
               <Tabs
-                  style={{height: '72px'}}
+                  //style={{height: '72px'}}
                   value={this.state.currentTab}
                   onChange={this.handleTabClick}
-                  indicatorColor="primary"
-                  textColor="primary"
-                  variant="scrollable"
-                  scrollButtons="auto"
+                  indicatorColor = 'primary'
+                  textColor='primary'
+                  variant='scrollable'
+                  scrollButtons='auto'
               >
                 <Tab icon={<AllReportsIcon />} label="All Reports" key="All Reports" name="All Reports" />
                 <Tab icon={<AllReportsIcon />} label="Searched Reports" key = "Searched Reports" name="Searched Reports" />
@@ -454,6 +456,7 @@ class ReportList extends Component {
                   returnedIds = {this.state.returnedIds}
                   searchLoading = {this.state.searchLoading}
                   setSearchLoading = {this.setSearchLoading}
+                  previousSearchString = {this.state.previousSearchString}
               />
             </div>
             <div key='reportCollapse' className={this.props.classes.collapseDivider}  onClick={this.handleHideReport}>
@@ -497,9 +500,29 @@ class ReportList extends Component {
                     style={{ margin: 12, width: '100%' }}
                 />
                 <hr />
-                <Button raised onClick={this.handleNewCaseClick} style={{ margin: 12 }} color="primary">Create Case</Button>
+                <Button variant ="raised" onClick={this.handleNewCaseClick} style={{ margin: 12 }} color="primary">Create Case</Button>
               </Paper>
             </Modal>
+
+            {/* ====== Floating Action Button for Going back to Main Visualization ====== */}
+            <div style={{ position: 'absolute', left: '0px', bottom: '0px', padding: '20px' }} >
+              <MaterialTooltip
+                  title="Go Back To Visualization"
+                  placement="top"
+                  enterDelay={50}
+                  classes={{
+                    tooltip: this.props.classes.tooltipStyle,
+                    popper: this.props.classes.tooltipStyle,
+                  }}
+              >
+                <Link href="/visualization" to="/visualization" >
+                  <Button fab style={{ margin: 12 }} color="primary">
+                    <img src={GoToVisualizationIcon} className={this.props.classes.goToVisualizationSVG} alt="Go Back To Visualization" />
+                  </Button>
+                </Link>
+              </MaterialTooltip>
+            </div>
+
             {/* ====== Snackbar for Notificaitons to the User ====== */}
             <Snackbar
                 anchorOrigin={{

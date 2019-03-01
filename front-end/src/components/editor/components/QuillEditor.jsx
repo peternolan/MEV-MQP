@@ -707,14 +707,15 @@ class QuillEditor extends Component {
                 justifyContent: 'center',
                 minWidth: '7%',
                 borderStyle: 'solid',
-                padding: '0px',
+                paddingRight: '1px',
+                paddingLeft: '1px',
                 borderWidth: 1,
                 borderColor: 'rgba(0, 0, 0, .25)',
                 borderRadius: 0,
                 background: annotationColors.drug,
                 top: '5px',
                 minHeight: '6%',
-                fontSize: '10px'
+                fontSize: '90%'
             }}>
                 Drug
             </Button>
@@ -726,11 +727,12 @@ class QuillEditor extends Component {
                 borderWidth: 1,
                 borderColor: 'rgba(0, 0, 0, .25)',
                 borderRadius: 0,
-                padding: '0px',
+                paddingRight: '1px',
+                paddingLeft: '1px',
                 background: annotationColors.reaction,
                 top: '5px',
                 minHeight: '6%',
-                fontSize: '10px'}}>
+                fontSize: '90%'}}>
                 Reaction
             </Button>
             <Button className="ql-colorBackground" value={annotationColors.dosage} style={{ display: 'inline-block',
@@ -741,11 +743,12 @@ class QuillEditor extends Component {
                 borderWidth: 1,
                 borderColor: 'rgba(0, 0, 0, .25)',
                 borderRadius: 0,
-                padding: '0px',
+                paddingRight: '1px',
+                paddingLeft: '1px',
                 background: annotationColors.dosage,
                 top: '5px',
                 minHeight: '6%',
-                fontSize: '10px'
+                fontSize: '90%'
             }}>
                 Dosage
             </Button>
@@ -757,11 +760,12 @@ class QuillEditor extends Component {
                 borderWidth: 1,
                 borderColor: 'rgba(0, 0, 0, .25)',
                 borderRadius: 0,
-                padding: '0px',
+                paddingRight: '1px',
+                paddingLeft: '1px',
                 background: annotationColors.age,
                 top: '5px',
                 minHeight: '6%',
-                fontSize: '10px'
+                fontSize: '90%'
             }}>
                 Age
             </Button>
@@ -773,11 +777,12 @@ class QuillEditor extends Component {
                 borderWidth: 1,
                 borderColor: 'rgba(0, 0, 0, .25)',
                 borderRadius: 0,
-                padding: '0px',
                 background: annotationColors.sex,
+                paddingRight: '1px',
+                paddingLeft: '1px',
                 top: '5px',
                 minHeight: '6%',
-                fontSize: '10px'
+                fontSize: '90%'
             }}>
                 Gender
             </Button>
@@ -790,9 +795,11 @@ class QuillEditor extends Component {
                 borderColor: 'rgba(0, 0, 0, .25)',
                 borderRadius: 0,
                 background: annotationColors.weight,
+                paddingRight: '1px',
+                paddingLeft: '1px',
                 top: '5px',
                 minHeight: '6%',
-                fontSize: '10px'
+                fontSize: '90%'
             }}>
                 Weight
             </Button>
@@ -804,11 +811,12 @@ class QuillEditor extends Component {
                 borderWidth: 1,
                 borderColor: 'rgba(0, 0, 0, .25)',
                 borderRadius: 0,
-                padding: '0px',
+                paddingRight: '1px',
+                paddingLeft: '1px',
                 background: annotationColors.indication,
                 top: '5px',
                 minHeight: '6%',
-                fontSize: '10px'
+                fontSize: '80%'
             }}>
                 Indication
             </Button>
@@ -820,11 +828,12 @@ class QuillEditor extends Component {
                 borderWidth: 1,
                 borderColor: 'rgba(0, 0, 0, .25)',
                 borderRadius: 0,
-                padding: '0px',
+                paddingRight: '1px',
+                paddingLeft: '1px',
                 background: annotationColors.interesting,
                 top: '5px',
                 minHeight: '6%',
-                fontSize: '10px'}}>
+                fontSize: '80%'}}>
                 Interesting
             </Button>
             <Button className="ql-colorBackground" value="" style={{ display: 'inline-block',
@@ -833,12 +842,13 @@ class QuillEditor extends Component {
                 minWidth: '7.5%',
                 borderStyle: 'solid',
                 borderWidth: 1,
-                padding: '0px',
+                paddingRight: '1px',
+                paddingLeft: '1px',
                 borderColor: 'rgba(0, 0, 0, .25)',
                 borderRadius: 0,
                 top: '5px',
                 minHeight: '6%',
-                fontSize: '10px'}}>
+                fontSize: '90%'}}>
                 Clear
             </Button>
 

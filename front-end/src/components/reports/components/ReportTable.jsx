@@ -439,9 +439,14 @@ class ReportTable extends React.PureComponent {
     console.log('resizeTable');
     const container = document.getElementById('table-container');
     const containerHeight = window.getComputedStyle(container, null).getPropertyValue('height');
+
+    console.log('containerHeight ' + containerHeight);
+
     this.setState({
       tableHeight: parseInt(containerHeight || 800, 10),
       stillResizingTimer: '',
+    }, () => {
+      console.log('this.state.tableHeight ' + this.state.tableHeight);
     });
   };
 

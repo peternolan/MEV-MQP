@@ -720,6 +720,9 @@ app.put('/saveuser', (req, res) => {
   let query =
   'INSERT INTO users(email) VALUES (\''+ req.body.email +'\');';
   db.query(query, (err, data) => {
+  	if(err){
+  		console.log(err);
+  	}
     res.status(200).send();
   });
 });

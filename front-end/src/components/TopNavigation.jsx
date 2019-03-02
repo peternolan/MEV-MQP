@@ -14,7 +14,7 @@ import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import MaterialTooltip from '@material-ui/core/Tooltip';
 import Divider from '@material-ui/core/Divider';
-import { setUserInfo } from '../actions/userActions';
+import { setUserInfo, move } from '../actions/userActions';
 import CurrentlySelectedFilters from './components/CurrentlySelectedFilters';
 import wpiLogo from '../resources/wpi-logo.png';
 import styles from './TopNavigationStyles';
@@ -37,11 +37,19 @@ class TopNavigation extends Component {
     this.state = { open: false, left: false };
   }
 
+    logOutHelp = (callback) => {
+        console.log("LOGOUT");
+        this.props.setUserInfo(false, '', -1);
+        setTimeout(this.props.move(), 2000)
+    }
+
   logout = (event) => {
+
     event.preventDefault();
-    this.props.setUserInfo(false, '', -1);
-    window.location = '/';
-  }
+    this.logOutHelp(function () {
+        window.location.assign('/');
+      });
+  };
 
   toggleDrawer = (side, open) => () => {
     this.setState({
@@ -127,7 +135,7 @@ class TopNavigation extends Component {
                       </ListItem>
                     </Link>
                     {!this.props.isLoggedIn ? (
-                      <Link to="/" className={this.props.classes.listLink}>
+                      <div to="/" className={this.props.classes.listLink}>
                         <ListItem button >
                           <ListItemText
                             disableTypography
@@ -138,9 +146,9 @@ class TopNavigation extends Component {
                             }
                           />
                         </ListItem>
-                      </Link>
+                      </div>
                     ) : (
-                      <Link to="/" onClick={this.logout} className={this.props.classes.listLink}>
+                      <div /*to="/"*/ onClick={this.logout} className={this.props.classes.listLink}>
                         <ListItem button >
                           <ListItemText
                             disableTypography
@@ -151,7 +159,7 @@ class TopNavigation extends Component {
                             }
                           />
                         </ListItem>
-                      </Link>
+                      </div>
                     )
                     }
                   </List>
@@ -244,6 +252,7 @@ export default withStyles(styles)(connect(
   mapStateToProps,
   {
     setUserInfo,
+      move,
     toggleSexFilter,
     toggleAgeFilter,
     toggleLocationFilter,

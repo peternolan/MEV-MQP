@@ -138,8 +138,6 @@ class QuillEditor extends Component {
 
         dummyNode.innerHTML = this.state.comment;
 
-        console.log("comment Delete " + dummyNode.innerHTML);
-
         var newText = '';
 
         if (dummyNode.getElementsByTagName("comments")[0]) {
@@ -182,7 +180,6 @@ class QuillEditor extends Component {
                 loading: false,
             });
         } else {
-            console.log('id Quill ' + id);
             this.props.getReportNarrativeFromID(id)
                 .then((rows) => {
 
@@ -299,9 +296,7 @@ class QuillEditor extends Component {
 
 
     saveWork = () => {
-        console.log('SaveWork');
-        console.log(this.state.current.reportText);
-        console.log(this.state.current.tags);
+
         if (!this.state.saving && !_.isEqual(this.state.current, this.state.saved)) {
             this.setState({
                 success: false,
@@ -384,8 +379,6 @@ class QuillEditor extends Component {
 
         for (let i = 0; i < spans.length; i += 1) {
 
-            console.log ('In the for loop for highlighting');
-
             switch (spans[i].getAttribute('style')) {
                 case drugRE:
                     newTags.drug = (newTags.drug)
@@ -439,10 +432,9 @@ class QuillEditor extends Component {
 
         var finalText = this.state.report + comment;
 
-        console.log(newTags);
 
-        this.setState({success: false, current: {reportText: finalText, tags: newTags}}, () =>
-        {console.log(this.state.current.tags)});
+
+        this.setState({success: false, current: {reportText: finalText, tags: newTags}});
 
         if (this.state.addingComment) {
             var dummyNode2 = document.createElement('div');
@@ -526,8 +518,6 @@ class QuillEditor extends Component {
         var newText = '';
         var checked = document.getElementById('viewToggle');
 
-        console.log('checked ' + checked.checked);
-
         if (dummyNode.getElementsByTagName("comments")[0]) {
 
 
@@ -574,12 +564,12 @@ class QuillEditor extends Component {
 
 
                 if (checked.checked) {
-                    console.log("Checked True")
+
                     newInner = dummyNode.getElementsByTagName("comments")[0].innerHTML.concat(`<comment id=${this.state.userID} viewable = 'public' className="comment">${this.state.userEmail}: ${comment.replace(/\n/g, " n$")}\n<br/></comment>`);
 
                 }
                 else {
-                    console.log("Checked False")
+
                     newInner = dummyNode.getElementsByTagName("comments")[0].innerHTML.concat(`<comment id=${this.state.userID} viewable = 'private' className="comment">${this.state.userEmail}: ${comment.replace(/\n/g, " n$")}\n<br/></comment>`);
 
                 }
@@ -602,11 +592,11 @@ class QuillEditor extends Component {
 
 
             if (checked.checked) {
-                console.log("Checked True")
+
                 var comSpecial = `<comments id = 'comment-${this.props.primaryid}'><comment id = ${this.state.userID} viewable = 'public' class = "comment" >${this.state.userEmail}: ${comment.replace(/\n/g, " n$")}\n<br/></comment></comments>`;
 
             } else {
-                console.log("Checked False")
+
                 var comSpecial = `<comments id = 'comment-${this.props.primaryid}'><comment id = ${this.state.userID} viewable = 'private' class = "comment" >${this.state.userEmail}: ${comment.replace(/\n/g, " n$")}\n<br/></comment></comments>`;
 
             }

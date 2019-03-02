@@ -173,13 +173,15 @@ class CaseSummary extends Component {
       });
     }, []);
 
+    console.log(this.state.tags);
+
     /********  To get the highlighed words */
     Object.keys(this.state.tags).map((keyName) => {
       var x = this.state.tags[keyName];
       Object.keys(x).map((values) => {
         highlightedRawWords.push(x[values].toLowerCase().split(' '));
       })
-    })
+    });
 
       
     /*********** Smooth the 2D array into 1D */
@@ -608,6 +610,9 @@ class CaseSummary extends Component {
   render(){{
             this.getReports();
             this.updateReports();
+
+            console.log(this.state.highlightedWords);
+
             }
     return (
       <div key={this.state.caseName} className={this.props.classes.summaryContent}>

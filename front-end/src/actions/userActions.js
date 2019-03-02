@@ -3,7 +3,6 @@
  */
 export const setUserInfo = (isLoggedIn, userEmail, userID) => (dispatch) => {
 
-  console.log("LOGOUT");
   return dispatch({ type: 'SET_USER', userInfo: { isLoggedIn, userEmail, userID } });
 
 };

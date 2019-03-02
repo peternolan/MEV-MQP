@@ -598,7 +598,7 @@ app.post('/binreport', (req, res) => {
         });
       } else if (req.body.fromBin === 'all reports' && req.body.toBin !== 'all reports') {
         console.log(toQuery);
-        console.log('IN HERE');
+
         db.query(toQuery, (err, toData) => {
         	if(err){console.log(err)}
             res.status(200).send();

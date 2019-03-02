@@ -300,6 +300,8 @@ class QuillEditor extends Component {
 
     saveWork = () => {
         console.log('SaveWork');
+        console.log(this.state.current.reportText);
+        console.log(this.state.current.tags);
         if (!this.state.saving && !_.isEqual(this.state.current, this.state.saved)) {
             this.setState({
                 success: false,
@@ -382,6 +384,8 @@ class QuillEditor extends Component {
 
         for (let i = 0; i < spans.length; i += 1) {
 
+            console.log ('In the for loop for highlighting');
+
             switch (spans[i].getAttribute('style')) {
                 case drugRE:
                     newTags.drug = (newTags.drug)
@@ -435,7 +439,10 @@ class QuillEditor extends Component {
 
         var finalText = this.state.report + comment;
 
-        this.setState({success: false, current: {reportText: finalText, tags: newTags}});
+        console.log(newTags);
+
+        this.setState({success: false, current: {reportText: finalText, tags: newTags}}, () =>
+        {console.log(this.state.current.tags)});
 
         if (this.state.addingComment) {
             var dummyNode2 = document.createElement('div');
@@ -490,7 +497,7 @@ class QuillEditor extends Component {
 
         var finalTextComm = this.state.report + this.state.comment;
 
-        this.setState({success: false, addingComment: false,  current: {reportText: finalTextComm}});
+        this.setState({success: false, addingComment: false,  current: {reportText: finalTextComm, tags: newTags}});
 
 
     };

@@ -406,65 +406,69 @@ class CaseSummary extends Component {
     var resultIds  = [];
     var arr = [];
 
-    this.props.setSearchLoading(true);
-    this.props.executeSearch(this.state.recommendationString)
-        .then((data) => {
-          results = JSON.parse(data);
-          var j = 0;
+    if (this.state.recommendationString.length > 0) {
 
-          var allGood = true;
-          while (results.results[j] && allGood) {
-            if (Number.isInteger(Number(j))) {
-              arr.push(results.results[j]);
-            } else {
-              allGood = false;
-            }
-            j++;
-          }
-          j = 0;
-          while (arr[j]) {
-            var item = arr;
-            var i = 0;
-            this.props.getAgeAndCode(arr[j].id).then((rows) => {
-              if (rows.length > 0) {
+      this.props.setSearchLoading(true);
+      this.props.executeSearch(this.state.recommendationString)
+          .then((data) => {
+            results = JSON.parse(data);
+            var j = 0;
 
-
-                var age;
-                var code;
-                age = rows[0].age_year;
-                code = rows[0].outc_cod[0];
-
-
-                if (!age) {
-                  age = "--";
-                }
-                if (!code) {
-                  code = "--";
-                }
-
-                resultsArr.push({
-                  primaryid: item[i].id,
-                  drugname: item[i].drugname,
-                  sex: item[i].sex,
-                  me_type: item[i].error,
-                  excerpt: item[i].report_text_highlights,
-                  age_year: age,
-                  outc_cod: code
-                });
-                resultIds.push(item[i].id);
-                if (resultsArr.length >= arr.length && resultIds.length >= arr.length) {
-                  /* Made it? */
-                  this.handleSearchResults(resultsArr, resultIds, this.state.recommendationString);
-                }
+            var allGood = true;
+            while (results.results[j] && allGood) {
+              if (Number.isInteger(Number(j))) {
+                arr.push(results.results[j]);
+              } else {
+                allGood = false;
               }
+              j++;
+            }
+            j = 0;
+            while (arr[j]) {
+              var item = arr;
+              var i = 0;
+              this.props.getAgeAndCode(arr[j].id).then((rows) => {
+                if (rows.length > 0) {
 
-              i++;
-            });
 
-            j++;
+                  var age;
+                  var code;
+                  age = rows[0].age_year;
+                  code = rows[0].outc_cod[0];
 
-          }
-    });
+
+                  if (!age) {
+                    age = "--";
+                  }
+                  if (!code) {
+                    code = "--";
+                  }
+
+                  resultsArr.push({
+                    primaryid: item[i].id,
+                    drugname: item[i].drugname,
+                    sex: item[i].sex,
+                    me_type: item[i].error,
+                    excerpt: item[i].report_text_highlights,
+                    age_year: age,
+                    outc_cod: code
+                  });
+                  resultIds.push(item[i].id);
+                  if (resultsArr.length >= arr.length && resultIds.length >= arr.length) {
+                    /* Made it? */
+                    this.handleSearchResults(resultsArr, resultIds, this.state.recommendationString);
+                  }
+                }
+
+                i++;
+              });
+
+              j++;
+
+            }
+          });
+    }
+
   }
   /* back propagate results to list */
   handleSearchResults = (array1, array2, string) => {

@@ -21,6 +21,7 @@ class CaseSummaryListing extends React.PureComponent {
     printSearchResults: PropTypes.func.isRequired,
     bins: PropTypes.arrayOf(PropTypes.object).isRequired,
     summaryCounter: PropTypes.number.isRequired,
+    refresh: PropTypes.bool,
     userID: PropTypes.number.isRequired,
     classes: PropTypes.shape({
       summaryContainer: PropTypes.string,
@@ -72,6 +73,7 @@ class CaseSummaryListing extends React.PureComponent {
                 summaryCounter={this.props.summaryCounter}
                 updateTab={this.props.updateTab}
                 handleClick={this.props.handleClickPieChart}
+                refresh = {this.props.refresh}
               />
             </Collapse>
           </div>

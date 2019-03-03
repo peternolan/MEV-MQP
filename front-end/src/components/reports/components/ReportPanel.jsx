@@ -19,6 +19,7 @@ class ReportPanel extends React.PureComponent {
         htmlEncode: PropTypes.func.isRequired,
         htmlUnescape: PropTypes.func.isRequired,
         incrementSummary: PropTypes.func,
+        refreshCases: PropTypes.func,
         classes: PropTypes.shape({
             pdfView: PropTypes.string,
             editorWindow: PropTypes.string,
@@ -164,6 +165,7 @@ class ReportPanel extends React.PureComponent {
                             commentsOn = {this.commentOnHandler}
                             summaryOn = {this.state.summaryShown}
                             match={this.props.match}
+                            refreshCases = {this.props.refreshCases}
                             />
 
                         )

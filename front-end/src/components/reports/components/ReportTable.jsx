@@ -142,9 +142,6 @@ class ReportTable extends React.PureComponent {
   componentWillMount() {
       console.log('component Will mount');
     if(this.props.bin !== 'searched reports'){
-      console.log(this.props.filters);
-
-
       //if (this.props.filters.sex.length > 0 || this.props.filters.age.length > 0  || this.props.filters.cause.length > 0
        //   || this.props.filters.meType.length > 0  || this.props.filters.occp_cod.length > 0  ||
        // this.props.filters.occr_country.length > 0  || this.props.filters.product.length > 0  || this.props.filters.stage.length > 0 ) {
@@ -158,8 +155,6 @@ class ReportTable extends React.PureComponent {
                 data: reports,
                 allData: reports,
                 loadingData: false,
-              }, () => {
-                console.log(this.state.data);
               });
             });
       //}

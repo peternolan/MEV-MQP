@@ -32,6 +32,7 @@ class QuillEditor extends Component {
         incrementSummary: PropTypes.func,
         commentsOn: PropTypes.func,
         summaryOn: PropTypes.bool,
+        refreshCases: PropTypes.func,
         classes: PropTypes.shape({
             pdfView: PropTypes.string,
             editorWindow: PropTypes.string,
@@ -328,6 +329,8 @@ class QuillEditor extends Component {
                         saved: this.state.current,
                         success: true,
                         saving: false,
+                    }, () => {
+                        this.props.refreshCases();
                     });
                 })
                 .catch(err => console.log(err));
@@ -432,9 +435,6 @@ class QuillEditor extends Component {
 
         var finalText = this.state.report + comment;
 
-
-
-        this.setState({success: false, current: {reportText: finalText, tags: newTags}});
 
         if (this.state.addingComment) {
             var dummyNode2 = document.createElement('div');

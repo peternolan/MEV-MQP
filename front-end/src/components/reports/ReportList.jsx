@@ -81,6 +81,7 @@ class ReportList extends Component {
     super();
     this.handleCaseChangePrimary = this.handleCaseChangePrimary.bind(this);
     this.state = {
+      refreshCases: false,
       bin: 'all reports',
       userBins: [],
       newCaseModalOpen: false,
@@ -145,6 +146,14 @@ class ReportList extends Component {
       returnedResults: this.props.returnedResults,
     });
   };
+
+
+  refreshCases = () => {
+
+    this.setState({refreshCases: !this.state.refreshCases}, () => {
+      console.log(this.state.refreshCases)
+    })
+  }
 
 
 
@@ -315,6 +324,12 @@ class ReportList extends Component {
 
   };
 
+
+
+
+
+
+
   calculateSummarySize = () => {
     if(this.state.summaryOpen){
       if(this.state.textOpen){
@@ -431,6 +446,7 @@ class ReportList extends Component {
                   returnedResults = {this.state.returnedResults}
                   returnedIds = {this.state.returnedIds}
                   setSearchLoading = {this.setSearchLoading}
+                  refresh = {this.state.refreshCases}
               />
             </div>
             <div key='summaryCollapse' className={this.props.classes.collapseDivider} style={{float: 'left'}} onClick={this.handleViewCaseSummary}>
@@ -472,6 +488,7 @@ class ReportList extends Component {
                   userID={this.props.userID}
                   userEmail={this.props.userEmail}
                   reportOpen={this.state.reportOpen}
+                  refreshCases = {this.refreshCases}
               />
             </div>
             {/* ====== Modal for Creating a New Case ====== */}

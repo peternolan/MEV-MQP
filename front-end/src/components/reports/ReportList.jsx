@@ -150,9 +150,8 @@ class ReportList extends Component {
 
   refreshCases = () => {
 
-    this.setState({refreshCases: !this.state.refreshCases}, () => {
-      console.log(this.state.refreshCases)
-    })
+    this.setState({refreshCases: !this.state.refreshCases});
+
   }
 
 
@@ -191,8 +190,6 @@ class ReportList extends Component {
       returnedIds: arr2,
       searchLoading: false,
       previousSearchString: string,
-    }, () => {
-      console.log(this.state.returnedIds);
     });
   };
 
@@ -296,7 +293,7 @@ class ReportList extends Component {
     switch (color) {
 
       case this.COLORS.primary:
-        console.log("Primary " + this.COLORS.primary);
+
         this.setState (
             {
               primaryChosen: true,
@@ -395,7 +392,7 @@ class ReportList extends Component {
 
   render() {
     // console.log(this.state.searchedReports)
-    console.log('render List');
+
     return (
         <MuiThemeProvider theme={defaultTheme} >
           <div className={this.props.classes.ReportList} >

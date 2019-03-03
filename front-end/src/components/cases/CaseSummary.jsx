@@ -79,9 +79,9 @@ class CaseSummary extends Component {
   }
 
   componentWillReceiveProps(incomingProps) {
-    console.log(incomingProps.refresh);
+
     if (this.state.summaryCounter !== incomingProps.summaryCounter || this.state.refresh !== incomingProps.refresh) {
-      console.log("Will Receive Props");
+
       this.updateSummary();
       this.setState({
         summaryCounter: incomingProps.summaryCounter,
@@ -171,8 +171,6 @@ class CaseSummary extends Component {
   /******* define function  */
 
   getTagData = () => {
-
-    console.log("Get Tag Data");
 
     const stop_words= ["", 'a','about','above','across','after','again','against','all','almost','alone','along','already','also','although','always','among','an','and','another','any','anybody','anyone','anything','anywhere','are','area','areas','around','as','ask','asked','asking','asks','at','away','b','back','backed','backing','backs','be','became','because','become','becomes','been','before','began','behind','being','beings','best','better','between','big','both','but','by','c','came','can','cannot','case','cases','certain','certainly','clear','clearly','come','could','d','did','differ','different','differently','do','does','done','down','down','downed','downing','downs','during','e','each','early','either','end','ended','ending','ends','enough','even','evenly','ever','every','everybody','everyone','everything','everywhere','f','face','faces','fact','facts','far','felt','few','find','finds','first','for','four','from','full','fully','further','furthered','furthering','furthers','g','gave','general','generally','get','gets','give','given','gives','go','going','good','goods','got','great','greater','greatest','group','grouped','grouping','groups','h','had','has','have','having','he','her','here','herself','high','high','high','higher','highest','him','himself','his','how','however','i','if','important','in','interest','interested','interesting','interests','into','is','it','its','itself','j','just','k','keep','keeps','kind','knew','know','known','knows','l','large','largely','last','later','latest','least','less','let','lets','like','likely','long','longer','longest','m','made','make','making','man','many','may','me','member','members','men','might','more','most','mostly','mr','mrs','much','must','my','myself','n','necessary','need','needed','needing','needs','never','new','new','newer','newest','next','no','nobody','non','noone','not','nothing','now','nowhere','number','numbers','o','of','off','often','old','older','oldest','on','once','one','only','open','opened','opening','opens','or','order','ordered','ordering','orders','other','others','our','out','over','p','part','parted','parting','parts','per','perhaps','place','places','point','pointed','pointing','points','possible','present','presented','presenting','presents','problem','problems','put','puts','q','quite','r','rather','really','right','right','room','rooms','s','said','same','saw','say','says','second','seconds','see','seem','seemed','seeming','seems','sees','several','shall','she','should','show','showed','showing','shows','side','sides','since','small','smaller','smallest','so','some','somebody','someone','something','somewhere','state','states','still','still','such','sure','t','take','taken','than','that','the','their','them','then','there','therefore','these','they','thing','things','think','thinks','this','those','though','thought','thoughts','three','through','thus','to','today','together','too','took','toward','turn','turned','turning','turns','two','u','under','until','up','upon','us','use','used','uses','v','very','w','want','wanted','wanting','wants','was','way','ways','we','well','wells','went','were','what','when','where','whether','which','while','who','whole','whose','why','will','with','within','without','work','worked','working','works','would','x','y','year','years','yet','you','young','younger','youngest','your','yours','z'];
     // const highlightedWordsData = [];
@@ -266,9 +264,6 @@ class CaseSummary extends Component {
   //this function is called once for each report in all cases
   updateGraphs = () => {
     /********* reports assigned to the variable */
-
-    console.log('updateGraphs');
-
     this.props.getReportsInCases(this.props.userID, this.state.caseName)
       .then(reports => this.setState({
         reportsInCase: reports,
@@ -316,7 +311,7 @@ class CaseSummary extends Component {
 
   /************ when case changes, update the reports */
   handleCaseChange = () => {
-      console.log('reports',this.state.reportsInCase);
+
       this.props.updateTab(this.state.caseName);
   };
 
@@ -406,7 +401,6 @@ class CaseSummary extends Component {
   }
   /* search for recommendations */
   searchRecommendations = () => {
-    console.log(this.state.recommendationString);
     var results;
     var resultsArr = [];
     var resultIds  = [];
@@ -416,11 +410,9 @@ class CaseSummary extends Component {
     this.props.executeSearch(this.state.recommendationString)
         .then((data) => {
           results = JSON.parse(data);
-          console.log(results.results)
           var j = 0;
 
           var allGood = true;
-          console.log('okay')
           while (results.results[j] && allGood) {
             if (Number.isInteger(Number(j))) {
               arr.push(results.results[j]);
@@ -431,11 +423,9 @@ class CaseSummary extends Component {
           }
           j = 0;
           while (arr[j]) {
-            console.log('maybe')
             var item = arr;
             var i = 0;
             this.props.getAgeAndCode(arr[j].id).then((rows) => {
-              console.log('ageandcode')
               if (rows.length > 0) {
 
 
@@ -464,7 +454,6 @@ class CaseSummary extends Component {
                 resultIds.push(item[i].id);
                 if (resultsArr.length >= arr.length && resultIds.length >= arr.length) {
                   /* Made it? */
-                  console.log(resultsArr);
                   this.handleSearchResults(resultsArr, resultIds, this.state.recommendationString);
                 }
               }
@@ -479,7 +468,6 @@ class CaseSummary extends Component {
   }
   /* back propagate results to list */
   handleSearchResults = (array1, array2, string) => {
-    console.log('printing');
     this.props.printSearchResults(array1,array2,string);
     this.props.changeTab(1);
   }
@@ -623,9 +611,6 @@ class CaseSummary extends Component {
   render(){{
             this.getReports();
             this.updateReports();
-
-            console.log(this.state.highlightedWords);
-
             }
     return (
       <div key={this.state.caseName} className={this.props.classes.summaryContent}>
@@ -647,7 +632,7 @@ class CaseSummary extends Component {
           <div className={this.props.classes.bargraph} key="bargraph" id='bargraph' ref='bargraph'><svg ref="svg" preserveAspectRatio="none" viewBox="0 0 100 100" width="100%" height='100%'></svg> </div>
         <div className={this.props.classes.bglegend} key='bglegend'>
           {this.state.catColors.map((category) => {
-            console.log('catcol',this.state.catColors)
+
             return (<div className={this.props.classes.legendPair}><div className={this.props.classes.legendColor} style={{backgroundColor:category[1]}}/><Typography className={this.props.classes.legendCategory}>{category[0]} ({category[2]})</Typography></div>)
           })}
         </div>

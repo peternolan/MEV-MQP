@@ -140,7 +140,7 @@ class ReportTable extends React.PureComponent {
    * Sends fetch request to retrieve list of reports to be shown in table
    */
   componentWillMount() {
-      console.log('component Will mount');
+
     if(this.props.bin !== 'searched reports'){
       //if (this.props.filters.sex.length > 0 || this.props.filters.age.length > 0  || this.props.filters.cause.length > 0
        //   || this.props.filters.meType.length > 0  || this.props.filters.occp_cod.length > 0  ||
@@ -168,7 +168,7 @@ class ReportTable extends React.PureComponent {
 
   componentDidMount() {
 
-      console.log('component Did mount');
+
 
     this.resizeTable();
     // Listen for window resize, but wait till they have stopped to do the size calculations.
@@ -183,23 +183,19 @@ class ReportTable extends React.PureComponent {
 
       if (prevProps.bin !== this.props.bin || !_.isEqual(this.props.filters, prevProps.filters)) {
       if(this.props.bin !== 'searched reports') {
-        console.log('component Did Update not searched reports');
+
         this.setState({
           loadingData: true,
         });
       }
 
-      console.log('component Did Update');
-        console.log(this.props.bin);
           if (this.props.bin !== 'all reports') {
             if (this.props.filters.sex.length > 0 || this.props.filters.age.length > 0  || this.props.filters.cause.length > 0
                 || this.props.filters.meType.length > 0  || this.props.filters.occp_cod.length > 0  ||
                 this.props.filters.occr_country.length > 0  || this.props.filters.product.length > 0  || this.props.filters.stage.length > 0 ) {
 
-              console.log('FILTERS PRESENT');
               this.props.getCaseReports(this.props.bin, this.props.userID, {})
                   .then((reports) => {
-                    console.log(reports);
                     this.props.setAllReports(reports);
                     this.updateEvidenceRows();
                     this.setState({
@@ -212,11 +208,8 @@ class ReportTable extends React.PureComponent {
 
             }
             else {
-
-              console.log('NO FILTERS PRESENT');
               this.props.getCaseReports(this.props.bin, this.props.userID, {})
                   .then((reports) => {
-                    console.log(reports);
                     this.props.setAllReports(reports);
                     this.updateEvidenceRows();
                     this.setState({
@@ -233,7 +226,6 @@ class ReportTable extends React.PureComponent {
         else {
           this.props.getCaseReports(this.props.bin, this.props.userID)
               .then((reports) => {
-                console.log(reports);
                 this.props.setAllReports(reports);
                 this.updateEvidenceRows();
                 this.setState({
@@ -266,7 +258,6 @@ class ReportTable extends React.PureComponent {
    * Gets the report narrative for a given primaryid
    */
   getReportNarrative = (primaryid) => {
-    console.log('id table ' + primaryid);
     this.props.getReportNarrativeFromID(primaryid)
         .then((rows) => {
           if (rows.length > 0) {
@@ -314,7 +305,6 @@ class ReportTable extends React.PureComponent {
    * Sets what rows are expanded in the table
    */
   changeExpandedDetails = (expandedRows) => {
-    console.log("change expanded");
     this.setState({ expandedRows });
   };
 
@@ -336,7 +326,6 @@ class ReportTable extends React.PureComponent {
   };
 
   updateEvidenceRows = () => {
-      console.log("Update Evidence this.props.bin " + this.props.bin  );
     if (this.props.bin !== 'searched reports') {
       this.props.getReportsInCases(this.props.userID)
           .then((response) => {
@@ -391,7 +380,7 @@ class ReportTable extends React.PureComponent {
    * Sends a backend request to move a report from one bin to another
    */
   handleMoveReport = (primaryid, fromBin, toBin, type) => {
-    console.log('from',fromBin,'to',toBin);
+
     this.props.moveReport(primaryid, fromBin, toBin, this.props.userID, type ? 'primary' : 'supportive')
         .then(() => {
           if (toBin === 'trash' || toBin ==='all reports') {
@@ -431,17 +420,13 @@ class ReportTable extends React.PureComponent {
    * Calculate the size of the table
    */
   resizeTable = () => {
-    console.log('resizeTable');
+
     const container = document.getElementById('table-container');
     const containerHeight = window.getComputedStyle(container, null).getPropertyValue('height');
-
-    console.log('containerHeight ' + containerHeight);
 
     this.setState({
       tableHeight: parseInt(containerHeight || 800, 10),
       stillResizingTimer: '',
-    }, () => {
-      console.log('this.state.tableHeight ' + this.state.tableHeight);
     });
   };
 
@@ -452,7 +437,6 @@ class ReportTable extends React.PureComponent {
 
 
   reportToPanel = ( id ) => {
-    console.log('Report to Panel ' + id);
     this.setState({selected: id,}, function() {
       this.props.handleViewReport(id);
     });
@@ -524,10 +508,6 @@ class ReportTable extends React.PureComponent {
   search = () => {
     var contents = document.getElementById('search').value;
 
-    console.log('Search');
-
-
-
     var results;
 
     var resultsArr = [];
@@ -595,7 +575,7 @@ class ReportTable extends React.PureComponent {
   };
 
   handleSearchResults = (array1, array2, string) => {
-    console.log('handling');
+
     this.props.printSearchResults(array1,array2,string);
     this.props.changeTab(1);
   };
@@ -698,8 +678,6 @@ class ReportTable extends React.PureComponent {
   renderDetailRowContent = row => {
     var final;
     var dummyNode = document.createElement('div');
-
-    console.log(this.props.currentTab);
 
     if(this.props.currentTab === 1){
       final = (row.row.excerpt) ? row.row.excerpt[0] + row.row.excerpt[1] : '<div>--</div>';

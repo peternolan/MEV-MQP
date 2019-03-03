@@ -79,7 +79,6 @@ class ReportPanel extends React.PureComponent {
         if (this.props.match.params) {
             this.getTextFromID(Number(this.props.match.params.id, 10));
         } else {
-            console.log(this.props.primaryid);
             this.getTextFromID(this.props.primaryid);
         }
     }
@@ -107,7 +106,6 @@ class ReportPanel extends React.PureComponent {
                 loading: false,
             });
         } else {
-            console.log('id Panel' + id);
             this.props.getReportNarrativeFromID(id)
                 .then((rows) => {
                     if (rows.length > 0) {
@@ -140,7 +138,6 @@ class ReportPanel extends React.PureComponent {
         this.setState({summaryShown: !this.state.summaryShown})
     };
     commentOnHandler = (setting) => {
-        console.log("CommentsOn");
         if (setting == null) {
             if (this.state.commentsOn) {
                 this.setState({commentsOn: false});

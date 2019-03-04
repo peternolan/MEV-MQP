@@ -453,7 +453,7 @@ class ReportList extends Component {
             </div>
             {/* ====== Table for Viewing the table of reports ====== */}
             <div key='reporttable' className={this.props.classes.tableContainer} >
-              <Typography variant='body' className={this.props.classes.titleBar} style={{fontWeight: 'bold'}}>Report table</Typography>
+              <Typography variant='body' className={this.props.classes.titleBar} style={{fontWeight: 'bold'}}>Report Table</Typography>
               <ReportTable
                   reportPanel = {this.state.reportOpen}
                   bin={this.state.bin}

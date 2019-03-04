@@ -131,7 +131,7 @@ export default {
         display: 'inline-flex',
         alignItems: 'center',
         justifyContent: 'center',
-        width: 'calc(100% /8)',
+        width: '40%',
         height: 20,
         paddingLeft: 10,
         paddingRight: 10,
@@ -139,6 +139,7 @@ export default {
         borderWidth: 1,
         borderColor: 'rgba(0, 0, 0, .25)',
         borderRadius: 0,
+        marginLeft: '1vw',
     },
     highlightButtons: {
         display: 'inline-flex',

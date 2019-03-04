@@ -33,6 +33,9 @@ class CaseSummary extends Component {
     caseID: PropTypes.number,
     userID: PropTypes.number.isRequired,
     refresh: PropTypes.bool,
+    classes: PropTypes.shape({
+      legendEntry: PropTypes.string,
+    }),
     match: PropTypes.shape({
       params: PropTypes.shape({
         id: PropTypes.string,
@@ -64,6 +67,7 @@ class CaseSummary extends Component {
       highlightedWordsData:[],
       highlightedWords:[],
       caseNarratives:[],
+      legendTab:[],
       caseNarrativesData:[],
       searchedReports:[],
       searchOption: '',
@@ -522,7 +526,75 @@ class CaseSummary extends Component {
     var data = this.props.getInstances(reports);
     var formatted_data = fmt(data);
 
-    var label = d3.select(this.refs.options).node().value
+    var label = d3.select(this.refs.options).node().value;
+    console.log('label ' + label);
+
+
+    if (document.getElementById('legend-' + this.props.caseID)) {
+
+      var legendCont = ``;
+
+      switch (label) {
+        case 'sex':
+          console.log('Switch ' + label);
+          console.log(formatted_data.counts[formatted_data.fields.indexOf(label)]);
+          for (var w = 0 ; w < formatted_data.counts[formatted_data.fields.indexOf('sex')].length; w++ ) {
+            legendCont +=
+                `<div className = {this.props.classes.legendEntry} style  = 'margin-left: ${'1%'}; background-color : ${"#"+this.getFillColor(w, formatted_data.counts[formatted_data.fields.indexOf('sex')].length)}' >
+                    ${ formatted_data.counts[formatted_data.fields.indexOf('sex')][w].label}</div>`
+
+
+          }
+          document.getElementById('legend-' + this.props.caseID).innerHTML = `<div>Legend:</div>` + legendCont;
+
+          break;
+        case 'age_year':
+          console.log('Switch ' + label);
+          console.log(formatted_data.counts[formatted_data.fields.indexOf(label)]);
+          for (var xx = 0 ; xx < formatted_data.counts[formatted_data.fields.indexOf('age_year')].length; xx++ ) {
+
+            legendCont +=
+                `<div className = ${this.props.classes.legendEntry} style  = 'margin-left: ${'1%'}; background-color : ${"#"+this.getFillColor(xx, formatted_data.counts[formatted_data.fields.indexOf('age_year')].length)}' >
+                    ${ formatted_data.counts[formatted_data.fields.indexOf('age_year')][xx].label}</div>`
+
+
+          }
+          document.getElementById('legend-' + this.props.caseID).innerHTML = `<div>Legend:</div>` + legendCont;
+          break;
+        case 'me_type':
+          console.log('Switch ' + label);
+          console.log(formatted_data.counts[formatted_data.fields.indexOf(label)]);
+          for (var y = 0 ; y < formatted_data.counts[formatted_data.fields.indexOf('me_type')].length; y++ ) {
+            legendCont +=
+                `<div className = ${this.props.classes.legendEntry} style  = 'margin-left: ${'1%'}; background-color : ${"#"+this.getFillColor(y, formatted_data.counts[formatted_data.fields.indexOf('me_type')].length)}' >
+                    ${ formatted_data.counts[formatted_data.fields.indexOf('me_type')][y].label}</div>`
+
+
+          }
+
+          document.getElementById('legend-' + this.props.caseID).innerHTML = `<div>Legend:</div>` + legendCont;
+          break;
+        case 'outc_cod':
+          console.log('Switch ' + label);
+          console.log(formatted_data.counts[formatted_data.fields.indexOf(label)]);
+          for (var z = 0 ; z < formatted_data.counts[formatted_data.fields.indexOf('outc_cod')].length; z++ ) {
+            legendCont +=
+                `<div className = ${this.props.classes.legendEntry} style  = ' margin-left: ${'1%'}; background-color : ${"#"+this.getFillColor(z, formatted_data.counts[formatted_data.fields.indexOf('outc_cod')].length)}' >
+                    ${ formatted_data.counts[formatted_data.fields.indexOf('outc_cod')][z].label}</div>`
+
+
+          }
+          document.getElementById('legend-' + this.props.caseID).innerHTML = `<div>Legend:</div>` + legendCont;
+          break;
+        default:
+          document.getElementById('legend-' + this.props.caseID).innerHTML = ``;
+          break;
+      }
+    }
+      else {
+        console.log('NOT HERE')
+      }
+
     if (label == "TODO"){
       return;
     }
@@ -540,7 +612,7 @@ class CaseSummary extends Component {
         .selectAll("g.bar")//for each bar, append a new group
         .data([label], d=>d);
 
-    chart.exit().remove()
+    chart.exit().remove();
 
     chart.enter()
         .append("g")
@@ -557,7 +629,7 @@ class CaseSummary extends Component {
         .attr("y", 0)
         .attr("stroke-width", 1)
         .attr("stroke", "#FFF")
-        .attr("opacity", .7)
+        .attr("opacity", 1)
         .attr("height", 100)
         .attr("x", d=>{return x(d.start/total_reports) > 50 ? 100 : 0;})//preset the x position of new elements to "push" them against the edges for a smoother animation
     
@@ -617,7 +689,7 @@ class CaseSummary extends Component {
             this.updateReports();
             }
     return (
-      <div key={this.state.caseName} className={this.props.classes.summaryContent}>
+      <div key={this.state.caseName} className={this.props.classes.summaryContent} >
           <div key="upper_part" style={{paddingLeft: 10}}>
             <div className={this.props.classes.reportBox}>
               <Typography variant='button' className={this.props.classes.countText}>Total Count of Reports: {this.state.reportsInCase.length}</Typography>
@@ -633,6 +705,7 @@ class CaseSummary extends Component {
               </select>
             </Typography>
           </div>
+        <div className={this.props.classes.legend} key = "legend" id ={'legend-' + this.props.caseID} ref = 'legend'>Legend</div>
           <div className={this.props.classes.bargraph} key="bargraph" id='bargraph' ref='bargraph'><svg ref="svg" preserveAspectRatio="none" viewBox="0 0 100 100" width="100%" height='100%'></svg> </div>
         <div className={this.props.classes.bglegend} key='bglegend'>
           {this.state.catColors.map((category) => {

@@ -543,7 +543,7 @@ class CaseSummary extends Component {
 
       for (var z = 0 ; z < formatted_data.counts[formatted_data.fields.indexOf(label)].length; z++ ) {
         legendCont +=
-            `<div className= ${this.props.classes.legendEntry} style  = ' padding : ${'1px'} ;margin-left: ${'1%'}; background-color : ${"#"+this.getFillColor(z, formatted_data.counts[formatted_data.fields.indexOf(label)].length)}' >${ formatted_data.counts[formatted_data.fields.indexOf(label)][z].label}</div>`
+            `<div className= ${this.props.classes.legendEntry} style  = ' padding : ${'2px'} ;margin-left: ${'1%'}; background-color : ${"#"+this.getFillColor(z, formatted_data.counts[formatted_data.fields.indexOf(label)].length)}' >${ formatted_data.counts[formatted_data.fields.indexOf(label)][z].label}</div>`
       }
       document.getElementById('legend-'+this.props.caseID).innerHTML = legendCont;
     }

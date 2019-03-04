@@ -142,6 +142,7 @@ class ReportTable extends React.PureComponent {
   componentWillMount() {
 
     if(this.props.bin !== 'searched reports'){
+      console.log('Component Will Mount');
       //if (this.props.filters.sex.length > 0 || this.props.filters.age.length > 0  || this.props.filters.cause.length > 0
        //   || this.props.filters.meType.length > 0  || this.props.filters.occp_cod.length > 0  ||
        // this.props.filters.occr_country.length > 0  || this.props.filters.product.length > 0  || this.props.filters.stage.length > 0 ) {
@@ -194,7 +195,7 @@ class ReportTable extends React.PureComponent {
                 || this.props.filters.meType.length > 0  || this.props.filters.occp_cod.length > 0  ||
                 this.props.filters.occr_country.length > 0  || this.props.filters.product.length > 0  || this.props.filters.stage.length > 0 ) {
 
-              this.props.getCaseReports(this.props.bin, this.props.userID, {})
+              this.props.getCaseReports(this.props.bin, this.props.userID)
                   .then((reports) => {
                     this.props.setAllReports(reports);
                     this.updateEvidenceRows();

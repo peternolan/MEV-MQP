@@ -202,6 +202,7 @@ class ReportList extends Component {
    * Handler for Tab bar clicks
    */
   handleTabClick = (event, currentTab) => {
+    console.log(currentTab)
     // If the Current tab is the New Case tab, open the Modal
     if (currentTab === 4) {
       this.setState({

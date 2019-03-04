@@ -62,7 +62,7 @@ class CaseSummary extends Component {
       caseDescription: '',
       reportsInCase: [],
       reports:[],
-      pieChartData: [],
+      pvs: [],
       barChartData: [],
       highlightedWordsData:[],
       highlightedWords:[],
@@ -71,7 +71,7 @@ class CaseSummary extends Component {
       caseNarrativesData:[],
       searchedReports:[],
       searchOption: '',
-      graphdata: 'outc_cod',
+      graphdata: 'pvs',
       keywordsExposed: false,
       recommendationArray: [],
       recommendationString: undefined,
@@ -158,12 +158,12 @@ class CaseSummary extends Component {
       return acc;
     }, {});
 
-    const pieChartData = Object.keys(typeObject).reduce((acc, key) => {
-      return acc.concat({ name: key.toUpperCase(), value: typeObject[key] });
+    const pvs = Object.keys(typeObject).reduce((acc, key) => {
+      return acc.concat({ name: key.charAt(0).toUpperCase()+key.slice(1), value: typeObject[key] });
     }, []);
 
     this.setState({
-      pieChartData,
+      pvs,
     });
   };
 
@@ -228,8 +228,8 @@ class CaseSummary extends Component {
       });
     }, []);
     this.setState({
-      recommendationArray: highlightedWords,
-      recommendationString: highlightedWords.join(' '),
+      recommendationArray: highlightedWords.slice(),
+      recommendationString: highlightedWords.slice().join(' '),
       barChartData,
       highlightedWordsData,
       highlightedWords,
@@ -525,75 +525,29 @@ class CaseSummary extends Component {
     };
     var data = this.props.getInstances(reports);
     var formatted_data = fmt(data);
+    /* add in the primary supportive data */
+    var pvsform = [];
+    var onecnt = {label: this.state.pvs[0].name, start: 0, end: this.state.pvs[0].value};
+    pvsform.push(onecnt);
+    if(this.state.pvs.length > 1){
+      var twocnt = {label: this.state.pvs[1].name, start: this.state.pvs[0].value, end: this.state.pvs[0].value+this.state.pvs[1].value};
+      pvsform.push(twocnt);
+    }
+    formatted_data.counts.push(pvsform);
+    formatted_data.fields.push('pvs');
 
     var label = d3.select(this.refs.options).node().value;
 
-
-
     if (document.getElementById('legend-' + this.props.caseID)) {
-
       var legendCont = ``;
 
-      switch (label) {
-        case 'sex':
-
-          for (var w = 0 ; w < formatted_data.counts[formatted_data.fields.indexOf('sex')].length; w++ ) {
-            legendCont +=
-                `<div className = {this.props.classes.legendEntry} style  = 'margin-left: ${'1%'}; background-color : ${"#"+this.getFillColor(w, formatted_data.counts[formatted_data.fields.indexOf('sex')].length)}' >
-                    ${ formatted_data.counts[formatted_data.fields.indexOf('sex')][w].label}</div>`
-
-
-          }
-          document.getElementById('legend-' + this.props.caseID).innerHTML = `<div>Legend:</div>` + legendCont;
-
-          break;
-        case 'age_year':
-
-          for (var xx = 0 ; xx < formatted_data.counts[formatted_data.fields.indexOf('age_year')].length; xx++ ) {
-
-            legendCont +=
-                `<div className = ${this.props.classes.legendEntry} style  = 'margin-left: ${'1%'}; background-color : ${"#"+this.getFillColor(xx, formatted_data.counts[formatted_data.fields.indexOf('age_year')].length)}' >
-                    ${ formatted_data.counts[formatted_data.fields.indexOf('age_year')][xx].label}</div>`
-
-
-          }
-          document.getElementById('legend-' + this.props.caseID).innerHTML = `<div>Legend:</div>` + legendCont;
-          break;
-        case 'me_type':
-
-          for (var y = 0 ; y < formatted_data.counts[formatted_data.fields.indexOf('me_type')].length; y++ ) {
-            legendCont +=
-                `<div className = ${this.props.classes.legendEntry} style  = 'margin-left: ${'1%'}; background-color : ${"#"+this.getFillColor(y, formatted_data.counts[formatted_data.fields.indexOf('me_type')].length)}' >
-                    ${ formatted_data.counts[formatted_data.fields.indexOf('me_type')][y].label}</div>`
-
-
-          }
-
-          document.getElementById('legend-' + this.props.caseID).innerHTML = `<div>Legend:</div>` + legendCont;
-          break;
-        case 'outc_cod':
-
-          for (var z = 0 ; z < formatted_data.counts[formatted_data.fields.indexOf('outc_cod')].length; z++ ) {
-            legendCont +=
-                `<div className = ${this.props.classes.legendEntry} style  = ' margin-left: ${'1%'}; background-color : ${"#"+this.getFillColor(z, formatted_data.counts[formatted_data.fields.indexOf('outc_cod')].length)}' >
-                    ${ formatted_data.counts[formatted_data.fields.indexOf('outc_cod')][z].label}</div>`
-
-
-          }
-          document.getElementById('legend-' + this.props.caseID).innerHTML = `<div>Legend:</div>` + legendCont;
-          break;
-        default:
-          document.getElementById('legend-' + this.props.caseID).innerHTML = ``;
-          break;
+      for (var z = 0 ; z < formatted_data.counts[formatted_data.fields.indexOf(label)].length; z++ ) {
+        legendCont +=
+            `<div className= ${this.props.classes.legendEntry} style  = ' margin-left: ${'1%'}; background-color : ${"#"+this.getFillColor(z, formatted_data.counts[formatted_data.fields.indexOf(label)].length)}' >${ formatted_data.counts[formatted_data.fields.indexOf(label)][z].label}</div>`
       }
+      document.getElementById('legend-'+this.props.caseID).innerHTML = legendCont;
     }
-      else {
-        console.log('NOT HERE')
-      }
 
-    if (label == "TODO"){
-      return;
-    }
     var counts = formatted_data["counts"][formatted_data["fields"].indexOf(label)];
     if(counts.length == 0){return;}
 
@@ -684,56 +638,52 @@ class CaseSummary extends Component {
             this.getReports();
             this.updateReports();
             }
-    return (
-      <div key={this.state.caseName} className={this.props.classes.summaryContent} >
-          <div key="upper_part" style={{paddingLeft: 10}}>
-            <div className={this.props.classes.reportBox}>
-              <Typography variant='button' className={this.props.classes.countText}>Total Count of Reports: {this.state.reportsInCase.length}</Typography>
-              <Typography id={this.state.caseName + 'casebutton'} type='button' className={this.props.classes.caseButton} onClick={this.handleCaseChange}>show reports</Typography>
-            </div>
-            <Typography variant='button' className={this.props.classes.caseBDText}>Case Breakdown:
-              <select disabled={(this.state.reportsInCase.length > 0) ? false : true} ref='options' value={this.state.graphdata} onChange={this.handleDataChange} className={this.props.classes.dataSelector}>
-                <option key='pvs' value='TODO'>Primary v. Supportive</option>
-                <option key='outc_cod' value='outc_cod'>Outcome Code</option>
-                <option key='me_type' value='me_type'>Medication Error</option>
-                <option key='sex' value='sex'>Patient Sex</option>
-                <option key='age_year' value='age_year'>Subject Age</option>
-              </select>
-            </Typography>
-          </div>
-        <div className={this.props.classes.legend} key = "legend" id ={'legend-' + this.props.caseID} ref = 'legend'>Legend</div>
-          <div className={this.props.classes.bargraph} key="bargraph" id='bargraph' ref='bargraph'><svg ref="svg" preserveAspectRatio="none" viewBox="0 0 100 100" width="100%" height='100%'></svg> </div>
-        <div className={this.props.classes.bglegend} key='bglegend'>
-          {this.state.catColors.map((category) => {
-
-            return (<div className={this.props.classes.legendPair}><div className={this.props.classes.legendColor} style={{backgroundColor:category[1]}}/><Typography className={this.props.classes.legendCategory}>{category[0]} ({category[2]})</Typography></div>)
-          })}
-        </div>
-        {(this.state.highlightedWords.length === 0) ?
-          <Typography variant='body1' style={{padding: 5, paddingLeft: 15}}>There are no annotated reports in this case for us to build keywords from; try annotating one of the reports.</Typography>
-          : <div>
-            <div className={this.props.classes.keywordHead}>
-              <Typography variant='button' className={this.props.classes.textButton} onClick={this.handleKeywordHide}>Keyword Summary</Typography>
-              <Typography variant='button' onClick={this.searchRecommendations} className={this.props.classes.recButton}>get recommendations</Typography>
-            </div>
-            <Collapse isOpened={this.state.keywordsExposed}>
-              <div className={this.props.classes.keywordContainer}>
-                <div key="highlighted_words">
-                  {this.state.highlightedWordsData.map((word) =>{
-                    return(
-                      <div key={word.name} className={this.props.classes.keywordCapsule}
-                           style={{backgroundColor: (this.state.recommendationArray.indexOf(word.name) > -1) ? '#7bd389' : '#ee7674'}} onClick={this.toggleWord}>
-                        <Typography value={word.name} variant='body1'>{word.name} ({word.count})</Typography>
-                      </div>
-                    )
-                  })}
-                </div>
+    if (this.state.reportsInCase.length > 0){
+      return(
+          <div key={this.state.caseName} className={this.props.classes.summaryContent} >
+            <div key="upper_part" style={{paddingLeft: 10}}>
+              <div className={this.props.classes.reportBox}>
+                <Typography variant='button' className={this.props.classes.countText}>Total Count of Reports: {this.state.reportsInCase.length}</Typography>
+                <Typography id={this.state.caseName + 'casebutton'} type='button' className={this.props.classes.caseButton} onClick={this.handleCaseChange}>show reports</Typography>
               </div>
-            </Collapse>
+              <Typography variant='button' className={this.props.classes.caseBDText}>Case Breakdown:
+                <select ref='options' value={this.state.graphdata} onChange={this.handleDataChange} className={this.props.classes.dataSelector}>
+                  <option key='pvs' value='pvs'>Primary v. Supportive</option>
+                  <option key='outc_cod' value='outc_cod'>Outcome Code</option>
+                  <option key='me_type' value='me_type'>Medication Error</option>
+                  <option key='sex' value='sex'>Patient Sex</option>
+                  <option key='age_year' value='age_year'>Subject Age</option>
+                </select>
+              </Typography>
+            </div>
+          <div className={this.props.classes.bargraph} key="bargraph" id='bargraph' ref='bargraph'><svg ref="svg" preserveAspectRatio="none" viewBox="0 0 100 100" width="100%" height='100%'></svg> </div>
+          <div className={this.props.classes.bglegend} key='bglegend' id ={'legend-' + this.props.caseID}/>
+          {(this.state.highlightedWords.length === 0) ?
+            <Typography variant='body1' style={{padding: 5, paddingLeft: 15}}>There are no annotated reports in this case for us to build keywords from; try annotating one of the reports.</Typography>
+            : <div>
+              <div className={this.props.classes.keywordHead}>
+                <Typography variant='button' className={this.props.classes.textButton} onClick={this.handleKeywordHide}>Keyword Summary</Typography>
+                <Typography variant='button' onClick={this.searchRecommendations} className={this.props.classes.recButton}>get recommendations</Typography>
+              </div>
+              <Collapse isOpened={this.state.keywordsExposed}>
+                <div className={this.props.classes.keywordContainer}>
+                  <div key="highlighted_words">
+                    {this.state.highlightedWordsData.map((word) =>{
+                      return(
+                        <div key={word.name} className={this.props.classes.keywordCapsule}
+                             style={{backgroundColor: (this.state.recommendationArray.indexOf(word.name) > -1) ? '#7bd389' : '#ee7674'}} onClick={this.toggleWord}>
+                          <Typography value={word.name} style={{padding:4}} variant='body1'>{word.name} ({word.count})</Typography>
+                        </div>
+                      )
+                    })}
+                  </div>
+                </div>
+              </Collapse>
+          </div>}
         </div>
-      }
-      </div>
-    );
+      );} else {
+      return ( <Typography variant='body' align='center'>There are no reports in this case.</Typography>);
+    }
   }
 }
 

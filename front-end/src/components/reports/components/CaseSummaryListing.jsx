@@ -74,7 +74,6 @@ class CaseSummaryListing extends React.PureComponent {
                 updateTab={this.props.updateTab}
                 handleClick={this.props.handleClickPieChart}
                 refresh = {this.props.refresh}
-
               />
             </Collapse>
           </div>

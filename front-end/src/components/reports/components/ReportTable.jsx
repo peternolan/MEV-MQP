@@ -398,7 +398,6 @@ class ReportTable extends React.PureComponent {
                   || this.props.filters.meType.length > 0  || this.props.filters.occp_cod.length > 0  ||
                   this.props.filters.occr_country.length > 0  || this.props.filters.product.length > 0  || this.props.filters.stage.length > 0 ) {
 
-                console.log("FILTERS")
                 this.props.getCaseReports(this.props.bin, this.props.userID)
                     .then(reports => this.setState({
                       data: reports,
@@ -407,8 +406,6 @@ class ReportTable extends React.PureComponent {
                     }));
               }
               else {
-
-                console.log("NO FILTERS")
                 this.props.getCaseReports(this.props.bin, this.props.userID, {})
                     .then(reports => this.setState({
                       data: reports,
@@ -418,6 +415,8 @@ class ReportTable extends React.PureComponent {
 
               }
             }
+            this.updateHighlightedRows();
+            this.updateEvidenceRows();
           } else {
             this.updateHighlightedRows();
             this.updateEvidenceRows();
@@ -489,6 +488,14 @@ class ReportTable extends React.PureComponent {
 
     switch (this.props.bin) {
       case 'searched reports':
+        incase = this.state.currentlyInCase[props.tableRow.rowId];
+
+        if (!incase) {
+          backgroundColor = '';
+        } else {
+          backgroundColor = (incase.includes('read') && incase.length === 1) ? '#b2abd2' : 'RGBA(131, 255, 168, 0.2)';
+
+        }
       case 'all reports':
         incase = this.state.currentlyInCase[props.tableRow.rowId];
 

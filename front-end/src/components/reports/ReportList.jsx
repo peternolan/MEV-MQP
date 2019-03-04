@@ -213,7 +213,7 @@ class ReportList extends Component {
     } else if (currentTab === 1) {  // This is the searched tab
       //***************  Searched reports can be accessed */
       if(this.state.returnedResults.length > 0){
-        this.setState({ currentTab, bin: event.currentTarget.getAttribute('name').toLowerCase()})
+        this.setState({ currentTab/*, bin: event.currentTarget.getAttribute('name').toLowerCase()*/})
       }
 
     } else {
@@ -469,7 +469,7 @@ class ReportList extends Component {
                   primaryChosen = {this.state.primaryChosen}
                   supportiveChosen = {this.state.supportiveChosen}
                   handleViewReport = {this.handleViewReportPanel}
-                  changeTab = {this.updateTab}
+                  changeTab = {this.changeTab}
                   printSearchResults = {this.printSearchResults}
                   currentTab={this.state.currentTab}
                   returnedResults = {this.state.returnedResults}

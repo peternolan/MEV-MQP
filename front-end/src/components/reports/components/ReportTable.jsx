@@ -384,10 +384,10 @@ class ReportTable extends React.PureComponent {
    * Sends a backend request to move a report from one bin to another
    */
   handleMoveReport = (primaryid, fromBin, toBin, type) => {
-
+    console.log(primaryid, ' from ',fromBin,' to ', toBin);
     this.props.moveReport(primaryid, fromBin, toBin, this.props.userID, type ? 'primary' : 'supportive')
         .then(() => {
-          if (toBin === 'trash' || toBin ==='all reports') {
+          if ( toBin ==='all reports') {
             this.setState({
               loadingData: true,
               keepTableWhileLoading: true,
@@ -428,7 +428,7 @@ class ReportTable extends React.PureComponent {
             snackbarMessage: `Report ${primaryid} Moved to ${this.props.toTitleCase(toBin)}`,
           });
         });
-    if (toBin === 'trash' || toBin ==='all reports') {
+    if (toBin ==='all reports') {
       const newExpandedRows = this.state.expandedRows;
       newExpandedRows.splice(this.state.expandedRows.indexOf(primaryid.toString()), 1);
       this.changeExpandedDetails(newExpandedRows);
@@ -621,7 +621,9 @@ class ReportTable extends React.PureComponent {
       case 'Trash':
         return (
             <div className={this.props.classes.moveToPair}>
-              <TrashIcon  width={sideL} height={sideL}/>
+              {(greyOutCaseIcon)
+                  ? <TrashIcon  width={sideL} height={sideL} style={{ filter: 'hue-rotate(270deg)' }} />
+                  : <TrashIcon  width={sideL} height={sideL}/>}
               <Typography variant="subheading" style={{ marginLeft: 15 }}>
                 {binName}
               </Typography>
@@ -737,7 +739,7 @@ class ReportTable extends React.PureComponent {
             {/* Non-Case Move Tos */}
             {this.props.bins.map((bin, index) => (
                 /* We only want cases */
-                (this.props.bin.toLowerCase() !== bin.name.toLowerCase() && (bin.name.toLowerCase() === 'read' || bin.name.toLowerCase() === 'trash' || bin.name.toLowerCase() === 'all reports'))
+                (this.props.bin.toLowerCase() !== bin.name.toLowerCase() && ((bin.name.toLowerCase() === 'read' || bin.name.toLowerCase() === 'trash' || bin.name.toLowerCase() === 'all reports')))
                     ? ( /* New item container for the move prompts*/
                         <Item
                             key={bin.case_id + ' ' + bin.name}

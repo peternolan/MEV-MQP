@@ -34,13 +34,25 @@ export default {
 		fontSize: 12,
 		color: '#000',
 	},
+	legendEntry: { /* The container for the text and squares. */
+		display: 'inline-flex',
+		alignItems: 'center',
+		justifyContent: 'center',
+		width: 'calc(100% /8)',
+		height: 20,
+		marginLeft: '1vw',
+		borderStyle: 'solid',
+		borderWidth: 1,
+		borderColor: 'rgba(0, 0, 0, .25)',
+		borderRadius: 0,
+	},
 	dataSelector: {
 		marginLeft: '7%',
 	},
 	summaryContent: {
 		width: '100%',
 		height: 'auto',
-		//overflow: 'scroll',
+		overflow: 'scroll',
 	},
 	reportBox: {
 		padding: 5,

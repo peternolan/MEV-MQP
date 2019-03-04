@@ -361,7 +361,7 @@ class Dashboard extends Component {
                 {this.state.userBins.map((option, index) => {
 
                   if (value === index) {
-                    console.log(value + ' ' + index);
+
                     return (
                         <div style = {{overflow: 'scroll',
                           position: 'relative',

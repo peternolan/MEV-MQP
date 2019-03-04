@@ -31,6 +31,8 @@ class QuillEditor extends Component {
         htmlUnescape: PropTypes.func.isRequired,
         incrementSummary: PropTypes.func,
         commentsOn: PropTypes.func,
+        summaryOn: PropTypes.bool,
+        refreshCases: PropTypes.func,
         classes: PropTypes.shape({
             pdfView: PropTypes.string,
             editorWindow: PropTypes.string,
@@ -132,8 +134,6 @@ class QuillEditor extends Component {
 
         dummyNode.innerHTML = this.state.comment;
 
-        console.log("comment Delete " + dummyNode.innerHTML);
-
         var newText = '';
 
         if (dummyNode.getElementsByTagName("comments")[0]) {
@@ -176,7 +176,6 @@ class QuillEditor extends Component {
                 loading: false,
             });
         } else {
-            console.log(this.props.getReportNarrativeFromID(id));
             this.props.getReportNarrativeFromID(id)
                 .then((rows) => {
 
@@ -293,7 +292,7 @@ class QuillEditor extends Component {
 
 
     saveWork = () => {
-        console.log('SaveWork');
+
         if (!this.state.saving && !_.isEqual(this.state.current, this.state.saved)) {
             this.setState({
                 success: false,
@@ -325,6 +324,8 @@ class QuillEditor extends Component {
                         saved: this.state.current,
                         success: true,
                         saving: false,
+                    }, () => {
+                        this.props.refreshCases();
                     });
                 })
                 .catch(err => console.log(err));
@@ -429,7 +430,6 @@ class QuillEditor extends Component {
 
         var finalText = this.state.report + comment;
 
-        this.setState({success: false, current: {reportText: finalText, tags: newTags}});
 
         if (this.state.addingComment) {
             var dummyNode2 = document.createElement('div');
@@ -484,7 +484,7 @@ class QuillEditor extends Component {
 
         var finalTextComm = this.state.report + this.state.comment;
 
-        this.setState({success: false, addingComment: false,  current: {reportText: finalTextComm}});
+        this.setState({success: false, addingComment: false,  current: {reportText: finalTextComm, tags: newTags}});
 
 
     };
@@ -512,8 +512,6 @@ class QuillEditor extends Component {
 
         var newText = '';
         var checked = document.getElementById('viewToggle');
-
-        console.log('checked ' + checked.checked);
 
         if (dummyNode.getElementsByTagName("comments")[0]) {
 
@@ -561,12 +559,12 @@ class QuillEditor extends Component {
 
 
                 if (checked.checked) {
-                    console.log("Checked True")
+
                     newInner = dummyNode.getElementsByTagName("comments")[0].innerHTML.concat(`<comment id=${this.state.userID} viewable = 'public' className="comment">${this.state.userEmail}: ${comment.replace(/\n/g, " n$")}\n<br/></comment>`);
 
                 }
                 else {
-                    console.log("Checked False")
+
                     newInner = dummyNode.getElementsByTagName("comments")[0].innerHTML.concat(`<comment id=${this.state.userID} viewable = 'private' className="comment">${this.state.userEmail}: ${comment.replace(/\n/g, " n$")}\n<br/></comment>`);
 
                 }
@@ -589,11 +587,11 @@ class QuillEditor extends Component {
 
 
             if (checked.checked) {
-                console.log("Checked True")
+
                 var comSpecial = `<comments id = 'comment-${this.props.primaryid}'><comment id = ${this.state.userID} viewable = 'public' class = "comment" >${this.state.userEmail}: ${comment.replace(/\n/g, " n$")}\n<br/></comment></comments>`;
 
             } else {
-                console.log("Checked False")
+
                 var comSpecial = `<comments id = 'comment-${this.props.primaryid}'><comment id = ${this.state.userID} viewable = 'private' class = "comment" >${this.state.userEmail}: ${comment.replace(/\n/g, " n$")}\n<br/></comment></comments>`;
 
             }
@@ -920,8 +918,9 @@ class QuillEditor extends Component {
         const searchWords= searchText.split(/\s/).filter(word => word)
 
         return (
-            <div className={this.props.classes.pdfView} >
-                <div className = {this.props.classes.quillArea} style = {{ display: 'inline-block', height: (this.state.commentsOn) ? '50%': '90%', overflow: 'scroll' }}>
+            <div className={this.props.classes.pdfView} style = {{ height: (this.props.summaryOn) ? 'calc(85vh - 122px)' : 'calc(93vh - 122px)'}} >
+
+                <div className = {this.props.classes.quillArea} style = {{ display: 'inline-block', height: (this.state.commentsOn) ? '60%': '90%', overflow: 'scroll' }}>
                     <div className={this.props.classes.editFacet}>
                         <div className={this.props.classes.editBox} style={{width:'auto'}}>
                             <div onClick={this.editMode}><Typography align='right' variant='button' className={this.props.classes.textButton}>{(this.state.editModeOn) ? 'Stop Editing' : 'Edit Highlights'}</Typography></div>
@@ -979,8 +978,29 @@ class QuillEditor extends Component {
 
                                 </label>
 
+                                <MaterialTooltip
+                                    title="Post Comment to Report"
+                                    placement="top"
+                                    enterDelay={50}
+                                    classes={{
+                                        tooltip: this.props.classes.toolTipStyle,
+                                        popper: this.props.classes.tooltipStyle,
+                                    }}
+                                    style={{fontSize: '20pt', position: 'relative'}}
+                                >
                                 <Button id="MakeNote" style={{padding: '0', position: 'relative', border: '2px solid #1d00ff',  height: 'calc(4vh)', left: '6.25%',  width: '11%'}}
                                         onClick={() => this.commentMade()}> Post </Button>
+                                </MaterialTooltip>
+                                <MaterialTooltip
+                                    title="Save Comment to Database"
+                                    placement="top"
+                                    enterDelay={50}
+                                    classes={{
+                                        tooltip: this.props.classes.toolTipStyle,
+                                        popper: this.props.classes.tooltipStyle,
+                                    }}
+                                    style={{fontSize: '20pt', position: 'relative'}}
+                                >
                                 <Button
                                     id="saveButton2"
                                     variant ="raised"
@@ -992,8 +1012,9 @@ class QuillEditor extends Component {
 
                                     Save
                                 </Button>
+                                </MaterialTooltip>
                                 <MaterialTooltip
-                                    title="Delete Comment"
+                                    title="Delete Your Comment"
                                     placement="top"
                                     enterDelay={50}
                                     classes={{

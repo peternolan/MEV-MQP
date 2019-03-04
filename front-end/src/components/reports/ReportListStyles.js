@@ -128,7 +128,8 @@ smallSummaryContainer: {
         height: '100%',
         padding: '0px',
         transition: 'width 200ms ease-in-out',
-        boxShadow: 'none'
+        boxShadow: 'none',
+      overflow: 'scroll'
   },
   closedReportContainer:{
     float:'right',

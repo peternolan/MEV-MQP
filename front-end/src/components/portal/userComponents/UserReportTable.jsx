@@ -211,7 +211,7 @@ class UserReportTable extends React.PureComponent {
   )
 
   render() {
-    console.log("RENDER");
+
     return (
       <Grid
         id="test2"

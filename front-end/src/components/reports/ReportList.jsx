@@ -81,6 +81,7 @@ class ReportList extends Component {
     super();
     this.handleCaseChangePrimary = this.handleCaseChangePrimary.bind(this);
     this.state = {
+      refreshCases: false,
       bin: 'all reports',
       userBins: [],
       newCaseModalOpen: false,
@@ -135,6 +136,7 @@ class ReportList extends Component {
   };
 
   updateTab = (name, color) => {
+    console.log('UpdateTab')
     const userCreatedArray = this.state.userBins.map(bin => bin.name.toLowerCase()).filter(bin => (bin !== 'trash' && bin !== 'read' && bin !== 'all reports' && bin !== 'new case' && bin !== 'searched reports'));
     const array = ['all reports', 'searched reports', 'read', 'trash', 'new case'].concat(userCreatedArray);
     const index = array.indexOf(name);
@@ -145,6 +147,13 @@ class ReportList extends Component {
       returnedResults: this.props.returnedResults,
     });
   };
+
+
+  refreshCases = () => {
+
+    this.setState({refreshCases: !this.state.refreshCases});
+
+  }
 
 
 
@@ -167,10 +176,11 @@ class ReportList extends Component {
    * Changes the first letter of any word in a string to be capital
    */
   toTitleCase = str => str.replace(/\w\S*/g, txt => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
+
   changeTab = (currentTab) => {
     if (currentTab === 1) {  // This is the searched tab
       //***************  Searched reports can be accessed */
-      this.setState({currentTab});
+      this.setState({currentTab, bin: 'searched reports'});
 
     }
   };
@@ -182,8 +192,6 @@ class ReportList extends Component {
       returnedIds: arr2,
       searchLoading: false,
       previousSearchString: string,
-    }, () => {
-      console.log(this.state.returnedIds);
     });
   };
 
@@ -287,7 +295,7 @@ class ReportList extends Component {
     switch (color) {
 
       case this.COLORS.primary:
-        console.log("Primary " + this.COLORS.primary);
+
         this.setState (
             {
               primaryChosen: true,
@@ -314,6 +322,12 @@ class ReportList extends Component {
     }
 
   };
+
+
+
+
+
+
 
   calculateSummarySize = () => {
     if(this.state.summaryOpen){
@@ -380,6 +394,7 @@ class ReportList extends Component {
 
   render() {
     // console.log(this.state.searchedReports)
+
     return (
         <MuiThemeProvider theme={defaultTheme} >
           <div className={this.props.classes.ReportList} >
@@ -430,6 +445,7 @@ class ReportList extends Component {
                   returnedResults = {this.state.returnedResults}
                   returnedIds = {this.state.returnedIds}
                   setSearchLoading = {this.setSearchLoading}
+                  refresh = {this.state.refreshCases}
               />
             </div>
             <div key='summaryCollapse' className={this.props.classes.collapseDivider} style={{float: 'left'}} onClick={this.handleViewCaseSummary}>
@@ -471,6 +487,7 @@ class ReportList extends Component {
                   userID={this.props.userID}
                   userEmail={this.props.userEmail}
                   reportOpen={this.state.reportOpen}
+                  refreshCases = {this.refreshCases}
               />
             </div>
             {/* ====== Modal for Creating a New Case ====== */}
@@ -516,7 +533,7 @@ class ReportList extends Component {
                   }}
               >
                 <Link href="/visualization" to="/visualization" >
-                  <Button fab style={{ margin: 12 }} color="primary">
+                  <Button fab = 'true' style={{ margin: 12 }} color="primary">
                     <img src={GoToVisualizationIcon} className={this.props.classes.goToVisualizationSVG} alt="Go Back To Visualization" />
                   </Button>
                 </Link>

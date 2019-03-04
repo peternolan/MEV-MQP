@@ -19,6 +19,7 @@ class ReportPanel extends React.PureComponent {
         htmlEncode: PropTypes.func.isRequired,
         htmlUnescape: PropTypes.func.isRequired,
         incrementSummary: PropTypes.func,
+        refreshCases: PropTypes.func,
         classes: PropTypes.shape({
             pdfView: PropTypes.string,
             editorWindow: PropTypes.string,
@@ -78,7 +79,6 @@ class ReportPanel extends React.PureComponent {
         if (this.props.match.params) {
             this.getTextFromID(Number(this.props.match.params.id, 10));
         } else {
-            console.log(this.props.primaryid);
             this.getTextFromID(this.props.primaryid);
         }
     }
@@ -138,7 +138,6 @@ class ReportPanel extends React.PureComponent {
         this.setState({summaryShown: !this.state.summaryShown})
     };
     commentOnHandler = (setting) => {
-        console.log("CommentsOn");
         if (setting == null) {
             if (this.state.commentsOn) {
                 this.setState({commentsOn: false});
@@ -161,7 +160,9 @@ class ReportPanel extends React.PureComponent {
                             incrementSummary={this.props.incrementSummary}
                             userEmail={this.props.userEmail}
                             commentsOn = {this.commentOnHandler}
+                            summaryOn = {this.state.summaryShown}
                             match={this.props.match}
+                            refreshCases = {this.props.refreshCases}
                             />
 
                         )
@@ -182,8 +183,12 @@ class ReportPanel extends React.PureComponent {
     render = () => {
         return (
             <Paper id='summary-container' className={this.props.classes.summaryContainer} elevation={4}>
-                {console.log("CommentsON : " + this.state.commentsOn)}
-                <Paper id='summarytitle' className={this.props.classes.summaryTitle}><Typography variant="title" style={{padding: 5}}>Report {this.props.primaryid}</Typography><div onClick={this.handleHideSummary} className={this.props.classes.hideBtn}><Typography variant='button'>{this.state.summaryShown ? 'Hide' : 'Show'} Summary</Typography></div></Paper>
+                <Paper id='summarytitle' className={this.props.classes.summaryTitle}>
+                    <Typography variant="title" style={{padding: 5}}>Report {this.props.primaryid}</Typography>
+                    <div onClick={this.handleHideSummary} className={this.props.classes.hideBtn}>
+                    <Typography className={this.props.classes.textButton} variant='button'>{this.state.summaryShown ? 'Hide' : 'Show'} Summary</Typography>
+                    </div>
+                </Paper>
                 <Collapse isOpened={this.state.summaryShown}>
                     <div className={this.props.classes.summarySummary}>
                         <Typography variant='body1'>Cupcake ipsum dolor sit amet gingerbread marzipan cookie topping. Chocolate bar toffee carrot cake ice cream lollipop carrot cake tootsie roll. Sesame snaps marzipan carrot cake gummies cake croissant topping tart. Lollipop bear claw brownie halvah liquorice tiramisu. Oat cake muffin jelly caramels biscuit sugar plum cookie tart oat cake. Candy canes powder cheesecake sweet roll fruitcake jujubes lollipop bear claw.</Typography>

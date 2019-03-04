@@ -3,7 +3,6 @@ import grey from '@material-ui/core/colors/grey';
 export default {
     pdfView: {
         maxWidth: '100%',
-        height: 'calc(94vh - 122px)',
         margin: 0,
         overflow : 'auto',
         padding: 0,
@@ -107,7 +106,7 @@ export default {
     wrapper: {
         margin: 10,
         position: 'relative',
-        overflow: 'scroll',
+        //overflow: 'scroll',
     },
     /* Not aprticularly useful */
     quillText: {
@@ -132,7 +131,7 @@ export default {
         display: 'inline-flex',
         alignItems: 'center',
         justifyContent: 'center',
-        width: 'calc(100% /8)',
+        width: '40%',
         height: 20,
         paddingLeft: 10,
         paddingRight: 10,
@@ -140,6 +139,7 @@ export default {
         borderWidth: 1,
         borderColor: 'rgba(0, 0, 0, .25)',
         borderRadius: 0,
+        marginLeft: '1vw',
     },
     highlightButtons: {
         display: 'inline-flex',

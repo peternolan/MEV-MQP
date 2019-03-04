@@ -79,10 +79,11 @@ db.connect()
 
 const allowCrossDomain = function (req, res, next) {
   res.header('Access-Control-Allow-Origin', "*");
-  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+  res.header('Access-Control-Allow-Methods', 'OPTIONS, GET,PUT,POST,DELETE');
   res.header('Access-Control-Allow-Headers', 'Content-Type');
+  res.header('Access-Control-Allow-Credentials', 'true');
   next();
-}
+};
 
 app.use(allowCrossDomain);
 
@@ -375,6 +376,7 @@ app.post('/getdemographicdata', (req, res) => {
 
   console.log(query);
   db.query(query, (err, data) => {
+  	if(err){console.log(err)}
     res.status(200).send(data);
   })
 });
@@ -425,6 +427,7 @@ app.post('/getreports', (req, res) => {
   }
   //console.log(query)
   db.query(query, (err, data) => {
+  	if(err){console.log(err)}
     res.status(200).send(data);
   });
 });
@@ -446,6 +449,7 @@ app.post('/getreportsincases', (req, res) => {
 
     console.log(query);
     db.query(query, (err, data) => {
+    	if(err){console.log(err)}
       res.status(200).send(data);
     });
   } else {
@@ -465,6 +469,7 @@ app.post('/getreportsfromcasename', (req, res) => {
     + `AND name='${req.body.caseName}' );`;
 
     db.query(query, (err, data) => {
+    	if(err){console.log(err)}
       console.log("query    "+query);
       res.status(200).send(data);
     });
@@ -483,6 +488,7 @@ app.post('/getcasename', (req, res) => {
 
     console.log(query)
     db.query(query, (err, data) => {
+    	if(err){console.log(err)}
       res.status(200).send(data);
     });
 });
@@ -507,6 +513,7 @@ app.post('/getcasetags', (req, res) => {
 
     console.log(query)
     db.query(query, (err, data) => {
+    	if(err){console.log(err)}
       res.status(200).send(data);
     });
 });
@@ -519,6 +526,7 @@ app.post('/getinactivecases', (req, res) => {
     
     console.log(query);
     db.query(query, (err, data) => {
+    	if(err){console.log(err)}
       res.status(200).send(data);
     });
   }
@@ -532,6 +540,7 @@ app.post('/getactivecases', (req, res) => {
     
     console.log(query);
     db.query(query, (err, data) => {
+    	if(err){console.log(err)}
       res.status(200).send(data);
     });
   } 
@@ -544,6 +553,7 @@ app.post('/getAgeAndCode', (req, res) => {
       + 'FROM reports '
       + 'WHERE primaryid = ' + req.body.primaryid;
   db.query(query, (err, data) => {
+  	if(err){console.log(err)}
     res.status(200).send(data);
   });
 });
@@ -552,7 +562,8 @@ app.post('/binreport', (req, res) => {
   console.log('got a bin request to move report with body:\n', req.body);
   caseIDQuery = `SELECT DISTINCT case_id FROM cases WHERE name = '${req.body.toBin}' AND user_id = ${req.body.userID}`;
   console.log(caseIDQuery);
-  db.query(caseIDQuery, (err, caseIDResult) => {
+  db.query(caseIDQuery, (err0, caseIDResult) => {
+  	if(err0){console.log(err0)}
     if (caseIDResult.rows.length) {
       let caseID;
       if(req.body.toBin !== 'all reports'){
@@ -578,20 +589,24 @@ app.post('/binreport', (req, res) => {
 
       if ((req.body.toBin === 'trash' || req.body.fromBin !== 'all reports') && req.body.toBin !== 'all reports') {
         console.log(toQuery, fromQuery);
-        db.query(toQuery, (err, toData) => {
+        db.query(toQuery, (err1, toData) => {
+        	if(err1){console.log(err1)}
           db.query(fromQuery, (err, fromData) => {
+          	if(err){console.log(err)}
             res.status(200).send();
           });
         });
       } else if (req.body.fromBin === 'all reports' && req.body.toBin !== 'all reports') {
         console.log(toQuery);
-        console.log('IN HERE');
+
         db.query(toQuery, (err, toData) => {
+        	if(err){console.log(err)}
             res.status(200).send();
         });
       } else if (req.body.fromBin !== 'all reports' && req.body.toBin === 'all reports') {
         console.log(fromQuery);
         db.query(fromQuery, (err, fromData) => {
+        	if(err){console.log(err)}
             res.status(200).send(fromData);
         });
       }
@@ -603,6 +618,7 @@ app.post('/binreport', (req, res) => {
 
         console.log(fromQuery);
         db.query(fromQuery, (err, fromData) => {
+        	if(err){console.log(err)}
             res.status(200).send(fromData);
         });
       }
@@ -616,13 +632,15 @@ app.post('/createuserbin', (req, res) => {
   'INSERT INTO cases (name, user_id, primaryid, description) '
 + `VALUES ('${req.body.binName}',${req.body.userID}, -1, '${req.body.binDesc}')`;
   console.log(query);
-  db.query(query, (err, data) => {
+  db.query(query, (err1, data) => {
+  	if(err1){console.log(err1)}
     let findCaseIDQuery =
       'SELECT DISTINCT name, case_id '
     + 'FROM cases '
     + `WHERE user_id = ${req.body.userID} `
     + `AND name ='${req.body.binName}'`;
-    db.query(findCaseIDQuery, (err, caseData) => {
+    db.query(findCaseIDQuery, (err2, caseData) => {
+    	if(err2){console.log(err2)}
       res.status(200).send(caseData);
     });
   });
@@ -636,6 +654,7 @@ app.post('/edituserbin', (req, res) => {
 + `WHERE user_id = ${req.body.userID} AND name = '${req.body.oldBinName}'`;
   console.log(query);
   db.query(query, (err, data) => {
+  	if(err){console.log(err)}
     res.status(200).send();
   });
 });
@@ -648,6 +667,7 @@ app.post('/getusercases', (req, res) => {
 + `WHERE user_id = ${req.body.userID} AND primaryid = -1`;
   console.log(query);
   db.query(query, (err, data) => {
+  	if(err){console.log(err)}
     res.status(200).send(data);
   });
 })
@@ -661,6 +681,7 @@ app.post('/getusertrash', (req, res) => {
 + `AND name = 'trash'`;
   console.log(query)
   db.query(query, (err, data) => {
+  	if(err){console.log(err)}
     res.status(200).send(data);
   });
 });
@@ -674,6 +695,7 @@ app.post('/getuserread', (req, res) => {
 + `AND name = 'read'`;
   console.log(query)
   db.query(query, (err, data) => {
+  	if(err){console.log(err)}
     res.status(200).send(data);
   });
 });
@@ -685,6 +707,7 @@ app.post('/getreporttext', (req, res) => {
 + 'FROM reports '
 + 'WHERE primaryid = ' + req.body.primaryid;
   db.query(query, (err, data) => {
+  	if(err){console.log(err)}
     res.status(200).send(data);
   });
 });
@@ -697,6 +720,7 @@ app.post('/getuser', (req, res) => {
 + 'WHERE email=\'' + req.body.email + '\'';
 console.log('user quer: \n', query);
   db.query(query, (err, data) => {
+  	if(err){console.log(err)}
     //console.log(data);
     res.status(200).send(data);
   });
@@ -710,6 +734,7 @@ app.get('/getUserName', (req, res) => {
       + 'WHERE user_id=\'' + req.body.email + '\'';
   console.log('user quer: \n', query);
   db.query(query, (err, data) => {
+  	if(err){console.log(err)}
     //console.log(data);
     res.status(200).send(data);
   });
@@ -719,6 +744,9 @@ app.put('/saveuser', (req, res) => {
   let query =
   'INSERT INTO users(email) VALUES (\''+ req.body.email +'\');';
   db.query(query, (err, data) => {
+  	if(err){
+  		console.log(err);
+  	}
     res.status(200).send();
   });
 });
@@ -729,6 +757,9 @@ app.put('/makeusertrash', (req, res) => {
   'INSERT INTO cases (name, user_id, primaryid, description) VALUES ( \'trash\',' + req.body.userID + ', -1, \'This is a pre-generated case to store the reports that you do not want to show up the report listing page\')';
   console.log(query);
   db.query(query, (err, data) => {
+  	  	if(err){
+  		console.log(err);
+  	}
     res.status(200).send();
   });
 });
@@ -739,6 +770,9 @@ app.put('/makeuserread', (req, res) => {
   'INSERT INTO cases (name, user_id, primaryid, description) VALUES ( \'read\',' + req.body.userID + ', -1, \'This is a pre-generated case to store the reports that you want to mark as being already read. Reports in this case will display as grey on the report listing page\')';
   console.log(query);
   db.query(query, (err, data) => {
+  	 if(err){
+  		console.log(err);
+  	}
     res.status(200).send();
   });
 });
@@ -751,6 +785,9 @@ app.put('/archivecase', (req, res) => {
 + `WHERE name = '${req.body.name}' AND user_id = '${req.body.userID}'`
   console.log(query);
   db.query(query, (err, data) => {
+  	  	if(err){
+  		console.log(err);
+  	}
     res.status(200).send();
   });
 });
@@ -765,6 +802,9 @@ app.put('/savereporttext', (req, res) => {
 + 'WHERE primaryid = ' + req.body.primaryid;
   console.log(query)
   db.query(query, (err, data) => {
+  	  	if(err){
+  		console.log(err);
+  	}
     res.status(200).send();
   });
 });
@@ -862,10 +902,14 @@ app.post('/getvis', (req, res) => {
     productQuery += " GROUP BY unnest(drugname)"; 
   console.log(productQuery)
 
-  db.query(meTypeQuery, (err, meTypeData) => {
-    db.query(productQuery, (err, productData) => {
-      db.query(stageQuery, (err, stageData) => {
-        db.query(causeQuery, (err, causeData) => {
+  db.query(meTypeQuery, (err1, meTypeData) => {
+  	if(err1){console.log(err1)}
+    db.query(productQuery, (err2, productData) => {
+      if(err2){console.log(err2)}
+      db.query(stageQuery, (err3, stageData) => {
+      	if(err3){console.log(err3)}
+        db.query(causeQuery, (err4, causeData) => {
+        	if(err4){console.log(err4);}
           returnObject = { 
             meType: meTypeData.rows,
             product: productData.rows,
@@ -927,7 +971,8 @@ app.post('/executeSearch', (req, res) => {
 app.post('/gettimelinedata', (req, res) => {
   console.log('got a request for timeline data')
   cache.send_command('JSON.GET', ['timeline'], (err, data) => {
-    if (data !== null) {
+  	if(err){console.log(err)}
+    if (data !== null && data !== undefined) {
       console.log('got timeline data from cache')
       return res.status(200).send(data)
     } else {
@@ -941,6 +986,9 @@ app.post('/gettimelinedata', (req, res) => {
           + "ORDER BY init_fda_dt"
         console.log(query)
       db.query(query, (err, data) => {
+      	if(err){
+  			console.log(err);
+  		}
         // console.log(data.rows)
         console.log('got timeline data from db');
         json = JSON.stringify(data.rows);
@@ -1000,6 +1048,7 @@ function writeSQL(dataRows, drugReactions, meTypesArray, drugNamesArray, causesA
 
       promises.push(new Promise((resolve2, reject) => {
         db.query(getDrugRowQuery, (err, drugData) => {
+        	if(err){console.log(err)}
           drugData.rows.forEach((drugRow, rowIndex) => {
             const randomDrug = drugNamesArray[drugNamesforPID[rowIndex % numberOfDrugsForPID]];
             let updateDrugRowQuery;

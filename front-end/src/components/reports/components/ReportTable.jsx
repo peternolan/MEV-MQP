@@ -734,13 +734,12 @@ class ReportTable extends React.PureComponent {
             <img src={EllipsisIcon} alt='More Options'/>
           </MenuProvider>
           <Menu id={row.row.primaryid}>
-            {(this.props.bin === 'all reports' || this.props.bin === 'read' || this.props.bin === 'trash')
+            {(this.props.bin === 'all reports' || this.props.bin === 'read' || this.props.bin === 'trash' || this.props.bin === 'searched reports')
                 ? null : <Item>{this.renderTypeToggle(row)}</Item>}
             {/* Non-Case Move Tos */}
             {this.props.bins.map((bin, index) => (
                 /* We only want cases */
-                (this.props.bin.toLowerCase() !== bin.name.toLowerCase() && ((bin.name.toLowerCase() === 'read' || bin.name.toLowerCase() === 'trash' || bin.name.toLowerCase() === 'all reports')))
-                    ? ( /* New item container for the move prompts*/
+                (this.props.bin.toLowerCase() !== bin.name.toLowerCase() && ((bin.name.toLowerCase() === 'read' || bin.name.toLowerCase() === 'trash'
                         <Item
                             key={bin.case_id + ' ' + bin.name}
                             onClick={() => {
@@ -766,7 +765,7 @@ class ReportTable extends React.PureComponent {
             <Submenu label='Add to case:'>
               {this.props.bins.map((bin, index) => (
                   /* We only want cases */
-                  (this.props.bin.toLowerCase() !== bin.name.toLowerCase() && bin.name.toLowerCase() !== 'read' && bin.name.toLowerCase() !== 'trash' && bin.name.toLowerCase() !== 'all reports')
+                  (this.props.bin.toLowerCase() !== bin.name.toLowerCase() && bin.name.toLowerCase() !== 'read' && bin.name.toLowerCase() !== 'trash' && bin.name.toLowerCase() !== 'all reports' && bin.name.toLowerCase() !== 'searched reports')
                       ? ( /* New item container for the move prompts*/
                           <Item
                               key={bin.case_id + ' ' + bin.name}

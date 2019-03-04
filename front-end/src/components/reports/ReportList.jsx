@@ -144,6 +144,8 @@ class ReportList extends Component {
       //background: color,
       currentTab: index,
       returnedResults: this.props.returnedResults,
+    }, () => {
+      this.changeTab(array.indexOf(name))
     });
   };
 

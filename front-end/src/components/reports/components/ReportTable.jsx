@@ -393,13 +393,30 @@ class ReportTable extends React.PureComponent {
               keepTableWhileLoading: true,
             });
 
+            if (this.props.bin !== 'all reports') {
+              if (this.props.filters.sex.length > 0 || this.props.filters.age.length > 0  || this.props.filters.cause.length > 0
+                  || this.props.filters.meType.length > 0  || this.props.filters.occp_cod.length > 0  ||
+                  this.props.filters.occr_country.length > 0  || this.props.filters.product.length > 0  || this.props.filters.stage.length > 0 ) {
 
-              this.props.getCaseReports(this.props.bin, this.props.userID)
-                  .then(reports => this.setState({
-                    data: reports,
-                    loadingData: false,
-                    keepTableWhileLoading: false,
-                  }));
+                console.log("NO FILTERS")
+                this.props.getCaseReports(this.props.bin, this.props.userID,{})
+                    .then(reports => this.setState({
+                      data: reports,
+                      loadingData: false,
+                      keepTableWhileLoading: false,
+                    }));
+              }
+              else {
+                console.log("FILTERS")
+                this.props.getCaseReports(this.props.bin, this.props.userID)
+                    .then(reports => this.setState({
+                      data: reports,
+                      loadingData: false,
+                      keepTableWhileLoading: false,
+                    }));
+
+              }
+            }
           } else {
             this.updateHighlightedRows();
             this.updateEvidenceRows();

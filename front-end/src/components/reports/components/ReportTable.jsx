@@ -409,7 +409,7 @@ class ReportTable extends React.PureComponent {
               else {
 
                 console.log("NO FILTERS")
-                this.props.getCaseReports(this.props.bin, this.props.userID)
+                this.props.getCaseReports(this.props.bin, this.props.userID, {})
                     .then(reports => this.setState({
                       data: reports,
                       loadingData: false,

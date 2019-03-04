@@ -209,7 +209,7 @@ class ReportTable extends React.PureComponent {
 
             }
             else {
-              console.log('FIRST ELSE')
+              console.log('SECOND ELSE')
               this.props.getCaseReports(this.props.bin, this.props.userID, {})
                   .then((reports) => {
                     this.props.setAllReports(reports);

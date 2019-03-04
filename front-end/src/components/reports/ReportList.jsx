@@ -182,7 +182,7 @@ class ReportList extends Component {
   changeTab = (currentTab) => {
     if (currentTab === 1) {  // This is the searched tab
       //***************  Searched reports can be accessed */
-      this.setState({currentTab, bin: 'all reports'});
+      this.setState({currentTab, bin: 'searched reports'});
 
     }
   };
@@ -469,7 +469,7 @@ class ReportList extends Component {
                   primaryChosen = {this.state.primaryChosen}
                   supportiveChosen = {this.state.supportiveChosen}
                   handleViewReport = {this.handleViewReportPanel}
-                  changeTab = {this.changeTab}
+                  changeTab = {this.updateTab}
                   printSearchResults = {this.printSearchResults}
                   currentTab={this.state.currentTab}
                   returnedResults = {this.state.returnedResults}

@@ -527,7 +527,7 @@ class CaseSummary extends Component {
     var formatted_data = fmt(data);
 
     var label = d3.select(this.refs.options).node().value;
-    console.log('label ' + label);
+
 
 
     if (document.getElementById('legend-' + this.props.caseID)) {
@@ -536,8 +536,7 @@ class CaseSummary extends Component {
 
       switch (label) {
         case 'sex':
-          console.log('Switch ' + label);
-          console.log(formatted_data.counts[formatted_data.fields.indexOf(label)]);
+
           for (var w = 0 ; w < formatted_data.counts[formatted_data.fields.indexOf('sex')].length; w++ ) {
             legendCont +=
                 `<div className = {this.props.classes.legendEntry} style  = 'margin-left: ${'1%'}; background-color : ${"#"+this.getFillColor(w, formatted_data.counts[formatted_data.fields.indexOf('sex')].length)}' >
@@ -549,8 +548,7 @@ class CaseSummary extends Component {
 
           break;
         case 'age_year':
-          console.log('Switch ' + label);
-          console.log(formatted_data.counts[formatted_data.fields.indexOf(label)]);
+
           for (var xx = 0 ; xx < formatted_data.counts[formatted_data.fields.indexOf('age_year')].length; xx++ ) {
 
             legendCont +=
@@ -562,8 +560,7 @@ class CaseSummary extends Component {
           document.getElementById('legend-' + this.props.caseID).innerHTML = `<div>Legend:</div>` + legendCont;
           break;
         case 'me_type':
-          console.log('Switch ' + label);
-          console.log(formatted_data.counts[formatted_data.fields.indexOf(label)]);
+
           for (var y = 0 ; y < formatted_data.counts[formatted_data.fields.indexOf('me_type')].length; y++ ) {
             legendCont +=
                 `<div className = ${this.props.classes.legendEntry} style  = 'margin-left: ${'1%'}; background-color : ${"#"+this.getFillColor(y, formatted_data.counts[formatted_data.fields.indexOf('me_type')].length)}' >
@@ -575,8 +572,7 @@ class CaseSummary extends Component {
           document.getElementById('legend-' + this.props.caseID).innerHTML = `<div>Legend:</div>` + legendCont;
           break;
         case 'outc_cod':
-          console.log('Switch ' + label);
-          console.log(formatted_data.counts[formatted_data.fields.indexOf(label)]);
+
           for (var z = 0 ; z < formatted_data.counts[formatted_data.fields.indexOf('outc_cod')].length; z++ ) {
             legendCont +=
                 `<div className = ${this.props.classes.legendEntry} style  = ' margin-left: ${'1%'}; background-color : ${"#"+this.getFillColor(z, formatted_data.counts[formatted_data.fields.indexOf('outc_cod')].length)}' >

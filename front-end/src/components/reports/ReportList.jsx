@@ -136,12 +136,10 @@ class ReportList extends Component {
   };
 
   updateTab = (name, color) => {
-    console.log('UpdateTab')
+
     const userCreatedArray = this.state.userBins.map(bin => bin.name.toLowerCase()).filter(bin => (bin !== 'trash' && bin !== 'read' && bin !== 'all reports' && bin !== 'new case' && bin !== 'searched reports'));
     const array = ['all reports', 'searched reports', 'read', 'trash', 'new case'].concat(userCreatedArray);
     const index = array.indexOf(name);
-
-    console.log(name);
 
     this.setState({
       bin: name,
@@ -182,7 +180,7 @@ class ReportList extends Component {
   changeTab = (currentTab) => {
     if (currentTab === 1) {  // This is the searched tab
       //***************  Searched reports can be accessed */
-      this.setState({currentTab, bin: 'searched reports'});
+      this.setState({currentTab});
 
     }
   };

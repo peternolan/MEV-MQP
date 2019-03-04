@@ -463,7 +463,7 @@ class ReportList extends Component {
                   primaryChosen = {this.state.primaryChosen}
                   supportiveChosen = {this.state.supportiveChosen}
                   handleViewReport = {this.handleViewReportPanel}
-                  changeTab = {this.changeTab}
+                  changeTab = {this.updateTab}
                   printSearchResults = {this.printSearchResults}
                   currentTab={this.state.currentTab}
                   returnedResults = {this.state.returnedResults}

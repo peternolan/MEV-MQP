@@ -136,10 +136,11 @@ class ReportList extends Component {
   };
 
   updateTab = (name, color) => {
-    console.log('UpdateTab')
+
     const userCreatedArray = this.state.userBins.map(bin => bin.name.toLowerCase()).filter(bin => (bin !== 'trash' && bin !== 'read' && bin !== 'all reports' && bin !== 'new case' && bin !== 'searched reports'));
     const array = ['all reports', 'searched reports', 'read', 'trash', 'new case'].concat(userCreatedArray);
     const index = array.indexOf(name);
+
     this.setState({
       bin: name,
       //background: color,
@@ -179,7 +180,7 @@ class ReportList extends Component {
   changeTab = (currentTab) => {
     if (currentTab === 1) {  // This is the searched tab
       //***************  Searched reports can be accessed */
-      this.setState({currentTab, bin: 'all reports'});
+      this.setState({currentTab});
 
     }
   };
@@ -201,6 +202,7 @@ class ReportList extends Component {
    * Handler for Tab bar clicks
    */
   handleTabClick = (event, currentTab) => {
+    console.log(currentTab)
     // If the Current tab is the New Case tab, open the Modal
     if (currentTab === 4) {
       this.setState({
@@ -210,7 +212,7 @@ class ReportList extends Component {
     } else if (currentTab === 1) {  // This is the searched tab
       //***************  Searched reports can be accessed */
       if(this.state.returnedResults.length > 0){
-        this.setState({ currentTab, bin: 'searched reports'})
+        this.setState({ currentTab, bin: 'all reports'})
       }
 
     } else {
@@ -453,7 +455,7 @@ class ReportList extends Component {
             </div>
             {/* ====== Table for Viewing the table of reports ====== */}
             <div key='reporttable' className={this.props.classes.tableContainer} >
-              <Typography variant='body' className={this.props.classes.titleBar} style={{fontWeight: 'bold'}}>Report table</Typography>
+              <Typography variant='body' className={this.props.classes.titleBar} style={{fontWeight: 'bold'}}>Report Table</Typography>
               <ReportTable
                   reportPanel = {this.state.reportOpen}
                   bin={this.state.bin}

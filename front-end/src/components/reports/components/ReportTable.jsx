@@ -599,7 +599,7 @@ class ReportTable extends React.PureComponent {
   handleSearchResults = (array1, array2, string) => {
 
     this.props.printSearchResults(array1,array2,string);
-    //this.props.changeTab(1, null);
+    this.props.changeTab(1);
   };
 
   handleToggleChange = primaryid => (event, checked) => {

@@ -136,6 +136,7 @@ class ReportList extends Component {
   };
 
   updateTab = (name, color) => {
+    console.log('UpdateTab')
     const userCreatedArray = this.state.userBins.map(bin => bin.name.toLowerCase()).filter(bin => (bin !== 'trash' && bin !== 'read' && bin !== 'all reports' && bin !== 'new case' && bin !== 'searched reports'));
     const array = ['all reports', 'searched reports', 'read', 'trash', 'new case'].concat(userCreatedArray);
     const index = array.indexOf(name);
@@ -145,6 +146,7 @@ class ReportList extends Component {
       currentTab: index,
       returnedResults: this.props.returnedResults,
     }, () => {
+      console.log(array.indexOf(name))
       this.changeTab(array.indexOf(name))
     });
   };

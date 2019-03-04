@@ -194,7 +194,6 @@ class ReportTable extends React.PureComponent {
                 || this.props.filters.meType.length > 0  || this.props.filters.occp_cod.length > 0  ||
                 this.props.filters.occr_country.length > 0  || this.props.filters.product.length > 0  || this.props.filters.stage.length > 0 ) {
 
-              console.log('BOTH IFS TRUE')
               this.props.getCaseReports(this.props.bin, this.props.userID, {})
                   .then((reports) => {
                     this.props.setAllReports(reports);
@@ -210,7 +209,7 @@ class ReportTable extends React.PureComponent {
             }
             else {
               console.log('SECOND ELSE')
-              console.log(this.props.bin)
+
               this.props.getCaseReports(this.props.bin, this.props.userID, {})
                   .then((reports) => {
                     this.props.setAllReports(reports);
@@ -398,8 +397,8 @@ class ReportTable extends React.PureComponent {
                   || this.props.filters.meType.length > 0  || this.props.filters.occp_cod.length > 0  ||
                   this.props.filters.occr_country.length > 0  || this.props.filters.product.length > 0  || this.props.filters.stage.length > 0 ) {
 
-                console.log("NO FILTERS")
-                this.props.getCaseReports(this.props.bin, this.props.userID,{})
+                console.log("FILTERS")
+                this.props.getCaseReports(this.props.bin, this.props.userID)
                     .then(reports => this.setState({
                       data: reports,
                       loadingData: false,
@@ -407,7 +406,8 @@ class ReportTable extends React.PureComponent {
                     }));
               }
               else {
-                console.log("FILTERS")
+
+                console.log("NO FILTERS")
                 this.props.getCaseReports(this.props.bin, this.props.userID)
                     .then(reports => this.setState({
                       data: reports,

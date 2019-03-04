@@ -983,8 +983,29 @@ class QuillEditor extends Component {
 
                                 </label>
 
+                                <MaterialTooltip
+                                    title="Post Comment to Report"
+                                    placement="top"
+                                    enterDelay={50}
+                                    classes={{
+                                        tooltip: this.props.classes.toolTipStyle,
+                                        popper: this.props.classes.tooltipStyle,
+                                    }}
+                                    style={{fontSize: '20pt', position: 'relative'}}
+                                >
                                 <Button id="MakeNote" style={{padding: '0', position: 'relative', border: '2px solid #1d00ff',  height: 'calc(4vh)', left: '6.25%',  width: '11%'}}
                                         onClick={() => this.commentMade()}> Post </Button>
+                                </MaterialTooltip>
+                                <MaterialTooltip
+                                    title="Save Comment to Database"
+                                    placement="top"
+                                    enterDelay={50}
+                                    classes={{
+                                        tooltip: this.props.classes.toolTipStyle,
+                                        popper: this.props.classes.tooltipStyle,
+                                    }}
+                                    style={{fontSize: '20pt', position: 'relative'}}
+                                >
                                 <Button
                                     id="saveButton2"
                                     variant ="raised"
@@ -996,8 +1017,9 @@ class QuillEditor extends Component {
 
                                     Save
                                 </Button>
+                                </MaterialTooltip>
                                 <MaterialTooltip
-                                    title="Delete Comment"
+                                    title="Delete Your Comment"
                                     placement="top"
                                     enterDelay={50}
                                     classes={{

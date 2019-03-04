@@ -352,7 +352,9 @@ class Dashboard extends Component {
                           return null;
                         default:
                           return (
-                            this.state.binActives[option.toLowerCase()] ? <Tab icon={<CaseIcon />} label={option} key={option} value={index} onClick={event => this.handleCaseClick(event, index)} /> : <Tab icon={<CaseIcon />} label={option} key={option} value={index} onClick={event => this.handleCaseClick(event, index)} style={{ filter: 'grayscale(100%)' }} />
+                            this.state.binActives[option.toLowerCase()] ?
+                                <Tab icon={<CaseIcon />} label={option} key={option} value={index} onClick={event => this.handleCaseClick(event, index)} /> :
+                                <Tab icon={<CaseIcon />} label={option} key={option} value={index} onClick={event => this.handleCaseClick(event, index)} style={{ filter: 'grayscale(100%)' }} />
                           );
                       }
                     })}

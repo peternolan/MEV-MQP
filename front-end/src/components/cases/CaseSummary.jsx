@@ -709,26 +709,29 @@ class CaseSummary extends Component {
             return (<div className={this.props.classes.legendPair}><div className={this.props.classes.legendColor} style={{backgroundColor:category[1]}}/><Typography className={this.props.classes.legendCategory}>{category[0]} ({category[2]})</Typography></div>)
           })}
         </div>
-        <div className={this.props.classes.keywordHead}>
-          <Typography variant='button' className={this.props.classes.textButton} onClick={this.handleKeywordHide}>Keyword Summary</Typography>
-          <Typography variant='button' onClick={this.searchRecommendations} className={this.props.classes.recButton}>get recommendations</Typography>
-        </div>
-        <Collapse isOpened={this.state.keywordsExposed}>
-          <div className={this.props.classes.keywordContainer}>
-            <div key="highlighted_words">
-              {(this.state.highlightedWordsData.length === 0) ? 
-              <Typography variant='body1' style={{padding: 5, paddingLeft: 15}}>There are no annotated reports in this case for us to build keywords from; try annotating one of the reports.</Typography>
-              : this.state.highlightedWordsData.map((word) =>{
-                return(
-                  <div key={word.name} className={this.props.classes.keywordCapsule}
-                       style={{backgroundColor: (this.state.recommendationArray.indexOf(word.name) > -1) ? '#7bd389' : '#ee7674'}} onClick={this.toggleWord}>
-                    <Typography value={word.name} variant='body1'>{word.name} ({word.count})</Typography>
-                  </div>
-                )
-              })}
+        {(this.state.highlightedWords.length === 0) ?
+          <Typography variant='body1' style={{padding: 5, paddingLeft: 15}}>There are no annotated reports in this case for us to build keywords from; try annotating one of the reports.</Typography>
+          : <div>
+            <div className={this.props.classes.keywordHead}>
+              <Typography variant='button' className={this.props.classes.textButton} onClick={this.handleKeywordHide}>Keyword Summary</Typography>
+              <Typography variant='button' onClick={this.searchRecommendations} className={this.props.classes.recButton}>get recommendations</Typography>
             </div>
-          </div>
-        </Collapse>
+            <Collapse isOpened={this.state.keywordsExposed}>
+              <div className={this.props.classes.keywordContainer}>
+                <div key="highlighted_words">
+                  {this.state.highlightedWordsData.map((word) =>{
+                    return(
+                      <div key={word.name} className={this.props.classes.keywordCapsule}
+                           style={{backgroundColor: (this.state.recommendationArray.indexOf(word.name) > -1) ? '#7bd389' : '#ee7674'}} onClick={this.toggleWord}>
+                        <Typography value={word.name} variant='body1'>{word.name} ({word.count})</Typography>
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+            </Collapse>
+        </div>
+      }
       </div>
     );
   }

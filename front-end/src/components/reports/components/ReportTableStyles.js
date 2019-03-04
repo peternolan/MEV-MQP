@@ -10,7 +10,7 @@ export default {
     padding: '0px',
     width: 470,
     overflowY: 'scroll',
-    height: 'calc(100vh - 165px)',
+    height: 'calc(100vh - 185px)',
     display: 'inline-block'
   },
   moveToCaseDetailsContainer: {

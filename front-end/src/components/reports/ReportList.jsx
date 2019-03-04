@@ -163,7 +163,6 @@ class ReportList extends Component {
     const index = array.indexOf(name);
     this.setState({
       bin: name,
-      //background: color,
       currentTab: index,
       returnedResults: this.props.returnedResults,
 
@@ -180,7 +179,7 @@ class ReportList extends Component {
   changeTab = (currentTab) => {
     if (currentTab === 1) {  // This is the searched tab
       //***************  Searched reports can be accessed */
-      this.setState({currentTab, bin: 'searched reports'});
+      this.setState({currentTab, bin: 'all reports'});
 
     }
   };
@@ -433,6 +432,7 @@ class ReportList extends Component {
 
             {/* ====== SideBar for Viewing the Case Summary ====== */}
             <div id="summary-sidebar" className={this.calculateSummarySize()}>
+              <Typography variant='body' className={this.props.classes.titleBar} style={{fontWeight: 'bold'}}>Case Summaries</Typography>
               <CaseSummaryListing
                   updateTab={this.updateTab}
                   bins={this.state.userBins}
@@ -453,6 +453,7 @@ class ReportList extends Component {
             </div>
             {/* ====== Table for Viewing the table of reports ====== */}
             <div key='reporttable' className={this.props.classes.tableContainer} >
+              <Typography variant='body' className={this.props.classes.titleBar} style={{fontWeight: 'bold'}}>Report table</Typography>
               <ReportTable
                   reportPanel = {this.state.reportOpen}
                   bin={this.state.bin}

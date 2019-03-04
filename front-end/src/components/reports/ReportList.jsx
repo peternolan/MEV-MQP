@@ -145,9 +145,6 @@ class ReportList extends Component {
       //background: color,
       currentTab: index,
       returnedResults: this.props.returnedResults,
-    }, () => {
-      console.log(array.indexOf(name))
-      this.changeTab(array.indexOf(name))
     });
   };
 
@@ -179,10 +176,11 @@ class ReportList extends Component {
    * Changes the first letter of any word in a string to be capital
    */
   toTitleCase = str => str.replace(/\w\S*/g, txt => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
+
   changeTab = (currentTab) => {
     if (currentTab === 1) {  // This is the searched tab
       //***************  Searched reports can be accessed */
-      this.setState({currentTab});
+      this.setState({currentTab, bin: 'searched reports'});
 
     }
   };
@@ -467,7 +465,7 @@ class ReportList extends Component {
                   primaryChosen = {this.state.primaryChosen}
                   supportiveChosen = {this.state.supportiveChosen}
                   handleViewReport = {this.handleViewReportPanel}
-                  changeTab = {this.updateTab}
+                  changeTab = {this.changeTab}
                   printSearchResults = {this.printSearchResults}
                   currentTab={this.state.currentTab}
                   returnedResults = {this.state.returnedResults}

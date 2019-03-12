@@ -5,8 +5,8 @@
 * NodeJS & NPM (download the most recent version for your OS at https://nodejs.org/en/download/)
 * Postgres (download the most recent version for your OS at https://www.postgresql.org/download/)
 * Python version 3.x
-* (OPTIONAL mac/linux only) Redis (download the most recent version for your OS at https://redis.io/download)
-* (OPTIONAL) Elasticsearch
+* (OPTIONAL mac/linux only) Redis (download the most recent version for your OS at https://redis.io/download) 
+* (OPTIONAL) Elasticsearch 
 ** Follow the instructions at (http://rejson.io/#building-and-loading-the-module) to set up the json module for redis 
 
 ### Database
@@ -15,7 +15,7 @@
 2. Download our DB dump file from the Google Drive called latest.sql
 3. Run the command '```psql faers < latest.sql```' to import data into the database (this may take some time)
 3. Run the command '```psql faers < ./back-end/optimizerv1.sql```' to properly add relations (this may also take some time).
-4. (IF USING ELASTICSEARCH), run ```indexDatabase.py```. You will be prompted for a username and password for the database. This script may take some hours to run, be warned.
+4. (IF USING ELASTICSEARCH), run ```indexDatabase.py```. You will be prompted for a username and password for the database. This script may take some hours to run, be warned. 
 5. Connect to the database using ```sudo -u mevuser psql faers```.
 
 #### Dump PostgreSQL DB
@@ -31,7 +31,7 @@
 7. Navigate to the project root
 8. Run ```npm start``` to start the application
 
-### Remote Startup and Deploy
+### Remote Startup and Deploy 
 1. Open `context.wpi.edu:8080` in your web browser. You will be required to log in.
 2. Navigate to the `Context` project
 3. Make sure no active build is running. If it is, click on the 'X' on the build to kill it.

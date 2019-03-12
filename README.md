@@ -4,7 +4,9 @@
 ### Dependencies
 * NodeJS & NPM (download the most recent version for your OS at https://nodejs.org/en/download/)
 * Postgres (download the most recent version for your OS at https://www.postgresql.org/download/)
+* Python version 3.x
 * (OPTIONAL mac/linux only) Redis (download the most recent version for your OS at https://redis.io/download)
+* (OPTIONAL) Elasticsearch
 ** Follow the instructions at (http://rejson.io/#building-and-loading-the-module) to set up the json module for redis 
 
 ### Database
@@ -12,7 +14,9 @@
 1. Run the command '```createdb faers```' in your command line interface
 2. Download our DB dump file from the Google Drive called latest.sql
 3. Run the command '```psql faers < latest.sql```' to import data into the database (this may take some time)
-4. Connect to the database using ```sudo -u mevuser psql faers```.
+3. Run the command '```psql faers < ./back-end/optimizerv1.sql```' to properly add relations (this may also take some time).
+4. (IF USING ELASTICSEARCH), run ```indexDatabase.py```. You will be prompted for a username and password for the database. This script may take some hours to run, be warned.
+5. Connect to the database using ```sudo -u mevuser psql faers```.
 
 #### Dump PostgreSQL DB
 1. run the command '```pg_dump -h localhost -U mevuser -W -d faers > latest.sql```' in the postgres command line interface
@@ -24,32 +28,19 @@
 4. Run ```npm install```
 5. Navigate to back-end folder
 6. Run ```npm install```
-7. Navigate to outermost `mev-mqp` folder
+7. Navigate to the project root
 8. Run ```npm start``` to start the application
 
-### Remote Startup
-1. SSH into the `mev.wpi.edu` machine and navigate to `/MEV/back-end`
-2. It is recommended to run the server in a linux **screen** session
-    - If needed, create a new screen by typing `screen`
-    - Use `screen -list` to find the name of the screen
-    - Re-attach to a screen with `screen -r` *`name`*
-    - Detach from a screen by pressing `ctrl + a` followed by `d`
-3. If the node server is running you can stop it with `ctrl-c`
-4. Start the server by running `npm run startBoth`. This starts the node server and the redis cache
-5. Detach from the screen by pressing `ctrl + a` followed by `d`
+### Remote Startup and Deploy
+1. Open `context.wpi.edu:8080` in your web browser. You will be required to log in.
+2. Navigate to the `Context` project
+3. Make sure no active build is running. If it is, click on the 'X' on the build to kill it.
+4. On the left panel, click "build now" to deploy the website. It will automatically pull your new code from GIT
+5. NOTE: if using a different repository, you may have to change the Configuration. This is pretty straightforward.
 
 #### Starting PostgreSQL
   - If you need to restart the database for any reason, type the command `sudo systemctl restart postgresql.service`
 
-### Remote Deploy
-1. SSH into the `mev.wpi.edu` machine and stop the node server with `ctrl-c`
-2. Inside of the `mev-mqp` folder run the `deploy.sh` file as '`sh deploy.sh` *`username`*' where username is your user account name on the `mev.wpi.edu` machine. 
-    - This will build the React app into a single build folder *-this should not be pushed to GitHub-*
-    - Copy this folder and the app.js to your user on the remote server
-    - Delete the previous build folder and app.js on the remote server
-    - Move the files from your user to the `/MEV/back-end` directory 
-3. This will require you to enter your `mev.wpi.edu` system account a few times.
-4. SSH into the `mev.wpi.edu` machine to start the node server again.
 
 ## Project Layout  
 |-back-end  

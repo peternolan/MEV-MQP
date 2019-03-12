@@ -81,6 +81,7 @@ class ReportList extends Component {
     super();
     this.handleCaseChangePrimary = this.handleCaseChangePrimary.bind(this);
     this.state = {
+      refreshCases: false,
       bin: 'all reports',
       userBins: [],
       newCaseModalOpen: false,
@@ -135,9 +136,11 @@ class ReportList extends Component {
   };
 
   updateTab = (name, color) => {
+
     const userCreatedArray = this.state.userBins.map(bin => bin.name.toLowerCase()).filter(bin => (bin !== 'trash' && bin !== 'read' && bin !== 'all reports' && bin !== 'new case' && bin !== 'searched reports'));
     const array = ['all reports', 'searched reports', 'read', 'trash', 'new case'].concat(userCreatedArray);
     const index = array.indexOf(name);
+
     this.setState({
       bin: name,
       //background: color,
@@ -147,6 +150,13 @@ class ReportList extends Component {
   };
 
 
+  refreshCases = () => {
+
+    this.setState({refreshCases: !this.state.refreshCases});
+
+  }
+
+
 
   updateColor = (name, color) => {
     const userCreatedArray = this.state.userBins.map(bin => bin.name.toLowerCase()).filter(bin => (bin !== 'trash' && bin !== 'read' && bin !== 'all reports' && bin !== 'new case' && bin !== 'searched reports'));
@@ -154,7 +164,6 @@ class ReportList extends Component {
     const index = array.indexOf(name);
     this.setState({
       bin: name,
-      //background: color,
       currentTab: index,
       returnedResults: this.props.returnedResults,
 
@@ -167,6 +176,7 @@ class ReportList extends Component {
    * Changes the first letter of any word in a string to be capital
    */
   toTitleCase = str => str.replace(/\w\S*/g, txt => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
+
   changeTab = (currentTab) => {
     if (currentTab === 1) {  // This is the searched tab
       //***************  Searched reports can be accessed */
@@ -182,8 +192,6 @@ class ReportList extends Component {
       returnedIds: arr2,
       searchLoading: false,
       previousSearchString: string,
-    }, () => {
-      console.log(this.state.returnedIds);
     });
   };
 
@@ -194,6 +202,7 @@ class ReportList extends Component {
    * Handler for Tab bar clicks
    */
   handleTabClick = (event, currentTab) => {
+    console.log(currentTab)
     // If the Current tab is the New Case tab, open the Modal
     if (currentTab === 4) {
       this.setState({
@@ -203,7 +212,7 @@ class ReportList extends Component {
     } else if (currentTab === 1) {  // This is the searched tab
       //***************  Searched reports can be accessed */
       if(this.state.returnedResults.length > 0){
-        this.setState({ currentTab, bin: 'searched reports'})
+        this.setState({ currentTab, bin: 'all reports'})
       }
 
     } else {
@@ -287,7 +296,7 @@ class ReportList extends Component {
     switch (color) {
 
       case this.COLORS.primary:
-        console.log("Primary " + this.COLORS.primary);
+
         this.setState (
             {
               primaryChosen: true,
@@ -314,6 +323,12 @@ class ReportList extends Component {
     }
 
   };
+
+
+
+
+
+
 
   calculateSummarySize = () => {
     if(this.state.summaryOpen){
@@ -380,6 +395,7 @@ class ReportList extends Component {
 
   render() {
     // console.log(this.state.searchedReports)
+
     return (
         <MuiThemeProvider theme={defaultTheme} >
           <div className={this.props.classes.ReportList} >
@@ -418,6 +434,7 @@ class ReportList extends Component {
 
             {/* ====== SideBar for Viewing the Case Summary ====== */}
             <div id="summary-sidebar" className={this.calculateSummarySize()}>
+              <Typography variant='body' className={this.props.classes.titleBar} style={{fontWeight: 'bold'}}>Case Summaries</Typography>
               <CaseSummaryListing
                   updateTab={this.updateTab}
                   bins={this.state.userBins}
@@ -430,6 +447,7 @@ class ReportList extends Component {
                   returnedResults = {this.state.returnedResults}
                   returnedIds = {this.state.returnedIds}
                   setSearchLoading = {this.setSearchLoading}
+                  refresh = {this.state.refreshCases}
               />
             </div>
             <div key='summaryCollapse' className={this.props.classes.collapseDivider} style={{float: 'left'}} onClick={this.handleViewCaseSummary}>
@@ -437,6 +455,7 @@ class ReportList extends Component {
             </div>
             {/* ====== Table for Viewing the table of reports ====== */}
             <div key='reporttable' className={this.props.classes.tableContainer} >
+              <Typography variant='body' className={this.props.classes.titleBar} style={{fontWeight: 'bold'}}>Report Table</Typography>
               <ReportTable
                   reportPanel = {this.state.reportOpen}
                   bin={this.state.bin}
@@ -471,6 +490,7 @@ class ReportList extends Component {
                   userID={this.props.userID}
                   userEmail={this.props.userEmail}
                   reportOpen={this.state.reportOpen}
+                  refreshCases = {this.refreshCases}
               />
             </div>
             {/* ====== Modal for Creating a New Case ====== */}
@@ -516,7 +536,7 @@ class ReportList extends Component {
                   }}
               >
                 <Link href="/visualization" to="/visualization" >
-                  <Button fab style={{ margin: 12 }} color="primary">
+                  <Button fab = 'true' style={{ margin: 12 }} color="primary">
                     <img src={GoToVisualizationIcon} className={this.props.classes.goToVisualizationSVG} alt="Go Back To Visualization" />
                   </Button>
                 </Link>

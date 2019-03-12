@@ -47,7 +47,8 @@
 |-front-end  
 |____public  
 |____src  
-| |____resources  
+| |____resources 
+| | |____images 
 | |____components  
 | | |____visualization  
 | | | |____components  
@@ -60,12 +61,11 @@
 | | | | |____treeMap  
 | | | | | |____components  
 | | |____portal  
-| | | |____images  
 | | | |____userComponents  
 | | |____cases  
 | | |____components  
 | | |____editor  
-| | | |____images  
+| | | |____components  
 | | |____reports  
 | | | |____components  
 | |____actions  
@@ -236,7 +236,7 @@ visualization/App.js uses the components for the treemaps, demographics, and tim
 
 ## Working on the Reports Listing page
 Assets for the reports listing page exist within the reports folder src/components/reports.  
-reports/ReportsList.jsx uses the components for the report listing grid which assets are all contained in the folder reports/components.
+reports/ReportsList.jsx uses the components for the report listing grid and Reports Panel which assets are all contained in the folder reports/components.
 
 ## Working on the Narrative Editor page
 All assets for the narrative editor page exist within the editor folder src/components/editor   

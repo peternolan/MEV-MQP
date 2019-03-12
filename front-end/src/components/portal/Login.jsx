@@ -55,8 +55,12 @@ class Login extends Component {
   }
 
   componentDidMount() {
+
+    console.log(this.props.isLoggedIn);
+
     if (this.props.isLoggedIn) {
-      window.location = '/visualization';
+      //window.location = '/visualization';
+
     }
   }
 

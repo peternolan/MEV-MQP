@@ -60,7 +60,6 @@ export const createUserBin = (userID, binName, binDesc) => () => {
  * move a report from one bin to another
  */
 export const moveReport = (primaryid, fromBin, toBin, userID, type) => () => {
-  console.log('Action Move Report ' + primaryid + ' ' + fromBin + ' ' + toBin + ' ' + userID + ' ' + type);
   const fetchData = {
     method: 'POST',
     mode: 'cors',
@@ -194,7 +193,7 @@ export const getInstances = (reports) => {
  */
 export const getCaseReports = (bin, userID, filters) => (dispatch, getState) => {
 
-  const defaultFilters = {
+   const defaultFilters = {
     init_fda_dt: {
       start: '1',
       end: '9999999999',
@@ -336,7 +335,7 @@ export const executeSearch = (str) => () => {
         body: JSON.stringify({'search_string':str.trim()}),
     };
     return fetch(`${process.env.REACT_APP_NODE_SERVER}/executeSearch`, fetchData)
-            .then(function(response){console.log(response);return response.json();});
+            .then(function(response){return response.json();});
             //.then(function(json){console.log(json)});
 };
 

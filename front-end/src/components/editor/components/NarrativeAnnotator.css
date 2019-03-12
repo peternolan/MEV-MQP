@@ -1,7 +1,6 @@
 .ql-container {
   font-size: 0.875rem;
   /* max-height: 75vh; */
-  overflow: scroll;
   border-color: white;
   font-weight: 400;
   text-align: justify;

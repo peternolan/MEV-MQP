@@ -7,9 +7,7 @@ export default {
 	bglegend: {
 		flexWrap: 'wrap',
 		display: 'flex',
-		flexDirection: 'row',
 		justifyContent: 'center',
-		alignItems: 'center',
 		height: 'auto',
 		width: 'calc(100% - 20px)',
 		margin: 0,
@@ -20,7 +18,7 @@ export default {
 	legendPair: {
 		display: 'inline-flex',
 		alignItems: 'center',
-		marginRight: 15,
+		margin: 5,
 	},
 	legendColor: {
 		display: 'inline-block',
@@ -34,13 +32,26 @@ export default {
 		fontSize: 12,
 		color: '#000',
 	},
+	legendEntry: { /* The container for the text and squares. */
+		display: 'inline-flex',
+		alignItems: 'center',
+		justifyContent: 'center',
+		width: 'auto',
+		height: 20,
+		padding: 2,
+		marginLeft: '1vw',
+		borderStyle: 'solid',
+		borderWidth: 1,
+		borderColor: 'rgba(0, 0, 0, .25)',
+		borderRadius: 0,
+	},
 	dataSelector: {
 		marginLeft: '7%',
 	},
 	summaryContent: {
 		width: '100%',
 		height: 'auto',
-		//overflow: 'scroll',
+		overflow: 'scroll',
 	},
 	reportBox: {
 		padding: 5,
@@ -116,7 +127,6 @@ export default {
 		height: 'auto',
 		width: 'auto',
 		margin: 2,
-		padding: 4,
 		opacity: .7,
 		borderRadius: 15,
 		'&:hover':{

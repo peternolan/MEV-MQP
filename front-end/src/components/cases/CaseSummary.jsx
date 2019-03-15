@@ -637,6 +637,7 @@ class CaseSummary extends Component {
   render(){{
             this.getReports();
             this.updateReports();
+            this.BarChart();
             }
     if (this.state.reportsInCase.length > 0){
       return(
@@ -668,7 +669,8 @@ class CaseSummary extends Component {
               <Collapse isOpened={this.state.keywordsExposed}>
                 <div className={this.props.classes.keywordContainer}>
                   <div key="highlighted_words">
-                    {this.state.highlightedWordsData.map((word) =>{
+                    {
+                      this.state.highlightedWordsData.slice(0,40).map((word) =>{
                       return(
                         <div key={word.name} className={this.props.classes.keywordCapsule}
                              style={{backgroundColor: (this.state.recommendationArray.indexOf(word.name) > -1) ? '#7bd389' : '#ee7674'}} onClick={this.toggleWord}>

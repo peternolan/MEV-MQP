@@ -118,9 +118,11 @@ export default {
         },
 	},
 	keywordContainer: {
+		display: 'flex',
 		height: 'auto',
 		width: 'auto',
 		padding: 10,
+		alignItems: 'center',
 	},
 	keywordCapsule: {
 		display: 'inline-block',

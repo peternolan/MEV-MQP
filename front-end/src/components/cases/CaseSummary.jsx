@@ -63,7 +63,6 @@ class CaseSummary extends Component {
       reportsInCase: [],
       reports:[],
       pvs: [],
-      barChartData: [],
       highlightedWordsData:[],
       highlightedWords:[],
       caseNarratives:[],
@@ -180,12 +179,6 @@ class CaseSummary extends Component {
     // const highlightedWordsData = [];
     const highlightedRawWords=[];
     var highlightedWords=[];
-    const barChartData = Object.keys(this.state.tags).reduce((acc, key) => {
-      return acc.concat({
-        name: (key.toUpperCase() === 'SEX') ? 'GENDER' : key.toUpperCase(),//why are they replacing SEX with GENDER?
-        count: this.state.tags[key].length,
-      });
-    }, []);
 
     /********  To get the highlighed words */
     Object.keys(this.state.tags).map((keyName) => {
@@ -211,7 +204,7 @@ class CaseSummary extends Component {
       /********** remove stop words */
     highlightedWords = highlightedWords.filter( function( el ) {
       return stop_words.indexOf( el ) < 0;
-    } );
+    });
 
     /************** count each word */
     var counts = {};
@@ -226,13 +219,20 @@ class CaseSummary extends Component {
         name:key,
         count: counts[key],
       });
-    }, []);
+    }, []).sort((a, b) => a.count > b.count?-1:1).slice(0,40);
+    
+    const hlwords = [];
+    if(highlightedWordsData.length > 0){
+      highlightedWordsData.map((word) => {
+        hlwords.push(word.name)
+      })
+    }
+
     this.setState({
-      recommendationArray: highlightedWords.slice(),
-      recommendationString: highlightedWords.slice().join(' '),
-      barChartData,
+      recommendationArray: hlwords,
+      recommendationString: hlwords.slice().join(' '),
       highlightedWordsData,
-      highlightedWords,
+      highlightedWords: hlwords,
     });
   };
 
@@ -378,31 +378,6 @@ class CaseSummary extends Component {
     } 
   }
 
-  /*********** Prepare data for keywords barcharts */
-  BarChart = ()  => {    
-    const total_bars=4;
-    const keywords_count= 20;  
-    var counter = 0;
-    let all_barCharts = [];
-    var data=[];
-
-    
-    if (this.state.highlightedWordsData.length > 0){
-      const data_all = this.state.highlightedWordsData;
-      const data_length =  this.state.highlightedWordsData.length;
-      const max_value = data_all.reduce((max, p) => p.count > max ? p.count : max, data_all[0].count)
-
-    data_all.sort((a, b) => a.count > b.count?-1:1)
-   
-      for (var i=0; i<total_bars;i++){
-            // let all_barCharts= []
-            for(var j=counter; j<counter+keywords_count && j< data_length;j++){   
-              data.push(data_all[j])
-            }
-      } 
-    } 
-    return data;
-  }
   /* search for recommendations */
   searchRecommendations = () => {
     var results;
@@ -487,10 +462,12 @@ class CaseSummary extends Component {
   }
   /* Toggle a word's activation for recommendations */
   toggleWord = (event) => {
+    event.stopPropagation()
     var strchk = event.target.getAttribute('value');
+
     var index = this.state.recommendationArray.indexOf(strchk);
     if (index > -1){
-      var rmdrec = this.state.recommendationArray;
+      var rmdrec = this.state.recommendationArray.slice();
       rmdrec.splice(index,1);
       this.setState({
         recommendationArray: rmdrec,
@@ -637,7 +614,6 @@ class CaseSummary extends Component {
   render(){{
             this.getReports();
             this.updateReports();
-            this.BarChart();
             }
     if (this.state.reportsInCase.length > 0){
       return(

@@ -128,26 +128,34 @@ class QuillEditor extends Component {
     onUnload = () => this.saveWork();
 
 
+    /*
+    Function for Deleting the user's comment. Note, this will only work for a comment within a specific report
+    for the currently logged in user. All other comments will remain intact.
+    */
     commentDelete = () => {
 
-        var dummyNode = document.createElement('div');
+        var dummyNode = document.createElement('div'); //Create new div
 
-        dummyNode.innerHTML = this.state.comment;
+        dummyNode.innerHTML = this.state.comment; //Set Div equal to list of comments HTML
 
         var newText = '';
 
+        //If comments are present.
         if (dummyNode.getElementsByTagName("comments")[0]) {
 
+            //Find comment with ID that matches the current userID
             for (var i in dummyNode.getElementsByTagName("comment")) {
 
-
+                //Check that current i is valid
                 if (Number.isInteger(Number(i))) {
 
+                    //Check that comment element exists at i
                     if (dummyNode.getElementsByTagName("comment")[i]) {
 
-
+                        //Check that comment id is equal to userID
                         if (dummyNode.getElementsByTagName("comment")[i].getAttribute("id").toString() === this.state.userID.toString()) {
 
+                            //Remove comment from element list.
                             var el = dummyNode.getElementsByTagName("comment")[i];
                             el.remove();
 
@@ -167,8 +175,10 @@ class QuillEditor extends Component {
     };
 
 
+    //Get the text from the Report ID when the user clicks on a report.
     getTextFromID = (id) => {
         this.props.commentsOn(false);
+        //Check that id is valid.
         if (isNaN(id)) {
             this.setState({
                 saving: true,
@@ -176,6 +186,7 @@ class QuillEditor extends Component {
                 loading: false,
             });
         } else {
+            //Get reportText from database
             this.props.getReportNarrativeFromID(id)
                 .then((rows) => {
 
@@ -188,18 +199,20 @@ class QuillEditor extends Component {
 
                         var commentHTML = '';
 
-
+                        //If comments are in this report.
                         if (dummyNode.getElementsByTagName("comments")[0]) {
 
-
+                            //If more that one comment is available.
                             if (dummyNode.getElementsByTagName("comments")[0].getElementsByTagName("comment"))
                             {
                                var text = '';
                                var commentLines = '';
 
+                                //Go through the list of comments and render them.
                                 for (var i in dummyNode.getElementsByTagName("comment")) {
 
                                     if (Number.isInteger(Number(i))) {
+                                        //If the comment has the same ID as the user, or is public, render it into the system.
                                        if (dummyNode.getElementsByTagName("comment")[i].id.toString() === this.state.userID.toString()
                                             || dummyNode.getElementsByTagName("comment")[i].getAttribute("viewable").toString() === "public") {
 
@@ -234,6 +247,7 @@ class QuillEditor extends Component {
 
                             }
 
+                            //If no comments are avialable, delete comments section from render so that comments can be added later.
                             commentHTML =  dummyNode.getElementsByTagName("comments")[0];
 
                             var commentFinal = commentHTML.outerHTML;
@@ -247,6 +261,8 @@ class QuillEditor extends Component {
 
                         }
                         else {
+
+                            //If no comments are avialable, proceed with an empty comments section.
                             commentFinal = ``;
                             reportHTML = dummyNode.innerHTML;
                             reportText = reportHTML + commentFinal;
@@ -291,6 +307,7 @@ class QuillEditor extends Component {
     }
 
 
+    //Save the changes that the user has made to database.
     saveWork = () => {
 
         if (!this.state.saving && !_.isEqual(this.state.current, this.state.saved)) {
@@ -334,6 +351,7 @@ class QuillEditor extends Component {
 
 
 
+    //Render the quill-editor itself.
     display =() =>{
         var dummyNode = document.createElement('div');
         dummyNode.innerHTML = `<span style = 'font-size: 6px'> ${this.state.report} </span>`;
@@ -358,7 +376,7 @@ class QuillEditor extends Component {
 
 
 
-    //Need to Set State in order to make sure it doesn't change when we add comments.
+    //This function activates whenever the user makes a change, either by hihlighting the code or commenting.
     handleChange = (value) => {
         const drugRE = `background-color: ${annotationColors.drug};`;
         const reactionRE = `background-color: ${annotationColors.reaction};`;
@@ -375,6 +393,7 @@ class QuillEditor extends Component {
             .getElementsByTagName('span');
 
 
+        //Check all highlights and change the tags as necessary.
         for (let i = 0; i < spans.length; i += 1) {
 
             switch (spans[i].getAttribute('style')) {
@@ -423,6 +442,7 @@ class QuillEditor extends Component {
             }
 
         this.setState({report: value});
+
         var dummyNode = document.createElement('div');
         dummyNode.innerHTML = this.state.comment;
 
@@ -431,31 +451,40 @@ class QuillEditor extends Component {
         var finalText = this.state.report + comment;
 
 
+        //If a new comment has been added
         if (this.state.addingComment) {
             var dummyNode2 = document.createElement('div');
             dummyNode2.innerHTML = this.state.comment;
 
+            //If comments are already in the system
             if (dummyNode2.getElementsByTagName("comment")) {
                 var text = '';
                 var commentLines = '';
 
+                //Go through all comments
                 for (var i in dummyNode2.getElementsByTagName("comment")) {
 
+                    //If there are one or more comments
                     if (dummyNode2.getElementsByTagName("comment").length > 0) {
 
-
+                        //If i is a vallid number
                         if (Number.isInteger(Number(i))) {
+
+                            //If we find a comment with the same ID as our own, or one that is public, include it into the viewable list of comments
                             if (dummyNode2.getElementsByTagName("comment")[i].id.toString() === this.state.userID.toString()
                                 || dummyNode2.getElementsByTagName("comment")[i].getAttribute("viewable").toString() === "public") {
 
                                 text = text.concat(dummyNode2.getElementsByTagName("comment")[i].innerText);
 
+                                //If we find a comment that is public, render it here.
                                 if (dummyNode2.getElementsByTagName("comment")[i].getAttribute('viewable').toString() === "public") {
 
                                     commentLines = commentLines.concat(`<div style='left: 3px; width: 80%; border-radius: 5px; background-color: #43e8e8; position: relative; padding: 6px ' >
                                                                         <div style ='left: 20px'>${dummyNode.getElementsByTagName("comment")[i].innerText.replace("n$", "</br>")} </div>
                                                                          </div>`);
-                                } else {
+                                }
+                                //If we find a comment that is private, render it here.
+                                else {
 
 
                                     commentLines = commentLines.concat(`<div style='left: 3px; width: 80%; border-radius: 5px; background-color: #c5cbd6; position: relative; padding: 6px ' >
@@ -477,11 +506,12 @@ class QuillEditor extends Component {
 
             }
 
-
+            //We are done adding comments
             this.setState({ addingComment: false});
 
         }
 
+        //Set the current reportText to the new report and new comments
         var finalTextComm = this.state.report + this.state.comment;
 
         this.setState({success: false, addingComment: false,  current: {reportText: finalTextComm, tags: newTags}});
@@ -501,21 +531,22 @@ class QuillEditor extends Component {
 
 
 
-
+    //This function activates when a comment is made.
     commentMade = () => {
 
-        var comment = document.getElementById('comment').value;
+        var comment = document.getElementById('comment').value; //Get value from comment textbox.
 
-        var dummyNode = document.createElement('div');
+        var dummyNode = document.createElement('div');//Create new div
 
-        dummyNode.innerHTML = this.state.comment;
+        dummyNode.innerHTML = this.state.comment;//Set new div to current list of comments.
 
         var newText = '';
-        var checked = document.getElementById('viewToggle');
+        var checked = document.getElementById('viewToggle'); //Check if the toggle is on public or private
 
+        //If a list of comments already exists.
         if (dummyNode.getElementsByTagName("comments")[0]) {
 
-
+            //Go through a list of comments
                 for (var i in dummyNode.getElementsByTagName("comment")) {
 
 
@@ -523,7 +554,7 @@ class QuillEditor extends Component {
 
                         if (dummyNode.getElementsByTagName("comment")[i]) {
 
-
+                            //If we find a comment that has the same id as the userID, edit the comment.
                             if (dummyNode.getElementsByTagName("comment")[i].getAttribute("id").toString() === this.state.userID.toString()) {
 
 
@@ -536,9 +567,6 @@ class QuillEditor extends Component {
                                 else {
                                     dummyNode.getElementsByTagName("comment")[i].setAttribute("viewable", 'private');
                                 }
-
-
-
 
                                 newText = dummyNode.innerHTML;
 
@@ -554,9 +582,9 @@ class QuillEditor extends Component {
                     }
                 }
 
+            //If we do not see our new comment, add it into the list.
 
                 var newInner;
-
 
                 if (checked.checked) {
 
@@ -584,14 +612,15 @@ class QuillEditor extends Component {
 
 
         } else {
+            //If we do nt have a list of comments, add a new list.
 
-
+            //Check to see if the toggle is on public or private.
             if (checked.checked) {
-
+                //public
                 var comSpecial = `<comments id = 'comment-${this.props.primaryid}'><comment id = ${this.state.userID} viewable = 'public' class = "comment" >${this.state.userEmail}: ${comment.replace(/\n/g, " n$")}\n<br/></comment></comments>`;
 
             } else {
-
+                //private
                 var comSpecial = `<comments id = 'comment-${this.props.primaryid}'><comment id = ${this.state.userID} viewable = 'private' class = "comment" >${this.state.userEmail}: ${comment.replace(/\n/g, " n$")}\n<br/></comment></comments>`;
 
             }
@@ -627,7 +656,7 @@ class QuillEditor extends Component {
 
     };
 
-
+    //If the comments section is open or closed, handle changing the view.
     showComments = () => {
 
         if (this.state.commentsOn) {
@@ -644,11 +673,14 @@ class QuillEditor extends Component {
 
 
 
+    //This function operates whether or not the toolbar for the report is viewable.
     editMode = () => {
 
+        //If edit mode is currently, on, set it to false.
         if (this.state.editModeOn) {
             //this.setContainer(`react-quill-${this.state.primaryId}-2`);
 
+            //Hide Highlighting toolbar and show empty toolbar.
             var x = document.getElementById(`react-quill-${this.props.primaryid}`);
             x.style.display = "none";
 
@@ -659,11 +691,11 @@ class QuillEditor extends Component {
             this.setState({editModeOn: false});
             this.saveWork();
 
-            //this.render();
         }
+        //If edit mode is currently off, set it to true.
         else {
 
-            //this.setContainer(`react-quill-${this.state.primaryId}`);
+            //Show Highlighting toolbar and hide empty toolbar.
             var a = document.getElementById(`react-quill-${this.props.primaryid}-2`);
             a.style.display = "none";
 
@@ -672,7 +704,6 @@ class QuillEditor extends Component {
 
 
             this.setState({editModeOn: true});
-            //this.render();
         }
 
     };
@@ -682,6 +713,7 @@ class QuillEditor extends Component {
         this.setState({valueAttr: ''})
     };
 
+    //Renders the toolbar for that allows the user to highlight the report text.
     customToolbar = () => (
 
         <div id={`react-quill-${this.state.primaryId}`} className = {this.props.classes.toolbar} style={{ width: '99%', height: 'calc(8vh)', display: 'none'}}>
@@ -877,7 +909,7 @@ class QuillEditor extends Component {
         </div>
     );
 
-
+    //Renders the empty toolbar.
     customToolbar2 = () => (
 
         <div id={`react-quill-${this.props.primaryid}-2`} style={{ padding: '6px' }} ref = 'toolbar'>

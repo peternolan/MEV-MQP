@@ -98,6 +98,7 @@ class ReportPanel extends React.PureComponent {
 
     onUnload = () => this.saveWork();
 
+    /*Get Specific Report Narrative from Database*/
     getTextFromID = (id) => {
         if (isNaN(id)) {
             this.setState({
@@ -106,6 +107,7 @@ class ReportPanel extends React.PureComponent {
                 loading: false,
             });
         } else {
+            //If id is valid number
             this.props.getReportNarrativeFromID(id)
                 .then((rows) => {
                     if (rows.length > 0) {
@@ -134,9 +136,12 @@ class ReportPanel extends React.PureComponent {
 
     };
 
+    //Show or hide the Report Summary when the user clicks the summary
     handleHideSummary = () => {
         this.setState({summaryShown: !this.state.summaryShown})
     };
+
+    //Open or close the comments section at the bottom of the panel.
     commentOnHandler = (setting) => {
         if (setting == null) {
             if (this.state.commentsOn) {
@@ -149,6 +154,8 @@ class ReportPanel extends React.PureComponent {
             this.setState({commentsOn: setting});
         }
     };
+
+    //Renders the QuillEditor when the system finishes searching for the specific report.
     renderInside = (primaryID) => {
         return (
             <div key={primaryID}>
@@ -180,6 +187,7 @@ class ReportPanel extends React.PureComponent {
         );
     };
 
+    //Render the Report Panel
     render = () => {
         return (
             <Paper id='summary-container' className={this.props.classes.summaryContainer} elevation={4}>

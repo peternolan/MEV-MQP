@@ -104,6 +104,7 @@ class ReportList extends Component {
     //handleCaseChangePrimary = handleCaseChangePrimary.bind(this);
   }
 
+  //Get the number of reports available to the user.
   getCount = () => {
 
     this.props.getCountData();
@@ -135,6 +136,8 @@ class ReportList extends Component {
         });
   };
 
+  //Change the current tab using the toolbar at the top of the screen.
+    //Name: name of the bin to be accessed.
   updateTab = (name, color) => {
 
     const userCreatedArray = this.state.userBins.map(bin => bin.name.toLowerCase()).filter(bin => (bin !== 'trash' && bin !== 'read' && bin !== 'all reports' && bin !== 'new case' && bin !== 'searched reports'));
@@ -185,6 +188,7 @@ class ReportList extends Component {
     }
   };
 
+  //Show all search results
   printSearchResults = (arr1,arr2,string) => {
     /* propagated */
     this.setState({

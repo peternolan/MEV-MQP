@@ -136,6 +136,8 @@ class Dashboard extends Component {
       });
   }
 
+  //Sets the count of the reports within a case.
+    //reportCount: Number of reports in a case.
   setReportCount = (reportCount) => {
     this.setState({
       reportCount,

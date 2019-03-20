@@ -98,7 +98,10 @@ class ReportPanel extends React.PureComponent {
 
     onUnload = () => this.saveWork();
 
-    /*Get Specific Report Narrative from Database*/
+    /*
+    Get Specific Report Narrative from Database
+        id: primaryId of report from database.
+     */
     getTextFromID = (id) => {
         if (isNaN(id)) {
             this.setState({

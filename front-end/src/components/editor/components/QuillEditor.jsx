@@ -30,10 +30,10 @@ class QuillEditor extends Component {
         htmlEncode: PropTypes.func.isRequired,
         htmlUnescape: PropTypes.func.isRequired,
         incrementSummary: PropTypes.func,
-        commentsOn: PropTypes.func,
-        summaryOn: PropTypes.bool,
+        commentsOn: PropTypes.func, //Is comments section open or closed?
+        summaryOn: PropTypes.bool, //Is the summary section opened or closed?
         refreshCases: PropTypes.func,
-        classes: PropTypes.shape({
+        classes: PropTypes.shape({ //Contains styles from QuillEdirtorStyles.js
             pdfView: PropTypes.string,
             editorWindow: PropTypes.string,
             paperWindow: PropTypes.string,
@@ -59,9 +59,9 @@ class QuillEditor extends Component {
             textButton: PropTypes.string,
 
         }).isRequired,
-        primaryid: PropTypes.number,
-        userID: PropTypes.number.isRequired,
-        userEmail: PropTypes.string,
+        primaryid: PropTypes.number, //Primaryid of the report
+        userID: PropTypes.number.isRequired, //Id of the current user
+        userEmail: PropTypes.string, //Username of the current user
         match: PropTypes.shape({
             params: PropTypes.shape({
                 id: PropTypes.string,
@@ -80,27 +80,27 @@ class QuillEditor extends Component {
         super(props);
         this.commentDelete = this.commentDelete.bind(this);
         this.state = {
-            //commentDelete: this.commentDelete,
-            searching:false,
-            valueAttr:'Search..',
-            addingComment: false,
-            loading: true,
-            editModeOn: false,
-            commentsOn: false,
-            primaryId: this.props.primaryid,
-            userID: this.props.userID,
-            userEmail: this.props.userEmail,
-            comment: ``,
-            report: '',
-            current: {
+
+            searching:false, //Cehck if still searching in report (UNUSED NOW)
+            valueAttr:'Search..', //Allows for Search
+            addingComment: false, //True is currently adding a comment
+            loading: true, //True if loading report
+            editModeOn: false, //True is the edit mode is currently on
+            commentsOn: false, //True if the comments section is open
+            primaryId: this.props.primaryid, //Primaryid of the report
+            userID: this.props.userID,  //Id of the current user
+            userEmail: this.props.userEmail,  //Username of the current user
+            comment: ``, //Will contain the HTML text for the comments list
+            report: '', //Will contain the HTML text for the report text
+            current: { //Current draft of report data
                 reportText: '',
                 tags: [],
             },
-            saved: {
+            saved: { //Saved draft of report data
                 reportText: '',
                 tags: [],
             },
-            textHighlight:{
+            textHighlight:{ //
                 searchText:'    ',
                 textToHighlight:'FDA contacted the patient for follow-up after',
                 activeIndex: -1,
@@ -175,7 +175,10 @@ class QuillEditor extends Component {
     };
 
 
-    //Get the text from the Report ID when the user clicks on a report.
+    /*
+    Get the text from the Report ID when the user clicks on a report.
+        id: PrimaryID of report, to be used in querry.
+    */
     getTextFromID = (id) => {
         this.props.commentsOn(false);
         //Check that id is valid.
@@ -186,7 +189,7 @@ class QuillEditor extends Component {
                 loading: false,
             });
         } else {
-            //Get reportText from database
+            //Get reportText from database. If report found, display it in system.
             this.props.getReportNarrativeFromID(id)
                 .then((rows) => {
 
@@ -271,6 +274,7 @@ class QuillEditor extends Component {
 
 
 
+                        //Change states when finished loading to allow for the system to display information.
                         this.setState({
                             saving: false,
                             success: true,
@@ -287,6 +291,7 @@ class QuillEditor extends Component {
                             },
                         });
                     } else {
+                        //If no text found, display nothing.
                         this.setState({
                             saving: true,
                             success: false,
@@ -298,24 +303,37 @@ class QuillEditor extends Component {
 
     };
 
+    /*
+    Used for Quill Editor to change text size. (No Longer used)
+        header: Chosen header format
+    */
     setHeaderStyle(header) {
         this.quill.format('header', header);
     }
 
+    /*
+   Used for Quill Editor to change alignment. (No Longer used)
+       align: Chosen alignment format
+   */
     setAlignStyle(align) {
         this.quill.format('align', align);
     }
 
 
-    //Save the changes that the user has made to database.
+    /*
+    Save the changes that the user has made to database.
+    */
     saveWork = () => {
 
+        //If we are not currently saving and something in the report has changed.
         if (!this.state.saving && !_.isEqual(this.state.current, this.state.saved)) {
+            //Set state to indicate saving.
             this.setState({
                 success: false,
                 saving: true,
             });
 
+            //Request for Backend Save.
             const fetchData = {
                 method: 'PUT',
                 mode: 'cors',
@@ -333,6 +351,7 @@ class QuillEditor extends Component {
 
             };
 
+            //Save to database
             fetch(`${process.env.REACT_APP_NODE_SERVER}/savereporttext`, fetchData)
                 .then(() => {
 
@@ -351,8 +370,11 @@ class QuillEditor extends Component {
 
 
 
-    //Render the quill-editor itself.
+    /*
+    Render the quill-editor itself. This will show us the actual report text.
+    */
     display =() =>{
+
         var dummyNode = document.createElement('div');
         dummyNode.innerHTML = `<span style = 'font-size: 6px'> ${this.state.report} </span>`;
 
@@ -376,7 +398,10 @@ class QuillEditor extends Component {
 
 
 
-    //This function activates whenever the user makes a change, either by hihlighting the code or commenting.
+    /*
+    This function activates whenever the user makes a change, either by hihlighting the code or commenting.
+        value: Current ReportText value.
+    */
     handleChange = (value) => {
         const drugRE = `background-color: ${annotationColors.drug};`;
         const reactionRE = `background-color: ${annotationColors.reaction};`;
@@ -521,8 +546,11 @@ class QuillEditor extends Component {
 
 
 
+    /*
+    Used for highlighting the text within the QuillEditor
+        color: The background color to change the text to.
 
-
+    */
     colorBackground(color) {
         const { index, length } = this.quill.getSelection();
         this.quill.formatText(index, length, 'background', color);
@@ -713,25 +741,12 @@ class QuillEditor extends Component {
         this.setState({valueAttr: ''})
     };
 
-    //Renders the toolbar for that allows the user to highlight the report text.
+    //Renders the toolbar for that allows the user to highlight the report text, which is used when edit mode is true.
     customToolbar = () => (
 
         <div id={`react-quill-${this.state.primaryId}`} className = {this.props.classes.toolbar} style={{ width: '99%', height: 'calc(8vh)', display: 'none'}}>
 
-            {/*
-            <select defaultValue="false" className="ql-header" style={{ width: '100px', height: '36px', margin: '4px' }}>
-                <option value="1"/>
-                <option value="2"/>
-                <option value="false"/>
-
-            </select>
-
-            <select defaultValue="justify" className="ql-align" style={{ width: '30px', height: '20px', margin: '4px' }}>
-                <option value="center" />
-                <option value="right" />
-                <option value="justify" />
-            </select>
-            */}
+            {/*   These are the buttons for highlighting in the toolbar.   */}
             <Button className="ql-colorBackground" value={annotationColors.drug} style={{ display: 'inline-block',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -898,18 +913,10 @@ class QuillEditor extends Component {
                         ? </Button>
                 </MaterialTooltip>
 
-            {/*<div class = 'tooltip' >Tooltip <span class = 'tooltiptext'></span></div>*/}
-
-
-            {/*
-            <div style={{position: 'absolute', bottom: 0, right: 0,}}>
-                <input className="ql-colorBackground pull-right" id="SearchTextbox" value= "Search.." ref={el => this.inputEntry = el} type="text" name="search" value = {this.state.valueAttr}  onClick= {this.clearText} onChange={this.searchTextBox}  style={{verticalAlign: 'absolute', padding: '0px', margin: '0px' }} />
-            </div>
-                */}
         </div>
     );
 
-    //Renders the empty toolbar.
+    //Renders the empty toolbar, which is used when EditMode is false
     customToolbar2 = () => (
 
         <div id={`react-quill-${this.props.primaryid}-2`} style={{ padding: '6px' }} ref = 'toolbar'>
@@ -940,6 +947,7 @@ class QuillEditor extends Component {
     };
 
 
+    //Render QuillEditor.jsx
     render() {
 
         const { ...props } = this.props;
@@ -962,8 +970,6 @@ class QuillEditor extends Component {
                     </div>
 
                 {/* ====== Quill editor for Annotating the Report Text ====== */}
-
-                {/* <!--<Paper elevation={4} className={this.props.classes.paperWindow}>--> */}
 
                 {this.customToolbar()}
                 {this.customToolbar2()}

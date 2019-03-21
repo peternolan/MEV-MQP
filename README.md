@@ -1,5 +1,5 @@
 # MEV-MQP - Adverse Reaction Reports Analysis Tool (ConText)
-[Written Report](https://docs.google.com/document/d/1oozqOELTnst3HxyYKCG1k_mBilB06OjTpsaDY0EuR2Y/edit)
+[Written Report](https://docs.google.com/document/d/1oozqOELTnst3HxyYKCG1k_mBilB06OjTpsaDY0EuR2Y/edit?usp=sharing)
 
 ## Setup
 ### Dependencies

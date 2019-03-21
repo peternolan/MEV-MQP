@@ -711,7 +711,7 @@ class ReportTable extends React.PureComponent {
     var dummyNode = document.createElement('div');
 
     if(this.props.currentTab === 1){
-      final = (row.row.excerpt) ? row.row.excerpt[0] + row.row.excerpt[1] : '<div>--</div>';
+      final = (row.row.excerpt) ? row.row.excerpt[0]+'..'+row.row.excerpt[1] : '<div>--</div>';
     } 
 
     dummyNode.innerHTML = final;
